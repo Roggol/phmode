@@ -302,4 +302,5 @@ subscript_files = files(
     'subscript_overworld_electric_terrain.s',
     'subscript_overworld_psychic_terrain.s',
     'subscript_move_fail_psychic_terrain.s',
+    'subscript_overworld_distortion_terrain.s',
 )

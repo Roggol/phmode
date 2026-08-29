@@ -3709,6 +3709,10 @@ int BattleSystem_TriggerEffectOnSwitch(BattleSystem *battleSys, BattleContext *b
                     subscript = subscript_overworld_psychic_terrain;
                     result = SWITCH_IN_CHECK_RESULT_BREAK;
                     break;
+                case OVERWORLD_WEATHER_DISTORTION_TERRAIN:
+                    subscript = subscript_overworld_distortion_terrain;
+                    result = SWITCH_IN_CHECK_RESULT_BREAK;
+                    break;
 
                 default:
                     break;
@@ -7365,6 +7369,7 @@ static const enum BattleSubAnimation sEffectsAlwaysShown[] = {
     BATTLE_ANIMATION_WEATHER_SUN,
     BATTLE_ANIMATION_WEATHER_ELECTRIC_TERRAIN,
     BATTLE_ANIMATION_WEATHER_PSYCHIC_TERRAIN,
+    BATTLE_ANIMATION_WEATHER_DISTORTION_TERRAIN,
     BATTLE_ANIMATION_SUBSTITUTE_IN,
     BATTLE_ANIMATION_SUBSTITUTE_OUT,
 };

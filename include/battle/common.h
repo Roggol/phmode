@@ -73,6 +73,7 @@
 #define WEATHER_IS_STICKY (battleCtx->fieldConditionsMask & FIELD_CONDITION_STICKY_WEB)
 #define WEATHER_IS_ELECTRIC_TERRAIN (battleCtx->fieldConditionsMask & FIELD_CONDITION_ELECTRIC_TERRAIN)
 #define WEATHER_IS_PSYCHIC_TERRAIN (battleCtx->fieldConditionsMask & FIELD_CONDITION_PSYCHIC_TERRAIN)
+#define WEATHER_IS_DISTORTION_TERRAIN (battleCtx->fieldConditionsMask & FIELD_CONDITION_DISTORTION_TERRAIN)
 
 #define FLAG_NEGATE(flag) ((flag) ^ 0xFFFFFFFF)
 

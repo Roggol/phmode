@@ -8528,6 +8528,12 @@
         "{STRVAR_1 1, 0, 0} is protected\n",
         "by the psychic terrain!"
       ]
+    },
+    {
+      "id": "BattleStrings_Text_TheTerrainIsDistorted",
+      "en_US": [
+        "The terrain is distorted!"
+      ]
     }
   ]
 }

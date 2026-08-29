@@ -914,6 +914,7 @@ enum FieldCondCheckState {
     FIELD_COND_CHECK_STATE_STICKY_WEB,
     FIELD_COND_CHECK_STATE_ELECTRIC_TERRAIN,
     FIELD_COND_CHECK_STATE_PSYCHIC_TERRAIN,
+    FIELD_COND_CHECK_STATE_DISTORTION_TERRAIN,
 
     FIELD_COND_CHECK_END
 };
@@ -1088,6 +1089,17 @@ static void BattleControllerPlayer_CheckFieldConditions(BattleSystem *battleSys,
                 battleCtx->msgBuffer.tags = TAG_NONE;
                 PrepareSubroutineSequence(battleCtx, subscript_weather_continues);
                 battleCtx->scriptTemp = BATTLE_ANIMATION_WEATHER_PSYCHIC_TERRAIN;
+                state = STATE_BREAK_OUT;
+            }
+            battleCtx->fieldConditionCheckState++;
+            break;
+
+        case FIELD_COND_CHECK_STATE_DISTORTION_TERRAIN:
+            if (battleCtx->fieldConditionsMask & FIELD_CONDITION_DISTORTION_TERRAIN) {
+                battleCtx->msgBuffer.id = BattleStrings_Text_TheTerrainIsDistorted;
+                battleCtx->msgBuffer.tags = TAG_NONE;
+                PrepareSubroutineSequence(battleCtx, subscript_weather_continues);
+                battleCtx->scriptTemp = BATTLE_ANIMATION_WEATHER_DISTORTION_TERRAIN;
                 state = STATE_BREAK_OUT;
             }
             battleCtx->fieldConditionCheckState++;

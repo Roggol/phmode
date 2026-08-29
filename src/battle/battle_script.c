@@ -2841,6 +2841,13 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
         battleCtx->scriptTemp = BATTLE_ANIMATION_STAT_BOOST;
     }
 
+    // Distortion Terrain inverts every stat-stage change on the field (Contrary-
+    // style), regardless of whether the battler is grounded.
+    if (battleCtx->fieldConditionsMask & FIELD_CONDITION_DISTORTION_TERRAIN) {
+        stageChange = -stageChange;
+        battleCtx->scriptTemp = stageChange > 0 ? BATTLE_ANIMATION_STAT_BOOST : BATTLE_ANIMATION_STAT_DROP;
+    }
+
     if (stageChange > 0) {
         if (mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] == MAX_STAT_STAGE) {
             battleCtx->battleStatusMask |= SYSCTL_FAIL_STAT_STAGE_CHANGE;

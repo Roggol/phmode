@@ -41,7 +41,7 @@ anim_subscript_files = files(
     'damage_whirlpool.s',
     'damage_sand_tomb.s',
     'damage_ingrain.s',
-    'dummy41.s',
+    'weather_distortion_terrain.s',
     'dummy42.s',
     'dummy43.s',
     'dummy44.s',
