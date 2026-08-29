@@ -300,4 +300,6 @@ subscript_files = files(
     'subscript_giratina_form_change.s',
     'subscript_overworld_sticky_web.s',
     'subscript_overworld_electric_terrain.s',
+    'subscript_overworld_psychic_terrain.s',
+    'subscript_move_fail_psychic_terrain.s',
 )

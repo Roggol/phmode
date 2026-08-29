@@ -24,7 +24,7 @@ anim_subscript_files = files(
     'weather_sandstorm.s',
     'weather_sun.s',
     'weather_electric_terrain.s',
-    'dummy24.s',
+    'weather_psychic_terrain.s',
     'substitute_in.s',
     'substitute_out.s',
     'happy.s',

@@ -229,6 +229,7 @@ ScriptCommand(BTLCMD_LOADARCHIVEDMONDATA,         BtlCmd_LoadArchivedMonData)
 ScriptCommand(BTLCMD_REFRESHMONDATA,              BtlCmd_RefreshMonData)
 ScriptCommand(BTLCMD_CHECKSTICKYWEB,              BtlCmd_CheckStickyWeb)
 ScriptCommand(BTLCMD_CHECKELECTRICTERRAIN,        BtlCmd_CheckElectricTerrain)
+ScriptCommand(BTLCMD_CHECKGROUNDED,               BtlCmd_CheckGrounded)
 ScriptCommand(BTLCMD_END,                         BtlCmd_End)
 
 // clang-format on

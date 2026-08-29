@@ -913,6 +913,7 @@ enum FieldCondCheckState {
     FIELD_COND_CHECK_STATE_GRAVITY,
     FIELD_COND_CHECK_STATE_STICKY_WEB,
     FIELD_COND_CHECK_STATE_ELECTRIC_TERRAIN,
+    FIELD_COND_CHECK_STATE_PSYCHIC_TERRAIN,
 
     FIELD_COND_CHECK_END
 };
@@ -1076,6 +1077,17 @@ static void BattleControllerPlayer_CheckFieldConditions(BattleSystem *battleSys,
                 battleCtx->msgBuffer.tags = TAG_NONE;
                 PrepareSubroutineSequence(battleCtx, subscript_weather_continues);
                 battleCtx->scriptTemp = BATTLE_ANIMATION_WEATHER_ELECTRIC_TERRAIN;
+                state = STATE_BREAK_OUT;
+            }
+            battleCtx->fieldConditionCheckState++;
+            break;
+
+        case FIELD_COND_CHECK_STATE_PSYCHIC_TERRAIN:
+            if (battleCtx->fieldConditionsMask & FIELD_CONDITION_PSYCHIC_TERRAIN) {
+                battleCtx->msgBuffer.id = BattleStrings_Text_TheTerrainIsPsychic;
+                battleCtx->msgBuffer.tags = TAG_NONE;
+                PrepareSubroutineSequence(battleCtx, subscript_weather_continues);
+                battleCtx->scriptTemp = BATTLE_ANIMATION_WEATHER_PSYCHIC_TERRAIN;
                 state = STATE_BREAK_OUT;
             }
             battleCtx->fieldConditionCheckState++;
@@ -2407,6 +2419,7 @@ enum CheckStatusState {
     CHECK_STATUS_STATE_IMPRISON,
     CHECK_STATUS_STATE_GRAVITY,
     CHECK_STATUS_STATE_HEAL_BLOCK,
+    CHECK_STATUS_STATE_PSYCHIC_TERRAIN,
     CHECK_STATUS_STATE_CONFUSION,
     CHECK_STATUS_STATE_PARALYSIS,
     CHECK_STATUS_STATE_ATTRACT,
@@ -2624,6 +2637,20 @@ static BOOL BattleControllerPlayer_CheckStatusDisruption(BattleSystem *battleSys
                 battleCtx->moveFailFlags[battleCtx->attacker].healBlocked = TRUE;
 
                 LOAD_SUBSEQ(subscript_move_is_heal_blocked);
+                battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
+                battleCtx->commandNext = BATTLE_CONTROL_UPDATE_MOVE_BUFFERS;
+
+                result = CHECK_STATUS_DISRUPT_MOVE;
+            }
+
+            battleCtx->statusCheckState++;
+            break;
+
+        case CHECK_STATUS_STATE_PSYCHIC_TERRAIN:
+            if (Move_BlockedByPsychicTerrain(battleSys, battleCtx, battleCtx->attacker, battleCtx->defender, battleCtx->moveCur)) {
+                battleCtx->msgBattlerTemp = battleCtx->defender;
+
+                LOAD_SUBSEQ(subscript_move_fail_psychic_terrain);
                 battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
                 battleCtx->commandNext = BATTLE_CONTROL_UPDATE_MOVE_BUFFERS;
 

@@ -8515,6 +8515,19 @@
       "en_US": [
         "The terrain is electric!"
       ]
+    },
+    {
+      "id": "BattleStrings_Text_TheTerrainIsPsychic",
+      "en_US": [
+        "The terrain got weird!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_ProtectedByPsychicTerrain",
+      "en_US": [
+        "{STRVAR_1 1, 0, 0} is protected\n",
+        "by the psychic terrain!"
+      ]
     }
   ]
 }

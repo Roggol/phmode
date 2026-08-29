@@ -3705,6 +3705,10 @@ int BattleSystem_TriggerEffectOnSwitch(BattleSystem *battleSys, BattleContext *b
                     subscript = subscript_overworld_electric_terrain;
                     result = SWITCH_IN_CHECK_RESULT_BREAK;
                     break;
+                case OVERWORLD_WEATHER_PSYCHIC_TERRAIN:
+                    subscript = subscript_overworld_psychic_terrain;
+                    result = SWITCH_IN_CHECK_RESULT_BREAK;
+                    break;
 
                 default:
                     break;
@@ -5520,6 +5524,40 @@ static inline int CountAbilityTheirSide(BattleSystem *battleSys, BattleContext *
     return BattleSystem_CountAbility(battleSys, battleCtx, COUNT_ALIVE_BATTLERS_THEIR_SIDE, battler, ability);
 }
 
+BOOL Battler_IsGrounded(BattleContext *battleCtx, int battler)
+{
+    return BattlerIsGrounded(battleCtx, battler);
+}
+
+BOOL Move_BlockedByPsychicTerrain(BattleSystem *battleSys, BattleContext *battleCtx, int attacker, int defender, int move)
+{
+    if ((battleCtx->fieldConditionsMask & FIELD_CONDITION_PSYCHIC_TERRAIN) == FALSE) {
+        return FALSE;
+    }
+
+    // Only moves that gained priority this turn are blocked.
+    if (MOVE_DATA(move).priority <= 0) {
+        return FALSE;
+    }
+
+    // Field, self, ally, and wide moves pass through: only single-target moves
+    // aimed at an opponent are affected.
+    if (MOVE_DATA(move).range != RANGE_SINGLE_TARGET
+        && MOVE_DATA(move).range != RANGE_RANDOM_OPPONENT) {
+        return FALSE;
+    }
+
+    // The terrain only shields grounded opponents.
+    if (defender == BATTLER_NONE
+        || battleCtx->battleMons[defender].curHP == 0
+        || BattleSystem_GetBattlerSide(battleSys, attacker) == BattleSystem_GetBattlerSide(battleSys, defender)
+        || Battler_IsGrounded(battleCtx, defender) == FALSE) {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
 BOOL Battler_IsTrapped(BattleSystem *battleSys, BattleContext *battleCtx, int battler)
 {
     int result = FALSE;
@@ -7079,7 +7117,10 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
             }
         }
     }
-    if(fieldConditions & FIELD_CONDITION_ELECTRIC_TERRAIN && moveType == TYPE_ELECTRIC) {
+    if(fieldConditions & FIELD_CONDITION_ELECTRIC_TERRAIN && moveType == TYPE_ELECTRIC && Battler_IsGrounded(battleCtx, attacker)) {
+        damage = damage * 13 / 10;
+    }
+    if(fieldConditions & FIELD_CONDITION_PSYCHIC_TERRAIN && moveType == TYPE_PSYCHIC && Battler_IsGrounded(battleCtx, attacker)) {
         damage = damage * 13 / 10;
     }
 
@@ -7323,6 +7364,7 @@ static const enum BattleSubAnimation sEffectsAlwaysShown[] = {
     BATTLE_ANIMATION_WEATHER_SAND,
     BATTLE_ANIMATION_WEATHER_SUN,
     BATTLE_ANIMATION_WEATHER_ELECTRIC_TERRAIN,
+    BATTLE_ANIMATION_WEATHER_PSYCHIC_TERRAIN,
     BATTLE_ANIMATION_SUBSTITUTE_IN,
     BATTLE_ANIMATION_SUBSTITUTE_OUT,
 };

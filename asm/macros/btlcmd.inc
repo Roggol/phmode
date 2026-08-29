@@ -653,6 +653,12 @@
     .long (\jump_no_et-.) / 4 - 1
     .endm
 
+    .macro CheckGrounded battler, jump_if_airborne
+    .long BTLCMD_CHECKGROUNDED
+    .long \battler
+    .long (\jump_if_airborne-.) / 4 - 1
+    .endm
+
     .macro TryPerishSong jump_if_fail
     .long BTLCMD_TRYPERISHSONG
     .long (\jump_if_fail-.) / 4 - 1

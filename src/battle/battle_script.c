@@ -192,6 +192,7 @@ static BOOL BtlCmd_TrySpikes(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_CheckSpikes(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_CheckStickyWeb(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_CheckElectricTerrain(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_CheckGrounded(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_TryPerishSong(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_GetMonBySpeedOrder(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_GoToIfValidMon(BattleSystem *battleSys, BattleContext *battleCtx);
@@ -5502,9 +5503,39 @@ static BOOL BtlCmd_CheckElectricTerrain(BattleSystem *battleSys, BattleContext *
 
     if ((WEATHER_IS_ELECTRIC_TERRAIN
             && battleCtx->battleMons[battler].curHP
-            && (battleCtx->battleMons[battler].status & MON_CONDITION_SLEEP))
+            && (battleCtx->battleMons[battler].status & MON_CONDITION_SLEEP)
+            && Battler_IsGrounded(battleCtx, battler))
         == FALSE) {
         BattleScript_Iter(battleCtx, jumpOnFail);
+    }
+
+    return FALSE;
+}
+
+/**
+ * @brief Check whether the given battler is grounded.
+ *
+ * Used to gate ground-based field effects (the terrains, Sticky Web) so they
+ * only affect grounded Pokemon.
+ *
+ * Inputs:
+ * 1. The battler to check.
+ * 2. The distance to jump if the battler is airborne (not grounded).
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @return FALSE
+ */
+static BOOL BtlCmd_CheckGrounded(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int inBattler = BattleScript_Read(battleCtx);
+    int jumpIfAirborne = BattleScript_Read(battleCtx);
+
+    int battler = BattleScript_Battler(battleSys, battleCtx, inBattler);
+
+    if (Battler_IsGrounded(battleCtx, battler) == FALSE) {
+        BattleScript_Iter(battleCtx, jumpIfAirborne);
     }
 
     return FALSE;

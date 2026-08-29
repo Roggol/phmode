@@ -779,6 +779,37 @@ BOOL Move_FailsInHighGravity(BattleSystem *battleSys, BattleContext *battleCtx, 
 BOOL Move_HealBlocked(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int move);
 
 /**
+ * @brief Check if a battler is grounded (affected by terrain, Spikes, Sticky
+ * Web, and other ground-based effects).
+ *
+ * A battler is grounded unless it is airborne via the Flying type, Levitate, or
+ * Magnet Rise; holding an Iron Ball or under Gravity forces it to the ground
+ * regardless.
+ *
+ * @param battleCtx
+ * @param battler
+ * @return TRUE if the battler is grounded; FALSE otherwise
+ */
+BOOL Battler_IsGrounded(BattleContext *battleCtx, int battler);
+
+/**
+ * @brief Check if a given move should be blocked by Psychic Terrain.
+ *
+ * Psychic Terrain shields grounded Pokemon from opponents' increased-priority
+ * moves. Only single-target moves aimed at a grounded opponent are affected;
+ * field, self, ally, and wide moves are unaffected.
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @param attacker  The battler trying to execute a move
+ * @param defender  The move's intended target
+ * @param move      The move to be executed
+ * @return TRUE if Psychic Terrain is active AND the move should be blocked;
+ * FALSE otherwise
+ */
+BOOL Move_BlockedByPsychicTerrain(BattleSystem *battleSys, BattleContext *battleCtx, int attacker, int defender, int move);
+
+/**
  * @brief Update buffers for the attacking Pokemon related to Last Resort.
  *
  * @param battleSys
