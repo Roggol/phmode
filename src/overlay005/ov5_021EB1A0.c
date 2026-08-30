@@ -1007,7 +1007,9 @@ static void ov5_021EBEFC(MapObject *mapObj, Billboard *param1, UnkStruct_ov5_021
     }
 
     if (ov5_021ECD38(mapObj) == 0) {
-        Billboard_AdvanceAnim(param1, (FX32_ONE));
+        // Run steps now cross a tile in 2 frames instead of 4, so advance the
+        // 4-unit run cycle twice as fast to keep a full stride per tile (else it glides).
+        Billboard_AdvanceAnim(param1, ((FX32_ONE) * 2));
     }
 }
 
