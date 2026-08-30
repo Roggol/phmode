@@ -3,6 +3,8 @@
 #include <nitro.h>
 #include <string.h>
 
+#include "constants/pokemon.h"
+
 #include "generated/genders.h"
 #include "generated/items.h"
 
@@ -47,6 +49,9 @@ static void PrintStaticWindows(PokemonSummaryScreen *summaryScreen);
 static void PrintMoveNameAndPP(PokemonSummaryScreen *summaryScreen, u32 moveIndex);
 static void DrawInfoPageWindows(PokemonSummaryScreen *summaryScreen);
 static void DrawMemoPageWindows(PokemonSummaryScreen *summaryScreen);
+static TextColor SkillStatNatureColor(u8 nature, u8 statType);
+static void PrintSkillStat(PokemonSummaryScreen *summaryScreen, u32 windowIndex, u32 templateID, u16 value, TextColor color);
+static void DrawSkillsPageStats(PokemonSummaryScreen *summaryScreen);
 static void DrawSkillsPageWindows(PokemonSummaryScreen *summaryScreen);
 static void DrawConditionPageWindows(PokemonSummaryScreen *summaryScreen);
 static void DrawBattleMovesPageWindows(PokemonSummaryScreen *summaryScreen);
@@ -1142,6 +1147,66 @@ static void DrawMemoPageWindows(PokemonSummaryScreen *summaryScreen)
     Window_ScheduleCopyToVRAM(&summaryScreen->extraWindows[SUMMARY_WINDOW_MEMO]);
 }
 
+static void PrintSkillStat(PokemonSummaryScreen *summaryScreen, u32 windowIndex, u32 templateID, u16 value, TextColor color)
+{
+    SetAndFormatNumberBuf(summaryScreen, templateID, value, 3, PADDING_MODE_NONE);
+    PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[windowIndex], color, ALIGN_RIGHT);
+}
+
+// Colours a stat by how the nature modifies it: red if the nature raises it, blue if it lowers it, black otherwise.
+static TextColor SkillStatNatureColor(u8 nature, u8 statType)
+{
+    s8 affinity = Pokemon_GetStatAffinityOf(nature, statType);
+
+    if (affinity > 0) {
+        return SUMMARY_TEXT_RED;
+    }
+
+    if (affinity < 0) {
+        return SUMMARY_TEXT_BLUE;
+    }
+
+    return SUMMARY_TEXT_BLACK;
+}
+
+// Draws the six stat values on the skills page. While L is held the effort values are shown in blue,
+// while R is held the individual values are shown in red; otherwise the final calculated stats are shown.
+static void DrawSkillsPageStats(PokemonSummaryScreen *summaryScreen)
+{
+    const PokemonSummaryMonData *monData = &summaryScreen->monData;
+
+    if (summaryScreen->statsDisplayMode == SUMMARY_STATS_DISPLAY_EVS) {
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_HP, PokemonSummary_Text_TemplateCurrentHp, monData->hpEV, SUMMARY_TEXT_BLUE);
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_ATTACK, PokemonSummary_Text_TemplateAttack, monData->atkEV, SUMMARY_TEXT_BLUE);
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_DEFENSE, PokemonSummary_Text_TemplateDefense, monData->defEV, SUMMARY_TEXT_BLUE);
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_SP_ATTACK, PokemonSummary_Text_TemplateSpAttack, monData->spAtkEV, SUMMARY_TEXT_BLUE);
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_SP_DEFENSE, PokemonSummary_Text_TemplateSpDefense, monData->spDefEV, SUMMARY_TEXT_BLUE);
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_SPEED, PokemonSummary_Text_TemplateSpeed, monData->speedEV, SUMMARY_TEXT_BLUE);
+        return;
+    }
+
+    if (summaryScreen->statsDisplayMode == SUMMARY_STATS_DISPLAY_IVS) {
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_HP, PokemonSummary_Text_TemplateCurrentHp, monData->hpIV, SUMMARY_TEXT_RED);
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_ATTACK, PokemonSummary_Text_TemplateAttack, monData->atkIV, SUMMARY_TEXT_RED);
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_DEFENSE, PokemonSummary_Text_TemplateDefense, monData->defIV, SUMMARY_TEXT_RED);
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_SP_ATTACK, PokemonSummary_Text_TemplateSpAttack, monData->spAtkIV, SUMMARY_TEXT_RED);
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_SP_DEFENSE, PokemonSummary_Text_TemplateSpDefense, monData->spDefIV, SUMMARY_TEXT_RED);
+        PrintSkillStat(summaryScreen, SUMMARY_WINDOW_SPEED, PokemonSummary_Text_TemplateSpeed, monData->speedIV, SUMMARY_TEXT_RED);
+        return;
+    }
+
+    u8 nature = monData->nature;
+    u32 hpWindowWidth = Window_GetWidth(&summaryScreen->extraWindows[SUMMARY_WINDOW_HP]) * 8;
+
+    // HP is never affected by nature, so it stays the default colour.
+    PrintCurrentAndMaxInfo(summaryScreen, 0, PokemonSummary_Text_Slash, PokemonSummary_Text_TemplateCurrentHp, PokemonSummary_Text_TemplateMaxHp, monData->curHP, monData->maxHP, 3, hpWindowWidth / 2, 0);
+    PrintSkillStat(summaryScreen, SUMMARY_WINDOW_ATTACK, PokemonSummary_Text_TemplateAttack, monData->attack, SkillStatNatureColor(nature, STAT_ATTACK));
+    PrintSkillStat(summaryScreen, SUMMARY_WINDOW_DEFENSE, PokemonSummary_Text_TemplateDefense, monData->defense, SkillStatNatureColor(nature, STAT_DEFENSE));
+    PrintSkillStat(summaryScreen, SUMMARY_WINDOW_SP_ATTACK, PokemonSummary_Text_TemplateSpAttack, monData->spAttack, SkillStatNatureColor(nature, STAT_SPECIAL_ATTACK));
+    PrintSkillStat(summaryScreen, SUMMARY_WINDOW_SP_DEFENSE, PokemonSummary_Text_TemplateSpDefense, monData->spDefense, SkillStatNatureColor(nature, STAT_SPECIAL_DEFENSE));
+    PrintSkillStat(summaryScreen, SUMMARY_WINDOW_SPEED, PokemonSummary_Text_TemplateSpeed, monData->speed, SkillStatNatureColor(nature, STAT_SPEED));
+}
+
 static void DrawSkillsPageWindows(PokemonSummaryScreen *summaryScreen)
 {
     Window_ScheduleCopyToVRAM(&summaryScreen->staticWindows[SUMMARY_WINDOW_LABEL_SKILLS]);
@@ -1162,19 +1227,7 @@ static void DrawSkillsPageWindows(PokemonSummaryScreen *summaryScreen)
     Window_FillTilemap(&summaryScreen->extraWindows[SUMMARY_WINDOW_ABILITY], 0);
     Window_FillTilemap(&summaryScreen->extraWindows[SUMMARY_WINDOW_ABILITY_DESCRIPTION], 0);
 
-    u32 hpWindowWidth = Window_GetWidth(&summaryScreen->extraWindows[SUMMARY_WINDOW_HP]) * 8;
-
-    PrintCurrentAndMaxInfo(summaryScreen, 0, PokemonSummary_Text_Slash, PokemonSummary_Text_TemplateCurrentHp, PokemonSummary_Text_TemplateMaxHp, summaryScreen->monData.curHP, summaryScreen->monData.maxHP, 3, hpWindowWidth / 2, 0);
-    SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateAttack, summaryScreen->monData.attack, 3, PADDING_MODE_NONE);
-    PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_ATTACK], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
-    SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateDefense, summaryScreen->monData.defense, 3, PADDING_MODE_NONE);
-    PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_DEFENSE], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
-    SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpAttack, summaryScreen->monData.spAttack, 3, PADDING_MODE_NONE);
-    PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_ATTACK], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
-    SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpDefense, summaryScreen->monData.spDefense, 3, PADDING_MODE_NONE);
-    PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_DEFENSE], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
-    SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpeed, summaryScreen->monData.speed, 3, PADDING_MODE_NONE);
-    PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SPEED], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+    DrawSkillsPageStats(summaryScreen);
 
     StringTemplate_SetAbilityName(summaryScreen->strFormatter, 0, summaryScreen->monData.ability);
     String *buf = MessageLoader_GetNewString(summaryScreen->msgLoader, PokemonSummary_Text_TemplateAbility);

@@ -50,6 +50,12 @@ enum SummaryPage {
     SUMMARY_PAGE_NONE = 0xFF
 };
 
+enum SummaryStatsDisplay {
+    SUMMARY_STATS_DISPLAY_BASE = 0, // final calculated stats (default)
+    SUMMARY_STATS_DISPLAY_EVS,      // effort values, while L is held
+    SUMMARY_STATS_DISPLAY_IVS,      // individual values, while R is held
+};
+
 enum SummaryDataType {
     SUMMARY_DATA_MON = 0,
     SUMMARY_DATA_PARTY_MON,
@@ -375,6 +381,20 @@ typedef struct PokemonSummaryMonData {
     u8 ability;
     u8 nature;
 
+    // Effort and individual values, shown on the skills page while L (EVs) or R (IVs) is held.
+    u8 hpEV;
+    u8 atkEV;
+    u8 defEV;
+    u8 spAtkEV;
+    u8 spDefEV;
+    u8 speedEV;
+    u8 hpIV;
+    u8 atkIV;
+    u8 defIV;
+    u8 spAtkIV;
+    u8 spDefIV;
+    u8 speedIV;
+
     u16 moves[LEARNED_MOVES_MAX];
     u8 curPP[LEARNED_MOVES_MAX];
     u8 maxPP[LEARNED_MOVES_MAX];
@@ -438,6 +458,7 @@ typedef struct PokemonSummaryScreen {
     u8 cursor : 4;
     u8 cursorTmp : 4;
     u8 pageState;
+    u8 statsDisplayMode; // enum SummaryStatsDisplay; which values the skills page shows
 
     u8 subscreenType : 4;
     u8 subscreenExit : 4;

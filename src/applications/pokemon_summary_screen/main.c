@@ -584,6 +584,21 @@ static int HandleInput_Main(PokemonSummaryScreen *summaryScreen)
         return SUMMARY_STATE_TRANSITION_OUT;
     }
 
+    if (summaryScreen->page == SUMMARY_PAGE_SKILLS) {
+        u8 statsMode = SUMMARY_STATS_DISPLAY_BASE;
+
+        if (JOY_HELD(PAD_BUTTON_L)) {
+            statsMode = SUMMARY_STATS_DISPLAY_EVS;
+        } else if (JOY_HELD(PAD_BUTTON_R)) {
+            statsMode = SUMMARY_STATS_DISPLAY_IVS;
+        }
+
+        if (statsMode != summaryScreen->statsDisplayMode) {
+            summaryScreen->statsDisplayMode = statsMode;
+            PokemonSummaryScreen_DrawExtraWindows(summaryScreen);
+        }
+    }
+
     if (JOY_REPEAT(PAD_KEY_LEFT)) {
         ChangePage(summaryScreen, -1);
         return SUMMARY_STATE_HANDLE_INPUT;
@@ -1107,6 +1122,19 @@ static void SetMonDataFromMon(PokemonSummaryScreen *summaryScreen, Pokemon *mon,
     monData->ability = Pokemon_GetValue(mon, MON_DATA_ABILITY, NULL);
     monData->nature = Pokemon_GetNature(mon);
 
+    monData->hpEV = Pokemon_GetValue(mon, MON_DATA_HP_EV, NULL);
+    monData->atkEV = Pokemon_GetValue(mon, MON_DATA_ATK_EV, NULL);
+    monData->defEV = Pokemon_GetValue(mon, MON_DATA_DEF_EV, NULL);
+    monData->spAtkEV = Pokemon_GetValue(mon, MON_DATA_SPATK_EV, NULL);
+    monData->spDefEV = Pokemon_GetValue(mon, MON_DATA_SPDEF_EV, NULL);
+    monData->speedEV = Pokemon_GetValue(mon, MON_DATA_SPEED_EV, NULL);
+    monData->hpIV = Pokemon_GetValue(mon, MON_DATA_HP_IV, NULL);
+    monData->atkIV = Pokemon_GetValue(mon, MON_DATA_ATK_IV, NULL);
+    monData->defIV = Pokemon_GetValue(mon, MON_DATA_DEF_IV, NULL);
+    monData->spAtkIV = Pokemon_GetValue(mon, MON_DATA_SPATK_IV, NULL);
+    monData->spDefIV = Pokemon_GetValue(mon, MON_DATA_SPDEF_IV, NULL);
+    monData->speedIV = Pokemon_GetValue(mon, MON_DATA_SPEED_IV, NULL);
+
     u16 i;
     u8 maxPP;
     for (i = 0; i < LEARNED_MOVES_MAX; i++) {
@@ -1291,6 +1319,7 @@ static void SetupPageFromSubscreenButton(PokemonSummaryScreen *summaryScreen, u8
 
     PokemonSummaryScreen_RemoveExtraWindows(summaryScreen);
     summaryScreen->page = page;
+    summaryScreen->statsDisplayMode = SUMMARY_STATS_DISPLAY_BASE;
     PokemonSummaryScreen_UpdateAButtonSprite(summaryScreen, NULL);
 
     PokemonSummaryScreen_UpdatePageTabSprites(summaryScreen);
