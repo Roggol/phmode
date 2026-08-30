@@ -28,7 +28,7 @@ void Options_Init(Options *options)
 
     options->textSpeed = OPTIONS_TEXT_SPEED_NORMAL;
     options->soundMode = OPTIONS_SOUND_MODE_STEREO;
-    options->battleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
+    options->battleStyle = OPTIONS_BATTLE_STYLE_SET;
     options->battleScene = OPTIONS_BATTLE_SCENE_ON;
     options->buttonMode = OPTIONS_BUTTON_MODE_NORMAL;
     options->frame = OPTIONS_FRAME_1;

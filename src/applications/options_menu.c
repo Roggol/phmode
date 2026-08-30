@@ -887,7 +887,8 @@ static void ProcessMainInput(OptionsMenuData *menuData)
 {
     OptionsMenuEntry *entry = &menuData->entries.asArray[menuData->cursor];
 
-    if (menuData->cursor != ENTRY_CLOSE) {
+    // Battle style is locked to "Set"; ignore left/right on that row.
+    if (menuData->cursor != ENTRY_CLOSE && menuData->cursor != ENTRY_BATTLE_STYLE) {
         if (JOY_NEW(PAD_KEY_RIGHT)) {
             entry->selected = (entry->selected + 1) % entry->numChoices;
             PrintEntryChoices(menuData, menuData->cursor);
