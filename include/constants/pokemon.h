@@ -22,6 +22,10 @@
 #define MAX_POKEMON_LEVEL    100
 #define EGG_POKEMON_LEVEL    1
 
+// Starting value of VAR_HARD_LEVEL_CAP on a new game. Scripts raise it as the
+// player earns badges; it is never 0 (a stored 0 is treated as this value).
+#define DEFAULT_HARD_LEVEL_CAP 14
+
 #define EVOLVE_FRIENDSHIP_THRESHOLD 220
 
 #define BASE_FRIENDSHIP_VALUE 70

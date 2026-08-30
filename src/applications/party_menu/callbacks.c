@@ -752,7 +752,7 @@ static enum PartyMenuState PartyMenuCB_LevelUp(PartyMenuApplication *application
     case LEVELUP_STATE_CHECK_LEARNSET:
         mon = Party_GetPokemonBySlotIndex(application->partyMenu->party, application->currPartySlot);
 
-        switch (Pokemon_LevelUpMove(mon, &application->partyMenu->levelUpMoveIndex, &application->partyMenu->learnedMove)) {
+        switch (Pokemon_LevelUpMoveUpTo(mon, &application->partyMenu->levelUpMoveIndex, &application->partyMenu->learnedMove)) {
         case MOVE_NONE:
             application->callbackState = LEVELUP_STATE_CHECK_EVOLUTION;
             break;

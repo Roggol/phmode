@@ -47,6 +47,7 @@
 #include "sprite.h"
 #include "sprite_system.h"
 #include "string_gf.h"
+#include "system_vars.h"
 #include "trainer_data.h"
 #include "trainer_info.h"
 #include "unk_02017038.h"
@@ -2329,6 +2330,45 @@ u32 Pokemon_GetSpeciesBaseExpAt(int monSpecies, int monLevel)
     return Pokemon_GetExpRateBaseExpAt(SpeciesData_GetSpeciesValue(monSpecies, SPECIES_DATA_EXP_RATE), monLevel);
 }
 
+u16 Pokemon_GetHardLevelCap(void)
+{
+    u16 levelCap = SystemVars_GetHardLevelCap(SaveData_GetVarsFlags(SaveData_Ptr()));
+
+    // The cap is never off: a new game seeds VAR_HARD_LEVEL_CAP with
+    // DEFAULT_HARD_LEVEL_CAP and scripts only ever raise it, but treat a stored 0
+    // (old save, or a save made before this feature existed) as the default too.
+    if (levelCap == 0) {
+        levelCap = DEFAULT_HARD_LEVEL_CAP;
+    }
+
+    return levelCap;
+}
+
+u32 Pokemon_ClampExpToHardLevelCap(int monSpecies, u32 exp)
+{
+    u16 levelCap = Pokemon_GetHardLevelCap();
+
+    if (levelCap != 0 && levelCap < MAX_POKEMON_LEVEL) {
+        u32 capExp = Pokemon_GetSpeciesBaseExpAt(monSpecies, levelCap);
+        if (exp > capExp) {
+            exp = capExp;
+        }
+    }
+
+    return exp;
+}
+
+BOOL Pokemon_BelowHardLevelCap(Pokemon *mon)
+{
+    u16 levelCap = Pokemon_GetHardLevelCap();
+
+    if (levelCap == 0 || levelCap >= MAX_POKEMON_LEVEL) {
+        return TRUE;
+    }
+
+    return Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL) < levelCap;
+}
+
 static void Pokemon_LoadExperienceTableOf(enum ExpRate monExpRate, u32 *monExpTable)
 {
     GF_ASSERT(monExpRate < EXP_RATE_COUNT);
@@ -3959,6 +3999,61 @@ u16 Pokemon_LevelUpMove(Pokemon *mon, int *index, u16 *moveID)
         *moveID = monLevelUpMoves[*index] & 0x1FF;
         (*index)++;
         result = Pokemon_AddMove(mon, *moveID);
+    }
+
+    Heap_Free(monLevelUpMoves);
+    return result;
+}
+
+u16 Pokemon_LevelUpMoveUpTo(Pokemon *mon, int *index, u16 *moveID)
+{
+    int i;
+    u16 result = MOVE_NONE;
+    u16 *monLevelUpMoves = Heap_Alloc(HEAP_ID_SYSTEM, sizeof(SpeciesLearnset));
+    u16 monSpecies = Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL);
+    int monForm = Pokemon_GetValue(mon, MON_DATA_FORM, NULL);
+    u8 monLevel = Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
+    u16 knownMoves[LEARNED_MOVES_MAX];
+
+    for (i = 0; i < LEARNED_MOVES_MAX; i++) {
+        knownMoves[i] = Pokemon_GetValue(mon, MON_DATA_MOVE1 + i, NULL);
+    }
+
+    Pokemon_LoadLevelUpMovesOf(monSpecies, monForm, monLevelUpMoves);
+
+    // Scan forward from *index for the next level-up move the Pokemon can learn by
+    // its current level but does not already know. One call resolves one move; the
+    // caller loops until this returns MOVE_NONE. Used by the Rare Candy multi-level
+    // jump so the player is offered every move across all the skipped levels at
+    // once. Like the Move Reminder, this scans the whole learnset (never breaks
+    // early) so out-of-order learnset entries are still handled, and it works off
+    // the Pokemon's known moves rather than a remembered "from" level.
+    while (monLevelUpMoves[*index] != LEARNSET_SENTINEL_ENTRY) {
+        u16 entry = monLevelUpMoves[*index];
+        u8 entryLevel = (entry & 0xFE00) >> 9;
+        u16 entryMove = entry & 0x1FF;
+        BOOL alreadyKnown = FALSE;
+
+        (*index)++;
+
+        if (entryLevel > monLevel) {
+            continue;
+        }
+
+        for (i = 0; i < LEARNED_MOVES_MAX; i++) {
+            if (knownMoves[i] == entryMove) {
+                alreadyKnown = TRUE;
+                break;
+            }
+        }
+
+        if (alreadyKnown) {
+            continue;
+        }
+
+        *moveID = entryMove;
+        result = Pokemon_AddMove(mon, *moveID);
+        break;
     }
 
     Heap_Free(monLevelUpMoves);

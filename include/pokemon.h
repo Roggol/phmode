@@ -284,6 +284,40 @@ u32 Pokemon_GetCurrentLevelBaseExp(Pokemon *mon);
 u32 Pokemon_GetSpeciesBaseExpAt(int monSpecies, int monLevel);
 
 /**
+ * @brief Returns the current hard level cap stored in VAR_HARD_LEVEL_CAP.
+ *
+ * The cap is always active: a new game seeds the variable with
+ * DEFAULT_HARD_LEVEL_CAP and scripts raise it as the player earns badges
+ * (`SetVar VAR_HARD_LEVEL_CAP, <level>`). A stored 0 (a save predating the
+ * feature) is reported as DEFAULT_HARD_LEVEL_CAP.
+ *
+ * @return The cap level (never 0). A value of MAX_POKEMON_LEVEL or higher means
+ * "no effective cap" to the enforcement helpers.
+ */
+u16 Pokemon_GetHardLevelCap(void);
+
+/**
+ * @brief Clamps an experience total so that it never places a Pokemon of the
+ * given species above the hard level cap (see Pokemon_GetHardLevelCap).
+ *
+ * @param monSpecies
+ * @param exp The prospective experience total.
+ * @return The experience total, reduced to the cap level's base experience if it
+ * would otherwise exceed it.
+ */
+u32 Pokemon_ClampExpToHardLevelCap(int monSpecies, u32 exp);
+
+/**
+ * @brief Checks whether the given Pokemon is below the hard level cap (see
+ * Pokemon_GetHardLevelCap), and may therefore still gain levels.
+ *
+ * @param mon
+ * @return TRUE if the cap is at MAX_POKEMON_LEVEL or higher, or the Pokemon's
+ * level is under the cap.
+ */
+BOOL Pokemon_BelowHardLevelCap(Pokemon *mon);
+
+/**
  * @copybrief GetMonSpeciesLevel()
  *
  * @param mon
@@ -588,6 +622,24 @@ void Pokemon_ResetMoveSlot(Pokemon *mon, u16 moveID, u8 moveSlot);
 void Pokemon_SetMoveSlot(Pokemon *mon, u16 moveID, u8 moveSlot);
 
 u16 Pokemon_LevelUpMove(Pokemon *mon, int *index, u16 *moveID);
+
+/**
+ * @brief Like Pokemon_LevelUpMove, but resolves the next level-up move the
+ * Pokemon can learn by its current level and does not already know, rather than
+ * only moves learned at its exact current level.
+ *
+ * Call repeatedly with the same monotonically-advancing @p index until it
+ * returns MOVE_NONE. Intended for the Rare Candy multi-level jump, where several
+ * levels are gained at once and the player should be offered every move that was
+ * skipped. It reads the Pokemon's known moves, so it needs no "from" level.
+ *
+ * @param mon
+ * @param index   Learnset cursor; initialise to 0 and reuse across calls.
+ * @param moveID  Out param: the move that was offered/learned.
+ * @return MOVE_NONE, LEARNSET_ALL_SLOTS_FILLED, or the learned move ID — same
+ * contract as Pokemon_LevelUpMove (a move already known is skipped internally).
+ */
+u16 Pokemon_LevelUpMoveUpTo(Pokemon *mon, int *index, u16 *moveID);
 
 /**
  * @brief Swaps the places of two moves on a Pokemon

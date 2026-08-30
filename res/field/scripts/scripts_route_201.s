@@ -37,6 +37,7 @@ Route201_SetCounterpartGraphicsLucas:
 Route201_CoordEvent_ChooseStarterScene:
     LockAll
     ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalNoticePlayer
+    SetVar VAR_HARD_LEVEL_CAP, 14
     WaitMovement
     Message Route201_Text_TooSlow
     CloseMessage

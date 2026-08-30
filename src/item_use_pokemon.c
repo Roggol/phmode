@@ -289,8 +289,18 @@ u8 Pokemon_ApplyItemEffects(Pokemon *mon, u16 itemId, u16 moveSlot, u16 location
     vApplyLevel = Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
 
     if (Item_Get(item, ITEM_PARAM_LEVEL_UP)) {
-        if (vApplyLevel < MAX_POKEMON_LEVEL) {
-            Pokemon_IncreaseValue(mon, MON_DATA_EXPERIENCE, Pokemon_GetExpToNextLevel(mon));
+        if (vApplyLevel < MAX_POKEMON_LEVEL && Pokemon_BelowHardLevelCap(mon)) {
+            u16 levelCap = Pokemon_GetHardLevelCap();
+
+            if (levelCap != 0 && levelCap < MAX_POKEMON_LEVEL && levelCap > vApplyLevel) {
+                // Rare Candy jumps straight to the hard level cap in one use; the
+                // party menu then walks the skipped levels' learnsets.
+                u32 capExp = Pokemon_GetSpeciesBaseExpAt(Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL), levelCap);
+                Pokemon_IncreaseValue(mon, MON_DATA_EXPERIENCE, capExp - Pokemon_GetValue(mon, MON_DATA_EXPERIENCE, NULL));
+            } else {
+                Pokemon_IncreaseValue(mon, MON_DATA_EXPERIENCE, Pokemon_GetExpToNextLevel(mon));
+            }
+
             Pokemon_CalcLevelAndStats(mon);
 
             if (vApplyCurrentHP == 0) {

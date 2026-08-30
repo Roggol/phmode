@@ -9884,9 +9884,24 @@ static void BattleScript_GetExpTask(SysTask *task, void *inData)
                 msg.id = BattleStrings_Text_PokemonGainedABoostedExpPoints; // "{0} gained a boosted {1} Exp. Points!"
             }
 
-            u32 newExp = Pokemon_GetValue(mon, MON_DATA_EXPERIENCE, NULL);
+            u32 baseExp = Pokemon_GetValue(mon, MON_DATA_EXPERIENCE, NULL);
+            u32 newExp = baseExp;
             data->tmpData[GET_EXP_NEW_EXP] = newExp - Pokemon_GetCurrentLevelBaseExp(mon);
             newExp += totalExp;
+
+            // Enforce the hard level cap (VAR_HARD_LEVEL_CAP): a mon may reach the
+            // cap but never gain Exp. Points past it. If the cap was lowered below
+            // the mon's current level, leave its Exp untouched rather than rewind
+            // it. Skipped for link battles so the two consoles cannot desync on a
+            // cap that only one player's save has set.
+            if ((battleType & BATTLE_TYPE_LINK) == FALSE) {
+                newExp = Pokemon_ClampExpToHardLevelCap(Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL), newExp);
+                totalExp = newExp > baseExp ? newExp - baseExp : 0;
+
+                if (totalExp == 0) {
+                    newExp = baseExp;
+                }
+            }
 
             if (slot == data->battleCtx->selectedPartySlot[expBattler]) {
                 data->battleCtx->battleMons[expBattler].exp = newExp;
@@ -10341,8 +10356,16 @@ static void BattleScript_CalcEffortValues(Party *party, int slot, int species, i
     u16 item;
     int itemEffect;
     int itemPower;
-    SpeciesData *personal = SpeciesData_FromMonForm(species, form, HEAP_ID_BATTLE);
-    Pokemon *mon = Party_GetPokemonBySlotIndex(party, slot);
+    SpeciesData *personal;
+    Pokemon *mon;
+
+    // EV gain from battles is disabled in this romhack: defeating a foe yields no
+    // effort values, regardless of the foe's species, the participant's held item,
+    // or Pokerus. Remove this early return to restore vanilla EV payouts.
+    return;
+
+    personal = SpeciesData_FromMonForm(species, form, HEAP_ID_BATTLE);
+    mon = Party_GetPokemonBySlotIndex(party, slot);
     item = Pokemon_GetValue(mon, MON_DATA_HELD_ITEM, NULL);
     itemEffect = Item_LoadParam(item, ITEM_PARAM_HOLD_EFFECT, HEAP_ID_BATTLE);
     itemPower = Item_LoadParam(item, ITEM_PARAM_EFFECT_PARAM, HEAP_ID_BATTLE);

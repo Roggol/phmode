@@ -116,6 +116,15 @@
     {
       "id": "TwinleafTown_Text_RivalsHouse",
       "en_US": "{STRVAR_1 3, 0, 0}’s House"
+    },
+    {
+      "id": "TwinleafTown_Text_GuitaristRareCandyGift",
+      "en_US": [
+        "Oh, hey, {STRVAR_1 3, 0, 0}!\r",
+        "A roadie gave me this, but sweets\n",
+        "aren’t really my thing.\r",
+        "You take it. Your Pokémon’ll love it.\r"
+      ]
     }
   ]
 }

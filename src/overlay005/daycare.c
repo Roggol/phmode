@@ -182,6 +182,11 @@ static int Daycare_MoveToPartyFromDaycareMon(Party *party, DaycareMon *daycareMo
     if (Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL) != MAX_POKEMON_LEVEL) {
         experience = Pokemon_GetValue(mon, MON_DATA_EXPERIENCE, NULL);
         experience += DaycareMon_GetSteps(daycareMon);
+
+        // Respect the hard level cap (VAR_HARD_LEVEL_CAP) so the Day Care cannot
+        // be used to grind a Pokemon past it.
+        experience = Pokemon_ClampExpToHardLevelCap(species, experience);
+
         Pokemon_SetValue(mon, MON_DATA_EXPERIENCE, (u8 *)&experience);
         ov5_021E63E0(mon);
     }
@@ -220,6 +225,10 @@ int BoxPokemon_GiveExperience(BoxPokemon *boxMon, u32 givenExp)
 
     exp = BoxPokemon_GetValue(boxMonRef, MON_DATA_EXPERIENCE, NULL);
     exp += givenExp;
+
+    // Respect the hard level cap (VAR_HARD_LEVEL_CAP) so the Day Care cannot be
+    // used to grind a Pokemon past it.
+    exp = Pokemon_ClampExpToHardLevelCap(BoxPokemon_GetValue(boxMonRef, MON_DATA_SPECIES, NULL), exp);
 
     BoxPokemon_SetValue(boxMonRef, MON_DATA_EXPERIENCE, (u8 *)&exp);
     level = BoxPokemon_GetLevel(boxMonRef);
