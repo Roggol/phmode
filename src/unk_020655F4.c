@@ -517,25 +517,25 @@ static BOOL MovementAction_WalkSlowEast_Step0(MapObject *mapObj)
 
 static BOOL MovementAction_WalkNormalNorth_Step0(MapObject *mapObj)
 {
-    MovementAction_InitWalk(mapObj, DIR_NORTH, FX32_CONST(2), 8, MAP_OBJ_UNK_A0_03);
+    MovementAction_InitWalk(mapObj, DIR_NORTH, FX32_CONST(4), 4, MAP_OBJ_UNK_A0_03);
     return TRUE;
 }
 
 static BOOL MovementAction_WalkNormalSouth_Step0(MapObject *mapObj)
 {
-    MovementAction_InitWalk(mapObj, DIR_SOUTH, FX32_CONST(2), 8, MAP_OBJ_UNK_A0_03);
+    MovementAction_InitWalk(mapObj, DIR_SOUTH, FX32_CONST(4), 4, MAP_OBJ_UNK_A0_03);
     return TRUE;
 }
 
 static BOOL MovementAction_WalkNormalWest_Step0(MapObject *mapObj)
 {
-    MovementAction_InitWalk(mapObj, DIR_WEST, FX32_CONST(2), 8, MAP_OBJ_UNK_A0_03);
+    MovementAction_InitWalk(mapObj, DIR_WEST, FX32_CONST(4), 4, MAP_OBJ_UNK_A0_03);
     return TRUE;
 }
 
 static BOOL MovementAction_WalkNormalEast_Step0(MapObject *mapObj)
 {
-    MovementAction_InitWalk(mapObj, DIR_EAST, FX32_CONST(2), 8, MAP_OBJ_UNK_A0_03);
+    MovementAction_InitWalk(mapObj, DIR_EAST, FX32_CONST(4), 4, MAP_OBJ_UNK_A0_03);
     return TRUE;
 }
 
@@ -613,25 +613,25 @@ static BOOL MovementAction_WalkFastestEast_Step0(MapObject *mapObj)
 
 static BOOL MovementAction_RunNorth_Step0(MapObject *mapObj)
 {
-    MovementAction_InitWalk(mapObj, DIR_NORTH, FX32_CONST(4), 4, MAP_OBJ_UNK_A0_09);
+    MovementAction_InitWalk(mapObj, DIR_NORTH, FX32_CONST(8), 2, MAP_OBJ_UNK_A0_09);
     return TRUE;
 }
 
 static BOOL MovementAction_RunSouth_Step0(MapObject *mapObj)
 {
-    MovementAction_InitWalk(mapObj, DIR_SOUTH, FX32_CONST(4), 4, MAP_OBJ_UNK_A0_09);
+    MovementAction_InitWalk(mapObj, DIR_SOUTH, FX32_CONST(8), 2, MAP_OBJ_UNK_A0_09);
     return TRUE;
 }
 
 static BOOL MovementAction_RunWest_Step0(MapObject *mapObj)
 {
-    MovementAction_InitWalk(mapObj, DIR_WEST, FX32_CONST(4), 4, MAP_OBJ_UNK_A0_09);
+    MovementAction_InitWalk(mapObj, DIR_WEST, FX32_CONST(8), 2, MAP_OBJ_UNK_A0_09);
     return TRUE;
 }
 
 static BOOL MovementAction_RunEast_Step0(MapObject *mapObj)
 {
-    MovementAction_InitWalk(mapObj, DIR_EAST, FX32_CONST(4), 4, MAP_OBJ_UNK_A0_09);
+    MovementAction_InitWalk(mapObj, DIR_EAST, FX32_CONST(8), 2, MAP_OBJ_UNK_A0_09);
     return TRUE;
 }
 

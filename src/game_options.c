@@ -69,11 +69,11 @@ u8 Options_TextFrameDelay(const Options *options)
     int speed = Options_TextSpeed(options);
 
     if (speed == OPTIONS_TEXT_SPEED_SLOW) {
-        return TEXT_SPEED_SLOW;
-    } else if (speed == OPTIONS_TEXT_SPEED_NORMAL) {
         return TEXT_SPEED_NORMAL;
+    } else if (speed == OPTIONS_TEXT_SPEED_NORMAL) {
+        return TEXT_SPEED_QUICK;
     } else {
-        return TEXT_SPEED_FAST;
+        return TEXT_SPEED_INSTANT;
     }
 }
 
