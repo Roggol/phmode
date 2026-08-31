@@ -6,6 +6,7 @@
 /metroskrew-*.7z
 
 # Subproject folders
+/subprojects/SDATTool/
 /subprojects/libvct-*/
 /subprojects/NitroDWC-*/
 /subprojects/NitroSDK-*/
