@@ -68,12 +68,16 @@ u8 Options_TextFrameDelay(const Options *options)
 {
     int speed = Options_TextSpeed(options);
 
+    // Do not return TEXT_SPEED_INSTANT (0) here: that makes Text_AddPrinter render
+    // synchronously and return MAX_TEXT_PRINTERS instead of a printer ID, which
+    // callers that store and later query the ID (e.g. the options menu) then index
+    // out of bounds. TEXT_SPEED_FAST is the fastest async speed.
     if (speed == OPTIONS_TEXT_SPEED_SLOW) {
         return TEXT_SPEED_NORMAL;
     } else if (speed == OPTIONS_TEXT_SPEED_NORMAL) {
         return TEXT_SPEED_QUICK;
     } else {
-        return TEXT_SPEED_INSTANT;
+        return TEXT_SPEED_FAST;
     }
 }
 

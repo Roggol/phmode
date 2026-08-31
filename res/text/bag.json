@@ -511,6 +511,13 @@
     {
       "id": "Bag_Text_CannotUseNoFishing",
       "en_US": "There’s nothing to be caught here..."
+    },
+    {
+      "id": "Bag_Text_PphmHealedParty",
+      "en_US": [
+        "Your Pokémon were restored\n",
+        "to full health!"
+      ]
     }
   ]
 }

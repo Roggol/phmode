@@ -121,6 +121,7 @@ metang_generators = {
 }
 
 c_consts_generators = []
+c_consts_by_name = {}
 py_consts_generators = []
 
 foreach gen_key : metang_generators.keys()
@@ -130,7 +131,7 @@ foreach gen_key : metang_generators.keys()
     gen_args = metang_generators.get(gen_key)
     gen_extra_args = gen_args.get('extra', [])
 
-    c_consts_generators += custom_target(gen_h,
+    gen_h_target = custom_target(gen_h,
         output: gen_h,
         input: gen_file,
         command: [
@@ -142,6 +143,9 @@ foreach gen_key : metang_generators.keys()
             '@INPUT@',
         ]
     )
+
+    c_consts_generators += gen_h_target
+    c_consts_by_name += { gen_key: gen_h_target }
 
     py_consts_generators += custom_target(gen_py,
         output: gen_py,

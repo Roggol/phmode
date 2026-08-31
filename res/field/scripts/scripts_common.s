@@ -158,6 +158,7 @@ CommonScript_NurseFarewellAfterHeal:
     WaitMovement
     SetPlayerState PLAYER_TRANSITION_WALKING
     ChangePlayerState
+    Call CommonScript_NurseTryGiveFirstVisitGift
     ApplyMovement VAR_0x8007, CommonScript_Movement_NurseBow
     WaitMovement
     Message CommonStrings_Text_PokecenterHopeToSeeYouAgain1
@@ -181,6 +182,30 @@ CommonScript_NurseFarewellAfterHealGoldCard:
     ReleaseAll
     ReturnCommonScript
     End
+
+@ The first time the player has their Pokemon healed, Nurse Joy also hands over the PPHM.
+@ This runs inside common script 0x7D2 (the sub-context), so it must NOT use
+@ Common_GiveItemQuantity*: those expand to a nested CallCommonScript, and there is
+@ only one sub-context slot, so nesting overwrites and leaks the running nurse script
+@ and crashes right after the item is added. The item hand-off is inlined instead.
+CommonScript_NurseTryGiveFirstVisitGift:
+    GoToIfSet FLAG_RECEIVED_PPHM, CommonScript_NurseFirstVisitGiftDone
+    SetVar VAR_0x8004, ITEM_PPHM
+    SetVar VAR_0x8005, 1
+    GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, CommonScript_NurseFirstVisitGiftDone
+    Message CommonStrings_Text_PokecenterFirstVisitGift
+    WaitButton
+    AddItem VAR_0x8004, VAR_0x8005, VAR_RESULT
+    SetFlag FLAG_RECEIVED_PPHM
+    PlayFanfare SEQ_FANFA3_sseq
+    BufferPlayerName 0
+    BufferItemName 1, VAR_0x8004
+    Message CommonStrings_Text_ObtainedKeyItem
+    WaitFanfare
+    WaitButton
+    CloseMessage
+CommonScript_NurseFirstVisitGiftDone:
+    Return
 
 CommonScript_NurseCheckPokerus:
     CheckPartyPokerus VAR_0x8006

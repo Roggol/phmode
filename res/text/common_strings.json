@@ -31,6 +31,13 @@
       "en_US": "We hope to see you again!"
     },
     {
+      "id": "CommonStrings_Text_PokecenterFirstVisitGift",
+      "en_US": [
+        "Oh, and since this is your first\n",
+        "visit, please take this with you."
+      ]
+    },
+    {
       "id": "CommonStrings_Text_PokecenterGreeting_Interrupted",
       "en_US": [
         "Hello, and welcome to\n",

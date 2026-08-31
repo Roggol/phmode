@@ -4,7 +4,10 @@
 #include <nitro.h>
 #include <string.h>
 
+#include "constants/narc.h"
 #include "constants/savedata/vars_flags.h"
+
+#include "generated/text_banks.h"
 
 #include "struct_decls/map_object.h"
 
@@ -35,6 +38,7 @@
 #include "heap.h"
 #include "item.h"
 #include "item_use_functions.h"
+#include "item_use_pokemon.h"
 #include "items.h"
 #include "mail.h"
 #include "map_header.h"
@@ -42,6 +46,7 @@
 #include "map_object.h"
 #include "map_object_move.h"
 #include "map_tile_behavior.h"
+#include "message.h"
 #include "party.h"
 #include "player_avatar.h"
 #include "player_move.h"
@@ -52,6 +57,7 @@
 #include "screen_fade.h"
 #include "script_manager.h"
 #include "sound.h"
+#include "sound_playback.h"
 #include "start_menu.h"
 #include "string_gf.h"
 #include "system.h"
@@ -63,6 +69,7 @@
 #include "unk_0206B9D8.h"
 #include "vars_flags.h"
 
+#include "res/text/bank/bag.h"
 #include "res/text/bank/location_names.h"
 
 typedef struct ItemUseFuncDat {
@@ -96,6 +103,7 @@ static void UseEscapeRopeFromMenu(ItemMenuUseContext *usageContext, const ItemUs
 static void UseAzureFluteFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseVsRecorderFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseGracideaFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
+static void UsePphmFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static BOOL UseBicycleInField(ItemFieldUseContext *usageContext);
 static BOOL UseJournalInField(ItemFieldUseContext *usageContext);
 static BOOL UseOldRodInField(ItemFieldUseContext *usageContext);
@@ -112,6 +120,8 @@ static BOOL UseVsSeekerInField(ItemFieldUseContext *usageContext);
 static BOOL UseAzureFluteInField(ItemFieldUseContext *usageContext);
 static BOOL UseVsRecorderInField(ItemFieldUseContext *usageContext);
 static BOOL UseGracideaInField(ItemFieldUseContext *usageContext);
+static BOOL UsePphmInField(ItemFieldUseContext *usageContext);
+static UnkStruct_02068EFC *Pphm_HealPartyAndPrepareMessage(FieldSystem *fieldSystem);
 static void *sub_02068BEC(void *some_param);
 static void *sub_02068B9C(void *some_param);
 static void *sub_02068708(void *some_param);
@@ -163,6 +173,7 @@ static const ItemUseFuncDat sItemUseFuncs[] = {
     [ITEM_USE_FUNC_AZURE_FLUTE]  = { UseAzureFluteFromMenu,  UseAzureFluteInField,  CanUseAzureFlute  },
     [ITEM_USE_FUNC_VS_RECORDER]  = { UseVsRecorderFromMenu,  UseVsRecorderInField,  NULL              },
     [ITEM_USE_FUNC_GRACIDEA]     = { UseGracideaFromMenu,    UseGracideaInField,    NULL              },
+    [ITEM_USE_FUNC_PPHM]         = { UsePphmFromMenu,        UsePphmInField,        NULL              },
 };
 // clang-format on
 
@@ -1036,6 +1047,45 @@ static BOOL UseGracideaInField(ItemFieldUseContext *usageContext)
 static void *OpenPartyMenuForGracidea(void *fieldSystem)
 {
     return FieldSystem_OpenPartyMenu_SelectForItemUsage(fieldSystem, HEAP_ID_FIELD2, ITEM_GRACIDEA);
+}
+
+// Fully restores every party Pokemon (HP, status and PP) and prepares the
+// "Your Pokemon were restored to full health!" message for the field task.
+static UnkStruct_02068EFC *Pphm_HealPartyAndPrepareMessage(FieldSystem *fieldSystem)
+{
+    MessageLoader *msgLoader;
+    UnkStruct_02068EFC *taskData;
+
+    Party_HealAllMembers(SaveData_GetParty(fieldSystem->saveData));
+    Sound_PlayEffect(SEQ_SE_DP_KAIFUKU_sseq);
+
+    taskData = Heap_Alloc(HEAP_ID_FIELD2, sizeof(UnkStruct_02068EFC));
+    taskData->unk_16 = 0;
+    taskData->unk_10 = String_Init(128, HEAP_ID_FIELD2);
+
+    msgLoader = MessageLoader_Init(MSG_LOADER_LOAD_ON_DEMAND, NARC_INDEX_MSGDATA__PL_MSG, TEXT_BANK_BAG, HEAP_ID_FIELD2);
+    MessageLoader_GetString(msgLoader, Bag_Text_PphmHealedParty, taskData->unk_10);
+    MessageLoader_Free(msgLoader);
+
+    return taskData;
+}
+
+static void UsePphmFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(usageContext->fieldTask);
+    StartMenu *menu = FieldTask_GetEnv(usageContext->fieldTask);
+
+    FieldSystem_StartFieldMap(fieldSystem);
+
+    menu->callback = PrintRegisteredKeyItemUseMessage;
+    menu->taskData = Pphm_HealPartyAndPrepareMessage(fieldSystem);
+    menu->state = START_MENU_STATE_NEW_TASK;
+}
+
+static BOOL UsePphmInField(ItemFieldUseContext *usageContext)
+{
+    FieldSystem_CreateTask(usageContext->fieldSystem, PrintRegisteredKeyItemUseMessage, Pphm_HealPartyAndPrepareMessage(usageContext->fieldSystem));
+    return FALSE;
 }
 
 BOOL sub_02069238(FieldSystem *fieldSystem)

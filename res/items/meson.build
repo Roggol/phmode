@@ -41,11 +41,13 @@ item_data = custom_target('item_data',
         'item_descriptions.json',
     ],
 
+    input: c_consts_by_name['items'],
+
     command: [
         itemproc_exe,
         '-M', '@DEPFILE@',
         '-o', meson.current_build_dir(),
-        meson.global_build_root() / 'generated' / 'items.h', # TODO: replace with proper file() reference
+        '@INPUT@',
         meson.current_source_dir() / 'data',
     ],
 
