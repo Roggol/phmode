@@ -5702,6 +5702,7 @@ static BOOL BtlCmd_EndOfTurnWeatherEffect(BattleSystem *battleSys, BattleContext
             }
         }
 
+        // Snow (formerly Hail) no longer buffets non-Ice types; it only heals Ice Body.
         if (WEATHER_IS_HAIL
             && battleCtx->battleMons[battler].curHP
             && (battleCtx->battleMons[battler].moveEffectsMask & MOVE_EFFECT_NO_WEATHER_DAMAGE) == FALSE) {
@@ -5709,11 +5710,6 @@ static BOOL BtlCmd_EndOfTurnWeatherEffect(BattleSystem *battleSys, BattleContext
                 if (battleCtx->battleMons[battler].curHP < battleCtx->battleMons[battler].maxHP) {
                     battleCtx->hpCalcTemp = BattleSystem_Divide(battleCtx->battleMons[battler].maxHP, 16);
                 }
-            } else if (type1 != TYPE_ICE
-                && type2 != TYPE_ICE
-                && Battler_Ability(battleCtx, battler) != ABILITY_SNOW_CLOAK) {
-                battleCtx->msgMoveTemp = MOVE_HAIL;
-                battleCtx->hpCalcTemp = BattleSystem_Divide(battleCtx->battleMons[battler].maxHP * -1, 16);
             }
         }
 

@@ -1247,7 +1247,7 @@ static void BattleControllerPlayer_CheckFieldConditions(BattleSystem *battleSys,
         case FIELD_COND_CHECK_STATE_HAILING:
             if (battleCtx->fieldConditionsMask & FIELD_CONDITION_HAILING) {
                 if (battleCtx->fieldConditionsMask & FIELD_CONDITION_HAILING_PERM) {
-                    battleCtx->msgBuffer.id = 811; // "Hail continues to fall."
+                    battleCtx->msgBuffer.id = 811; // "Snow continues to fall."
                     battleCtx->msgBuffer.tags = TAG_NONE;
 
                     PrepareSubroutineSequence(battleCtx, subscript_weather_continues);
@@ -1255,7 +1255,7 @@ static void BattleControllerPlayer_CheckFieldConditions(BattleSystem *battleSys,
                     if (--battleCtx->fieldConditions.weatherTurns == 0) {
                         PrepareSubroutineSequence(battleCtx, subscript_hailing_end);
                     } else {
-                        battleCtx->msgBuffer.id = 811; // "Hail continues to fall."
+                        battleCtx->msgBuffer.id = 811; // "Snow continues to fall."
                         battleCtx->msgBuffer.tags = TAG_NONE;
 
                         PrepareSubroutineSequence(battleCtx, subscript_weather_continues);

@@ -6979,6 +6979,12 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
             spDefenseStat = spDefenseStat * 15 / 10;
         }
 
+        // Snow raises the Defense of Ice-type Pokemon by 50%.
+        if ((fieldConditions & FIELD_CONDITION_HAILING)
+            && (defenderParams.type1 == TYPE_ICE || defenderParams.type2 == TYPE_ICE)) {
+            defenseStat = defenseStat * 15 / 10;
+        }
+
         if ((fieldConditions & FIELD_CONDITION_SUNNY)
             && BattleSystem_CountAbility(battleSys, battleCtx, COUNT_ALIVE_BATTLERS_OUR_SIDE, attacker, ABILITY_FLOWER_GIFT)) {
             attackStat = attackStat * 15 / 10;
