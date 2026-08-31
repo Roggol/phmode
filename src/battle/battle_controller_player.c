@@ -563,8 +563,21 @@ static void BattleControllerPlayer_CommandSelectionInput(BattleSystem *battleSys
                 battleCtx->curCommandState[i] = COMMAND_SELECTION_INIT;
             } else if (BattleContext_IOBufferVal(battleCtx, i)) {
                 u32 *data = &battleCtx->ioBuffer[i][0];
-                battleCtx->battlerActions[i][BATTLE_ACTION_TEMP_VALUE] = *data;
-                battleCtx->curCommandState[i] = COMMAND_SELECTION_WAIT;
+                BattleItemUse *selected = (BattleItemUse *)data;
+
+                // Only Poke Balls may be used from the bag in battle; anything the
+                // player would use on their own Pokemon is rejected here.
+                if (selected->category != ITEM_BATTLE_CATEGORY_POKE_BALLS) {
+                    msg.id = 593; // "Items can't be used here."
+                    msg.tags = TAG_NONE;
+                    BattleController_EmitSetAlertMessage(battleSys, i, msg);
+
+                    battleCtx->curCommandState[i] = COMMAND_SELECTION_ALERT_MESSAGE_WAIT;
+                    battleCtx->nextCommandState[i] = COMMAND_SELECTION_INIT;
+                } else {
+                    battleCtx->battlerActions[i][BATTLE_ACTION_TEMP_VALUE] = *data;
+                    battleCtx->curCommandState[i] = COMMAND_SELECTION_WAIT;
+                }
             }
             break;
 
