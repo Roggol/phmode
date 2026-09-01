@@ -42,6 +42,9 @@ DayCareCommon_ManEggWaiting:
 DayCareCommon_TryGiveEgg:
     GetPartyCount VAR_RESULT
     GoToIfNe VAR_RESULT, MAX_PARTY_SIZE, DayCareCommon_GiveEgg
+    @ Party full: still hand the egg over as long as a PC box has room for it.
+    GetPCBoxesFreeSlotCount VAR_RESULT
+    GoToIfNe VAR_RESULT, 0, DayCareCommon_GiveEgg
     Message DayCareCommon_Text_YouHaveNoRoom
     WaitButton
     CloseMessage
@@ -57,8 +60,16 @@ DayCareCommon_GiveEgg:
     Message DayCareCommon_Text_TakeGoodCareOfIt
     WaitButton
     CloseMessage
-    GiveEggFromDaycare
+    GiveEggFromDaycare VAR_RESULT
     ClearFlag FLAG_DUMMY_0x0073
+    GoToIfEq VAR_RESULT, GIVE_MON_RESULT_TO_BOX, DayCareCommon_EggSentToBox
+    ReleaseAll
+    End
+
+DayCareCommon_EggSentToBox:
+    Message DayCareCommon_Text_EggSentToBox
+    WaitButton
+    CloseMessage
     ReleaseAll
     End
 

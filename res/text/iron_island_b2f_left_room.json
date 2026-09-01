@@ -127,6 +127,13 @@
       ]
     },
     {
+      "id": "IronIslandB2FLeftRoom_Text_EggSentToBox",
+      "en_US": [
+        "Riley: Your party was full, so the Egg\n",
+        "was sent to a Box in your PC."
+      ]
+    },
+    {
       "id": "IronIslandB2FLeftRoom_Text_AcceptItAsToken",
       "en_US": [
         "Riley: I hope you’ll accept it as\n",

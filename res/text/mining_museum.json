@@ -87,6 +87,13 @@
       ]
     },
     {
+      "id": "MiningMuseum_Text_SentToBox",
+      "en_US": [
+        "Your party is full, so the {STRVAR_1 0, 1, 0}\n",
+        "was sent to a Box in your PC."
+      ]
+    },
+    {
       "id": "MiningMuseum_Text_BringFossilsToMe",
       "en_US": [
         "If it is a Fossil that you obtain,\n",

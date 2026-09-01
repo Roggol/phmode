@@ -56,6 +56,13 @@
       "en_US": "You take good care of it."
     },
     {
+      "id": "DayCareCommon_Text_EggSentToBox",
+      "en_US": [
+        "Your party was full, so the Egg was\n",
+        "sent to a Box in your PC."
+      ]
+    },
+    {
       "id": "DayCareCommon_Text_SawPokemonReceivingMail",
       "en_US": [
         "By the way, I saw your {STRVAR_1 0, 0, 0}\n",

@@ -30,6 +30,7 @@
 #include "string_template.h"
 #include "trainer_info.h"
 #include "unk_02017038.h"
+#include "unk_02054884.h"
 #include "unk_020559DC.h"
 #include "unk_02092494.h"
 
@@ -757,8 +758,9 @@ static void Egg_SetInitialData(Pokemon *mon, u16 species, Daycare *daycare, u32 
     String_Free(string);
 }
 
-void Daycare_GiveEggFromDaycare(Daycare *daycare, Party *party, TrainerInfo *trainerInfo)
+int Daycare_GiveEggFromDaycare(Daycare *daycare, SaveData *saveData, TrainerInfo *trainerInfo)
 {
+    int result;
     u16 species;
     u8 parentSlots[NUM_DAYCARE_MONS], isEgg;
     Pokemon *mon = Pokemon_New(HEAP_ID_FIELD1);
@@ -784,9 +786,17 @@ void Daycare_GiveEggFromDaycare(Daycare *daycare, Party *party, TrainerInfo *tra
     isEgg = TRUE;
     Pokemon_SetValue(mon, MON_DATA_IS_EGG, &isEgg);
 
-    Party_AddPokemon(party, mon);
-    Daycare_ResetPersonalityAndStepCounter(daycare);
+    // Party full? Put the egg in a PC box. Only clear the Day Care's "egg ready"
+    // state once the egg has actually gone somewhere, so it isn't lost when the
+    // party and every box are full.
+    result = Pokemon_AddToPartyOrBox(saveData, mon);
+
+    if (result != GIVE_MON_RESULT_NO_ROOM) {
+        Daycare_ResetPersonalityAndStepCounter(daycare);
+    }
+
     Heap_Free(mon);
+    return result;
 }
 
 static int Party_GetEggCyclesToSubtract(Party *party)

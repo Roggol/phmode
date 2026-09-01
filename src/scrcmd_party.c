@@ -85,20 +85,19 @@ BOOL ScrCmd_GiveEgg(ScriptContext *ctx)
     TrainerInfo *trainer = SaveData_GetTrainerInfo(fieldSystem->saveData);
     u16 species = ScriptContext_GetVar(ctx);
     u16 eggGiver = ScriptContext_GetVar(ctx);
+    u16 *result = ScriptContext_GetVarPointer(ctx);
 
-    Party *party = SaveData_GetParty(fieldSystem->saveData);
-    u8 partyCount = Party_GetCurrentCount(party);
+    Pokemon *egg = Pokemon_New(HEAP_ID_FIELD2);
+    Pokemon_Init(egg);
 
-    if (partyCount < MAX_PARTY_SIZE) {
-        Pokemon *egg = Pokemon_New(HEAP_ID_FIELD2);
-        Pokemon_Init(egg);
+    int specialMetLoc = SpecialMetLoc_GetId(1, eggGiver);
+    Egg_CreateEgg(egg, species, 1, trainer, 3, specialMetLoc);
 
-        int specialMetLoc = SpecialMetLoc_GetId(1, eggGiver);
-        Egg_CreateEgg(egg, species, 1, trainer, 3, specialMetLoc);
+    // A gifted egg that doesn't fit in the party is sent to a PC box rather than
+    // being refused; the script reads the result to word its message.
+    *result = Pokemon_AddToPartyOrBox(fieldSystem->saveData, egg);
 
-        Party_AddPokemon(party, egg);
-        Heap_Free(egg);
-    }
+    Heap_Free(egg);
 
     return FALSE;
 }

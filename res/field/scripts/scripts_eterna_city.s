@@ -1072,7 +1072,11 @@ EternaCity_CynthiaTryGiveEgg:
     ShowYesNoMenu VAR_RESULT
     GoToIfEq VAR_RESULT, MENU_NO, EternaCity_RefusedEgg
     GetPartyCount VAR_RESULT
-    GoToIfGe VAR_RESULT, 6, EternaCity_PartyIsFull
+    GoToIfLt VAR_RESULT, 6, EternaCity_CynthiaGiveEggAndLeave
+    @ Party full: hand the Egg over anyway as long as a PC box has room.
+    GetPCBoxesFreeSlotCount VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, EternaCity_PartyIsFull
+EternaCity_CynthiaGiveEggAndLeave:
     Call EternaCity_GiveTogepiEgg
     ApplyMovement LOCALID_CYNTHIA, EternaCity_Movement_CynthiaLeaveAfterEgg
     WaitMovement
@@ -1081,12 +1085,22 @@ EternaCity_CynthiaTryGiveEgg:
     End
 
 EternaCity_GiveTogepiEgg:
+    GiveEgg SPECIES_TOGEPI, SPECIAL_METLOC_NAME_CYNTHIA, VAR_RESULT
+    GoToIfEq VAR_RESULT, GIVE_MON_RESULT_TO_BOX, EternaCity_GiveTogepiEggToBox
     PlayFanfare SEQ_FANFA4_sseq
     WaitFanfare
     Message EternaCity_Text_ThatsWonderful
     Message EternaCity_Text_KeepEggInYourParty
     CloseMessage
-    GiveEgg SPECIES_TOGEPI, SPECIAL_METLOC_NAME_CYNTHIA
+    SetVar VAR_ETERNA_CITY_STATE, 5
+    Return
+
+EternaCity_GiveTogepiEggToBox:
+    PlayFanfare SEQ_FANFA4_sseq
+    WaitFanfare
+    Message EternaCity_Text_ThatsWonderful
+    Message EternaCity_Text_TogepiEggSentToBox
+    CloseMessage
     SetVar VAR_ETERNA_CITY_STATE, 5
     Return
 
@@ -1137,7 +1151,11 @@ EternaCity_CynthiaTryAgainGiveEgg:
     ShowYesNoMenu VAR_RESULT
     GoToIfEq VAR_RESULT, MENU_NO, EternaCity_RefusedEggAgain
     GetPartyCount VAR_RESULT
-    GoToIfGe VAR_RESULT, 6, EternaCity_PartyIsFullAgain
+    GoToIfLt VAR_RESULT, 6, EternaCity_CynthiaTryAgainGiveEggDeliver
+    @ Party full: hand the Egg over anyway as long as a PC box has room.
+    GetPCBoxesFreeSlotCount VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, EternaCity_PartyIsFullAgain
+EternaCity_CynthiaTryAgainGiveEggDeliver:
     Call EternaCity_GiveTogepiEgg
     GetPlayerDir VAR_RESULT
     GoToIfEq VAR_RESULT, DIR_NORTH, EternaCity_CynthiaLeaveAfterEggNorth

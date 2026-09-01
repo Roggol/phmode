@@ -58,10 +58,13 @@ BOOL ScrCmd_GiveEggFromDaycare(ScriptContext *ctx)
     FieldSystem *fieldSystem = ctx->fieldSystem;
     SaveData *saveData = fieldSystem->saveData;
     Daycare *daycare = SaveData_SaveTable(saveData, SAVE_TABLE_ENTRY_DAYCARE);
-    Party *party = SaveData_GetParty(fieldSystem->saveData);
     TrainerInfo *trainerInfo = SaveData_GetTrainerInfo(FieldSystem_GetSaveData(ctx->fieldSystem));
+    u16 *result = ScriptContext_GetVarPointer(ctx);
 
-    Daycare_GiveEggFromDaycare(daycare, party, trainerInfo);
+    // A full party sends the Day Care egg to a PC box instead of turning the
+    // player away; the daycare only forgets the egg once it has actually landed
+    // somewhere.
+    *result = Daycare_GiveEggFromDaycare(daycare, saveData, trainerInfo);
     return FALSE;
 }
 

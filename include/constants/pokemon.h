@@ -9,6 +9,12 @@
 #define MAX_PARTY_SIZE  6
 #define PARTY_SLOT_NONE 0xFF
 
+// Result written by the GivePokemon script command / Pokemon_GiveMonFromScript:
+// where the gift Pokemon ended up.
+#define GIVE_MON_RESULT_TO_PARTY 0
+#define GIVE_MON_RESULT_TO_BOX   1
+#define GIVE_MON_RESULT_NO_ROOM  2
+
 #define NUM_BOOSTABLE_STATS 8
 
 #define MAX_IVS_SINGLE_STAT 31

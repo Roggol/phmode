@@ -218,20 +218,30 @@ MiningMuseum_DeclinedRevival:
 MiningMuseum_PokemonRevival:
     BufferSpeciesNameFromVar 0, VAR_REVIVED_POKEMON_SPECIES, 0, 0
     Message MiningMuseum_Text_ThisIsRevivedPokemon
-    GetPartyCount VAR_RESULT
-    GoToIfEq VAR_RESULT, MAX_PARTY_SIZE, MiningMuseum_PartyFull
     BufferSpeciesNameFromVar 1, VAR_REVIVED_POKEMON_SPECIES, 0, 0
     BufferPlayerName 0
     PlayFanfare SEQ_FANFA4_sseq
     Message MiningMuseum_Text_ReceivedPokemon
     WaitFanfare
     GivePokemon VAR_REVIVED_POKEMON_SPECIES, 20, ITEM_NONE, VAR_RESULT
+    @ Only bail (keeping VAR_REVIVED_POKEMON_SPECIES set so it can be collected
+    @ later) if the party AND every PC box are full.
+    GoToIfEq VAR_RESULT, GIVE_MON_RESULT_NO_ROOM, MiningMuseum_PartyFull
     IncrementGameRecord RECORD_POKEMON_RECEIVED_FROM_FOSSIL_REVIVAL
     SetVar VAR_REVIVED_POKEMON_SPECIES, 0
+    @ A full party sends the gift straight to a PC box; skip the nickname prompt.
+    GoToIfEq VAR_RESULT, GIVE_MON_RESULT_TO_BOX, MiningMuseum_FossilMonSentToBox
     Message MiningMuseum_Text_GiveNickname
     ShowYesNoMenu VAR_RESULT
     GoToIfEq VAR_RESULT, MENU_YES, MiningMuseum_NicknamePrompt
     GoToIfEq VAR_RESULT, MENU_NO, MiningMuseum_NoNickname
+    End
+
+MiningMuseum_FossilMonSentToBox:
+    Message MiningMuseum_Text_SentToBox
+    WaitButton
+    CloseMessage
+    ReleaseAll
     End
 
 MiningMuseum_NicknamePrompt:

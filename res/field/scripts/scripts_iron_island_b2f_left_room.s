@@ -238,15 +238,26 @@ IronIslandB2FLeftRoom_WouldYouTakeEgg:
 
 IronIslandB2FLeftRoom_AcceptedEgg:
     GetPartyCount VAR_RESULT
-    GoToIfEq VAR_RESULT, MAX_PARTY_SIZE, IronIslandB2FLeftRoom_NoRoomToTakeEgg
+    GoToIfNe VAR_RESULT, MAX_PARTY_SIZE, IronIslandB2FLeftRoom_AcceptedEggGive
+    @ Party full: still take the Egg as long as a PC box has room.
+    GetPCBoxesFreeSlotCount VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, IronIslandB2FLeftRoom_NoRoomToTakeEgg
+IronIslandB2FLeftRoom_AcceptedEggGive:
     PlayFanfare SEQ_FANFA4_sseq
     WaitFanfare
     Message IronIslandB2FLeftRoom_Text_ShowEggPokemonPlaces
-    GiveEgg SPECIES_RIOLU, SPECIAL_METLOC_NAME_RILEY
+    GiveEgg SPECIES_RIOLU, SPECIAL_METLOC_NAME_RILEY, VAR_RESULT
     SetFlag FLAG_HIDE_IRON_ISLAND_B2F_LEFT_ROOM_RILEY
     ClearFlag FLAG_COULD_NOT_RECEIVE_RIOLU_EGG
     Call IronIslandB2FLeftRoom_SetFlagReceivedEgg
+    GoToIfEq VAR_RESULT, GIVE_MON_RESULT_TO_BOX, IronIslandB2FLeftRoom_RioluEggSentToBox
     Message IronIslandB2FLeftRoom_Text_LetsMeetAgain
+    WaitButton
+    CloseMessage
+    Return
+
+IronIslandB2FLeftRoom_RioluEggSentToBox:
+    Message IronIslandB2FLeftRoom_Text_EggSentToBox
     WaitButton
     CloseMessage
     Return

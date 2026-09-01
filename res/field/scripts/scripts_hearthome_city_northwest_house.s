@@ -28,19 +28,27 @@ HearthomeCityNorthwestHouse_AcceptEeveeYesNoMenu:
     End
 
 HearthomeCityNorthwestHouse_AcceptEevee:
-    GetPartyCount VAR_RESULT
-    GoToIfEq VAR_RESULT, 6, HearthomeCityNorthwestHouse_PartyIsFull
     Message HearthomeCityNorthwestHouse_Text_PleaseBeGoodToIt
     PlayFanfare SEQ_FANFA4_sseq
     BufferPlayerName 0
     Message HearthomeCityNorthwestHouse_Text_PlayerAcceptedTheEevee
     WaitFanfare
     GivePokemon SPECIES_EEVEE, 20, ITEM_NONE, VAR_RESULT
+    GoToIfEq VAR_RESULT, GIVE_MON_RESULT_NO_ROOM, HearthomeCityNorthwestHouse_PartyIsFull
     SetFlag FLAG_RECEIVED_HEARTHOME_CITY_NORTHWEST_HOUSE_EEVEE
+    @ A full party sends the gift straight to a PC box; skip the nickname prompt.
+    GoToIfEq VAR_RESULT, GIVE_MON_RESULT_TO_BOX, HearthomeCityNorthwestHouse_EeveeSentToBox
     Message HearthomeCityNorthwestHouse_Text_WouldYouLikeToNicknameEevee
     ShowYesNoMenu VAR_RESULT
     GoToIfEq VAR_RESULT, MENU_YES, HearthomeCityNorthwestHouse_GiveNickname
     GoToIfEq VAR_RESULT, MENU_NO, HearthomeCityNorthwestHouse_DontGiveNickname
+    End
+
+HearthomeCityNorthwestHouse_EeveeSentToBox:
+    Message HearthomeCityNorthwestHouse_Text_EeveeSentToBox
+    WaitButton
+    CloseMessage
+    ReleaseAll
     End
 
 HearthomeCityNorthwestHouse_GiveNickname:

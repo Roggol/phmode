@@ -1007,10 +1007,11 @@
     .endm
 
     @ eggGiverTextId corresponds to an entry in special_met_location_names.gmm.
-    .macro GiveEgg species, eggGiverTextId
+    .macro GiveEgg species, eggGiverTextId, successVar
     .short SCRCMD_GIVEEGG
     .short \species
     .short \eggGiverTextId
+    .short \successVar
     .endm
 
     .macro ResetPartyMonMoveSlot_Unused partySlot, moveSlot, moveID
@@ -2454,8 +2455,9 @@
     .short SCRCMD_RESETDAYCAREPERSONALITYANDSTEPCOUNTER
     .endm
 
-    .macro GiveEggFromDaycare
+    .macro GiveEggFromDaycare successVar
     .short SCRCMD_GIVEEGGFROMDAYCARE
+    .short \successVar
     .endm
 
     .macro BufferDaycarePriceBySlot destVar, daycareSlot

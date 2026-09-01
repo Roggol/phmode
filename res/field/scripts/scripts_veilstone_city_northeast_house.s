@@ -29,19 +29,27 @@ VeilstoneCityNortheastHouse_AcceptPorygonYesNo:
     End
 
 VeilstoneCityNortheastHouse_AcceptPorygon:
-    GetPartyCount VAR_RESULT
-    GoToIfEq VAR_RESULT, 6, VeilstoneCityNortheastHouse_PartyIsFull
     Message VeilstoneCityNortheastHouse_Text_Excellent
     PlayFanfare SEQ_FANFA4_sseq
     BufferPlayerName 0
     Message VeilstoneCityNortheastHouse_Text_PlayerAcceptedThePorygon
     WaitFanfare
     GivePokemon SPECIES_PORYGON, 25, ITEM_NONE, VAR_RESULT
+    GoToIfEq VAR_RESULT, GIVE_MON_RESULT_NO_ROOM, VeilstoneCityNortheastHouse_PartyIsFull
     SetFlag FLAG_RECEIVED_VEILSTONE_CITY_NORTHEAST_HOUSE_PORYGON
+    @ A full party sends the gift straight to a PC box; skip the nickname prompt.
+    GoToIfEq VAR_RESULT, GIVE_MON_RESULT_TO_BOX, VeilstoneCityNortheastHouse_PorygonSentToBox
     Message VeilstoneCityNortheastHouse_Text_AskNicknamePorygon
     ShowYesNoMenu VAR_RESULT
     GoToIfEq VAR_RESULT, MENU_YES, VeilstoneCityNortheastHouse_NicknamePorygon
     GoToIfEq VAR_RESULT, MENU_NO, VeilstoneCityNortheastHouse_DontNicknamePorygon
+    End
+
+VeilstoneCityNortheastHouse_PorygonSentToBox:
+    Message VeilstoneCityNortheastHouse_Text_PorygonSentToBox
+    WaitButton
+    CloseMessage
+    ReleaseAll
     End
 
 VeilstoneCityNortheastHouse_NicknamePorygon:

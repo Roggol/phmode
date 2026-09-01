@@ -161,6 +161,40 @@ A new Key Item (`ITEM_PPHM`, id 468).
 * `include/data/pickup.h` — the Pickup ability tables give Rare Candy where they
   gave Revive and Heart Scale where they gave Max Revive.
 
+### Gift Pokémon and eggs go to the PC when the party is full
+Instead of being turned away ("come back when you have room"), a gift Pokémon or
+gifted egg whose party is full is deposited straight into the first PC box with a
+free slot.
+
+* `src/unk_02054884.c` — new `Pokemon_AddToPartyOrBox` (adds to party, else to a
+  PC box, else returns `GIVE_MON_RESULT_NO_ROOM` without consuming anything).
+  `Pokemon_GiveMonFromScript` uses it and now returns one of
+  `GIVE_MON_RESULT_TO_PARTY` / `_TO_BOX` / `_NO_ROOM`
+  (`include/constants/pokemon.h`); return type changed from `BOOL` to `int`
+  (`include/unk_02054884.h`).
+* `res/field/scripts/scripts_hearthome_city_northwest_house.s` (Bebe's Eevee),
+  `scripts_veilstone_city_northeast_house.s` (the Porygon),
+  `scripts_mining_museum.s` (revived Fossils) — the up-front "party full" guard
+  is removed; after `GivePokemon` the script branches on the result, showing a
+  new "sent to a Box in your PC" message and skipping the nickname prompt when
+  the Pokémon was boxed. The old party-full message is still shown in the
+  can't-fit-anywhere case (party and all 18 boxes full); the Mining Museum keeps
+  `VAR_REVIVED_POKEMON_SPECIES` set for later pickup only in that case.
+* Eggs: the `GiveEgg` and `GiveEggFromDaycare` script commands
+  (`asm/macros/scrcmd.inc`, `src/scrcmd_party.c`, `src/scrcmd_daycare.c`) take a
+  result var and route a full party to a box the same way.
+  `Daycare_GiveEggFromDaycare` (`src/overlay005/daycare.c`) now takes `SaveData`,
+  returns the result, and only clears the Day Care's "egg ready" state once the
+  egg has actually landed somewhere. The three egg scripts —
+  `scripts_eterna_city.s` (Cynthia's Togepi), `scripts_iron_island_b2f_left_room.s`
+  (Riley's Riolu), `scripts_day_care_common.s` — keep a party check but fall
+  through to the hand-off whenever a box has room, show a "sent to a Box"
+  message, and only fall back to the "come back later" retry when the party and
+  every box are full. A boxed egg does not accumulate steps toward hatching until
+  it is moved into the party, so each message says so. New strings in the
+  matching `res/text/*.json` files.
+* Not changed: Mystery Gift has its own separate delivery path.
+
 ---
 
 ## Map data

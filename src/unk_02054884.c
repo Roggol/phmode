@@ -12,10 +12,12 @@
 
 #include "heap.h"
 #include "party.h"
+#include "pc_boxes.h"
 #include "pokemon.h"
 #include "save_catchrecords.h"
 #include "save_player.h"
 #include "savedata.h"
+#include "savedata/save_table.h"
 #include "trainer_info.h"
 #include "unk_02017038.h"
 
@@ -29,15 +31,31 @@ BOOL Pokemon_CanBattle(Pokemon *mon)
     return !Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL);
 }
 
-BOOL Pokemon_GiveMonFromScript(enum HeapID heapID, SaveData *saveData, u16 species, u8 level, u16 heldItem, int metLocation, int metTerrain)
+// Adds a freshly built Pokemon (or egg) to the party, or, if the party is full,
+// to the first PC box with a free slot. Gift scripts read the result to decide
+// whether to announce "sent to a Box" and skip the nickname prompt. Returns
+// GIVE_MON_RESULT_NO_ROOM (without taking ownership of anything) only when the
+// party and every box are full.
+int Pokemon_AddToPartyOrBox(SaveData *saveData, Pokemon *mon)
 {
-    BOOL result;
+    if (Party_AddPokemon(SaveData_GetParty(saveData), mon)) {
+        return GIVE_MON_RESULT_TO_PARTY;
+    }
+
+    if (PCBoxes_TryStoreBoxMon(SaveData_GetPCBoxes(saveData), Pokemon_GetBoxPokemon(mon))) {
+        return GIVE_MON_RESULT_TO_BOX;
+    }
+
+    return GIVE_MON_RESULT_NO_ROOM;
+}
+
+int Pokemon_GiveMonFromScript(enum HeapID heapID, SaveData *saveData, u16 species, u8 level, u16 heldItem, int metLocation, int metTerrain)
+{
+    int result;
     Pokemon *mon;
     u32 item;
-    Party *party;
     TrainerInfo *trainerInfo = SaveData_GetTrainerInfo(saveData);
 
-    party = SaveData_GetParty(saveData);
     mon = Pokemon_New(heapID);
 
     Pokemon_Init(mon);
@@ -46,9 +64,10 @@ BOOL Pokemon_GiveMonFromScript(enum HeapID heapID, SaveData *saveData, u16 speci
 
     item = heldItem;
     Pokemon_SetValue(mon, MON_DATA_HELD_ITEM, &item);
-    result = Party_AddPokemon(party, mon);
 
-    if (result) {
+    result = Pokemon_AddToPartyOrBox(saveData, mon);
+
+    if (result != GIVE_MON_RESULT_NO_ROOM) {
         SaveData_UpdateCatchRecords(saveData, mon);
     }
 
