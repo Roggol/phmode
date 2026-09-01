@@ -56,6 +56,20 @@ the Skills page:
   the boosted stat, blue for the hindered stat, default colour for a neutral
   nature.
 
+### HM moves are forgettable
+The "HM moves can't be forgotten!" restriction is removed, so Cut, Fly, Surf,
+etc. can be replaced from the "which move should be forgotten?" prompt like any
+other move — no trip to the Move Deleter required.
+
+* `src/applications/pokemon_summary_screen/main.c` — the HM guard in the
+  move-select A-press handler (`HandleInput` for `SUMMARY_STATE_SELECT_MOVE`) is
+  deleted; an HM slot is selected like any other. This covers level-up learning,
+  TM/HM learning, and the Move Deleter, which all route through this screen.
+* `src/battle_sub_menus/battle_party.c` — `CheckSelectedMoveIsHM` always returns
+  `FALSE`, so a move learned mid-battle can replace an HM move too.
+* `Item_IsHMMove` itself is unchanged — it is still used to keep HM *items* from
+  being consumed when taught and to pick the "Booted up an HM" bag message.
+
 ---
 
 ## Battle changes

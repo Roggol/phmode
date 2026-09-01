@@ -826,15 +826,9 @@ static int HandleInput_SelectMove(PokemonSummaryScreen *summaryScreen)
     if (JOY_NEW(PAD_BUTTON_A)) {
         Sound_PlayEffect(SEQ_SE_DP_DECIDE_sseq);
 
-        if (summaryScreen->cursor != LEARNED_MOVES_MAX) {
-            if (Item_IsHMMove(summaryScreen->monData.moves[summaryScreen->cursor]) == TRUE && summaryScreen->data->move != MOVE_NONE) {
-                Sprite_SetDrawFlag2(summaryScreen->sprites[SUMMARY_SPRITE_MOVE_CATEGORY_ICON], FALSE);
-                DrawEmptyHearts(summaryScreen);
-                PokemonSummaryScreen_PrintHMMovesCantBeForgotten(summaryScreen);
-                return SUMMARY_STATE_WAIT_HM_MSG_INPUT;
-            }
-        }
-
+        // HM moves are forgettable in this romhack: the usual "HM moves can't be
+        // forgotten!" block when choosing which move to give up for a new one is
+        // gone, so an HM slot can be selected like any other.
         summaryScreen->data->selectedMoveSlot = summaryScreen->cursor;
         summaryScreen->data->returnMode = SUMMARY_RETURN_SELECT;
         return SUMMARY_STATE_TRANSITION_OUT;

@@ -1723,15 +1723,11 @@ BOOL BattlePartyTask_CheckIfSwitchingWithPartnersPokemon(BattleParty *battlePart
 
 static BOOL CheckSelectedMoveIsHM(BattleParty *battleParty)
 {
-    u16 move;
-
-    if (battleParty->context->selectedMoveSlot == MOVE_TO_LEARN_SLOT) {
-        move = battleParty->context->moveToLearn;
-    } else {
-        move = battleParty->partyPokemon[battleParty->context->selectedPartyIndex].moves[battleParty->context->selectedMoveSlot].move;
-    }
-
-    return Item_IsHMMove(move);
+    // HM moves are forgettable in this romhack, so a move learned mid-battle can
+    // replace an HM move like any other. Always report "not an HM" so the
+    // "HM moves can't be forgotten!" path is never taken.
+    (void)battleParty;
+    return FALSE;
 }
 
 static void ClearMoveStats(BattleParty *battleParty)
