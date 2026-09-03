@@ -3795,6 +3795,26 @@ int BattleSystem_TriggerEffectOnSwitch(BattleSystem *battleSys, BattleContext *b
                             result = SWITCH_IN_CHECK_RESULT_BREAK;
                         }
                         break;
+
+                    // Space Warp (Palkia): permanent gravity on switch-in.
+                    case ABILITY_SPACE_WARP:
+                        battleCtx->battleMons[battler].weatherAbilityAnnounced = TRUE;
+
+                        if ((battleCtx->fieldConditionsMask & FIELD_CONDITION_GRAVITY_PERM) == FALSE) {
+                            subscript = subscript_space_warp;
+                            result = SWITCH_IN_CHECK_RESULT_BREAK;
+                        }
+                        break;
+
+                    // Distortion Surge (Giratina): permanent distortion terrain on switch-in.
+                    case ABILITY_DISTORTION_SURGE:
+                        battleCtx->battleMons[battler].weatherAbilityAnnounced = TRUE;
+
+                        if ((battleCtx->fieldConditionsMask & FIELD_CONDITION_DISTORTION_TERRAIN) == FALSE) {
+                            subscript = subscript_distortion_surge;
+                            result = SWITCH_IN_CHECK_RESULT_BREAK;
+                        }
+                        break;
                     }
                 }
 

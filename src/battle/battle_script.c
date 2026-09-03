@@ -193,6 +193,7 @@ static BOOL BtlCmd_CheckSpikes(BattleSystem *battleSys, BattleContext *battleCtx
 static BOOL BtlCmd_CheckStickyWeb(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_CheckElectricTerrain(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_CheckGrounded(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_GoToSubscriptIfAbilityOnField(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_TryPerishSong(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_GetMonBySpeedOrder(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_GoToIfValidMon(BattleSystem *battleSys, BattleContext *battleCtx);
@@ -5543,6 +5544,34 @@ static BOOL BtlCmd_CheckGrounded(BattleSystem *battleSys, BattleContext *battleC
 
     if (Battler_IsGrounded(battleCtx, battler) == FALSE) {
         BattleScript_Iter(battleCtx, jumpIfAirborne);
+    }
+
+    return FALSE;
+}
+
+/**
+ * @brief Jump if any living battler on the field has the given ability.
+ *
+ * Used by Time Warp (Dialga): the two-turn move effect scripts call this right
+ * after their Power Herb check, jumping to the same "skip the charge turn" label
+ * when Time Warp is present anywhere on the field.
+ *
+ * Inputs:
+ * 1. The ability to look for.
+ * 2. The distance to jump if the ability is on the field.
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @return FALSE
+ */
+static BOOL BtlCmd_GoToSubscriptIfAbilityOnField(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int ability = BattleScript_Read(battleCtx);
+    int jump = BattleScript_Read(battleCtx);
+
+    if (BattleSystem_CountAbility(battleSys, battleCtx, COUNT_ALIVE_BATTLERS, battleCtx->attacker, ability) > 0) {
+        BattleScript_Iter(battleCtx, jump);
     }
 
     return FALSE;

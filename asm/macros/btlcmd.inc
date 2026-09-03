@@ -659,6 +659,12 @@
     .long (\jump_if_airborne-.) / 4 - 1
     .endm
 
+    .macro GoToSubscriptIfAbilityOnField ability, jump
+    .long BTLCMD_GOTOSUBSCRIPTIFABILITYONFIELD
+    .long \ability
+    .long (\jump-.) / 4 - 1
+    .endm
+
     .macro TryPerishSong jump_if_fail
     .long BTLCMD_TRYPERISHSONG
     .long (\jump_if_fail-.) / 4 - 1

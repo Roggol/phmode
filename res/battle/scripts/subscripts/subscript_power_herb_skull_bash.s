@@ -3,24 +3,29 @@
 
 _000:
     PlayMoveAnimation BTLSCR_ATTACKER
-    Wait 
+    Wait
     CompareMonDataToValue OPCODE_FLAG_NOT, BTLSCR_ATTACKER, BATTLEMON_MOVE_EFFECTS_MASK, MOVE_EFFECT_SEMI_INVULNERABLE, _011
     ToggleVanish BTLSCR_ATTACKER, TRUE
 
 _011:
-    PrintBufferedMessage 
-    Wait 
+    PrintBufferedMessage
+    Wait
     WaitButtonABTime 30
     UpdateVarFromVar OPCODE_SET, BTLVAR_SIDE_EFFECT_MON, BTLVAR_ATTACKER
     UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_PARAM, MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE
     UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_TYPE, SIDE_EFFECT_TYPE_INDIRECT
     Call BATTLE_SUBSCRIPT_UPDATE_STAT_STAGE
+    // Time Warp (Dialga on the field) also skips the charge turn, but with no
+    // item to announce or consume.
+    CheckItemHoldEffect CHECK_NOT_HAVE, BTLSCR_ATTACKER, HOLD_EFFECT_CHARGE_SKIP, _055
     PlayBattleAnimation BTLSCR_ATTACKER, BATTLE_ANIMATION_HELD_ITEM
-    Wait 
+    Wait
     // {0} became fully charged due to its {1}!
     PrintMessage BattleStrings_Text_PokemonBecameFullyChargedDueToItsItem_Ally, TAG_NICKNAME_ITEM, BTLSCR_ATTACKER, BTLSCR_ATTACKER
-    Wait 
+    Wait
     WaitButtonABTime 30
     RemoveItem BTLSCR_ATTACKER
+
+_055:
     UpdateVar OPCODE_FLAG_OFF, BTLVAR_BATTLE_CTX_STATUS, SYSCTL_PLAYED_MOVE_ANIMATION
-    End 
+    End

@@ -1284,10 +1284,13 @@ static void BattleControllerPlayer_CheckFieldConditions(BattleSystem *battleSys,
             break;
 
         case FIELD_COND_CHECK_STATE_GRAVITY:
-            if (battleCtx->fieldConditionsMask & FIELD_CONDITION_GRAVITY) {
+            // Space Warp's permanent gravity (GRAVITY_PERM) never counts down and
+            // never ends; only the turn counter (bits 12-14) is decremented here.
+            if ((battleCtx->fieldConditionsMask & FIELD_CONDITION_GRAVITY_PERM) == 0
+                && (battleCtx->fieldConditionsMask & FIELD_CONDITION_GRAVITY_COUNTER)) {
                 battleCtx->fieldConditionsMask -= (1 << FIELD_CONDITION_GRAVITY_SHIFT);
 
-                if ((battleCtx->fieldConditionsMask & FIELD_CONDITION_GRAVITY) == 0) {
+                if ((battleCtx->fieldConditionsMask & FIELD_CONDITION_GRAVITY_COUNTER) == 0) {
                     PrepareSubroutineSequence(battleCtx, subscript_gravity_end);
                     state = STATE_BREAK_OUT;
                 }

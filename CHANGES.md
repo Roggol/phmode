@@ -114,6 +114,46 @@ Battle anim/subscript wiring is in `res/battle/scripts/` and `src/battle/`.
 * **Distortion Terrain** (`de20f3c30`) — every stat-stage change on the field is
   inverted, Contrary-style, for all battlers whether grounded or not.
 
+### Creation-trio signature abilities
+Dialga, Palkia and Giratina lose Pressure/Levitate and get a new ability each.
+Three abilities were added to `generated/abilities.txt` (124-126) with entries in
+`res/text/ability_names.json`, `ability_names_uppercase.json` and
+`ability_descriptions.json`, and assigned in `res/pokemon/{dialga,palkia,giratina}/data.json`
+plus `res/pokemon/giratina/forms/origin/data.json`.
+
+* **Time Warp** (Dialga) — while any Time Warp user is on the field, every
+  two-turn move resolves in a single turn: charging moves (Sky Attack, Solar
+  Beam, Razor Wind, Skull Bash, Meteor Beam, Freeze Shot, Ice Burn) and the
+  semi-invulnerable moves (Fly, Dig, Dive, Bounce, Phantom Force) fire the turn
+  they are chosen, and recharge moves (Hyper Beam, Giga Impact, Roar of Time, …)
+  skip the recharge turn. Implemented with a new battle script command
+  `GoToSubscriptIfAbilityOnField` (`asm/macros/btlcmd.inc`,
+  `include/data/scripts/btlcmd.h`, `src/battle/battle_script.c`) added to the
+  nine charge effect scripts (`res/battle/scripts/effects/effect_script_0039.s`
+  and friends) beside their Power Herb check, plus `effect_script_0080.s` for the
+  recharge. `subscript_item_skip_charge_turn` / `subscript_power_herb_skull_bash`
+  now skip the "fully charged due to its item!" line and the item removal when
+  the skip came from Time Warp rather than a held item.
+* **Space Warp** (Palkia) — sets battle-long gravity on switch-in. A new
+  `FIELD_CONDITION_GRAVITY_PERM` bit (`include/constants/battle/condition.h`) is
+  folded into `FIELD_CONDITION_GRAVITY`, so every "is gravity active" check
+  honours it — the modern Gravity effect is unchanged (all-move accuracy ×5/3;
+  Flying-types and Levitate grounded for Ground moves, Spikes/Toxic Spikes/Sticky
+  Web and Arena Trap; Fly/Bounce/Jump Kick/Hi Jump Kick/Splash/Magnet Rise fail).
+  The per-turn gravity countdown in `battle_controller_player.c` is guarded to
+  leave the permanent flag alone. `subscript_space_warp` announces the ability,
+  sets the flag, then calls `subscript_gravity_start` for the same one-time
+  knock-down of airborne Pokémon and Magnet Rise; `subscript_gravity_start` skips
+  its own "Gravity intensified!" line when the permanent flag is already set.
+* **Distortion Surge** (Giratina, both forms) — sets distortion terrain on
+  switch-in via `subscript_distortion_surge`; the terrain bit already persists
+  for the rest of the battle.
+
+New switch-in ability cases live in `battle_lib.c`'s
+`SWITCH_IN_CHECK_STATE_WEATHER_ABILITIES`; the two new subscripts are registered
+in `res/battle/scripts/subscripts/{sub_seq.order,meson.build}`. Two new ability
+announce strings were added to `res/text/battle_strings.json`.
+
 ---
 
 ## Level cap (`5c436cf12`)

@@ -8534,6 +8534,20 @@
       "en_US": [
         "The terrain is distorted!"
       ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityDistortedTheTerrain",
+      "en_US": [
+        "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
+        "distorted the terrain!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityIntensifiedGravity",
+      "en_US": [
+        "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
+        "intensified gravity!"
+      ]
     }
   ]
 }

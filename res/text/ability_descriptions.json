@@ -865,6 +865,27 @@
         "Reduces a sleeping foe’s\n",
         "HP."
       ]
+    },
+    {
+      "id": "pl_msg_00000612_00124",
+      "en_US": [
+        "Two-turn moves finish in\n",
+        "a single turn."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00125",
+      "en_US": [
+        "Sets gravity that lasts\n",
+        "for the whole battle."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00126",
+      "en_US": [
+        "Distorts the terrain for\n",
+        "the whole battle."
+      ]
     }
   ]
 }

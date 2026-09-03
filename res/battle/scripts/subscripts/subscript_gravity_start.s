@@ -2,11 +2,17 @@
 
 
 _000:
+    // Space Warp (Palkia) reuses this subscript only for the "knock airborne
+    // Pokemon down" loop below: gravity is already permanently active, so skip
+    // the announcement and the turn-counter setup.
+    CompareVarToValue OPCODE_FLAG_SET, BTLVAR_FIELD_CONDITIONS, FIELD_CONDITION_GRAVITY_PERM, _009
     // Gravity intensified!
     PrintMessage BattleStrings_Text_GravityIntensified, TAG_NONE
-    Wait 
+    Wait
     WaitButtonABTime 30
     UpdateVar OPCODE_FLAG_ON, BTLVAR_FIELD_CONDITIONS, FIELD_CONDITION_GRAVITY_INIT
+
+_009:
     UpdateVar OPCODE_SET, BTLVAR_BATTLER_SPEED_TEMP, 0
 
 _013:
