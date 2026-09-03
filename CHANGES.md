@@ -133,7 +133,9 @@ plus `res/pokemon/giratina/forms/origin/data.json`.
   and friends) beside their Power Herb check, plus `effect_script_0080.s` for the
   recharge. `subscript_item_skip_charge_turn` / `subscript_power_herb_skull_bash`
   now skip the "fully charged due to its item!" line and the item removal when
-  the skip came from Time Warp rather than a held item.
+  the skip came from Time Warp rather than a held item. On switch-in it also
+  announces itself — "[Pokémon] is warping time around it!" — via
+  `subscript_time_warp_announce`.
 * **Space Warp** (Palkia) — sets battle-long gravity on switch-in. A new
   `FIELD_CONDITION_GRAVITY_PERM` bit (`include/constants/battle/condition.h`) is
   folded into `FIELD_CONDITION_GRAVITY`, so every "is gravity active" check
@@ -150,9 +152,11 @@ plus `res/pokemon/giratina/forms/origin/data.json`.
   for the rest of the battle.
 
 New switch-in ability cases live in `battle_lib.c`'s
-`SWITCH_IN_CHECK_STATE_WEATHER_ABILITIES`; the two new subscripts are registered
-in `res/battle/scripts/subscripts/{sub_seq.order,meson.build}`. Two new ability
-announce strings were added to `res/text/battle_strings.json`.
+`SWITCH_IN_CHECK_STATE_WEATHER_ABILITIES`; the three new subscripts
+(`subscript_{distortion_surge,space_warp,time_warp_announce}`) are registered in
+`res/battle/scripts/subscripts/{sub_seq.order,meson.build}`. The new announce
+strings in `res/text/battle_strings.json` each come in the `_Ally`/`_Wild`/`_Foe`
+trio that `BattleMessage_CheckSide` expects for `TAG_NICKNAME`/`TAG_NICKNAME_ABILITY`.
 
 ---
 

@@ -3796,6 +3796,15 @@ int BattleSystem_TriggerEffectOnSwitch(BattleSystem *battleSys, BattleContext *b
                         }
                         break;
 
+                    // Time Warp (Dialga): announce on switch-in ("<mon> is
+                    // warping time around it!"). The two-turn-move shortcut
+                    // itself is handled in the move effect scripts.
+                    case ABILITY_TIME_WARP:
+                        battleCtx->battleMons[battler].weatherAbilityAnnounced = TRUE;
+                        subscript = subscript_time_warp_announce;
+                        result = SWITCH_IN_CHECK_RESULT_BREAK;
+                        break;
+
                     // Space Warp (Palkia): permanent gravity on switch-in.
                     case ABILITY_SPACE_WARP:
                         battleCtx->battleMons[battler].weatherAbilityAnnounced = TRUE;

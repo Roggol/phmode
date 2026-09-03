@@ -8536,17 +8536,66 @@
       ]
     },
     {
-      "id": "BattleStrings_Text_PokemonsAbilityDistortedTheTerrain",
+      "id": "BattleStrings_Text_PokemonsAbilityDistortedTheTerrain_Ally",
       "en_US": [
         "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
         "distorted the terrain!"
       ]
     },
     {
-      "id": "BattleStrings_Text_PokemonsAbilityIntensifiedGravity",
+      "id": "BattleStrings_Text_PokemonsAbilityDistortedTheTerrain_Wild",
+      "en_US": [
+        "The wild {STRVAR_1 1, 0, 0}’s\n",
+        "{STRVAR_1 5, 1, 0} distorted the terrain!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityDistortedTheTerrain_Foe",
+      "en_US": [
+        "The foe’s {STRVAR_1 1, 0, 0}’s\n",
+        "{STRVAR_1 5, 1, 0} distorted the terrain!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityIntensifiedGravity_Ally",
       "en_US": [
         "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
         "intensified gravity!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityIntensifiedGravity_Wild",
+      "en_US": [
+        "The wild {STRVAR_1 1, 0, 0}’s\n",
+        "{STRVAR_1 5, 1, 0} intensified gravity!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityIntensifiedGravity_Foe",
+      "en_US": [
+        "The foe’s {STRVAR_1 1, 0, 0}’s\n",
+        "{STRVAR_1 5, 1, 0} intensified gravity!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonIsWarpingTime_Ally",
+      "en_US": [
+        "{STRVAR_1 1, 0, 0} is warping\n",
+        "time around it!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonIsWarpingTime_Wild",
+      "en_US": [
+        "The wild {STRVAR_1 1, 0, 0} is\n",
+        "warping time around it!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonIsWarpingTime_Foe",
+      "en_US": [
+        "The foe’s {STRVAR_1 1, 0, 0} is\n",
+        "warping time around it!"
       ]
     }
   ]

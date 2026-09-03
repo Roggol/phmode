@@ -305,4 +305,5 @@ subscript_files = files(
     'subscript_overworld_distortion_terrain.s',
     'subscript_distortion_surge.s',
     'subscript_space_warp.s',
+    'subscript_time_warp_announce.s',
 )
