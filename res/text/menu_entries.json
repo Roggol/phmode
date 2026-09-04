@@ -1144,6 +1144,38 @@
     {
       "id": "MenuEntries_Text_StarPieces_10",
       "en_US": "10"
+    },
+    {
+      "id": "MenuEntries_Text_PC_InflictStatus",
+      "en_US": "INFLICT STATUS"
+    },
+    {
+      "id": "MenuEntries_Text_PC_InflictStatusCure",
+      "en_US": "Cure"
+    },
+    {
+      "id": "MenuEntries_Text_PC_InflictStatusSleep",
+      "en_US": "Sleep"
+    },
+    {
+      "id": "MenuEntries_Text_PC_InflictStatusPoison",
+      "en_US": "Poison"
+    },
+    {
+      "id": "MenuEntries_Text_PC_InflictStatusToxic",
+      "en_US": "Badly poison"
+    },
+    {
+      "id": "MenuEntries_Text_PC_InflictStatusBurn",
+      "en_US": "Burn"
+    },
+    {
+      "id": "MenuEntries_Text_PC_InflictStatusFreeze",
+      "en_US": "Freeze"
+    },
+    {
+      "id": "MenuEntries_Text_PC_InflictStatusParalyze",
+      "en_US": "Paralyze"
     }
   ]
 }

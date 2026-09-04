@@ -56,6 +56,26 @@ the Skills page:
   the boosted stat, blue for the hindered stat, default colour for a neutral
   nature.
 
+### PC: "Inflict status" option
+The main PC boot menu ("Someone's PC / [Player]'s PC / Switch off …") gains an
+**INFLICT STATUS** entry: pick a party Pokémon, then choose Cure / Sleep /
+Poison / Badly poison / Burn / Freeze / Paralyze from a list, and the condition
+is written to that Pokémon.
+
+* `res/field/scripts/scripts_common.s` — `CommonScript_AddMenuEntryInflictStatus`
+  (added to both `CommonScript_PCMenu` and `CommonScript_PCMenuHallOfFame`) and
+  `CommonScript_PCInflictStatus`, which reuses `SelectMoveTutorPokemon` /
+  `GetSelectedPartySlot` for the party picker and a single-column `ShowMenu` for
+  the condition. The condition list is built with `AddMenuEntry` (u16 string ID)
+  rather than `AddMenuEntryImm` / `AddListMenuEntry`, whose script commands
+  truncate the string ID to a byte and so can't reach the new
+  `menu_entries.json` strings past index 255.
+* New script command `InflictPartyMonStatus partySlot, choice`
+  (`asm/macros/scrcmd.inc`, `include/data/scripts/scrcmd.h`,
+  `include/scrcmd_party.h`, `src/scrcmd_party.c`) sets `MON_DATA_STATUS`
+  (`MON_CONDITION_*`) on the chosen party member.
+* Menu strings in `res/text/menu_entries.json`.
+
 ### HM moves are forgettable
 The "HM moves can't be forgotten!" restriction is removed, so Cut, Fly, Surf,
 etc. can be replaced from the "which move should be forgotten?" prompt like any

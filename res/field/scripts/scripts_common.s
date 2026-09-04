@@ -980,6 +980,7 @@ CommonScript_AddMenuEntryOaksPC:
 
 CommonScript_PCMenuHallOfFame:
     AddMenuEntryImm MenuEntries_Text_PC_HallOfFame, 3
+    Call CommonScript_AddMenuEntryInflictStatus
     AddMenuEntryImm MenuEntries_Text_PC_SwitchOff, 4
     ShowMenu
     SetVar VAR_0x8008, VAR_0x8006
@@ -987,16 +988,71 @@ CommonScript_PCMenuHallOfFame:
     GoToIfEq VAR_0x8008, 1, CommonScript_PlayersPC
     GoToIfEq VAR_0x8008, 2, CommonScript_ProfsPC
     GoToIfEq VAR_0x8008, 3, CommonScript_PCHallOfFame
+    GoToIfEq VAR_0x8008, 9, CommonScript_PCInflictStatus
     GoTo CommonScript_PCSwitchOff
 
 CommonScript_PCMenu:
+    Call CommonScript_AddMenuEntryInflictStatus
     AddMenuEntryImm MenuEntries_Text_PC_SwitchOff, 3
     ShowMenu
     SetVar VAR_0x8008, VAR_0x8006
     GoToIfEq VAR_0x8008, 0, CommonScript_StorageSystem
     GoToIfEq VAR_0x8008, 1, CommonScript_PlayersPC
     GoToIfEq VAR_0x8008, 2, CommonScript_ProfsPC
+    GoToIfEq VAR_0x8008, 9, CommonScript_PCInflictStatus
     GoTo CommonScript_PCSwitchOff
+
+CommonScript_AddMenuEntryInflictStatus:
+    SetVar VAR_0x8009, MenuEntries_Text_PC_InflictStatus
+    SetVar VAR_0x800A, 9
+    AddMenuEntry VAR_0x8009, VAR_0x800A
+    Return
+
+CommonScript_PCInflictStatus:
+    PlaySE SEQ_SE_DP_PC_LOGIN_sseq
+    CloseMessage
+    Call CommonScript_PCFadeOut
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8002
+    ReturnToField
+    Call CommonScript_PCFadeIn
+    GoToIfEq VAR_0x8002, PARTY_SLOT_NONE, CommonScript_AccessWhichPC
+    BufferPlayerName 0
+    MessageInstant CommonStrings_Text_AccessWhichPC
+    @ AddListMenuEntry truncates its string ID to a byte, so these
+    @ high-index strings must be added through AddMenuEntry (which reads a u16
+    @ var) on a single-column ShowMenu instead.
+    InitGlobalTextMenu 1, 1, 0, VAR_0x8006
+    Call CommonScript_AddInflictStatusChoice
+    ShowMenu
+    SetVar VAR_0x8005, VAR_0x8006
+    GoToIfGe VAR_0x8005, 7, CommonScript_AccessWhichPC
+    InflictPartyMonStatus VAR_0x8002, VAR_0x8005
+    GoTo CommonScript_AccessWhichPC
+
+CommonScript_AddInflictStatusChoice:
+    SetVar VAR_0x8009, MenuEntries_Text_PC_InflictStatusCure
+    SetVar VAR_0x800A, 0
+    AddMenuEntry VAR_0x8009, VAR_0x800A
+    SetVar VAR_0x8009, MenuEntries_Text_PC_InflictStatusSleep
+    SetVar VAR_0x800A, 1
+    AddMenuEntry VAR_0x8009, VAR_0x800A
+    SetVar VAR_0x8009, MenuEntries_Text_PC_InflictStatusPoison
+    SetVar VAR_0x800A, 2
+    AddMenuEntry VAR_0x8009, VAR_0x800A
+    SetVar VAR_0x8009, MenuEntries_Text_PC_InflictStatusToxic
+    SetVar VAR_0x800A, 3
+    AddMenuEntry VAR_0x8009, VAR_0x800A
+    SetVar VAR_0x8009, MenuEntries_Text_PC_InflictStatusBurn
+    SetVar VAR_0x800A, 4
+    AddMenuEntry VAR_0x8009, VAR_0x800A
+    SetVar VAR_0x8009, MenuEntries_Text_PC_InflictStatusFreeze
+    SetVar VAR_0x800A, 5
+    AddMenuEntry VAR_0x8009, VAR_0x800A
+    SetVar VAR_0x8009, MenuEntries_Text_PC_InflictStatusParalyze
+    SetVar VAR_0x800A, 6
+    AddMenuEntry VAR_0x8009, VAR_0x800A
+    Return
 
 CommonScript_StorageSystem:
     PlaySE SEQ_SE_DP_PC_LOGIN_sseq

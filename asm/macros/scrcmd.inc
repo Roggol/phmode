@@ -3242,6 +3242,12 @@
     .short \ribbonID
     .endm
 
+    .macro InflictPartyMonStatus partySlot, statusChoice
+    .short SCRCMD_INFLICTPARTYMONSTATUS
+    .short \partySlot
+    .short \statusChoice
+    .endm
+
     .macro BufferRibbonName templateArg, ribbonID
     .short SCRCMD_BUFFERRIBBONNAME
     .byte \templateArg

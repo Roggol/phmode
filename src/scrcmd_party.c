@@ -2,6 +2,7 @@
 
 #include <nitro.h>
 
+#include "constants/battle/condition.h"
 #include "constants/heap.h"
 #include "generated/natures.h"
 #include "generated/species.h"
@@ -822,5 +823,46 @@ BOOL ScrCmd_CheckPartyHasHeldItem(ScriptContext *ctx)
         }
     }
 
+    return FALSE;
+}
+
+// Inflicts (or, for choice 0, clears) a status condition on a chosen party
+// member. Backs the "Inflict status" PC menu option; `choice` matches the
+// list-menu entry indices in CommonScript_PCInflictStatus.
+BOOL ScrCmd_InflictPartyMonStatus(ScriptContext *ctx)
+{
+    u16 partySlot = ScriptContext_GetVar(ctx);
+    u16 choice = ScriptContext_GetVar(ctx);
+    u32 status;
+
+    Pokemon *mon = Party_GetPokemonBySlotIndex(SaveData_GetParty(ctx->fieldSystem->saveData), partySlot);
+
+    switch (choice) {
+    case 0:
+        status = MON_CONDITION_NONE;
+        break;
+    case 1:
+        status = MON_CONDITION_SLEEP_0 | MON_CONDITION_SLEEP_1; // 3 turns
+        break;
+    case 2:
+        status = MON_CONDITION_POISON;
+        break;
+    case 3:
+        status = MON_CONDITION_TOXIC;
+        break;
+    case 4:
+        status = MON_CONDITION_BURN;
+        break;
+    case 5:
+        status = MON_CONDITION_FREEZE;
+        break;
+    case 6:
+        status = MON_CONDITION_PARALYSIS;
+        break;
+    default:
+        return FALSE;
+    }
+
+    Pokemon_SetValue(mon, MON_DATA_STATUS, &status);
     return FALSE;
 }
