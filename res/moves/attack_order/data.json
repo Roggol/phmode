@@ -3,20 +3,18 @@
     "description": [
         "The user calls out\n",
         "its underlings to\n",
-        "pummel the foe.\n",
-        "It has a high\n",
-        "critical-hit ratio."
+        "pummel all foes."
     ],
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_BUG",
-    "power": 90,
+    "power": 100,
     "accuracy": 100,
     "pp": 15,
     "effect": {
-        "type": "BATTLE_EFFECT_HIGH_CRITICAL",
+        "type": "BATTLE_EFFECT_HIT",
         "chance": 0
     },
-    "range": "RANGE_SINGLE_TARGET",
+    "range": "RANGE_ADJACENT_OPPONENTS",
     "priority": 0,
     "flags": [
         "MOVE_FLAG_CAN_PROTECT",

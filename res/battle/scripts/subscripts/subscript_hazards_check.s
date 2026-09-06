@@ -20,11 +20,8 @@ _010:
     CheckStickyWeb BTLSCR_SWITCHED_MON, _037
     UpdateVarFromVar OPCODE_SET, BTLVAR_MSG_BATTLER_TEMP, BTLVAR_SWITCHED_MON
     UpdateVar OPCODE_FLAG_ON, BTLVAR_BATTLE_CTX_STATUS, SYSCTL_SKIP_SPRITE_BLINK
+    // {0} was caught in a sticky web! (message is buffered by ChangeStatStage)
     Call BATTLE_SUBSCRIPT_UPDATE_STAT_STAGE
-    // {0} has its speed lowered by the sticky web!
-    PrintMessage BattleStrings_Text_PokemonIsSlowedByStickyWeb_Ally, TAG_NICKNAME, BTLSCR_SWITCHED_MON
-    Wait 
-    WaitButtonABTime 30
     GoTo _037
 
 _037:

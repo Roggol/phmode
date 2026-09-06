@@ -105,6 +105,7 @@ static BOOL BattleControllerPlayer_DecrementPP(BattleSystem *battleSys, BattleCo
 static BOOL BattleControllerPlayer_HasNoTarget(BattleSystem *battleSys, BattleContext *battleCtx);
 static int BattleControllerPlayer_CheckTypeChart(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BattleControllerPlayer_CheckStatusDisruption(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BattleControllerPlayer_TriggerProtean(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BattleControllerPlayer_TriggerImmunityAbilities(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BattleControllerPlayer_LoadQuickClawCheck(BattleSystem *battleSys, BattleContext *battleCtx);
 static int BattleControllerPlayer_CheckMoveHitAccuracy(BattleSystem *battleSys, BattleContext *battleCtx, int attacker, int defender, int move);
@@ -1078,10 +1079,8 @@ static void BattleControllerPlayer_CheckFieldConditions(BattleSystem *battleSys,
             break;
 
         case FIELD_COND_CHECK_STATE_STICKY_WEB:
-            if (battleCtx->fieldConditionsMask & FIELD_CONDITION_STICKY_WEB) {
-                PrepareSubroutineSequence(battleCtx, subscript_weather_continues);
-                state = STATE_BREAK_OUT;
-            }
+            // Sticky Web is a per-side hazard now, not a field condition; nothing
+            // to process at end of turn (like Spikes / Stealth Rock).
             battleCtx->fieldConditionCheckState++;
             break;
 
@@ -2913,6 +2912,8 @@ static inline int CalcMoveType(BattleContext *battleCtx, int attacker, int move)
 {
     if (Battler_Ability(battleCtx, attacker) == ABILITY_NORMALIZE) {
         return TYPE_NORMAL;
+    } else if (Move_AteAbilityType(battleCtx, Battler_Ability(battleCtx, attacker), move) != TYPE_NORMAL) {
+        return Move_AteAbilityType(battleCtx, Battler_Ability(battleCtx, attacker), move);
     } else if (battleCtx->moveType) {
         return battleCtx->moveType;
     }
@@ -3197,6 +3198,41 @@ static void BattleControllerPlayer_ExecScript(BattleSystem *battleSys, BattleCon
     }
 }
 
+/**
+ * @brief Protean: just before a move is used, retype the attacker to that move's
+ * type (unless it is already exactly that pure type).
+ *
+ * @return TRUE if a type change was queued (a subscript was loaded); FALSE
+ * otherwise.
+ */
+static BOOL BattleControllerPlayer_TriggerProtean(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    int attacker = battleCtx->attacker;
+    u8 moveType;
+
+    if (Battler_Ability(battleCtx, attacker) != ABILITY_PROTEAN
+        || battleCtx->moveCur == MOVE_STRUGGLE
+        || battleCtx->moveCur == MOVE_NONE) {
+        return FALSE;
+    }
+
+    moveType = CalcMoveType(battleCtx, attacker, battleCtx->moveCur);
+
+    if (battleCtx->battleMons[attacker].type1 == moveType
+        && battleCtx->battleMons[attacker].type2 == moveType) {
+        return FALSE;
+    }
+
+    battleCtx->msgTemp = moveType;
+    battleCtx->msgBattlerTemp = attacker;
+
+    LOAD_SUBSEQ(subscript_protean);
+    battleCtx->commandNext = battleCtx->command;
+    battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
+
+    return TRUE;
+}
+
 enum BeforeMoveState {
     BEFORE_MOVE_START = 0,
 
@@ -3205,6 +3241,7 @@ enum BeforeMoveState {
     BEFORE_MOVE_STATE_CHECK_OBEDIENCE,
     BEFORE_MOVE_STATE_DECREMENT_PP,
     BEFORE_MOVE_STATE_CHECK_TARGET_EXISTS,
+    BEFORE_MOVE_STATE_PROTEAN,
     BEFORE_MOVE_STATE_CHECK_STOLEN,
     BEFORE_MOVE_STATE_REDIRECT_TARGET,
 
@@ -3265,6 +3302,13 @@ static void BattleControllerPlayer_BeforeMove(BattleSystem *battleSys, BattleCon
 
     case BEFORE_MOVE_STATE_CHECK_TARGET_EXISTS:
         if (BattleControllerPlayer_HasNoTarget(battleSys, battleCtx) == TRUE) {
+            return;
+        }
+
+        battleCtx->beforeMoveCheckState++;
+
+    case BEFORE_MOVE_STATE_PROTEAN:
+        if (BattleControllerPlayer_TriggerProtean(battleSys, battleCtx) == TRUE) {
             return;
         }
 
@@ -3479,6 +3523,14 @@ static void BattleControllerPlayer_UpdateHP(BattleSystem *battleSys, BattleConte
             } else {
                 battleCtx->moveStatusFlags |= MOVE_STATUS_ENDURED_ITEM;
             }
+        } else if (DEFENDER_TURN_FLAGS.enduring == 0
+            && DEFENDER_SELF_TURN_FLAGS.focusItemActivated == 0
+            && DEFENDING_MON.curHP == DEFENDING_MON.maxHP
+            && DEFENDING_MON.curHP + battleCtx->damage <= 0
+            && Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->defender, ABILITY_STURDY) == TRUE) {
+            // Modern Sturdy: a full-HP holder survives an otherwise-lethal hit at 1 HP.
+            battleCtx->damage = (DEFENDING_MON.curHP - 1) * -1;
+            battleCtx->moveStatusFlags |= MOVE_STATUS_ENDURED;
         }
 
         battleCtx->storedDamage[battleCtx->defender] += battleCtx->damage;
@@ -3530,6 +3582,7 @@ enum AfterMoveMessageState {
     ONE_HIT_FORM_CHANGE,
     ONE_HIT_RAGE,
     ONE_HIT_TRIGGER_ABILITY,
+    ONE_HIT_TRIGGER_ATTACKER_ABILITY,
     ONE_HIT_EXTRA_FLINCH,
 
     MULTI_HIT_CRITICAL = 0,
@@ -3537,6 +3590,7 @@ enum AfterMoveMessageState {
     MULTI_HIT_FORM_CHANGE,
     MULTI_HIT_RAGE,
     MULTI_HIT_TRIGGER_ABILITY,
+    MULTI_HIT_TRIGGER_ATTACKER_ABILITY,
     MULTI_HIT_STATUS,
     MULTI_HIT_EXTRA_FLINCH,
 };
@@ -3593,6 +3647,18 @@ static void BattleControllerPlayer_AfterMoveMessage(BattleSystem *battleSys, Bat
             battleCtx->afterMoveMessageState++;
             if (BattleSystem_TriggerAbilityOnHit(battleSys, battleCtx, &abilitySeq) == TRUE) {
                 LOAD_SUBSEQ(abilitySeq);
+                battleCtx->commandNext = battleCtx->command;
+                battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
+
+                return;
+            }
+
+        case ONE_HIT_TRIGGER_ATTACKER_ABILITY:
+            int attackerAbilitySeq;
+
+            battleCtx->afterMoveMessageState++;
+            if (BattleSystem_TriggerAttackerAbilityOnHit(battleSys, battleCtx, &attackerAbilitySeq) == TRUE) {
+                LOAD_SUBSEQ(attackerAbilitySeq);
                 battleCtx->commandNext = battleCtx->command;
                 battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
 
@@ -3659,6 +3725,18 @@ static void BattleControllerPlayer_AfterMoveMessage(BattleSystem *battleSys, Bat
                 return;
             }
 
+        case MULTI_HIT_TRIGGER_ATTACKER_ABILITY:
+            int multiAttackerAbilitySeq;
+
+            battleCtx->afterMoveMessageState++;
+            if (BattleSystem_TriggerAttackerAbilityOnHit(battleSys, battleCtx, &multiAttackerAbilitySeq) == TRUE) {
+                LOAD_SUBSEQ(multiAttackerAbilitySeq);
+                battleCtx->commandNext = battleCtx->command;
+                battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
+
+                return;
+            }
+
         case MULTI_HIT_STATUS:
             battleCtx->afterMoveMessageState++;
             if (BattleControllerPlayer_FollowupMessage(battleSys, battleCtx) == TRUE) {
@@ -3690,6 +3768,8 @@ static inline int CalcCurrentMoveType(BattleContext *battleCtx)
 {
     if (Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_NORMALIZE) {
         return TYPE_NORMAL;
+    } else if (Move_AteAbilityType(battleCtx, Battler_Ability(battleCtx, battleCtx->attacker), battleCtx->moveCur) != TYPE_NORMAL) {
+        return Move_AteAbilityType(battleCtx, Battler_Ability(battleCtx, battleCtx->attacker), battleCtx->moveCur);
     } else if (battleCtx->moveType) {
         return battleCtx->moveType;
     }

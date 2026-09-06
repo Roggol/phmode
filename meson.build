@@ -175,6 +175,7 @@ trainer_ai_o = custom_target(
     'trainer_ai_script.o',
     output: 'trainer_ai_script.o',
     input: files('src/battle/trainer_ai/script.s'),
+    depends: c_consts_generators,
     command: [
         arm_none_eabi_gcc_exe,
         '-I', meson.global_source_root() / 'include',

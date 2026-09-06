@@ -4,8 +4,8 @@
         "The user calls out\n",
         "its underlings to\n",
         "shield its body,\n",
-        "raising its Defense\n",
-        "and Sp. Def stats."
+        "sharply raising its\n",
+        "Defense and Sp. Def."
     ],
     "class": "CLASS_STATUS",
     "type": "TYPE_BUG",
@@ -13,7 +13,7 @@
     "accuracy": 0,
     "pp": 10,
     "effect": {
-        "type": "BATTLE_EFFECT_DEF_SPD_UP",
+        "type": "BATTLE_EFFECT_DEF_SPD_UP_2",
         "chance": 0
     },
     "range": "RANGE_USER",

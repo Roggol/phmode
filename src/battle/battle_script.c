@@ -311,6 +311,10 @@ static BOOL BtlCmd_CheckCurMoveIsType(BattleSystem *battleSys, BattleContext *ba
 static BOOL BtlCmd_LoadArchivedMonData(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_RefreshMonData(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_End(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_TryHealOrderAlly(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_TryStickyWeb(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_TryMoxie(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_BlowAwayHazards(BattleSystem *battleSys, BattleContext *battleCtx);
 
 static int BattleScript_Read(BattleContext *battleCtx);
 static void BattleScript_Iter(BattleContext *battleCtx, int i);
@@ -1329,6 +1333,8 @@ static void BattleScript_CalcMoveDamage(BattleSystem *battleSys, BattleContext *
     int moveType;
     if (Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_NORMALIZE) {
         moveType = TYPE_NORMAL;
+    } else if (Move_AteAbilityType(battleCtx, Battler_Ability(battleCtx, battleCtx->attacker), battleCtx->moveCur) != TYPE_NORMAL) {
+        moveType = Move_AteAbilityType(battleCtx, Battler_Ability(battleCtx, battleCtx->attacker), battleCtx->moveCur);
     } else if (battleCtx->moveType) {
         moveType = battleCtx->moveType;
     } else {
@@ -2842,6 +2848,12 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
         battleCtx->scriptTemp = BATTLE_ANIMATION_STAT_BOOST;
     }
 
+    // Contrary inverts stat-stage changes on the Pokemon that has it.
+    if (Battler_Ability(battleCtx, battleCtx->sideEffectMon) == ABILITY_CONTRARY) {
+        stageChange = -stageChange;
+        battleCtx->scriptTemp = stageChange > 0 ? BATTLE_ANIMATION_STAT_BOOST : BATTLE_ANIMATION_STAT_DROP;
+    }
+
     // Distortion Terrain inverts every stat-stage change on the field (Contrary-
     // style), regardless of whether the battler is grounded.
     if (battleCtx->fieldConditionsMask & FIELD_CONDITION_DISTORTION_TERRAIN) {
@@ -2884,7 +2896,12 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
         }
     } else {
         if ((battleCtx->sideEffectFlags & MOVE_SIDE_EFFECT_CANNOT_PREVENT) == FALSE) {
-            if (battleCtx->attacker != battleCtx->sideEffectMon) {
+            // Sticky Web's drop is caused by the opponent that set the hazard, so
+            // it is subject to Mist / Clear Body / White Smoke even though the
+            // switch-in flow leaves battleCtx->attacker pointing at the caught
+            // Pokemon itself.
+            if (battleCtx->attacker != battleCtx->sideEffectMon
+                || battleCtx->sideEffectType == SIDE_EFFECT_TYPE_STICKY_WEB) {
                 if (battleCtx->sideConditions[BattleSystem_GetBattlerSide(battleSys, battleCtx->sideEffectMon)].mistTurns) {
                     battleCtx->msgBuffer.id = BattleStrings_Text_PokemonIsProtectedByMist_Ally; // "{0} is protected by Mist!"
                     battleCtx->msgBuffer.tags = TAG_NICKNAME;
@@ -2970,6 +2987,10 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
             battleCtx->msgBuffer.params[1] = battleCtx->battleMons[battleCtx->attacker].ability;
             battleCtx->msgBuffer.params[2] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon);
             battleCtx->msgBuffer.params[3] = BATTLE_STAT_ATTACK + statOffset;
+        } else if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_STICKY_WEB) {
+            battleCtx->msgBuffer.id = BattleStrings_Text_PokemonIsSlowedByStickyWeb_Ally; // "{0} was caught in a sticky web!"
+            battleCtx->msgBuffer.tags = TAG_NICKNAME;
+            battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon);
         } else {
             SetupNicknameStatMsg(battleCtx,
                 stageChange == -1 ? BattleStrings_Text_PokemonsStatFell_Ally : // "{0}'s {1} fell!"
@@ -2981,6 +3002,31 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
 
         if (mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] < MIN_STAT_STAGE) {
             mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] = MIN_STAT_STAGE;
+        }
+
+        // Defiant / Competitive: when an opponent lowers one of this Pokemon's
+        // stats, Defiant raises its Attack by 2 stages and Competitive raises its
+        // Sp. Atk by 2 stages. Applied silently (the stat bar still updates); the
+        // triggering "stat fell!" message from the calling subscript still shows.
+        if (stageChange < 0
+            && battleCtx->battleMons[battleCtx->sideEffectMon].curHP
+            && BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker)
+                != BattleSystem_GetBattlerSide(battleSys, battleCtx->sideEffectMon)) {
+            int reactStat = -1;
+
+            if (Battler_Ability(battleCtx, battleCtx->sideEffectMon) == ABILITY_DEFIANT) {
+                reactStat = BATTLE_STAT_ATTACK;
+            } else if (Battler_Ability(battleCtx, battleCtx->sideEffectMon) == ABILITY_COMPETITIVE) {
+                reactStat = BATTLE_STAT_SP_ATTACK;
+            }
+
+            if (reactStat >= 0) {
+                mon->statBoosts[reactStat] += 2;
+
+                if (mon->statBoosts[reactStat] > MAX_STAT_STAGE) {
+                    mon->statBoosts[reactStat] = MAX_STAT_STAGE;
+                }
+            }
         }
     }
 
@@ -5474,9 +5520,10 @@ static BOOL BtlCmd_CheckStickyWeb(BattleSystem *battleSys, BattleContext *battle
     int battler = BattleScript_Battler(battleSys, battleCtx, inBattler);
     int side = BattleSystem_GetBattlerSide(battleSys, battler);
 
-    if (WEATHER_IS_STICKY && battleCtx->battleMons[battler].curHP) {
+    if ((battleCtx->sideConditionsMask[side] & SIDE_CONDITION_STICKY_WEB) && battleCtx->battleMons[battler].curHP) {
         battleCtx->sideEffectParam = MOVE_SUBSCRIPT_PTR_SPEED_DOWN_1_STAGE;
         battleCtx->sideEffectMon = battler;
+        battleCtx->sideEffectType = SIDE_EFFECT_TYPE_STICKY_WEB;
     } else {
         BattleScript_Iter(battleCtx, jumpOnFail);
     }
@@ -6032,8 +6079,6 @@ static BOOL BtlCmd_TryReplaceFaintedMon(BattleSystem *battleSys, BattleContext *
  */
 static BOOL BtlCmd_RapidSpin(BattleSystem *battleSys, BattleContext *battleCtx)
 {
-    int side = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker);
-
     if (ATTACKING_MON.statusVolatile & VOLATILE_CONDITION_BIND) {
         ATTACKING_MON.statusVolatile &= ~VOLATILE_CONDITION_BIND;
         battleCtx->msgBattlerTemp = ATTACKING_MON.moveEffectsData.bindTarget;
@@ -6052,29 +6097,73 @@ static BOOL BtlCmd_RapidSpin(BattleSystem *battleSys, BattleContext *battleCtx)
         return FALSE;
     }
 
-    if (battleCtx->sideConditions[side].spikesLayers) {
-        battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_SPIKES;
-        battleCtx->sideConditions[side].spikesLayers = 0;
-        battleCtx->msgMoveTemp = MOVE_SPIKES;
-        BattleScript_Call(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_blow_away_hazards);
+    BattleScript_Iter(battleCtx, 1);
 
-        return FALSE;
+    return FALSE;
+}
+
+/**
+ * @brief Clear every entry hazard from both sides of the field, plus Tailwind on
+ * both sides and Gravity, one condition per invocation.
+ *
+ * Like BtlCmd_RapidSpin, this command does not advance the script cursor before
+ * doing its work: after each condition it calls the relevant announcement
+ * subscript and returns, so the command re-executes until nothing is left and
+ * only then steps past itself. Shared by Rapid Spin and Defog.
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @return FALSE
+ */
+static BOOL BtlCmd_BlowAwayHazards(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    for (int side = 0; side < NUM_BATTLE_SIDES; side++) {
+        if (battleCtx->sideConditions[side].spikesLayers) {
+            battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_SPIKES;
+            battleCtx->sideConditions[side].spikesLayers = 0;
+            battleCtx->msgMoveTemp = MOVE_SPIKES;
+            BattleScript_Call(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_blow_away_hazards);
+
+            return FALSE;
+        }
+
+        if (battleCtx->sideConditions[side].toxicSpikesLayers) {
+            battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_TOXIC_SPIKES;
+            battleCtx->sideConditions[side].toxicSpikesLayers = 0;
+            battleCtx->msgMoveTemp = MOVE_TOXIC_SPIKES;
+            BattleScript_Call(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_blow_away_hazards);
+
+            return FALSE;
+        }
+
+        if (battleCtx->sideConditionsMask[side] & SIDE_CONDITION_STEALTH_ROCK) {
+            battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_STEALTH_ROCK;
+            battleCtx->msgMoveTemp = MOVE_STEALTH_ROCK;
+            BattleScript_Call(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_blow_away_hazards);
+
+            return FALSE;
+        }
+
+        if (battleCtx->sideConditionsMask[side] & SIDE_CONDITION_STICKY_WEB) {
+            battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_STICKY_WEB;
+            battleCtx->msgMoveTemp = MOVE_STICKY_WEB;
+            BattleScript_Call(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_blow_away_hazards);
+
+            return FALSE;
+        }
+
+        if (battleCtx->sideConditionsMask[side] & SIDE_CONDITION_TAILWIND) {
+            battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_TAILWIND;
+            battleCtx->msgBattlerTemp = BattleSystem_SideToBattler(battleSys, battleCtx, side);
+            BattleScript_Call(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_tailwind_end);
+
+            return FALSE;
+        }
     }
 
-    if (battleCtx->sideConditions[side].toxicSpikesLayers) {
-        battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_TOXIC_SPIKES;
-        battleCtx->sideConditions[side].toxicSpikesLayers = 0;
-        battleCtx->msgMoveTemp = MOVE_TOXIC_SPIKES;
-
-        BattleScript_Call(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_blow_away_hazards);
-
-        return FALSE;
-    }
-
-    if (battleCtx->sideConditionsMask[side] & SIDE_CONDITION_STEALTH_ROCK) {
-        battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_STEALTH_ROCK;
-        battleCtx->msgMoveTemp = MOVE_STEALTH_ROCK;
-        BattleScript_Call(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_blow_away_hazards);
+    if (battleCtx->fieldConditionsMask & FIELD_CONDITION_GRAVITY) {
+        battleCtx->fieldConditionsMask &= ~FIELD_CONDITION_GRAVITY;
+        BattleScript_Call(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_gravity_end);
 
         return FALSE;
     }
@@ -7002,11 +7091,6 @@ static BOOL BtlCmd_CalcWeatherBallParams(BattleSystem *battleSys, BattleContext 
 
             if (WEATHER_IS_HAIL) {
                 battleCtx->moveType = TYPE_ICE;
-            }
-
-            if(WEATHER_IS_STICKY) {
-                battleCtx->movePower = CURRENT_MOVE_DATA.power / 2;
-                battleCtx->moveType = TYPE_NORMAL;
             }
         } else {
             battleCtx->movePower = CURRENT_MOVE_DATA.power;
@@ -9264,6 +9348,12 @@ static BOOL BtlCmd_CheckHoldOnWith1HP(BattleSystem *battleSys, BattleContext *ba
     if (endure && battleCtx->battleMons[battler].curHP + battleCtx->hpCalcTemp <= 0) {
         battleCtx->hpCalcTemp = (battleCtx->battleMons[battler].curHP - 1) * -1;
         battleCtx->moveStatusFlags |= MOVE_STATUS_ENDURED_ITEM;
+    } else if (battleCtx->battleMons[battler].curHP == battleCtx->battleMons[battler].maxHP
+        && battleCtx->battleMons[battler].curHP + battleCtx->hpCalcTemp <= 0
+        && Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battler, ABILITY_STURDY) == TRUE) {
+        // Modern Sturdy: a full-HP holder survives an otherwise-lethal hit at 1 HP.
+        battleCtx->hpCalcTemp = (battleCtx->battleMons[battler].curHP - 1) * -1;
+        battleCtx->moveStatusFlags |= MOVE_STATUS_ENDURED;
     }
 
     return FALSE;
@@ -9605,6 +9695,100 @@ static BOOL BtlCmd_End(BattleSystem *battleSys, BattleContext *battleCtx)
 {
     battleCtx->battleProgressFlag = TRUE;
     return BattleSystem_PopScript(battleCtx);
+}
+
+/**
+ * @brief Heal Order: set up a half-max-HP heal for the attacker's ally, or jump
+ * past the ally-heal if there is no hurt, living ally.
+ *
+ * Inputs:
+ * 1. Jump distance if there is no ally to heal.
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @return FALSE
+ */
+static BOOL BtlCmd_TryHealOrderAlly(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int jumpIfNoAlly = BattleScript_Read(battleCtx);
+
+    int partner = BattleSystem_GetPartner(battleSys, battleCtx->attacker);
+
+    if (partner != battleCtx->attacker
+        && battleCtx->battleMons[partner].curHP > 0
+        && battleCtx->battleMons[partner].curHP < battleCtx->battleMons[partner].maxHP) {
+        battleCtx->hpCalcTemp = battleCtx->battleMons[partner].maxHP / 2;
+        if (battleCtx->hpCalcTemp == 0) {
+            battleCtx->hpCalcTemp = 1;
+        }
+        battleCtx->msgBattlerTemp = partner;
+    } else {
+        BattleScript_Iter(battleCtx, jumpIfNoAlly);
+    }
+
+    return FALSE;
+}
+
+/**
+ * @brief Sticky Web (move): lay the hazard on the target's side of the field.
+ *
+ * Inputs:
+ * 1. Jump distance if the opposing side is already webbed.
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @return FALSE
+ */
+static BOOL BtlCmd_TryStickyWeb(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int jumpOnFail = BattleScript_Read(battleCtx);
+    int defendingSide = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker) ^ 1;
+
+    if (battleCtx->sideConditionsMask[defendingSide] & SIDE_CONDITION_STICKY_WEB) {
+        battleCtx->selfTurnFlags[battleCtx->attacker].skipPressureCheck = TRUE;
+        BattleScript_Iter(battleCtx, jumpOnFail);
+    } else {
+        battleCtx->sideConditionsMask[defendingSide] |= SIDE_CONDITION_STICKY_WEB;
+    }
+
+    return FALSE;
+}
+
+/**
+ * @brief Moxie: after the attacker knocks out a Pokemon on the other side with a
+ * move, raise the attacker's Attack by one stage. Runs from the faint subscript
+ * so the boost is announced after the "fainted!" message.
+ *
+ * Inputs:
+ * 1. Jump distance if Moxie should not trigger.
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @return FALSE
+ */
+static BOOL BtlCmd_TryMoxie(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int jumpNoMoxie = BattleScript_Read(battleCtx);
+
+    int attacker = battleCtx->attacker;
+
+    if (Battler_Ability(battleCtx, attacker) == ABILITY_MOXIE
+        && battleCtx->battleMons[attacker].curHP > 0
+        && attacker != battleCtx->faintedMon
+        && BattleSystem_GetBattlerSide(battleSys, attacker) != BattleSystem_GetBattlerSide(battleSys, battleCtx->faintedMon)
+        && battleCtx->battleMons[attacker].statBoosts[BATTLE_STAT_ATTACK] < MAX_STAT_STAGE) {
+        battleCtx->sideEffectMon = attacker;
+        battleCtx->msgBattlerTemp = attacker;
+        battleCtx->sideEffectType = SIDE_EFFECT_TYPE_ABILITY;
+        battleCtx->sideEffectParam = MOVE_SUBSCRIPT_PTR_ATTACK_UP_1_STAGE;
+    } else {
+        BattleScript_Iter(battleCtx, jumpNoMoxie);
+    }
+
+    return FALSE;
 }
 
 /**

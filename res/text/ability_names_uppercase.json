@@ -508,6 +508,70 @@
     {
       "id": "pl_msg_00000611_00126",
       "en_US": "DISTORTION SURGE"
+    },
+    {
+      "id": "pl_msg_00000611_00127",
+      "en_US": "SHEER FORCE"
+    },
+    {
+      "id": "pl_msg_00000611_00128",
+      "en_US": "DEFIANT"
+    },
+    {
+      "id": "pl_msg_00000611_00129",
+      "en_US": "COMPETITIVE"
+    },
+    {
+      "id": "pl_msg_00000611_00130",
+      "en_US": "PRANKSTER"
+    },
+    {
+      "id": "pl_msg_00000611_00131",
+      "en_US": "CONTRARY"
+    },
+    {
+      "id": "pl_msg_00000611_00132",
+      "en_US": "PSYCHIC SURGE"
+    },
+    {
+      "id": "pl_msg_00000611_00133",
+      "en_US": "ELECTRIC SURGE"
+    },
+    {
+      "id": "pl_msg_00000611_00134",
+      "en_US": "SHED SPINES"
+    },
+    {
+      "id": "pl_msg_00000611_00135",
+      "en_US": "TOXIC BOOST"
+    },
+    {
+      "id": "pl_msg_00000611_00136",
+      "en_US": "PROTEAN"
+    },
+    {
+      "id": "pl_msg_00000611_00137",
+      "en_US": "REFRIGERATE"
+    },
+    {
+      "id": "pl_msg_00000611_00138",
+      "en_US": "FLARE BOOST"
+    },
+    {
+      "id": "pl_msg_00000611_00139",
+      "en_US": "MOXIE"
+    },
+    {
+      "id": "pl_msg_00000611_00140",
+      "en_US": "POISON TOUCH"
+    },
+    {
+      "id": "pl_msg_00000611_00141",
+      "en_US": "JUSTIFIED"
+    },
+    {
+      "id": "pl_msg_00000611_00142",
+      "en_US": "SHARPNESS"
     }
   ]
 }

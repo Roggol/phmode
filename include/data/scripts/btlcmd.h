@@ -231,6 +231,10 @@ ScriptCommand(BTLCMD_CHECKSTICKYWEB,              BtlCmd_CheckStickyWeb)
 ScriptCommand(BTLCMD_CHECKELECTRICTERRAIN,        BtlCmd_CheckElectricTerrain)
 ScriptCommand(BTLCMD_CHECKGROUNDED,               BtlCmd_CheckGrounded)
 ScriptCommand(BTLCMD_GOTOSUBSCRIPTIFABILITYONFIELD, BtlCmd_GoToSubscriptIfAbilityOnField)
+ScriptCommand(BTLCMD_TRYHEALORDERALLY,            BtlCmd_TryHealOrderAlly)
+ScriptCommand(BTLCMD_TRYSTICKYWEB,                BtlCmd_TryStickyWeb)
+ScriptCommand(BTLCMD_TRYMOXIE,                    BtlCmd_TryMoxie)
+ScriptCommand(BTLCMD_BLOWAWAYHAZARDS,             BtlCmd_BlowAwayHazards)
 ScriptCommand(BTLCMD_END,                         BtlCmd_End)
 
 // clang-format on

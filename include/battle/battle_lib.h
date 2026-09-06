@@ -650,6 +650,26 @@ BOOL BattleSystem_CanWhirlwind(BattleSystem *battleSys, BattleContext *battleCtx
 u8 Battler_Ability(BattleContext *battleCtx, int battler);
 
 /**
+ * @brief Get the type an "-ate" ability (currently only Refrigerate) converts a
+ * move to.
+ *
+ * @param battleCtx
+ * @param ability   The attacker's ability.
+ * @param move
+ * @return TYPE_ICE if the ability is Refrigerate and the move is an eligible
+ * Normal-type move; TYPE_NORMAL (no conversion) otherwise.
+ */
+u8 Move_AteAbilityType(BattleContext *battleCtx, int ability, int move);
+
+/**
+ * @brief Check whether a move is a slicing / cutting move (boosted by Sharpness).
+ *
+ * @param move
+ * @return TRUE if the move is in the slicing set.
+ */
+BOOL Move_IsSlicing(int move);
+
+/**
  * @brief Check if the given defender has the specified ability, treating it as
  * ignorable.
  *
@@ -904,6 +924,7 @@ int BattleSystem_RandomOpponent(BattleSystem *battleSys, BattleContext *battleCt
  * triggered effect.
  */
 BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *battleCtx, int *subscript);
+BOOL BattleSystem_TriggerAttackerAbilityOnHit(BattleSystem *battleSys, BattleContext *battleCtx, int *subscript);
 
 /**
  * @brief Triggers a battler's ability which prevents an illegal status

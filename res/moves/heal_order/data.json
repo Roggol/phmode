@@ -1,11 +1,10 @@
 {
     "name": "Heal Order",
     "description": [
-        "The user calls out\n",
-        "its underlings to heal\n",
-        "it. The user regains\n",
-        "up to half of its\n",
-        "max HP."
+        "The user calls out its\n",
+        "underlings to heal it\n",
+        "and its ally for up to\n",
+        "half of their max HP."
     ],
     "class": "CLASS_STATUS",
     "type": "TYPE_BUG",
@@ -13,7 +12,7 @@
     "accuracy": 0,
     "pp": 10,
     "effect": {
-        "type": "BATTLE_EFFECT_RESTORE_HALF_HP",
+        "type": "BATTLE_EFFECT_HEAL_ORDER",
         "chance": 0
     },
     "range": "RANGE_USER",

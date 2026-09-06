@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "constants/heap.h"
+#include "constants/overworld_weather.h"
 
 #include "field/field_system.h"
 #include "field/field_system_sub2_t.h"
@@ -424,6 +425,13 @@ void ov5_021D5F24(UnkStruct_ov5_021D5EF8 *param0, int param1)
 BOOL ov5_021D5F7C(UnkStruct_ov5_021D5EF8 *param0, int param1)
 {
     int v0;
+
+    // Battle-only "weather" values (Harsh Sun, Trick Room, the terrains, Sticky
+    // Web) drive a battle field condition but have no overworld visual, so render
+    // them as clear.
+    if (param1 >= 31) {
+        param1 = OVERWORLD_WEATHER_CLEAR;
+    }
 
     GF_ASSERT(param1 < 31);
 

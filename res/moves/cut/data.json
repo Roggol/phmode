@@ -8,7 +8,7 @@
         "trees."
     ],
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_NORMAL",
+    "type": "TYPE_GRASS",
     "power": 50,
     "accuracy": 95,
     "pp": 30,

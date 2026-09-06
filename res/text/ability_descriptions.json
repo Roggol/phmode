@@ -886,6 +886,118 @@
         "Distorts the terrain for\n",
         "the whole battle."
       ]
+    },
+    {
+      "id": "pl_msg_00000612_00127",
+      "en_US": [
+        "Removes added effects to\n",
+        "boost move power."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00128",
+      "en_US": [
+        "Sharply boosts the Attack\n",
+        "stat when a stat is lowered."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00129",
+      "en_US": [
+        "Sharply raises Sp. Atk when\n",
+        "a stat is lowered by the foe."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00130",
+      "en_US": [
+        "Gives priority to a\n",
+        "status move."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00131",
+      "en_US": [
+        "Makes stat changes have\n",
+        "an opposite effect."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00132",
+      "en_US": [
+        "Turns the ground into\n",
+        "Psychic Terrain on entry."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00133",
+      "en_US": [
+        "Turns the ground into\n",
+        "Electric Terrain on entry."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00134",
+      "en_US": [
+        "Scatters Spikes on the\n",
+        "foe’s side upon entry."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00135",
+      "en_US": [
+        "Powers up physical attacks\n",
+        "when poisoned."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00136",
+      "en_US": [
+        "Changes the Pokémon’s type\n",
+        "to the type of its move."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00137",
+      "en_US": [
+        "Normal-type moves become\n",
+        "Ice-type and do more damage."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00138",
+      "en_US": [
+        "Powers up special attacks\n",
+        "when burned."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00139",
+      "en_US": [
+        "Raises Attack after\n",
+        "knocking out a Pokémon."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00140",
+      "en_US": [
+        "May poison a target when\n",
+        "the Pokémon makes contact."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00141",
+      "en_US": [
+        "Raises Attack when hit\n",
+        "by a Dark-type move."
+      ]
+    },
+    {
+      "id": "pl_msg_00000612_00142",
+      "en_US": [
+        "Boosts the power of\n",
+        "slicing and cutting moves."
+      ]
     }
   ]
 }

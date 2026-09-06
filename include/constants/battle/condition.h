@@ -96,7 +96,7 @@
 #define SIDE_CONDITION_TAILWIND_0   (1 << 8)
 #define SIDE_CONDITION_TAILWIND_1   (1 << 9)
 #define SIDE_CONDITION_TOXIC_SPIKES (1 << 10)
-// unused flag: 1 << 11
+#define SIDE_CONDITION_STICKY_WEB   (1 << 11)
 #define SIDE_CONDITION_LUCKY_CHANT_0 (1 << 12)
 #define SIDE_CONDITION_LUCKY_CHANT_1 (1 << 13)
 #define SIDE_CONDITION_LUCKY_CHANT_2 (1 << 14)
@@ -123,7 +123,7 @@
 #define FIELD_CONDITION_TRICK_ROOM_0   (1 << 16)
 #define FIELD_CONDITION_TRICK_ROOM_1   (1 << 17)
 #define FIELD_CONDITION_TRICK_ROOM_2   (1 << 18)
-#define FIELD_CONDITION_STICKY_WEB     (1 << 19)
+// bit 19 free (Sticky Web is now the per-side SIDE_CONDITION_STICKY_WEB)
 #define FIELD_CONDITION_ELECTRIC_TERRAIN       (1 << 20)
 #define FIELD_CONDITION_PSYCHIC_TERRAIN        (1 << 21)
 #define FIELD_CONDITION_DISTORTION_TERRAIN     (1 << 22)
@@ -139,9 +139,11 @@
     | FIELD_CONDITION_SANDSTORM                            \
     | FIELD_CONDITION_SUNNY                                \
     | FIELD_CONDITION_HAILING                              \
-    | FIELD_CONDITION_DEEP_FOG                             \
-    | FIELD_CONDITION_STICKY_WEB)
+    | FIELD_CONDITION_DEEP_FOG)
 #define FIELD_CONDITION_TERRAIN (FIELD_CONDITION_ELECTRIC_TERRAIN | FIELD_CONDITION_PSYCHIC_TERRAIN | FIELD_CONDITION_DISTORTION_TERRAIN)
+// Weather and terrain share one slot: setting either clears the other, so any
+// weather overwrites any terrain and vice versa.
+#define FIELD_CONDITION_ATMOSPHERE (FIELD_CONDITION_WEATHER | FIELD_CONDITION_TERRAIN)
 #define FIELD_CONDITION_SOLAR_DOWN (FIELD_CONDITION_RAINING \
     | FIELD_CONDITION_SANDSTORM                             \
     | FIELD_CONDITION_HAILING                               \

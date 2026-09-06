@@ -306,4 +306,11 @@ subscript_files = files(
     'subscript_distortion_surge.s',
     'subscript_space_warp.s',
     'subscript_time_warp_announce.s',
+    'subscript_psychic_surge.s',
+    'subscript_electric_surge.s',
+    'subscript_shed_spines.s',
+    'subscript_protean.s',
+    'subscript_moxie.s',
+    'subscript_user_def_and_spdef_up_2_stages.s',
+    'subscript_heal_order.s',
 )

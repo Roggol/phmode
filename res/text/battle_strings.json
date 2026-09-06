@@ -8492,14 +8492,35 @@
     {
       "id": "BattleStrings_Text_PokemonIsSlowedByStickyWeb_Ally",
       "en_US": [
-        "{STRVAR_1 1, 0, 0} has its\n",
-        "speed lowered by the sticky web!"
+        "{STRVAR_1 1, 0, 0} was\n",
+        "caught in a sticky web!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonIsSlowedByStickyWeb_Wild",
+      "en_US": [
+        "The wild {STRVAR_1 1, 0, 0} was\n",
+        "caught in a sticky web!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonIsSlowedByStickyWeb_Foe",
+      "en_US": [
+        "The foe’s {STRVAR_1 1, 0, 0} was\n",
+        "caught in a sticky web!"
       ]
     },
     {
       "id": "BattleStrings_Text_YourSideStickyWeb",
       "en_US": [
         "Your side of the field is\n",
+        "covered in sticky webs!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_TheFoesSideStickyWeb",
+      "en_US": [
+        "The foe’s side of the field is\n",
         "covered in sticky webs!"
       ]
     },
@@ -8596,6 +8617,69 @@
       "en_US": [
         "The foe’s {STRVAR_1 1, 0, 0} is\n",
         "warping time around it!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityTurnedTheTerrainPsychic_Ally",
+      "en_US": [
+        "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
+        "made the terrain weird!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityTurnedTheTerrainPsychic_Wild",
+      "en_US": [
+        "The wild {STRVAR_1 1, 0, 0}’s\n",
+        "{STRVAR_1 5, 1, 0} made the terrain weird!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityTurnedTheTerrainPsychic_Foe",
+      "en_US": [
+        "The foe’s {STRVAR_1 1, 0, 0}’s\n",
+        "{STRVAR_1 5, 1, 0} made the terrain weird!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityChargedTheTerrain_Ally",
+      "en_US": [
+        "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
+        "electrified the terrain!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityChargedTheTerrain_Wild",
+      "en_US": [
+        "The wild {STRVAR_1 1, 0, 0}’s\n",
+        "{STRVAR_1 5, 1, 0} electrified the terrain!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityChargedTheTerrain_Foe",
+      "en_US": [
+        "The foe’s {STRVAR_1 1, 0, 0}’s\n",
+        "{STRVAR_1 5, 1, 0} electrified the terrain!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityScatteredSpikes_Ally",
+      "en_US": [
+        "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
+        "scattered Spikes at the foe’s feet!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityScatteredSpikes_Wild",
+      "en_US": [
+        "The wild {STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
+        "scattered Spikes at your feet!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilityScatteredSpikes_Foe",
+      "en_US": [
+        "The foe’s {STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
+        "scattered Spikes at your feet!"
       ]
     }
   ]

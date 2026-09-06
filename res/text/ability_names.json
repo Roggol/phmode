@@ -508,6 +508,70 @@
     {
       "id": "pl_msg_00000610_00126",
       "en_US": "Distortion Surge"
+    },
+    {
+      "id": "pl_msg_00000610_00127",
+      "en_US": "Sheer Force"
+    },
+    {
+      "id": "pl_msg_00000610_00128",
+      "en_US": "Defiant"
+    },
+    {
+      "id": "pl_msg_00000610_00129",
+      "en_US": "Competitive"
+    },
+    {
+      "id": "pl_msg_00000610_00130",
+      "en_US": "Prankster"
+    },
+    {
+      "id": "pl_msg_00000610_00131",
+      "en_US": "Contrary"
+    },
+    {
+      "id": "pl_msg_00000610_00132",
+      "en_US": "Psychic Surge"
+    },
+    {
+      "id": "pl_msg_00000610_00133",
+      "en_US": "Electric Surge"
+    },
+    {
+      "id": "pl_msg_00000610_00134",
+      "en_US": "Shed Spines"
+    },
+    {
+      "id": "pl_msg_00000610_00135",
+      "en_US": "Toxic Boost"
+    },
+    {
+      "id": "pl_msg_00000610_00136",
+      "en_US": "Protean"
+    },
+    {
+      "id": "pl_msg_00000610_00137",
+      "en_US": "Refrigerate"
+    },
+    {
+      "id": "pl_msg_00000610_00138",
+      "en_US": "Flare Boost"
+    },
+    {
+      "id": "pl_msg_00000610_00139",
+      "en_US": "Moxie"
+    },
+    {
+      "id": "pl_msg_00000610_00140",
+      "en_US": "Poison Touch"
+    },
+    {
+      "id": "pl_msg_00000610_00141",
+      "en_US": "Justified"
+    },
+    {
+      "id": "pl_msg_00000610_00142",
+      "en_US": "Sharpness"
     }
   ]
 }

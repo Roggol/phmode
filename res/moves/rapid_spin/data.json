@@ -1,15 +1,14 @@
 {
     "name": "Rapid Spin",
     "description": [
-        "A spin attack that\n",
-        "can also eliminate\n",
-        "such moves as Bind,\n",
-        "Wrap, Leech Seed,\n",
-        "and Spikes."
+        "A spin attack that frees\n",
+        "the user from Bind, Leech\n",
+        "Seed and entry hazards.\n",
+        "Also raises the user’s Speed."
     ],
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_NORMAL",
-    "power": 20,
+    "power": 50,
     "accuracy": 100,
     "pp": 40,
     "effect": {

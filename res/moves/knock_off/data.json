@@ -1,15 +1,15 @@
 {
     "name": "Knock Off",
     "description": [
-        "The user slaps down\n",
+        "The user knocks away\n",
         "the foe’s held item,\n",
-        "preventing the item\n",
-        "from being used\n",
-        "during the battle."
+        "and it also does more\n",
+        "damage if the foe has\n",
+        "an item."
     ],
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_DARK",
-    "power": 20,
+    "power": 65,
     "accuracy": 100,
     "pp": 20,
     "effect": {

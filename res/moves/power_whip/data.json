@@ -1,18 +1,18 @@
 {
     "name": "Power Whip",
     "description": [
-        "The user violently\n",
-        "whirls its vines or\n",
-        "tentacles to harshly\n",
-        "lash the foe.\n"
+        "The user violently whirls\n",
+        "its vines or tentacles to\n",
+        "lash the foe. The user is\n",
+        "hurt by recoil."
     ],
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_GRASS",
     "power": 120,
-    "accuracy": 85,
+    "accuracy": 100,
     "pp": 10,
     "effect": {
-        "type": "BATTLE_EFFECT_HIT",
+        "type": "BATTLE_EFFECT_RECOIL_QUARTER",
         "chance": 0
     },
     "range": "RANGE_SINGLE_TARGET",

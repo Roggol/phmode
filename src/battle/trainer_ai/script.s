@@ -3751,6 +3751,7 @@ Expert_RainDance_OtherChecks:
     IfLoadedEqualTo AI_WEATHER_HAILING, Expert_RainDance_ScorePlus1
     IfLoadedEqualTo AI_WEATHER_SUNNY, Expert_RainDance_ScorePlus1
     IfLoadedEqualTo AI_WEATHER_SANDSTORM, Expert_RainDance_ScorePlus1
+    IfLoadedEqualTo AI_WEATHER_TERRAIN, Expert_RainDance_ScorePlus1
     LoadBattlerAbility AI_BATTLER_ATTACKER
     IfLoadedEqualTo ABILITY_RAIN_DISH, Expert_RainDance_ScorePlus1
     IfLoadedNotEqualTo ABILITY_HYDRATION, Expert_RainDance_End
@@ -3781,6 +3782,7 @@ Expert_SunnyDay:
     IfLoadedEqualTo AI_WEATHER_HAILING, Expert_SunnyDay_ScorePlus1
     IfLoadedEqualTo AI_WEATHER_RAINING, Expert_SunnyDay_ScorePlus1
     IfLoadedEqualTo AI_WEATHER_SANDSTORM, Expert_SunnyDay_ScorePlus1
+    IfLoadedEqualTo AI_WEATHER_TERRAIN, Expert_SunnyDay_ScorePlus1
     LoadBattlerAbility AI_BATTLER_ATTACKER
     IfLoadedEqualTo ABILITY_FLOWER_GIFT, Expert_SunnyDay_ScorePlus1
     IfLoadedNotEqualTo ABILITY_LEAF_GUARD, Expert_SunnyDay_End
@@ -4095,6 +4097,7 @@ Expert_Hail:
     IfLoadedEqualTo AI_WEATHER_SUNNY, Expert_Hail_ScorePlus1AndCheckBlizzard
     IfLoadedEqualTo AI_WEATHER_RAINING, Expert_Hail_ScorePlus1AndCheckBlizzard
     IfLoadedEqualTo AI_WEATHER_SANDSTORM, Expert_Hail_ScorePlus1AndCheckBlizzard
+    IfLoadedEqualTo AI_WEATHER_TERRAIN, Expert_Hail_ScorePlus1AndCheckBlizzard
     GoTo Expert_Hail_End
 
 Expert_Hail_ScorePlus1AndCheckBlizzard:

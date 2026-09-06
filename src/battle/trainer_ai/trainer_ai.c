@@ -1436,6 +1436,13 @@ static void AICmd_LoadCurrentWeather(BattleSystem *battleSys, BattleContext *bat
     if (WEATHER_IS_FOG) {
         AI_CONTEXT.calcTemp = AI_WEATHER_DEEP_FOG;
     }
+
+    // Terrain occupies the same "atmosphere" slot as weather, so the AI treats an
+    // active terrain like weather when scoring weather-setting moves.
+    if (AI_CONTEXT.calcTemp == AI_WEATHER_CLEAR
+        && (battleCtx->fieldConditionsMask & FIELD_CONDITION_TERRAIN)) {
+        AI_CONTEXT.calcTemp = AI_WEATHER_TERRAIN;
+    }
 }
 
 static void AICmd_IfCurrentMoveEffectEqualTo(BattleSystem *battleSys, BattleContext *battleCtx)

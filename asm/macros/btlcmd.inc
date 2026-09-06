@@ -1255,6 +1255,25 @@
     .long \battler
     .endm
 
+    .macro TryHealOrderAlly jump
+    .long BTLCMD_TRYHEALORDERALLY
+    .long (\jump-.) / 4 - 1
+    .endm
+
+    .macro TryStickyWeb jump
+    .long BTLCMD_TRYSTICKYWEB
+    .long (\jump-.) / 4 - 1
+    .endm
+
+    .macro TryMoxie jump
+    .long BTLCMD_TRYMOXIE
+    .long (\jump-.) / 4 - 1
+    .endm
+
+    .macro BlowAwayHazards
+    .long BTLCMD_BLOWAWAYHAZARDS
+    .endm
+
     .macro End
     .long BTLCMD_END
     .endm

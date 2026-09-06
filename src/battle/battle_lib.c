@@ -1396,6 +1396,14 @@ u8 BattleSystem_CompareBattlerSpeed(BattleSystem *battleSys, BattleContext *batt
 
         battler1Priority = MOVE_DATA(battler1Move).priority;
         battler2Priority = MOVE_DATA(battler2Move).priority;
+
+        // Prankster gives +1 priority to status-category moves.
+        if (battler1Ability == ABILITY_PRANKSTER && MOVE_DATA(battler1Move).class == CLASS_STATUS) {
+            battler1Priority++;
+        }
+        if (battler2Ability == ABILITY_PRANKSTER && MOVE_DATA(battler2Move).class == CLASS_STATUS) {
+            battler2Priority++;
+        }
     }
 
     if (battler1Priority == battler2Priority) {
@@ -1520,6 +1528,9 @@ BOOL BattleSystem_TriggerSecondaryEffect(BattleSystem *battleSys, BattleContext 
 {
     BOOL result = FALSE;
     u16 effectChance;
+    // Sheer Force suppresses chance-based added effects (in exchange for the 30%
+    // power boost applied in BattleSystem_CalcMoveDamage).
+    BOOL sheerForce = Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_SHEER_FORCE;
 
     if (battleCtx->sideEffectIndirectFlags & MOVE_SIDE_EFFECT_ON_HIT) {
         SetupSideEffect(battleCtx, effect, SIDE_EFFECT_TYPE_INDIRECT);
@@ -1557,7 +1568,7 @@ BOOL BattleSystem_TriggerSecondaryEffect(BattleSystem *battleSys, BattleContext 
 
         GF_ASSERT(effectChance != 0);
 
-        if (BattleSystem_RandNext(battleSys) % 100 < effectChance) {
+        if (sheerForce == FALSE && BattleSystem_RandNext(battleSys) % 100 < effectChance) {
             battleCtx->battleStatusMask |= SYSCTL_APPLY_SECONDARY_EFFECT;
         }
 
@@ -1576,7 +1587,7 @@ BOOL BattleSystem_TriggerSecondaryEffect(BattleSystem *battleSys, BattleContext 
 
         GF_ASSERT(effectChance != 0);
 
-        if (BattleSystem_RandNext(battleSys) % 100 < effectChance) {
+        if (sheerForce == FALSE && BattleSystem_RandNext(battleSys) % 100 < effectChance) {
             SetupSideEffect(battleCtx, effect, SIDE_EFFECT_TYPE_INDIRECT);
 
             if (battleCtx->battleMons[battleCtx->sideEffectMon].curHP
@@ -2581,6 +2592,8 @@ int BattleSystem_ApplyTypeChart(BattleSystem *battleSys, BattleContext *battleCt
 
     if (Battler_Ability(battleCtx, attacker) == ABILITY_NORMALIZE) {
         moveType = TYPE_NORMAL;
+    } else if (Move_AteAbilityType(battleCtx, Battler_Ability(battleCtx, attacker), move) != TYPE_NORMAL) {
+        moveType = Move_AteAbilityType(battleCtx, Battler_Ability(battleCtx, attacker), move);
     } else if (inType) {
         moveType = inType;
     } else {
@@ -2689,6 +2702,8 @@ void BattleSystem_CalcEffectiveness(BattleContext *battleCtx, int move, int inTy
 
     if (attackerAbility == ABILITY_NORMALIZE) {
         moveType = TYPE_NORMAL;
+    } else if (Move_AteAbilityType(battleCtx, attackerAbility, move) != TYPE_NORMAL) {
+        moveType = Move_AteAbilityType(battleCtx, attackerAbility, move);
     } else if (inType) {
         moveType = inType;
     } else {
@@ -3105,6 +3120,46 @@ u8 Battler_Ability(BattleContext *battleCtx, int battler)
     return battleCtx->battleMons[battler].ability;
 }
 
+u8 Move_AteAbilityType(BattleContext *battleCtx, int ability, int move)
+{
+    if (move == MOVE_STRUGGLE
+        || move == MOVE_HIDDEN_POWER
+        || move == MOVE_WEATHER_BALL
+        || move == MOVE_NATURAL_GIFT
+        || move == MOVE_JUDGMENT
+        || MOVE_DATA(move).type != TYPE_NORMAL) {
+        return TYPE_NORMAL;
+    }
+
+    if (ability == ABILITY_REFRIGERATE) {
+        return TYPE_ICE;
+    }
+
+    return TYPE_NORMAL;
+}
+
+BOOL Move_IsSlicing(int move)
+{
+    switch (move) {
+    case MOVE_CUT:
+    case MOVE_SLASH:
+    case MOVE_NIGHT_SLASH:
+    case MOVE_PSYCHO_CUT:
+    case MOVE_LEAF_BLADE:
+    case MOVE_X_SCISSOR:
+    case MOVE_AIR_SLASH:
+    case MOVE_AIR_CUTTER:
+    case MOVE_FURY_CUTTER:
+    case MOVE_CROSS_POISON:
+    case MOVE_AERIAL_ACE:
+    case MOVE_RAZOR_LEAF:
+    case MOVE_RAZOR_WIND:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
 BOOL Battler_IgnorableAbility(BattleContext *battleCtx, int attacker, int defender, int ability)
 {
     BOOL result = FALSE;
@@ -3483,6 +3538,7 @@ static u16 sSoundMoves[] = {
     MOVE_HYPER_VOICE,
     MOVE_BUG_BUZZ,
     MOVE_CHATTER,
+    MOVE_BOOMBURST,
 };
 
 int BattleSystem_TriggerImmunityAbility(BattleContext *battleCtx, int attacker, int defender)
@@ -3698,6 +3754,8 @@ int BattleSystem_TriggerEffectOnSwitch(BattleSystem *battleSys, BattleContext *b
                     break;
 
                 case OVERWORLD_STICKY_WEB:
+                    // Overworld Sticky Web webs the player's side only.
+                    battleCtx->sideConditionsMask[BATTLE_SIDE_PLAYER] |= SIDE_CONDITION_STICKY_WEB;
                     subscript = subscript_overworld_sticky_web;
                     result = SWITCH_IN_CHECK_RESULT_BREAK;
                     break;
@@ -3824,6 +3882,42 @@ int BattleSystem_TriggerEffectOnSwitch(BattleSystem *battleSys, BattleContext *b
                             result = SWITCH_IN_CHECK_RESULT_BREAK;
                         }
                         break;
+
+                    // Psychic Surge (Grumpig): psychic terrain on switch-in.
+                    case ABILITY_PSYCHIC_SURGE:
+                        battleCtx->battleMons[battler].weatherAbilityAnnounced = TRUE;
+
+                        if ((battleCtx->fieldConditionsMask & FIELD_CONDITION_PSYCHIC_TERRAIN) == FALSE) {
+                            subscript = subscript_psychic_surge;
+                            result = SWITCH_IN_CHECK_RESULT_BREAK;
+                        }
+                        break;
+
+                    // Electric Surge (Ampharos): electric terrain on switch-in.
+                    case ABILITY_ELECTRIC_SURGE:
+                        battleCtx->battleMons[battler].weatherAbilityAnnounced = TRUE;
+
+                        if ((battleCtx->fieldConditionsMask & FIELD_CONDITION_ELECTRIC_TERRAIN) == FALSE) {
+                            subscript = subscript_electric_surge;
+                            result = SWITCH_IN_CHECK_RESULT_BREAK;
+                        }
+                        break;
+
+                    // Shed Spines (Cacturne): adds a layer of Spikes to the
+                    // opposing side on switch-in (up to the usual 3 layers).
+                    case ABILITY_SHED_SPINES: {
+                        int shedSpinesSide = BattleSystem_GetBattlerSide(battleSys, battler) ^ 1;
+
+                        battleCtx->battleMons[battler].weatherAbilityAnnounced = TRUE;
+
+                        if (battleCtx->sideConditions[shedSpinesSide].spikesLayers < 3) {
+                            battleCtx->sideConditionsMask[shedSpinesSide] |= SIDE_CONDITION_SPIKES;
+                            battleCtx->sideConditions[shedSpinesSide].spikesLayers++;
+                            subscript = subscript_shed_spines;
+                            result = SWITCH_IN_CHECK_RESULT_BREAK;
+                        }
+                        break;
+                    }
                     }
                 }
 
@@ -4280,6 +4374,8 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
 
         if (Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_NORMALIZE) {
             moveType = TYPE_NORMAL;
+        } else if (Move_AteAbilityType(battleCtx, Battler_Ability(battleCtx, battleCtx->attacker), battleCtx->moveCur) != TYPE_NORMAL) {
+            moveType = Move_AteAbilityType(battleCtx, Battler_Ability(battleCtx, battleCtx->attacker), battleCtx->moveCur);
         } else if (battleCtx->moveType) {
             moveType = battleCtx->moveType;
         } else {
@@ -4416,6 +4512,66 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
             result = TRUE;
         }
         break;
+
+    // Justified: being hit by a Dark-type damaging move raises the holder's Attack.
+    case ABILITY_JUSTIFIED:
+        if (DEFENDING_MON.curHP
+            && MOVE_DATA(battleCtx->moveCur).type == TYPE_DARK
+            && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
+            && (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN) == FALSE
+            && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
+            && DEFENDING_MON.statBoosts[BATTLE_STAT_ATTACK] < MAX_STAT_STAGE) {
+            battleCtx->sideEffectType = SIDE_EFFECT_TYPE_ABILITY;
+            battleCtx->sideEffectMon = battleCtx->defender;
+            battleCtx->msgBattlerTemp = battleCtx->defender;
+
+            *subscript = subscript_moxie;
+            result = TRUE;
+        }
+        break;
+    }
+
+    return result;
+}
+
+/**
+ * @brief Trigger the *attacker's* ability after it hits (currently just Poison
+ * Touch). This runs in its own after-move step so it stacks with the defender's
+ * on-hit ability rather than pre-empting it.
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @param subscript  Out: the subscript to run.
+ * @return TRUE if an ability effect was queued.
+ */
+BOOL BattleSystem_TriggerAttackerAbilityOnHit(BattleSystem *battleSys, BattleContext *battleCtx, int *subscript)
+{
+    BOOL result = FALSE;
+
+    if (battleCtx->defender == BATTLER_NONE) {
+        return result;
+    }
+
+    if (Battler_SubstituteWasHit(battleCtx, battleCtx->defender) == TRUE) {
+        return result;
+    }
+
+    // Poison Touch: the attacker's contact moves have a 30% chance to poison.
+    if (Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_POISON_TOUCH
+        && DEFENDING_MON.curHP
+        && DEFENDING_MON.status == MON_CONDITION_NONE
+        && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
+        && (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN) == FALSE
+        && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
+        && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
+        && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+        && BattleSystem_RandNext(battleSys) % 10 < 3) {
+        battleCtx->sideEffectType = SIDE_EFFECT_TYPE_ABILITY;
+        battleCtx->sideEffectMon = battleCtx->defender;
+        battleCtx->msgBattlerTemp = battleCtx->attacker;
+
+        *subscript = subscript_poison;
+        result = TRUE;
     }
 
     return result;
@@ -6758,6 +6914,12 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
 
     if (attackerParams.ability == ABILITY_NORMALIZE) {
         moveType = TYPE_NORMAL;
+        // Modern Normalize also boosts the power of every move it converts by 20%.
+        movePower = movePower * 12 / 10;
+    } else if (Move_AteAbilityType(battleCtx, attackerParams.ability, move) != TYPE_NORMAL) {
+        // -ate abilities (Refrigerate): convert the Normal move and boost it 20%.
+        moveType = Move_AteAbilityType(battleCtx, attackerParams.ability, move);
+        movePower = movePower * 12 / 10;
     } else if (inType == TYPE_NORMAL) {
         moveType = MOVE_DATA(move).type;
     } else {
@@ -6778,6 +6940,41 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     if (attackerParams.ability == ABILITY_TECHNICIAN
         && move != MOVE_STRUGGLE
         && movePower <= 60) {
+        movePower = movePower * 15 / 10;
+    }
+
+    // Sheer Force: moves with an added (chance-based) effect deal 30% more damage
+    // (the added effect itself is suppressed in BattleSystem_TriggerSecondaryEffect).
+    if (attackerParams.ability == ABILITY_SHEER_FORCE && MOVE_DATA(move).effectChance != 0) {
+        movePower = movePower * 13 / 10;
+    }
+
+    // Modern Knock Off: 50% more damage when the target is holding an item the
+    // move can actually remove. Mirrors the removal conditions in
+    // subscript_knock_off: no boost when the item is pinned by Sticky Hold, a
+    // Substitute, Multitype, the Griseous Orb, or an already-triggered Quick
+    // Claw / Custap Berry.
+    if (move == MOVE_KNOCK_OFF
+        && battleCtx->battleMons[defender].heldItem != ITEM_NONE
+        && battleCtx->battleMons[defender].heldItem != ITEM_GRISEOUS_ORB
+        && battleCtx->battleMons[defender].ability != ABILITY_MULTITYPE
+        && (battleCtx->battleMons[defender].statusVolatile & VOLATILE_CONDITION_SUBSTITUTE) == FALSE
+        && battleCtx->battleMons[defender].moveEffectsData.quickClaw == 0
+        && battleCtx->battleMons[defender].moveEffectsData.custapBerry == 0
+        && Battler_IgnorableAbility(battleCtx, attacker, defender, ABILITY_STICKY_HOLD) == FALSE) {
+        movePower = movePower * 15 / 10;
+    }
+
+    // Sharpness: slicing / cutting moves deal 50% more damage.
+    if (attackerParams.ability == ABILITY_SHARPNESS && Move_IsSlicing(move)) {
+        movePower = movePower * 15 / 10;
+    }
+
+    // Expanding Force: while Psychic Terrain is up and the user is grounded, the
+    // move hits harder (modern games raise its power to 120).
+    if (move == MOVE_EXPANDING_FORCE
+        && (battleCtx->fieldConditionsMask & FIELD_CONDITION_PSYCHIC_TERRAIN)
+        && Battler_IsGrounded(battleCtx, attacker)) {
         movePower = movePower * 15 / 10;
     }
 
@@ -6872,6 +7069,20 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     }
     if (attackerParams.ability == ABILITY_GUTS && attackerParams.statusMask) {
         attackStat = attackStat * 150 / 100;
+    }
+
+    // Toxic Boost: while poisoned, the user's physical moves deal 50% more.
+    if (attackerParams.ability == ABILITY_TOXIC_BOOST
+        && (attackerParams.statusMask & MON_CONDITION_ANY_POISON)
+        && moveClass == CLASS_PHYSICAL) {
+        movePower = movePower * 150 / 100;
+    }
+
+    // Flare Boost: while burned, the user's special moves deal 50% more.
+    if (attackerParams.ability == ABILITY_FLARE_BOOST
+        && (attackerParams.statusMask & MON_CONDITION_BURN)
+        && moveClass == CLASS_SPECIAL) {
+        movePower = movePower * 150 / 100;
     }
 
     if (Battler_IgnorableAbility(battleCtx, attacker, defender, ABILITY_MARVEL_SCALE) == TRUE
