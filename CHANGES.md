@@ -268,8 +268,7 @@ Space Warp / Distortion Surge, 124-126) are covered under "Battle changes".
   `BtlCmd_ChangeStatStage`. When an opposing battler lowers one of this Pokémon's
   stats, Defiant raises its Attack and Competitive raises its Sp. Atk by two
   stages. Applied silently — the stat bar updates and the triggering "stat fell!"
-  line still shows, but there is no dedicated animated subscript. Defiant is
-  fully implemented but currently unused by any species.
+  line still shows, but there is no dedicated animated subscript.
 * **Prankster** (130) — `src/battle/battle_lib.c`, `BattleSystem_CompareBattlerSpeed`.
   Grants +1 priority to `CLASS_STATUS` moves.
 * **Contrary** (131) — `src/battle/battle_script.c`, `BtlCmd_ChangeStatStage`.
@@ -417,7 +416,8 @@ above).
 `SIDE_CONDITION_STICKY_WEB` on the opposing side, so grounded foes that switch in
 have their Speed lowered one stage. Fails if that side is already webbed. Uses
 `BattleStrings_Text_YourSideStickyWeb` / `..._TheFoesSideStickyWeb` via the
-side-conscious message tag.
+side-conscious message tag. `sticky_web/anim.s` plays Spider Web's particle
+animation (`spider_web_spa`) instead of the placeholder white-flash.
 
 ### Wild Charge (new move, id 470)
 `res/moves/wild_charge/{data.json,anim.s,script.s}` + `generated/moves.txt`
@@ -491,6 +491,12 @@ ability; any slot not mentioned is unchanged.
 ### Ninetales
 * Ability slot 2: none → **Drought** (slot 1 stays Flash Fire).
 
+### Mankey
+* Ability slot 1: Vital Spirit → **Defiant** (slot 2 stays Anger Point).
+
+### Primeape
+* Ability slot 1: Vital Spirit → **Defiant** (slot 2 stays Anger Point).
+
 ### Parasect
 * Stats: HP 60 → 90, Sp. Atk 60 → 30. BST 405 (unchanged).
 
@@ -501,6 +507,9 @@ ability; any slot not mentioned is unchanged.
 * Evolves into Slowbro at level 30 (was 37). The King's Rock → Slowking
   evolution is unchanged — like every trade evolution in this romhack it now
   happens by using the item on it, not by trading (see Link Cable).
+
+### Farfetch'd
+* Ability slot 1: Keen Eye → **Defiant** (slot 2 stays Inner Focus).
 
 ### Onix
 * Stats: Atk 45 → 70, Spe 70 → 45. BST 385 (unchanged).
@@ -764,6 +773,9 @@ ability; any slot not mentioned is unchanged.
 ### Armaldo
 * Ability slot 2: none → **Swift Swim** (slot 1 stays Battle Armor).
 
+### Milotic
+* Ability slot 2: none → **Competitive** (slot 1 stays Marvel Scale).
+
 ### Castform
 * Stats: Atk 70 → 40, Def 70 → 55, Spe 70 → 100, Sp. Atk 70 → 100,
   Sp. Def 70 → 55. BST 420 (unchanged).
@@ -899,6 +911,10 @@ One species, three cloak forms (`res/pokemon/wormadam/data.json` for Plant Cloak
 
 ### Glameow
 * Evolves into Purugly at level 17 (was 38).
+
+### Purugly
+* Abilities: Thick Fat / Own Tempo → **Defiant** (slot 1) / **Thick Fat**
+  (slot 2). Own Tempo is dropped.
 
 ### Stunky
 * Evolves into Skuntank at level 24 (was 34).
