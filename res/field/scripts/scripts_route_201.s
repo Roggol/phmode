@@ -1136,8 +1136,32 @@ Route201_BreederM:
     NPCMessage Route201_Text_PokemonLurkInGrass
     End
 
+// TEST: the little boy east of the Lass hands over 100 Rare Candies, 10 Return
+// TMs (TM27), 10 X-Scissor TMs (TM81) and 50 Max Repels every time you talk to
+// him. No flag gate = repeatable.
 Route201_SchoolKidM:
-    NPCMessage Route201_Text_ThatLedgeIsOneWay
+    PlaySE SE_CONFIRM_sseq_3
+    LockAll
+    FacePlayer
+    Message Route201_Text_EnjoyYourTesting
+    SetVar VAR_0x8004, ITEM_RARE_CANDY
+    SetVar VAR_0x8005, 100
+    GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, Route201_BagIsFull
+    Common_GiveItemQuantity
+    SetVar VAR_0x8004, ITEM_TM27
+    SetVar VAR_0x8005, 10
+    GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, Route201_BagIsFull
+    Common_GiveItemQuantity
+    SetVar VAR_0x8004, ITEM_TM81
+    SetVar VAR_0x8005, 10
+    GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, Route201_BagIsFull
+    Common_GiveItemQuantity
+    SetVar VAR_0x8004, ITEM_MAX_REPEL
+    SetVar VAR_0x8005, 50
+    GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, Route201_BagIsFull
+    Common_GiveItemQuantity
+    CloseMessage
+    ReleaseAll
     End
 
 // TEST: repeatable double battle. Never sets a "defeated" flag, so talking to

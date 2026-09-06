@@ -136,6 +136,13 @@ Rattata, Bite + Endure**. The first two are **level 60** and the very first one
 holds a **Choice Scarf**; the other four are level 10. Needs two healthy
 Pokémon or she just gives her old line.
 
+## Route 201 School Kid — restock NPC
+
+`LOCALID_SCHOOL_KID_M` (the little boy just east of the Lass) says "Enjoy your
+testing!" and hands over **100 Rare Candies, 10 Return TMs (TM27), 10 X-Scissor
+TMs (TM81) and 50 Max Repels** every time you talk to him — `Route201_SchoolKidM`
+in `scripts_route_201.s`, no flag gate.
+
 ## Route weather / terrain
 
 Set via each map header's `.weather`. No overworld visual (values ≥ 31 render as
