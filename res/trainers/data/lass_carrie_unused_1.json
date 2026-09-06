@@ -5,29 +5,76 @@
     "ai_flags": [
         "AI_FLAG_BASIC"
     ],
-    "double_battle": false,
+    "double_battle": true,
     "party": [
         {
-            "species": "SPECIES_BONSLY",
+            "species": "SPECIES_RATTATA",
             "form": 0,
-            "level": 23,
-            "item": null,
+            "level": 60,
+            "item": "ITEM_CHOICE_SCARF",
             "moves": [
-                "MOVE_BLOCK",
-                "MOVE_ROCK_THROW"
+                "MOVE_BITE",
+                "MOVE_ENDURE"
             ],
             "iv_scale": 0,
             "ball_seal": 0
         },
         {
-            "species": "SPECIES_MIME_JR",
+            "species": "SPECIES_RATTATA",
             "form": 0,
-            "level": 24,
-            "item": null,
+            "level": 60,
+            "item": "ITEM_NONE",
             "moves": [
-                "MOVE_REFLECT",
-                "MOVE_LIGHT_SCREEN",
-                "MOVE_DOUBLE_SLAP"
+                "MOVE_BITE",
+                "MOVE_ENDURE"
+            ],
+            "iv_scale": 0,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_RATTATA",
+            "form": 0,
+            "level": 10,
+            "item": "ITEM_NONE",
+            "moves": [
+                "MOVE_BITE",
+                "MOVE_ENDURE"
+            ],
+            "iv_scale": 0,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_RATTATA",
+            "form": 0,
+            "level": 10,
+            "item": "ITEM_NONE",
+            "moves": [
+                "MOVE_BITE",
+                "MOVE_ENDURE"
+            ],
+            "iv_scale": 0,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_RATTATA",
+            "form": 0,
+            "level": 10,
+            "item": "ITEM_NONE",
+            "moves": [
+                "MOVE_BITE",
+                "MOVE_ENDURE"
+            ],
+            "iv_scale": 0,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_RATTATA",
+            "form": 0,
+            "level": 10,
+            "item": "ITEM_NONE",
+            "moves": [
+                "MOVE_BITE",
+                "MOVE_ENDURE"
             ],
             "iv_scale": 0,
             "ball_seal": 0
@@ -36,28 +83,11 @@
     "messages": [
         {
             "type": "TRMSG_PRE_BATTLE",
-            "en_US": [
-                "Hi, what kinds of Pokémon do you\n",
-                "have with you?\r",
-                "I’ll show you my Pokémon while we\n",
-                "have a battle.\r"
-            ]
+            "en_US": "Want to test your team? Here we go!\n"
         },
         {
             "type": "TRMSG_DEFEAT",
-            "en_US": [
-                "Huh? It’s over already?!\n",
-                "I thought I’d win for sure!\n"
-            ]
-        },
-        {
-            "type": "TRMSG_POST_BATTLE",
-            "en_US": [
-                "You’re too tough!\n",
-                "I won’t battle you again!\r",
-                "Just joking! I’ll challenge you again\n",
-                "when I level up my Pokémon.\n"
-            ]
+            "en_US": "Come back any time for another round!\n"
         }
     ]
 }

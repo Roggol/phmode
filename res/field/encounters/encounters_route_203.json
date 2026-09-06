@@ -1,53 +1,53 @@
 {
-    "land_rate": 30,
+    "land_rate": 90,
     "land_encounters": [
         {
-            "level": 4,
-            "species": "SPECIES_STARLY"
+            "level": 50,
+            "species": "SPECIES_NIDOKING"
         },
         {
-            "level": 4,
-            "species": "SPECIES_SHINX"
+            "level": 50,
+            "species": "SPECIES_EMPOLEON"
         },
         {
-            "level": 5,
-            "species": "SPECIES_STARLY"
+            "level": 50,
+            "species": "SPECIES_SABLEYE"
         },
         {
-            "level": 4,
-            "species": "SPECIES_KRICKETOT"
+            "level": 50,
+            "species": "SPECIES_ZANGOOSE"
         },
         {
-            "level": 5,
-            "species": "SPECIES_BIDOOF"
+            "level": 50,
+            "species": "SPECIES_SPINDA"
         },
         {
-            "level": 4,
-            "species": "SPECIES_ABRA"
+            "level": 50,
+            "species": "SPECIES_PRIMEAPE"
         },
         {
-            "level": 5,
-            "species": "SPECIES_ABRA"
+            "level": 50,
+            "species": "SPECIES_AMPHAROS"
         },
         {
-            "level": 5,
-            "species": "SPECIES_SHINX"
+            "level": 50,
+            "species": "SPECIES_EXPLOUD"
         },
         {
-            "level": 6,
-            "species": "SPECIES_STARLY"
+            "level": 50,
+            "species": "SPECIES_NIDOKING"
         },
         {
-            "level": 6,
-            "species": "SPECIES_BIDOOF"
+            "level": 50,
+            "species": "SPECIES_EMPOLEON"
         },
         {
-            "level": 7,
-            "species": "SPECIES_STARLY"
+            "level": 50,
+            "species": "SPECIES_SABLEYE"
         },
         {
-            "level": 7,
-            "species": "SPECIES_BIDOOF"
+            "level": 50,
+            "species": "SPECIES_PRIMEAPE"
         }
     ],
     "swarms": [
@@ -55,12 +55,12 @@
         "SPECIES_CUBONE"
     ],
     "day": [
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_SABLEYE",
+        "SPECIES_ZANGOOSE"
     ],
     "night": [
-        "SPECIES_KRICKETOT",
-        "SPECIES_ZUBAT"
+        "SPECIES_SABLEYE",
+        "SPECIES_ZANGOOSE"
     ],
     "radar": [
         "SPECIES_BIDOOF",

@@ -1,53 +1,53 @@
 {
-    "land_rate": 30,
+    "land_rate": 90,
     "land_encounters": [
         {
-            "level": 4,
-            "species": "SPECIES_STARLY"
+            "level": 50,
+            "species": "SPECIES_DELCATTY"
         },
         {
-            "level": 4,
-            "species": "SPECIES_BIDOOF"
+            "level": 50,
+            "species": "SPECIES_MILOTIC"
         },
         {
-            "level": 4,
-            "species": "SPECIES_WURMPLE"
+            "level": 50,
+            "species": "SPECIES_PURUGLY"
         },
         {
-            "level": 3,
-            "species": "SPECIES_KRICKETOT"
+            "level": 50,
+            "species": "SPECIES_FARFETCHD"
         },
         {
-            "level": 4,
-            "species": "SPECIES_BUDEW"
+            "level": 40,
+            "species": "SPECIES_MANKEY"
         },
         {
-            "level": 4,
-            "species": "SPECIES_SHINX"
+            "level": 50,
+            "species": "SPECIES_NIDOQUEEN"
         },
         {
-            "level": 5,
-            "species": "SPECIES_BUDEW"
+            "level": 50,
+            "species": "SPECIES_DELCATTY"
         },
         {
-            "level": 5,
-            "species": "SPECIES_SHINX"
+            "level": 50,
+            "species": "SPECIES_MILOTIC"
         },
         {
-            "level": 5,
-            "species": "SPECIES_STARLY"
+            "level": 50,
+            "species": "SPECIES_PURUGLY"
         },
         {
-            "level": 5,
-            "species": "SPECIES_BIDOOF"
+            "level": 50,
+            "species": "SPECIES_FARFETCHD"
         },
         {
-            "level": 6,
-            "species": "SPECIES_STARLY"
+            "level": 40,
+            "species": "SPECIES_MANKEY"
         },
         {
-            "level": 6,
-            "species": "SPECIES_BIDOOF"
+            "level": 50,
+            "species": "SPECIES_NIDOQUEEN"
         }
     ],
     "swarms": [
@@ -55,12 +55,12 @@
         "SPECIES_BIDOOF"
     ],
     "day": [
-        "SPECIES_WURMPLE",
-        "SPECIES_BUDEW"
+        "SPECIES_PURUGLY",
+        "SPECIES_FARFETCHD"
     ],
     "night": [
-        "SPECIES_KRICKETOT",
-        "SPECIES_ZUBAT"
+        "SPECIES_PURUGLY",
+        "SPECIES_FARFETCHD"
     ],
     "radar": [
         "SPECIES_BUDEW",

@@ -10,20 +10,8 @@
             "species": "SPECIES_SPINARAK"
         },
         {
-            "level": 38,
-            "species": "SPECIES_ARIADOS"
-        },
-        {
             "level": 55,
             "species": "SPECIES_UXIE"
-        },
-        {
-            "level": 55,
-            "species": "SPECIES_MESPRIT"
-        },
-        {
-            "level": 55,
-            "species": "SPECIES_AZELF"
         },
         {
             "level": 55,
@@ -38,6 +26,14 @@
             "species": "SPECIES_GIRATINA"
         },
         {
+            "level": 55,
+            "species": "SPECIES_MESPRIT"
+        },
+        {
+            "level": 55,
+            "species": "SPECIES_AZELF"
+        },
+        {
             "level": 52,
             "species": "SPECIES_LUXRAY"
         },
@@ -46,8 +42,12 @@
             "species": "SPECIES_SPINARAK"
         },
         {
-            "level": 38,
-            "species": "SPECIES_ARIADOS"
+            "level": 55,
+            "species": "SPECIES_DIALGA"
+        },
+        {
+            "level": 55,
+            "species": "SPECIES_GIRATINA"
         }
     ],
     "swarms": [
@@ -55,12 +55,12 @@
         "SPECIES_BIDOOF"
     ],
     "day": [
-        "SPECIES_ARIADOS",
-        "SPECIES_UXIE"
+        "SPECIES_UXIE",
+        "SPECIES_DIALGA"
     ],
     "night": [
-        "SPECIES_ARIADOS",
-        "SPECIES_UXIE"
+        "SPECIES_UXIE",
+        "SPECIES_DIALGA"
     ],
     "radar": [
         "SPECIES_WOBBUFFET",

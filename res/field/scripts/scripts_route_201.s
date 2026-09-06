@@ -1140,23 +1140,41 @@ Route201_SchoolKidM:
     NPCMessage Route201_Text_ThatLedgeIsOneWay
     End
 
+// TEST: repeatable double battle. Never sets a "defeated" flag, so talking to
+// her starts the fight again every time.
 Route201_Lass:
     PlaySE SE_CONFIRM_sseq_3
     LockAll
     FacePlayer
-    GoToIfSet FLAG_HAS_POKEDEX, Route201_IfHPIsLowGoToAPokemonCenter
+    CheckHasTwoAliveMons VAR_RESULT
+    GoToIfEq VAR_RESULT, FALSE, Route201_LassNeedTwoMons
+    SetVar VAR_0x8004, TRAINER_LASS_CARRIE_UNUSED_1
+    PlayTrainerEncounterBGM VAR_0x8004
+    OpenMessage
+    GetTrainerMessageTypes VAR_0x8000, VAR_0x8001, VAR_0x8002
+    PrintTrainerDialogue VAR_0x8004, VAR_0x8000
+    CloseMessage
+    SetMoveCodeForFacingDirection
+    StartTrainerBattle VAR_0x8004
+    CheckLostBattle VAR_RESULT
+    GoToIfEq VAR_RESULT, TRUE, Route201_LassBlackOut
+    ReleaseAll
+    End
+
+Route201_LassNeedTwoMons:
     Message Route201_Text_IfHPIsLowGoHome
     GoTo Route201_LassCloseMessage
+
+Route201_LassBlackOut:
+    BlackOutFromBattle
+    ReleaseAll
+    End
 
 Route201_LassCloseMessage:
     WaitButton
     CloseMessage
     ReleaseAll
     End
-
-Route201_IfHPIsLowGoToAPokemonCenter:
-    Message Route201_Text_IfHPIsLowGoToAPokemonCenter
-    GoTo Route201_LassCloseMessage
 
 Route201_Cashier:
     PlaySE SE_CONFIRM_sseq_3

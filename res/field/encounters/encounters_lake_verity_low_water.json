@@ -1,53 +1,53 @@
 {
-    "land_rate": 30,
+    "land_rate": 90,
     "land_encounters": [
         {
-            "level": 2,
-            "species": "SPECIES_STARLY"
+            "level": 52,
+            "species": "SPECIES_LUXRAY"
         },
         {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
+            "level": 35,
+            "species": "SPECIES_SPINARAK"
         },
         {
-            "level": 3,
-            "species": "SPECIES_STARLY"
+            "level": 55,
+            "species": "SPECIES_UXIE"
         },
         {
-            "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "level": 55,
+            "species": "SPECIES_DIALGA"
         },
         {
-            "level": 3,
-            "species": "SPECIES_STARLY"
+            "level": 55,
+            "species": "SPECIES_PALKIA"
         },
         {
-            "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "level": 55,
+            "species": "SPECIES_GIRATINA"
         },
         {
-            "level": 4,
-            "species": "SPECIES_STARLY"
+            "level": 55,
+            "species": "SPECIES_MESPRIT"
         },
         {
-            "level": 4,
-            "species": "SPECIES_BIDOOF"
+            "level": 55,
+            "species": "SPECIES_AZELF"
         },
         {
-            "level": 4,
-            "species": "SPECIES_STARLY"
+            "level": 52,
+            "species": "SPECIES_LUXRAY"
         },
         {
-            "level": 4,
-            "species": "SPECIES_BIDOOF"
+            "level": 35,
+            "species": "SPECIES_SPINARAK"
         },
         {
-            "level": 4,
-            "species": "SPECIES_STARLY"
+            "level": 55,
+            "species": "SPECIES_DIALGA"
         },
         {
-            "level": 4,
-            "species": "SPECIES_BIDOOF"
+            "level": 55,
+            "species": "SPECIES_GIRATINA"
         }
     ],
     "swarms": [
@@ -55,12 +55,12 @@
         "SPECIES_BIDOOF"
     ],
     "day": [
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_UXIE",
+        "SPECIES_DIALGA"
     ],
     "night": [
-        "SPECIES_BIDOOF",
-        "SPECIES_BIDOOF"
+        "SPECIES_UXIE",
+        "SPECIES_DIALGA"
     ],
     "radar": [
         "SPECIES_WOBBUFFET",

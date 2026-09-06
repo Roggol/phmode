@@ -1,53 +1,53 @@
 {
-    "land_rate": 30,
+    "land_rate": 90,
     "land_encounters": [
         {
-            "level": 3,
-            "species": "SPECIES_SHINX"
+            "level": 20,
+            "species": "SPECIES_FORRETRESS"
         },
         {
-            "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "level": 42,
+            "species": "SPECIES_TANGROWTH"
         },
         {
-            "level": 4,
-            "species": "SPECIES_STARLY"
+            "level": 38,
+            "species": "SPECIES_VESPIQUEN"
         },
         {
-            "level": 3,
-            "species": "SPECIES_KRICKETOT"
+            "level": 26,
+            "species": "SPECIES_VESPIQUEN"
         },
         {
-            "level": 4,
-            "species": "SPECIES_SHINX"
+            "level": 16,
+            "species": "SPECIES_VESPIQUEN"
         },
         {
-            "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "level": 50,
+            "species": "SPECIES_SCIZOR"
         },
         {
-            "level": 4,
-            "species": "SPECIES_STARLY"
+            "level": 20,
+            "species": "SPECIES_PARASECT"
         },
         {
-            "level": 4,
-            "species": "SPECIES_BIDOOF"
+            "level": 50,
+            "species": "SPECIES_ABOMASNOW"
         },
         {
-            "level": 2,
-            "species": "SPECIES_STARLY"
+            "level": 20,
+            "species": "SPECIES_FORRETRESS"
         },
         {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
+            "level": 42,
+            "species": "SPECIES_TANGROWTH"
         },
         {
-            "level": 2,
-            "species": "SPECIES_STARLY"
+            "level": 38,
+            "species": "SPECIES_VESPIQUEN"
         },
         {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
+            "level": 50,
+            "species": "SPECIES_SCIZOR"
         }
     ],
     "swarms": [
@@ -55,12 +55,12 @@
         "SPECIES_ZIGZAGOON"
     ],
     "day": [
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_VESPIQUEN",
+        "SPECIES_VESPIQUEN"
     ],
     "night": [
-        "SPECIES_KRICKETOT",
-        "SPECIES_BIDOOF"
+        "SPECIES_VESPIQUEN",
+        "SPECIES_VESPIQUEN"
     ],
     "radar": [
         "SPECIES_SENTRET",
