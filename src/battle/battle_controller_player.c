@@ -1881,9 +1881,12 @@ static void BattleControllerPlayer_CheckSideConditions(BattleSystem *battleSys, 
         // fall-through
 
     case SIDE_COND_CHECK_STATE_TRICK_ROOM:
-        if (battleCtx->fieldConditionsMask & FIELD_CONDITION_TRICK_ROOM) {
+        // Overworld Trick Room (TRICK_ROOM_PERM) never counts down and never
+        // ends here; only the move's turn counter (bits 16-18) is decremented.
+        if ((battleCtx->fieldConditionsMask & FIELD_CONDITION_TRICK_ROOM_PERM) == 0
+            && (battleCtx->fieldConditionsMask & FIELD_CONDITION_TRICK_ROOM_COUNTER)) {
             battleCtx->fieldConditionsMask -= (1 << FIELD_CONDITION_TRICK_ROOM_SHIFT);
-            if ((battleCtx->fieldConditionsMask & FIELD_CONDITION_TRICK_ROOM) == FALSE) {
+            if ((battleCtx->fieldConditionsMask & FIELD_CONDITION_TRICK_ROOM_COUNTER) == FALSE) {
                 PrepareSubroutineSequence(battleCtx, subscript_trick_room_end);
                 return;
             }
@@ -2300,7 +2303,7 @@ static BOOL BattleControllerPlayer_DecrementPP(BattleSystem *battleSys, BattleCo
         if (battleCtx->moveTemp == MOVE_IMPRISON) {
             ppCost += BattleSystem_CountAbility(battleSys, battleCtx, COUNT_ALIVE_BATTLERS_THEIR_SIDE, battleCtx->attacker, ABILITY_PRESSURE);
         } else {
-            switch (battleCtx->aiContext.moveTable[battleCtx->moveTemp].range) {
+            switch (Move_EffectiveRange(battleSys, battleCtx, battleCtx->attacker, battleCtx->moveTemp)) {
             case RANGE_ALL_ADJACENT:
             case RANGE_FIELD:
                 // Number of mons on the field with Pressure
@@ -3530,7 +3533,7 @@ static void BattleControllerPlayer_UpdateHP(BattleSystem *battleSys, BattleConte
             && Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->defender, ABILITY_STURDY) == TRUE) {
             // Modern Sturdy: a full-HP holder survives an otherwise-lethal hit at 1 HP.
             battleCtx->damage = (DEFENDING_MON.curHP - 1) * -1;
-            battleCtx->moveStatusFlags |= MOVE_STATUS_ENDURED;
+            battleCtx->moveStatusFlags |= MOVE_STATUS_STURDY_HELD_ON;
         }
 
         battleCtx->storedDamage[battleCtx->defender] += battleCtx->damage;
@@ -3993,7 +3996,7 @@ static void BattleControllerPlayer_LoopSpreadMoves(BattleSystem *battleSys, Batt
 
     BattleControllerPlayer_UpdateFlagsWhenHit(battleSys, battleCtx);
 
-    if (CURRENT_MOVE_DATA.range == RANGE_ADJACENT_OPPONENTS
+    if (Move_EffectiveRange(battleSys, battleCtx, battleCtx->attacker, battleCtx->moveCur) == RANGE_ADJACENT_OPPONENTS
         && (battleCtx->battleStatusMask & SYSCTL_CHECK_LOOP_ONLY_ONCE) == FALSE
         && battleCtx->battlerCounter < BattleSystem_GetMaxBattlers(battleSys)) {
         battleCtx->multiHitCheckFlags = SYSCTL_HIT_MULTIPLE_TARGETS;
@@ -4502,7 +4505,7 @@ static BOOL BattleControllerPlayer_MustSelectTarget(BattleSystem *battleSys, Bat
         && Move_IsGhostCurse(battleCtx, battleCtx->battleMons[battler].moves[moveSlot], battler) == FALSE) {
         *range = RANGE_USER;
     } else {
-        *range = MOVE_DATA(battleCtx->battleMons[battler].moves[moveSlot]).range;
+        *range = Move_EffectiveRange(battleSys, battleCtx, battler, battleCtx->battleMons[battler].moves[moveSlot]);
     }
 
     if (battleType & BATTLE_TYPE_DOUBLES) {

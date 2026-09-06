@@ -295,8 +295,11 @@ static const VRAMTransfer sCurrentHPNumberVRAMTransfer[][2] = {
         { 0xD00, 0x60 },
     },
     {
-        { 0x620, 0x60 },
-        { 0x0, 0x0 },
+        // Enemy solo: "cur" sits directly below the HP gauge, spanning the two
+        // 64x64 sprite halves — the first two digit tiles land in the left half
+        // (0x5C0), the last one in the right half (0xD00).
+        { 0x5C0, 0x40 },
+        { 0xD00, 0x20 },
     },
     {
         { 0x0, 0x0 },
@@ -318,7 +321,7 @@ static const VRAMTransfer sCurrentHPNumberVRAMTransfer[][2] = {
 
 static const VRAMTransfer sMaxHPNumberVRAMTransfer[] = {
     { 0xD80, 0x60 },
-    { 0x6A0, 0x60 },
+    { 0xD40, 0x60 },
     { 0xC80, 0x60 },
     { 0x6A0, 0x60 },
     { 0xC80, 0x60 },
@@ -404,7 +407,10 @@ static const VRAMTransfer sHPDisplayRightVRAMTransfer[] = {
 
 static const VRAMTransfer sHPDisplaySlashVRAMTransfer[] = {
     { 0x0, 0x0 },
-    { 0x0, 0x0 },
+    // Enemy solo: the "/" divider sits between the current-HP digits (…0xD00) and
+    // the max-HP digits (0xD40…), one tile into the right sprite half. Unlike the
+    // player's solo box it is not baked into the sprite graphic, so it is blitted.
+    { 0xD20, HEALTHBOX_WINDOW_BLOCK_SIZE },
     { 0xC60, HEALTHBOX_WINDOW_BLOCK_SIZE },
     { 0x0, 0x0 },
     { 0xC60, HEALTHBOX_WINDOW_BLOCK_SIZE },
@@ -631,6 +637,13 @@ void HealthBox_DrawInfo(HealthBox *healthbox, u32 hp, u32 flags)
 
     switch (healthbox->type) {
     case HEALTHBOX_TYPE_ENEMY_SOLO:
+        // Show the raw current/max HP numbers on the enemy healthbox too (like the
+        // player's), but never the EXP bar. The enemy sprite has VRAM slots
+        // allocated for the HP digits already.
+        flags &= ~HEALTHBOX_INFO_EXP_GAUGE;
+        caughtSpecies = TRUE;
+        break;
+
     case HEALTHBOX_TYPE_ENEMY_SLOT_1:
     case HEALTHBOX_TYPE_ENEMY_SLOT_2:
         // Never display current HP, max HP, or the EXP bar on an enemy healthbox
@@ -677,6 +690,18 @@ void HealthBox_DrawInfo(HealthBox *healthbox, u32 hp, u32 flags)
 
     if (flags & HEALTHBOX_INFO_MAX_HP) {
         HealthBox_DrawMaxHP(healthbox);
+
+        if (healthbox->type == HEALTHBOX_TYPE_ENEMY_SOLO) {
+            // Draw the "/" divider that the enemy solo sprite lacks (see
+            // sHPDisplaySlashVRAMTransfer).
+            void *slashCharPtr = G2_GetOBJCharPtr();
+            NNSG2dImageProxy *slashProxy = Sprite_GetImageProxy(healthbox->mainSprite->sprite);
+            const u8 *slashTile = GetHealthBoxPartsTile(HEALTHBOX_PART_SLASH);
+
+            MI_CpuCopy16(slashTile,
+                (void *)((u32)slashCharPtr + sHPDisplaySlashVRAMTransfer[healthbox->type].pos + slashProxy->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DMAIN]),
+                sHPDisplaySlashVRAMTransfer[healthbox->type].size);
+        }
     }
 
     if ((flags & HEALTHBOX_INFO_LEVEL_TEXT) || (flags & HEALTHBOX_INFO_GENDER)) {

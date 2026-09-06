@@ -1274,6 +1274,11 @@
     .long BTLCMD_BLOWAWAYHAZARDS
     .endm
 
+    .macro CheckDefiantReaction jump
+    .long BTLCMD_CHECKDEFIANTREACTION
+    .long (\jump-.) / 4 - 1
+    .endm
+
     .macro End
     .long BTLCMD_END
     .endm

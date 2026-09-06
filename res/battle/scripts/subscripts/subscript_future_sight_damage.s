@@ -37,18 +37,26 @@ _058:
     WaitButtonABTime 30
 
 _092:
+    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_STURDY_HELD_ON, _100
+    // {0} survived the hit with Sturdy!
+    PrintMessage BattleStrings_Text_PokemonSurvivedTheHitWithSturdy_Ally, TAG_NICKNAME, BTLSCR_MSG_TEMP
+    Wait
+    WaitButtonABTime 30
+    GoTo _116
+
+_100:
     CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_ENDURED_ITEM, _116
     PlayBattleAnimation BTLSCR_MSG_TEMP, BATTLE_ANIMATION_HELD_ITEM
-    Wait 
+    Wait
     // {0} hung on using its {1}!
     PrintMessage BattleStrings_Text_PokemonHungOnUsingItsItem_Ally, TAG_NICKNAME_ITEM, BTLSCR_MSG_TEMP, BTLSCR_MSG_BATTLER_TEMP
-    Wait 
+    Wait
     WaitButtonABTime 30
     CheckItemHoldEffect CHECK_NOT_HAVE, BTLSCR_MSG_TEMP, HOLD_EFFECT_ENDURE, _116
     RemoveItem BTLSCR_MSG_TEMP
 
 _116:
-    End 
+    End
 
 _117:
     WaitButtonABTime 30

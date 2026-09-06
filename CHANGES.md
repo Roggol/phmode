@@ -46,6 +46,26 @@ with the faster run step instead of gliding.
 * `src/applications/options_menu.c` — `ProcessMainInput` ignores left/right on
   the Battle Style row, so the player cannot switch it back to "Switch".
 
+### Enemy health box shows HP numbers
+The single-battle opponent's health box now prints the raw `current / max` HP
+below its gauge, the same as the player's, inside an enlarged box frame.
+
+* `src/battle/healthbox.c` — `HealthBox_DrawInfo` no longer strips the
+  current-HP / max-HP number flags for `HEALTHBOX_TYPE_ENEMY_SOLO` (only the EXP
+  bar). The double-battle enemy slots (`HEALTHBOX_TYPE_ENEMY_SLOT_1` / `_2`,
+  which have no room for digits) are unchanged.
+* The enemy-solo digit slots were repositioned to a clean tile row directly
+  under the gauge: `sCurrentHPNumberVRAMTransfer` index 1 is now split across
+  the two 64×64 sprite halves (`{0x5C0,0x40}` + `{0xD00,0x20}`),
+  `sMaxHPNumberVRAMTransfer` index 1 is `0xD40`, and the "/" divider — which,
+  unlike the player's solo box, is *not* baked into the enemy graphic — is
+  blitted from `HEALTHBOX_PART_SLASH` at `sHPDisplaySlashVRAMTransfer` index 1
+  (`0xD20`) each time the max HP is drawn.
+* `res/graphics/battle/healthbox/enemy.png` — the box body is extended ~8 px
+  downward (extra gauge-fill rows plus the bottom border moved down) so the new
+  number row sits neatly within the frame. The pointed tail stays at the HP-bar
+  row.
+
 ### Summary screen: EV / IV view and nature colours
 `src/applications/pokemon_summary_screen/` (`main.c`, `window.c`, `main.h`) — on
 the Skills page:
@@ -131,6 +151,9 @@ Battle anim/subscript wiring is in `res/battle/scripts/` and `src/battle/`.
   against grounded targets (`Move_BlockedByPsychicTerrain`). Psychic-type moves
   by a grounded attacker deal ×1.3. This commit also added the shared
   `Battler_IsGrounded` helper used by the terrains.
+  `subscript_move_fail_psychic_terrain` now prints "{mon} used {move}!"
+  (`PrintAttackMessage`) before "{target} is protected by the psychic terrain!",
+  so a blocked priority move is not swallowed silently.
 * **Distortion Terrain** (`de20f3c30`) — every stat-stage change on the field is
   inverted, Contrary-style, for all battlers whether grounded or not.
 
@@ -144,7 +167,17 @@ and the weather-ability subscripts
 `FIELD_CONDITION_ATMOSPHERE` instead of `FIELD_CONDITION_WEATHER`; the terrain
 subscripts (`subscript_{psychic_surge,electric_surge,distortion_surge}` and the
 `subscript_overworld_*_terrain` trio) gained a matching clear before they set
-their bit.
+their bit. **Trick Room is deliberately not part of `FIELD_CONDITION_ATMOSPHERE`**
+(bits 16-18 / 24), so no weather or terrain ever overrides it.
+
+**Overworld Trick Room is permanent.** New `FIELD_CONDITION_TRICK_ROOM_PERM`
+(bit 24, mirroring Space Warp's `GRAVITY_PERM`): `subscript_overworld_trick_room`
+sets that bit instead of the 5-turn `TRICK_ROOM_INIT` counter, and the
+end-of-turn countdown (`SIDE_COND_CHECK_STATE_TRICK_ROOM`) skips it entirely, so
+a battle whose map `.weather` is `OVERWORLD_WEATHER_TRICK_ROOM` stays under Trick
+Room for its whole length. `FIELD_CONDITION_TRICK_ROOM` now = counter | perm, so
+the Trick Room *move* still toggles it off (`effect_script_0259` clears the whole
+mask) — that is the only way to end it.
 
 ### Sticky Web is a per-side hazard
 `FIELD_CONDITION_STICKY_WEB` (a field-wide "weather" bit) was replaced with the
@@ -264,11 +297,19 @@ Space Warp / Distortion Surge, 124-126) are covered under "Battle changes".
   `effectChance` deals ×1.3 damage in `BattleSystem_CalcMoveDamage`, and its
   chance-based added effect is suppressed (`BattleSystem_TriggerSecondaryEffect`
   skips the roll).
-* **Defiant** (128) / **Competitive** (129) — `src/battle/battle_script.c`,
-  `BtlCmd_ChangeStatStage`. When an opposing battler lowers one of this Pokémon's
-  stats, Defiant raises its Attack and Competitive raises its Sp. Atk by two
-  stages. Applied silently — the stat bar updates and the triggering "stat fell!"
-  line still shows, but there is no dedicated animated subscript.
+* **Defiant** (128) / **Competitive** (129) — `src/battle/battle_script.c`.
+  When an opposing battler lands a stat drop on this Pokémon, `BtlCmd_ChangeStatStage`
+  flags it (`battleCtx->defiantReactType`); once the "stat fell!" line has shown,
+  `subscript_update_stat_stage` runs the new `BtlCmd_CheckDefiantReaction`, which
+  re-enters the stat-change subscript as a `SIDE_EFFECT_TYPE_ABILITY` **+2 Attack**
+  (Defiant) or **+2 Sp. Atk** (Competitive) raise — so the boost gets its own
+  animation and a "{mon}'s {ability} sharply raised its {stat}!" message (a new
+  `BattleStrings_Text_PokemonsAbilitySharplyRaisedItsStat_*` trio; `+1` ability
+  raises still use the plain "raised its {stat}!"). Only fires when
+  the drop actually landed (not when Clear Body / Mist / a -6 stat blocks it) and
+  only from the opposing side (so a Sticky Web / Intimidate from a foe counts).
+  New btlcmd registered in `asm/macros/btlcmd.inc` /
+  `include/data/scripts/btlcmd.h`.
 * **Prankster** (130) — `src/battle/battle_lib.c`, `BattleSystem_CompareBattlerSpeed`.
   Grants +1 priority to `CLASS_STATUS` moves.
 * **Contrary** (131) — `src/battle/battle_script.c`, `BtlCmd_ChangeStatStage`.
@@ -335,9 +376,12 @@ Space Warp / Distortion Surge, 124-126) are covered under "Battle changes".
 `src/battle/battle_controller_player.c` (main damage application) and
 `src/battle/battle_script.c` `BtlCmd_CheckHoldOnWith1HP`. In addition to blocking
 OHKO moves (already implemented), a Pokémon with Sturdy that is at full HP now
-survives any otherwise-lethal hit at 1 HP. It reuses the Endure code path, so the
-existing "{mon} endured the hit!" message is shown. Mold Breaker ignores it
-(`Battler_IgnorableAbility`).
+survives any otherwise-lethal hit at 1 HP. Mold Breaker ignores it
+(`Battler_IgnorableAbility`). It sets a dedicated `MOVE_STATUS_STURDY_HELD_ON`
+flag (not the Endure flag), so `subscript_move_followup_message` /
+`subscript_future_sight_damage` print **"{mon} survived the hit with Sturdy!"**
+(`BattleStrings_Text_PokemonSurvivedTheHitWithSturdy_*`) rather than the generic
+"endured the hit!".
 
 ---
 
@@ -431,8 +475,12 @@ Psychic-type special, 80 power / 100 accuracy / 10 PP,
 single target, `BATTLE_EFFECT_HIT`. `src/battle/battle_lib.c`
 `BattleSystem_CalcMoveDamage` gives it ×1.5 power while Psychic Terrain is up and
 the user is grounded (on top of the terrain's own generic ×1.3), approximating the
-modern "power becomes 120 in terrain". The modern doubles-only spread effect is
-not reproduced.
+modern "power becomes 120 in terrain". Under the same condition it also **hits
+both opponents** in a double battle: a new `Move_EffectiveRange` helper
+(`src/battle/battle_lib.c`) reports `RANGE_ADJACENT_OPPONENTS` instead of
+`RANGE_SINGLE_TARGET` for Expanding Force in that state, and is used by
+`BattleSystem_Defender`, the spread-damage ×0.75 check, the
+`LoopSpreadMoves` re-loop, the target-select layout, and the Pressure PP cost.
 
 ---
 
