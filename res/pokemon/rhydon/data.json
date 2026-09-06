@@ -125,7 +125,7 @@
     },
     "evolutions": [
         [
-            "EVO_TRADE_WITH_HELD_ITEM",
+            "EVO_USE_ITEM",
             "ITEM_PROTECTOR",
             "SPECIES_RHYPERIOR"
         ]

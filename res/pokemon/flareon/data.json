@@ -41,12 +41,12 @@
             [ 15, "MOVE_EMBER" ],
             [ 22, "MOVE_QUICK_ATTACK" ],
             [ 29, "MOVE_BITE" ],
-            [ 36, "MOVE_FIRE_SPIN" ],
-            [ 43, "MOVE_FIRE_FANG" ],
+            [ 36, "MOVE_FIRE_FANG" ],
+            [ 43, "MOVE_FIRE_SPIN" ],
             [ 50, "MOVE_LAST_RESORT" ],
             [ 57, "MOVE_SMOG" ],
             [ 64, "MOVE_SCARY_FACE" ],
-            [ 71, "MOVE_FIRE_BLAST" ],
+            [ 71, "MOVE_FLARE_BLITZ" ],
             [ 78, "MOVE_LAVA_PLUME" ]
         ],
         "by_tm": [

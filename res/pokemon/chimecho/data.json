@@ -7,7 +7,7 @@
         "special_attack": 95,
         "special_defense": 80
     },
-    "types": [ "TYPE_PSYCHIC", "TYPE_PSYCHIC" ],
+    "types": [ "TYPE_PSYCHIC", "TYPE_STEEL" ],
     "catch_rate": 45,
     "base_exp_reward": 147,
     "ev_yields": {
@@ -42,9 +42,9 @@
             [ 22, "MOVE_TAKE_DOWN" ],
             [ 25, "MOVE_YAWN" ],
             [ 30, "MOVE_PSYWAVE" ],
-            [ 33, "MOVE_DOUBLE_EDGE" ],
+            [ 33, "MOVE_PROTECT" ],
             [ 38, "MOVE_HEAL_BELL" ],
-            [ 41, "MOVE_SAFEGUARD" ],
+            [ 41, "MOVE_WISH" ],
             [ 46, "MOVE_EXTRASENSORY" ],
             [ 49, "MOVE_HEALING_WISH" ]
         ],

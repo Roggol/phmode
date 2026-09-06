@@ -1,10 +1,10 @@
 {
     "base_stats": {
         "hp": 45,
-        "attack": 55,
+        "attack": 25,
         "defense": 45,
         "speed": 75,
-        "special_attack": 65,
+        "special_attack": 95,
         "special_defense": 45
     },
     "types": [ "TYPE_ICE", "TYPE_FLYING" ],
@@ -27,14 +27,19 @@
     "base_friendship": 70,
     "exp_rate": "EXP_RATE_FAST",
     "egg_groups": [ "EGG_GROUP_WATER_1", "EGG_GROUP_FIELD" ],
-    "abilities": [ "ABILITY_VITAL_SPIRIT", "ABILITY_HUSTLE" ],
+    "abilities": [ "ABILITY_VITAL_SPIRIT", "ABILITY_SNOW_WARNING" ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_RED",
     "flip_sprite": false,
     "icon_palette": 0,
     "learnset": {
         "by_level": [
-            [ 1, "MOVE_PRESENT" ]
+            [ 1, "MOVE_PRESENT" ],
+            [ 10, "MOVE_SWIFT" ],
+            [ 15, "MOVE_ICE_SHARD" ],
+            [ 20, "MOVE_ICY_WIND" ],
+            [ 30, "MOVE_FAKE_OUT" ],
+            [ 40, "MOVE_BLIZZARD" ]
         ],
         "by_tm": [
             "TM01",

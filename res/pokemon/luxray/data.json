@@ -27,7 +27,7 @@
     "base_friendship": 70,
     "exp_rate": "EXP_RATE_MEDIUM_SLOW",
     "egg_groups": [ "EGG_GROUP_FIELD", "EGG_GROUP_FIELD" ],
-    "abilities": [ "ABILITY_RIVALRY", "ABILITY_INTIMIDATE" ],
+    "abilities": [ "ABILITY_GUTS", "ABILITY_INTIMIDATE" ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_BLUE",
     "flip_sprite": false,
@@ -45,7 +45,7 @@
             [ 28, "MOVE_SWAGGER" ],
             [ 35, "MOVE_THUNDER_FANG" ],
             [ 42, "MOVE_CRUNCH" ],
-            [ 49, "MOVE_SCARY_FACE" ],
+            [ 49, "MOVE_WILD_CHARGE" ],
             [ 56, "MOVE_DISCHARGE" ]
         ],
         "by_tm": [

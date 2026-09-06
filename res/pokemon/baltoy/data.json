@@ -42,7 +42,7 @@
             [ 15, "MOVE_ROCK_TOMB" ],
             [ 19, "MOVE_SELFDESTRUCT" ],
             [ 25, "MOVE_ANCIENT_POWER" ],
-            [ 31, "MOVE_POWER_TRICK" ],
+            [ 31, "MOVE_RECOVER" ],
             [ 37, "MOVE_SANDSTORM" ],
             [ 45, "MOVE_COSMIC_POWER" ],
             [ 53, "MOVE_EARTH_POWER" ],

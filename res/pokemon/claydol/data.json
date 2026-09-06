@@ -45,7 +45,7 @@
             [ 15, "MOVE_ROCK_TOMB" ],
             [ 19, "MOVE_SELFDESTRUCT" ],
             [ 25, "MOVE_ANCIENT_POWER" ],
-            [ 31, "MOVE_POWER_TRICK" ],
+            [ 31, "MOVE_RECOVER" ],
             [ 36, "MOVE_HYPER_BEAM" ],
             [ 40, "MOVE_SANDSTORM" ],
             [ 51, "MOVE_COSMIC_POWER" ],

@@ -7,7 +7,7 @@
         "special_attack": 105,
         "special_defense": 107
     },
-    "types": [ "TYPE_ELECTRIC", "TYPE_GHOST" ],
+    "types": [ "TYPE_ELECTRIC", "TYPE_FLYING" ],
     "catch_rate": 45,
     "base_exp_reward": 132,
     "ev_yields": {

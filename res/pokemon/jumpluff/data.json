@@ -47,6 +47,7 @@
             [ 20, "MOVE_BULLET_SEED" ],
             [ 24, "MOVE_LEECH_SEED" ],
             [ 28, "MOVE_MEGA_DRAIN" ],
+            [ 30, "MOVE_TAILWIND" ],
             [ 32, "MOVE_COTTON_SPORE" ],
             [ 36, "MOVE_U_TURN" ],
             [ 40, "MOVE_WORRY_SEED" ],

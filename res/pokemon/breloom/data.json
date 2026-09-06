@@ -49,7 +49,8 @@
             [ 33, "MOVE_SKY_UPPERCUT" ],
             [ 37, "MOVE_MIND_READER" ],
             [ 41, "MOVE_SEED_BOMB" ],
-            [ 45, "MOVE_DYNAMIC_PUNCH" ]
+            [ 45, "MOVE_DYNAMIC_PUNCH" ],
+            [ 50, "MOVE_SPORE" ]
         ],
         "by_tm": [
             "TM01",

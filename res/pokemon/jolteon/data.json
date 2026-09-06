@@ -42,12 +42,11 @@
             [ 22, "MOVE_QUICK_ATTACK" ],
             [ 29, "MOVE_DOUBLE_KICK" ],
             [ 36, "MOVE_PIN_MISSILE" ],
-            [ 43, "MOVE_THUNDER_FANG" ],
-            [ 50, "MOVE_LAST_RESORT" ],
+            [ 43, "MOVE_THUNDERBOLT" ],
+            [ 50, "MOVE_DISCHARGE" ],
             [ 57, "MOVE_THUNDER_WAVE" ],
             [ 64, "MOVE_AGILITY" ],
-            [ 71, "MOVE_THUNDER" ],
-            [ 78, "MOVE_DISCHARGE" ]
+            [ 71, "MOVE_THUNDER" ]
         ],
         "by_tm": [
             "TM05",

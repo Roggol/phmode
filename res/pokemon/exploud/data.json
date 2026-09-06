@@ -49,7 +49,7 @@
             [ 29, "MOVE_STOMP" ],
             [ 37, "MOVE_SCREECH" ],
             [ 40, "MOVE_CRUNCH" ],
-            [ 45, "MOVE_ROAR" ],
+            [ 45, "MOVE_BOOMBURST" ],
             [ 55, "MOVE_REST" ],
             [ 55, "MOVE_SLEEP_TALK" ],
             [ 63, "MOVE_HYPER_VOICE" ],

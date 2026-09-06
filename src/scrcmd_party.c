@@ -866,3 +866,6 @@ BOOL ScrCmd_InflictPartyMonStatus(ScriptContext *ctx)
     Pokemon_SetValue(mon, MON_DATA_STATUS, &status);
     return FALSE;
 }
+
+// Debug/utility: inflict (or clear) a status condition on a chosen party member.
+// Driven by the Inflict

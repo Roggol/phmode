@@ -107,7 +107,7 @@
         ]
     },
     "evolutions": [
-        [ "EVO_TRADE", "SPECIES_ALAKAZAM" ]
+        [ "EVO_USE_ITEM", "ITEM_LINK_CABLE", "SPECIES_ALAKAZAM" ]
     ],
     "offspring": "SPECIES_ABRA",
     "footprint": {

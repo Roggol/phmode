@@ -50,7 +50,8 @@
             [ 44, "MOVE_EMBARGO" ],
             [ 48, "MOVE_FLAMETHROWER" ],
             [ 54, "MOVE_CRUNCH" ],
-            [ 60, "MOVE_NASTY_PLOT" ]
+            [ 60, "MOVE_NASTY_PLOT" ],
+            [ 66, "MOVE_DARK_PULSE" ]
         ],
         "by_tm": [
             "TM05",

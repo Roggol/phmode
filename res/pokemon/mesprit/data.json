@@ -27,7 +27,7 @@
     "base_friendship": 140,
     "exp_rate": "EXP_RATE_SLOW",
     "egg_groups": [ "EGG_GROUP_UNDISCOVERED", "EGG_GROUP_UNDISCOVERED" ],
-    "abilities": [ "ABILITY_LEVITATE", "ABILITY_NONE" ],
+    "abilities": [ "ABILITY_PSYCHIC_SURGE", "ABILITY_PSYCHIC_SURGE" ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_PINK",
     "flip_sprite": false,
@@ -42,7 +42,7 @@
             [ 31, "MOVE_LUCKY_CHANT" ],
             [ 36, "MOVE_FUTURE_SIGHT" ],
             [ 46, "MOVE_CHARM" ],
-            [ 51, "MOVE_EXTRASENSORY" ],
+            [ 51, "MOVE_EXPANDING_FORCE" ],
             [ 61, "MOVE_COPYCAT" ],
             [ 66, "MOVE_NATURAL_GIFT" ],
             [ 76, "MOVE_HEALING_WISH" ]

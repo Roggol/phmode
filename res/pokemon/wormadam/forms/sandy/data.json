@@ -1,10 +1,10 @@
 {
     "base_stats": {
         "hp": 60,
-        "attack": 79,
+        "attack": 99,
         "defense": 105,
         "speed": 36,
-        "special_attack": 59,
+        "special_attack": 39,
         "special_defense": 85
     },
     "types": [ "TYPE_BUG", "TYPE_GROUND" ],
@@ -40,13 +40,14 @@
             [ 20, "MOVE_HIDDEN_POWER" ],
             [ 23, "MOVE_CONFUSION" ],
             [ 26, "MOVE_ROCK_BLAST" ],
-            [ 29, "MOVE_HARDEN" ],
+            [ 29, "MOVE_LEECH_LIFE" ],
             [ 32, "MOVE_PSYBEAM" ],
             [ 35, "MOVE_CAPTIVATE" ],
             [ 38, "MOVE_FLAIL" ],
             [ 41, "MOVE_ATTRACT" ],
             [ 44, "MOVE_PSYCHIC" ],
-            [ 47, "MOVE_FISSURE" ]
+            [ 47, "MOVE_EARTHQUAKE" ],
+            [ 50, "MOVE_SUCKER_PUNCH" ]
         ],
         "by_tm": [
             "TM06",

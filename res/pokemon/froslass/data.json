@@ -1,10 +1,10 @@
 {
     "base_stats": {
         "hp": 70,
-        "attack": 80,
+        "attack": 50,
         "defense": 70,
         "speed": 110,
-        "special_attack": 80,
+        "special_attack": 110,
         "special_defense": 70
     },
     "types": [ "TYPE_ICE", "TYPE_GHOST" ],
@@ -27,7 +27,7 @@
     "base_friendship": 70,
     "exp_rate": "EXP_RATE_MEDIUM_FAST",
     "egg_groups": [ "EGG_GROUP_FAIRY", "EGG_GROUP_MINERAL" ],
-    "abilities": [ "ABILITY_SNOW_CLOAK", "ABILITY_SNOW_CLOAK" ],
+    "abilities": [ "ABILITY_SNOW_WARNING", "ABILITY_SNOW_WARNING" ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_WHITE",
     "flip_sprite": false,

@@ -1,10 +1,10 @@
 {
     "base_stats": {
         "hp": 60,
-        "attack": 69,
+        "attack": 79,
         "defense": 95,
-        "speed": 36,
-        "special_attack": 69,
+        "speed": 16,
+        "special_attack": 79,
         "special_defense": 95
     },
     "types": [ "TYPE_BUG", "TYPE_STEEL" ],
@@ -40,13 +40,14 @@
             [ 20, "MOVE_HIDDEN_POWER" ],
             [ 23, "MOVE_CONFUSION" ],
             [ 26, "MOVE_MIRROR_SHOT" ],
-            [ 29, "MOVE_METAL_SOUND" ],
+            [ 29, "MOVE_LEECH_LIFE" ],
             [ 32, "MOVE_PSYBEAM" ],
             [ 35, "MOVE_CAPTIVATE" ],
             [ 38, "MOVE_FLAIL" ],
             [ 41, "MOVE_ATTRACT" ],
             [ 44, "MOVE_PSYCHIC" ],
-            [ 47, "MOVE_IRON_HEAD" ]
+            [ 47, "MOVE_IRON_HEAD" ],
+            [ 50, "MOVE_SUCKER_PUNCH" ]
         ],
         "by_tm": [
             "TM06",

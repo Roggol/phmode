@@ -37,7 +37,14 @@
             [ 1, "MOVE_SKY_ATTACK" ],
             [ 1, "MOVE_EXTREME_SPEED" ],
             [ 1, "MOVE_AURA_SPHERE" ],
-            [ 1, "MOVE_AIR_SLASH" ]
+            [ 1, "MOVE_AIR_SLASH" ],
+            [ 1, "MOVE_ANCIENT_POWER" ],
+            [ 1, "MOVE_LAST_RESORT" ],
+            [ 1, "MOVE_WISH" ],
+            [ 1, "MOVE_FOLLOW_ME" ],
+            [ 1, "MOVE_ENCORE" ],
+            [ 1, "MOVE_YAWN" ],
+            [ 1, "MOVE_EXTRASENSORY" ]
         ],
         "by_tm": [
             "TM01",

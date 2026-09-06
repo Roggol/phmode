@@ -1,20 +1,20 @@
 {
-  "name": "Dragon Scale",
-  "plural": "Dragon Scales",
+  "name": "Link Cable",
+  "plural": "Link Cables",
   "article": "a",
   "description": [
-    "A thick and tough scale.\n",
-    "Dragon-type Pokémon may be holding\n",
-    "this item when caught."
+    "A cable that mimics a link trade.\n",
+    "Certain species evolve when this is\n",
+    "used on them."
   ],
   "icon": {
-    "sprite": "dragon_scale_NCGR",
-    "palette": "dragon_scale_NCLR"
+    "sprite": "pal_pad_NCGR",
+    "palette": "pal_pad_NCLR"
   },
-  "gbaID": "GBA_ITEM_DRAGON_SCALE",
+  "gbaID": "GBA_ITEM_NONE",
   "price": 2100,
-  "effectParam": 10,
-  "holdEffect": "HOLD_EFFECT_EVOLVE_SEADRA",
+  "effectParam": 0,
+  "holdEffect": "HOLD_EFFECT_NONE",
   "pluckEffect": "PLUCK_EFFECT_NONE",
   "flingEffect": "FLING_EFFECT_NONE",
   "flingPower": 30,

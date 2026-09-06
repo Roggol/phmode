@@ -122,11 +122,11 @@
     "evolutions": [
         [
             "EVO_LEVEL",
-            37,
+            30,
             "SPECIES_SLOWBRO"
         ],
         [
-            "EVO_TRADE_WITH_HELD_ITEM",
+            "EVO_USE_ITEM",
             "ITEM_KINGS_ROCK",
             "SPECIES_SLOWKING"
         ]

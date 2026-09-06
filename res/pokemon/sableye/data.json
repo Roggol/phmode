@@ -27,7 +27,7 @@
     "base_friendship": 35,
     "exp_rate": "EXP_RATE_MEDIUM_SLOW",
     "egg_groups": [ "EGG_GROUP_HUMAN_LIKE", "EGG_GROUP_HUMAN_LIKE" ],
-    "abilities": [ "ABILITY_KEEN_EYE", "ABILITY_STALL" ],
+    "abilities": [ "ABILITY_KEEN_EYE", "ABILITY_PRANKSTER" ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_PURPLE",
     "flip_sprite": false,
@@ -44,14 +44,14 @@
             [ 22, "MOVE_DETECT" ],
             [ 25, "MOVE_SHADOW_SNEAK" ],
             [ 29, "MOVE_KNOCK_OFF" ],
+            [ 30, "MOVE_GRAVITY" ],
             [ 32, "MOVE_FAINT_ATTACK" ],
             [ 36, "MOVE_PUNISHMENT" ],
             [ 39, "MOVE_SHADOW_CLAW" ],
             [ 43, "MOVE_POWER_GEM" ],
             [ 46, "MOVE_CONFUSE_RAY" ],
             [ 50, "MOVE_ZEN_HEADBUTT" ],
-            [ 53, "MOVE_SHADOW_BALL" ],
-            [ 57, "MOVE_MEAN_LOOK" ]
+            [ 53, "MOVE_SHADOW_BALL" ]
         ],
         "by_tm": [
             "TM01",

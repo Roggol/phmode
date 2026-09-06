@@ -108,7 +108,7 @@
         ]
     },
     "evolutions": [
-        [ "EVO_TRADE", "SPECIES_GENGAR" ]
+        [ "EVO_USE_ITEM", "ITEM_LINK_CABLE", "SPECIES_GENGAR" ]
     ],
     "offspring": "SPECIES_GASTLY",
     "footprint": {

@@ -39,6 +39,7 @@
             [ 6, "MOVE_METRONOME" ],
             [ 10, "MOVE_SWEET_KISS" ],
             [ 15, "MOVE_YAWN" ],
+            [ 17, "MOVE_EXTRASENSORY" ],
             [ 19, "MOVE_ENCORE" ],
             [ 24, "MOVE_FOLLOW_ME" ],
             [ 28, "MOVE_WISH" ],

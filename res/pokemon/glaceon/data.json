@@ -42,7 +42,7 @@
             [ 22, "MOVE_QUICK_ATTACK" ],
             [ 29, "MOVE_BITE" ],
             [ 36, "MOVE_ICE_SHARD" ],
-            [ 43, "MOVE_ICE_FANG" ],
+            [ 43, "MOVE_ICE_BEAM" ],
             [ 50, "MOVE_LAST_RESORT" ],
             [ 57, "MOVE_MIRROR_COAT" ],
             [ 64, "MOVE_HAIL" ],

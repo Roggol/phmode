@@ -43,7 +43,7 @@
             [ 19, "MOVE_SHADOW_SNEAK" ],
             [ 22, "MOVE_FURY_SWIPES" ],
             [ 26, "MOVE_SUCKER_PUNCH" ],
-            [ 29, "MOVE_SPIDER_WEB" ],
+            [ 29, "MOVE_STICKY_WEB" ],
             [ 33, "MOVE_AGILITY" ],
             [ 36, "MOVE_PIN_MISSILE" ],
             [ 40, "MOVE_PSYCHIC" ],

@@ -24,7 +24,7 @@
   "canRegister": false,
   "fieldPocket": "POCKET_ITEMS",
   "battlePocket": "BATTLE_POCKET_MASK_NONE",
-  "fieldUseFunc": "ITEM_USE_FUNC_NONE",
+  "fieldUseFunc": "ITEM_USE_FUNC_EVO_STONE",
   "battleUseFunc": 0,
-  "itemUseParams": null
+  "itemUseParams": {}
 }
