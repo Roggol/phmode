@@ -1,11 +1,32 @@
 #include "macros/btlanimcmd.inc"
 
 L_0:
-    PlaySoundEffectR SEQ_SE_DP_030_sseq
-    Func_FadeBg FADE_BG_TYPE_BASE, 1, 0, 8, BATTLE_COLOR_WHITE
-    Func_Shake 1, 0, 2, 4, BATTLE_ANIM_BATTLER_SPRITE_DEFENDER
-    Func_Shake 1, 0, 2, 4, BATTLE_ANIM_BATTLER_SPRITE_DEFENDER_PARTNER
-    WaitForAnimTasks
-    Func_FadeBg FADE_BG_TYPE_BASE, 1, 8, 0, BATTLE_COLOR_WHITE
-    WaitForAnimTasks
+    LoadParticleResource 0, spider_web_spa
+    LoadParticleResource 1, spider_web_spa
+    JumpIfContest L_1
+    PlayMovingSoundEffectAtkDef SEQ_SE_DP_W081B_sseq, BATTLE_SOUND_PAN_LEFT, BATTLE_SOUND_PAN_RIGHT, 4, 2
+    CreateEmitter 0, 0, EMITTER_CB_GENERIC
+    SetExtraParams 0, 2, 6, 1, 0, 1
+    CreateEmitter 1, 1, EMITTER_CB_SET_POS_TO_DEFENDER
+    CreateEmitter 1, 2, EMITTER_CB_SET_POS_TO_DEFENDER
+    Delay 14
+    PlaySoundEffectR SEQ_SE_DP_061_sseq
+    PlayDelayedSoundEffectR SEQ_SE_DP_W081_sseq, 32
+    WaitForAllEmitters
+    UnloadParticleSystem 0
+    UnloadParticleSystem 1
+    End
+
+L_1:
+    PlayMovingSoundEffectAtkDef SEQ_SE_DP_W081B_sseq, BATTLE_SOUND_PAN_LEFT, BATTLE_SOUND_PAN_RIGHT, 4, 2
+    CreateEmitter 0, 0, EMITTER_CB_GENERIC
+    SetExtraParams 0, 0, 28, 22, 0, 4
+    CreateEmitter 1, 1, EMITTER_CB_SET_POS_TO_DEFENDER
+    CreateEmitter 1, 2, EMITTER_CB_SET_POS_TO_DEFENDER
+    Delay 14
+    PlaySoundEffectR SEQ_SE_DP_061_sseq
+    PlayDelayedSoundEffectR SEQ_SE_DP_W081_sseq, 32
+    WaitForAllEmitters
+    UnloadParticleSystem 0
+    UnloadParticleSystem 1
     End
