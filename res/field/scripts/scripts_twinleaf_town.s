@@ -46,7 +46,7 @@ TwinleafTown_Guitarist:
     SetFlag FLAG_RECEIVED_TWINLEAF_TOWN_GUITARIST_RARE_CANDY
     Common_GiveItemQuantity
     SetVar VAR_0x8004, ITEM_RARE_CANDY
-    SetVar VAR_0x8005, 1
+    SetVar VAR_0x8005, 999
     GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, TwinleafTown_GuitaristBagIsFull
     Common_GiveItemQuantity
     CloseMessage

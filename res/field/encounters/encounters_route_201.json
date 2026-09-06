@@ -3,51 +3,51 @@
     "land_encounters": [
         {
             "level": 50,
-            "species": "SPECIES_DIALGA"
+            "species": "SPECIES_HONCHKROW"
         },
         {
             "level": 50,
-            "species": "SPECIES_PALKIA"
+            "species": "SPECIES_DRIFLOON"
         },
         {
             "level": 50,
-            "species": "SPECIES_GIRATINA"
+            "species": "SPECIES_DRIFBLIM"
         },
         {
             "level": 50,
-            "species": "SPECIES_DIALGA"
+            "species": "SPECIES_KECLEON"
         },
         {
             "level": 50,
-            "species": "SPECIES_PALKIA"
+            "species": "SPECIES_CACTURNE"
         },
         {
             "level": 50,
-            "species": "SPECIES_GIRATINA"
+            "species": "SPECIES_GALLADE"
+        },
+        {
+            "level": 45,
+            "species": "SPECIES_CROAGUNK"
         },
         {
             "level": 50,
-            "species": "SPECIES_DIALGA"
+            "species": "SPECIES_TOXICROAK"
         },
         {
             "level": 50,
-            "species": "SPECIES_PALKIA"
+            "species": "SPECIES_AMPHAROS"
         },
         {
             "level": 50,
-            "species": "SPECIES_GIRATINA"
+            "species": "SPECIES_GRUMPIG"
         },
         {
             "level": 50,
-            "species": "SPECIES_DIALGA"
+            "species": "SPECIES_GLALIE"
         },
         {
             "level": 50,
-            "species": "SPECIES_PALKIA"
-        },
-        {
-            "level": 50,
-            "species": "SPECIES_GIRATINA"
+            "species": "SPECIES_EXPLOUD"
         }
     ],
     "swarms": [
@@ -55,12 +55,12 @@
         "SPECIES_DODUO"
     ],
     "day": [
-        "SPECIES_DIALGA",
-        "SPECIES_PALKIA"
+        "SPECIES_DRIFBLIM",
+        "SPECIES_KECLEON"
     ],
     "night": [
-        "SPECIES_PALKIA",
-        "SPECIES_GIRATINA"
+        "SPECIES_DRIFBLIM",
+        "SPECIES_KECLEON"
     ],
     "radar": [
         "SPECIES_NIDORAN_M",
