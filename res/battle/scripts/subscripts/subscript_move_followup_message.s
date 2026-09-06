@@ -23,11 +23,20 @@ _032:
     GoTo _067
 
 _037:
-    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_ENDURED, _057
-    CompareMonDataToValue OPCODE_NEQ, BTLSCR_DEFENDER, BATTLEMON_CUR_HP, 1, _057
+    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_ENDURED, _047
+    CompareMonDataToValue OPCODE_NEQ, BTLSCR_DEFENDER, BATTLEMON_CUR_HP, 1, _047
     // {0} endured the hit!
     PrintMessage BattleStrings_Text_PokemonEnduredTheHit_Ally, TAG_NICKNAME, BTLSCR_DEFENDER
-    Wait 
+    Wait
+    WaitButtonABTime 30
+    GoTo _067
+
+_047:
+    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_STURDY_HELD_ON, _057
+    CompareMonDataToValue OPCODE_NEQ, BTLSCR_DEFENDER, BATTLEMON_CUR_HP, 1, _057
+    // {0} survived the hit with Sturdy!
+    PrintMessage BattleStrings_Text_PokemonSurvivedTheHitWithSturdy_Ally, TAG_NICKNAME, BTLSCR_DEFENDER
+    Wait
     WaitButtonABTime 30
     GoTo _067
 

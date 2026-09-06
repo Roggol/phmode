@@ -668,6 +668,7 @@ u8 Move_AteAbilityType(BattleContext *battleCtx, int ability, int move);
  * @return TRUE if the move is in the slicing set.
  */
 BOOL Move_IsSlicing(int move);
+int Move_EffectiveRange(BattleSystem *battleSys, BattleContext *battleCtx, int attacker, int move);
 
 /**
  * @brief Check if the given defender has the specified ability, treating it as

@@ -196,6 +196,7 @@ struct BattleContext {
     int msgTemp;
     int calcTemp;
     int scriptTemp;
+    int defiantReactType; // 0 none, 1 Defiant (+2 Atk), 2 Competitive (+2 SpA); consumed by BtlCmd_CheckDefiantReaction
 
     u32 battlerStatusFlags[MAX_BATTLERS];
     u32 payDayCount;

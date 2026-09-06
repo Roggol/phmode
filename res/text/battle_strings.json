@@ -6276,7 +6276,7 @@
         "stopped evolving!\r"
       ]
     },
-    {           
+    {
       "id": "BattleStrings_Text_EllipsesEllipses",
       "en_US": "... ...?\r"
     },
@@ -8680,6 +8680,48 @@
       "en_US": [
         "The foe’s {STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
         "scattered Spikes at your feet!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonSurvivedTheHitWithSturdy_Ally",
+      "en_US": [
+        "{STRVAR_1 1, 0, 0} survived\n",
+        "the hit with Sturdy!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonSurvivedTheHitWithSturdy_Wild",
+      "en_US": [
+        "The wild {STRVAR_1 1, 0, 0} survived\n",
+        "the hit with Sturdy!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonSurvivedTheHitWithSturdy_Foe",
+      "en_US": [
+        "The foe’s {STRVAR_1 1, 0, 0} survived\n",
+        "the hit with Sturdy!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilitySharplyRaisedItsStat_Ally",
+      "en_US": [
+        "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
+        "sharply raised its {STRVAR_1 13, 2, 0}!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilitySharplyRaisedItsStat_Wild",
+      "en_US": [
+        "The wild {STRVAR_1 1, 0, 0}’s\n",
+        "{STRVAR_1 5, 1, 0} sharply raised its {STRVAR_1 13, 2, 0}!"
+      ]
+    },
+    {
+      "id": "BattleStrings_Text_PokemonsAbilitySharplyRaisedItsStat_Foe",
+      "en_US": [
+        "The foe’s {STRVAR_1 1, 0, 0}’s\n",
+        "{STRVAR_1 5, 1, 0} sharply raised its {STRVAR_1 13, 2, 0}!"
       ]
     }
   ]

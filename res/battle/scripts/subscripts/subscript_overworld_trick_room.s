@@ -11,5 +11,5 @@ _000:
     PrintMessage BattleStrings_Text_TheDimensionsBecameDistorted, TAG_NONE
     Wait 
     WaitButtonABTime 30
-    UpdateVar OPCODE_FLAG_ON, BTLVAR_FIELD_CONDITIONS, FIELD_CONDITION_TRICK_ROOM_INIT
-    End 
+    UpdateVar OPCODE_FLAG_ON, BTLVAR_FIELD_CONDITIONS, FIELD_CONDITION_TRICK_ROOM_PERM
+    End

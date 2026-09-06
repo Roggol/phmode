@@ -315,6 +315,7 @@ static BOOL BtlCmd_TryHealOrderAlly(BattleSystem *battleSys, BattleContext *batt
 static BOOL BtlCmd_TryStickyWeb(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_TryMoxie(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_BlowAwayHazards(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_CheckDefiantReaction(BattleSystem *battleSys, BattleContext *battleCtx);
 
 static int BattleScript_Read(BattleContext *battleCtx);
 static void BattleScript_Iter(BattleContext *battleCtx, int i);
@@ -2827,6 +2828,7 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
     jumpBlocked = BattleScript_Read(battleCtx);
     jumpBlockedBySubstitute = BattleScript_Read(battleCtx);
     result = 0;
+    battleCtx->defiantReactType = 0;
 
     battleCtx->battleStatusMask &= ~SYSCTL_FAIL_STAT_STAGE_CHANGE;
 
@@ -2874,7 +2876,11 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
             }
         } else {
             if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_ABILITY) {
-                SetupNicknameAbilityStatMsg(battleCtx, BattleStrings_Text_PokemonsAbilityRaisedItsStat_Ally, statOffset); // "{0}'s {1} raised its {2}!"
+                SetupNicknameAbilityStatMsg(battleCtx,
+                    stageChange >= 2
+                        ? BattleStrings_Text_PokemonsAbilitySharplyRaisedItsStat_Ally // "{0}'s {1} sharply raised its {2}!"
+                        : BattleStrings_Text_PokemonsAbilityRaisedItsStat_Ally,        // "{0}'s {1} raised its {2}!"
+                    statOffset);
             } else if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_HELD_ITEM) {
                 battleCtx->msgBuffer.id = BattleStrings_Text_TheItemRaisedPokemonsStat_Ally; // "The {0} raised {1}'s {2}!"
                 battleCtx->msgBuffer.tags = TAG_NICKNAME_ITEM_STAT;
@@ -3005,27 +3011,19 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
         }
 
         // Defiant / Competitive: when an opponent lowers one of this Pokemon's
-        // stats, Defiant raises its Attack by 2 stages and Competitive raises its
-        // Sp. Atk by 2 stages. Applied silently (the stat bar still updates); the
-        // triggering "stat fell!" message from the calling subscript still shows.
+        // stats, flag a follow-up +2 boost to Attack (Defiant) or Sp. Atk
+        // (Competitive). subscript_update_stat_stage runs it via
+        // BtlCmd_CheckDefiantReaction once the "stat fell!" line has been shown,
+        // so the boost gets its own animation and "{mon}'s {ability} raised its
+        // {stat}!" message.
         if (stageChange < 0
             && battleCtx->battleMons[battleCtx->sideEffectMon].curHP
             && BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker)
                 != BattleSystem_GetBattlerSide(battleSys, battleCtx->sideEffectMon)) {
-            int reactStat = -1;
-
             if (Battler_Ability(battleCtx, battleCtx->sideEffectMon) == ABILITY_DEFIANT) {
-                reactStat = BATTLE_STAT_ATTACK;
+                battleCtx->defiantReactType = 1;
             } else if (Battler_Ability(battleCtx, battleCtx->sideEffectMon) == ABILITY_COMPETITIVE) {
-                reactStat = BATTLE_STAT_SP_ATTACK;
-            }
-
-            if (reactStat >= 0) {
-                mon->statBoosts[reactStat] += 2;
-
-                if (mon->statBoosts[reactStat] > MAX_STAT_STAGE) {
-                    mon->statBoosts[reactStat] = MAX_STAT_STAGE;
-                }
+                battleCtx->defiantReactType = 2;
             }
         }
     }
@@ -6169,6 +6167,41 @@ static BOOL BtlCmd_BlowAwayHazards(BattleSystem *battleSys, BattleContext *battl
     }
 
     BattleScript_Iter(battleCtx, 1);
+
+    return FALSE;
+}
+
+/**
+ * @brief Defiant / Competitive follow-up: if BtlCmd_ChangeStatStage flagged an
+ * opponent-induced stat drop on a Defiant / Competitive holder, set up the
+ * matching +2 Attack / Sp. Atk boost (as a SIDE_EFFECT_TYPE_ABILITY raise, so it
+ * gets its own animation and "{mon}'s {ability} raised its {stat}!" message) and
+ * fall through to a Call of subscript_update_stat_stage; otherwise jump past it.
+ *
+ * Inputs:
+ * 1. Jump distance if no reaction is pending.
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @return FALSE
+ */
+static BOOL BtlCmd_CheckDefiantReaction(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int jumpNoReaction = BattleScript_Read(battleCtx);
+
+    int reactType = battleCtx->defiantReactType;
+    battleCtx->defiantReactType = 0;
+
+    if (reactType == 1 || reactType == 2) {
+        battleCtx->sideEffectType = SIDE_EFFECT_TYPE_ABILITY;
+        battleCtx->sideEffectParam = reactType == 1
+            ? MOVE_SUBSCRIPT_PTR_ATTACK_UP_2_STAGES
+            : MOVE_SUBSCRIPT_PTR_SP_ATTACK_UP_2_STAGES;
+        battleCtx->msgBattlerTemp = battleCtx->sideEffectMon;
+    } else {
+        BattleScript_Iter(battleCtx, jumpNoReaction);
+    }
 
     return FALSE;
 }
@@ -9353,7 +9386,7 @@ static BOOL BtlCmd_CheckHoldOnWith1HP(BattleSystem *battleSys, BattleContext *ba
         && Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battler, ABILITY_STURDY) == TRUE) {
         // Modern Sturdy: a full-HP holder survives an otherwise-lethal hit at 1 HP.
         battleCtx->hpCalcTemp = (battleCtx->battleMons[battler].curHP - 1) * -1;
-        battleCtx->moveStatusFlags |= MOVE_STATUS_ENDURED;
+        battleCtx->moveStatusFlags |= MOVE_STATUS_STURDY_HELD_ON;
     }
 
     return FALSE;

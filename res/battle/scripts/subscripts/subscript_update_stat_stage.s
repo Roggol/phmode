@@ -20,10 +20,15 @@ _018:
     UpdateVar OPCODE_FLAG_ON, BTLVAR_BATTLE_CTX_STATUS_2, SYSCTL_UPDATE_STAT_STAGES
 
 _036:
-    PrintBufferedMessage 
-    Wait 
+    PrintBufferedMessage
+    Wait
     WaitButtonABTime 30
-    End 
+    CheckDefiantReaction _039
+    // Defiant / Competitive: +2 Atk / SpA, with its own "{mon}'s {ability} raised its {stat}!" line
+    Call BATTLE_SUBSCRIPT_UPDATE_STAT_STAGE
+
+_039:
+    End
 
 _041:
     CompareVarToValue OPCODE_NEQ, BTLVAR_SIDE_EFFECT_TYPE, SIDE_EFFECT_TYPE_DIRECT, _048

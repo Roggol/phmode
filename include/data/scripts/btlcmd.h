@@ -235,6 +235,7 @@ ScriptCommand(BTLCMD_TRYHEALORDERALLY,            BtlCmd_TryHealOrderAlly)
 ScriptCommand(BTLCMD_TRYSTICKYWEB,                BtlCmd_TryStickyWeb)
 ScriptCommand(BTLCMD_TRYMOXIE,                    BtlCmd_TryMoxie)
 ScriptCommand(BTLCMD_BLOWAWAYHAZARDS,             BtlCmd_BlowAwayHazards)
+ScriptCommand(BTLCMD_CHECKDEFIANTREACTION,        BtlCmd_CheckDefiantReaction)
 ScriptCommand(BTLCMD_END,                         BtlCmd_End)
 
 // clang-format on

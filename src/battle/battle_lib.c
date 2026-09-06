@@ -1614,7 +1614,7 @@ int BattleSystem_Defender(BattleSystem *battleSys, BattleContext *battleCtx, int
 
     int range;
     if (move) {
-        range = MOVE_DATA(move).range;
+        range = Move_EffectiveRange(battleSys, battleCtx, attacker, move);
     } else {
         range = inRange;
     }
@@ -3158,6 +3158,20 @@ BOOL Move_IsSlicing(int move)
     default:
         return FALSE;
     }
+}
+
+int Move_EffectiveRange(BattleSystem *battleSys, BattleContext *battleCtx, int attacker, int move)
+{
+    // Expanding Force: in a double battle, while Psychic Terrain is up and the
+    // grounded user throws it, it hits both opponents instead of one.
+    if (move == MOVE_EXPANDING_FORCE
+        && (BattleSystem_GetBattleType(battleSys) & BATTLE_TYPE_DOUBLES)
+        && (battleCtx->fieldConditionsMask & FIELD_CONDITION_PSYCHIC_TERRAIN)
+        && Battler_IsGrounded(battleCtx, attacker)) {
+        return RANGE_ADJACENT_OPPONENTS;
+    }
+
+    return MOVE_DATA(move).range;
 }
 
 BOOL Battler_IgnorableAbility(BattleContext *battleCtx, int attacker, int defender, int ability)
@@ -7330,7 +7344,7 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     }
 
     if ((battleType & BATTLE_TYPE_DOUBLES)
-        && MOVE_DATA(move).range == RANGE_ADJACENT_OPPONENTS
+        && Move_EffectiveRange(battleSys, battleCtx, attacker, move) == RANGE_ADJACENT_OPPONENTS
         && BattleSystem_CountAliveBattlers(battleSys, battleCtx, TRUE, defender) == 2) {
         damage = damage * 3 / 4;
     }
