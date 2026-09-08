@@ -140,7 +140,10 @@ void HoneyTree_SlatherTree(FieldSystem *fieldSystem)
     PlayerHoneyTreeStates *treeDat = SpecialEncounter_GetPlayerHoneyTreeStates(SaveData_GetSpecialEncounters(fieldSystem->saveData));
     HoneyTree *tree = SpecialEncounter_GetHoneyTree(treeId, treeDat);
 
-    tree->minutesRemaining = (24 * 60); // slathering lasts for one day
+    // phmode: honey produces an encounter instantly instead of after 6 hours, so
+    // the tree is marked "ready" (see SixHoursSinceSlathered) the moment it is
+    // slathered and stays huntable until the encounter consumes it.
+    tree->minutesRemaining = (18 * 60);
 
     TrainerInfo *trainer = SaveData_GetTrainerInfo(fieldSystem->saveData);
     BOOL munchlaxTree = IsMunchlaxTree(TrainerInfo_ID(trainer), treeId);
@@ -156,16 +159,13 @@ void HoneyTree_SlatherTree(FieldSystem *fieldSystem)
 
     GetTreeEncounterGroup(munchlaxTree, &tree->encounterGroup);
 
-    if (tree->encounterGroup != TREE_GROUP_NO_ENCOUNTER) {
-        GetTreeEncounterSlot(&tree->encounterSlot);
-
-        tree->encounterTableIndex = GetEncounterTableFromGroup(tree->encounterGroup);
-    } else {
-        tree->encounterTableIndex = 0;
-        tree->encounterSlot = 0;
-        tree->minutesRemaining = 0;
+    // phmode: never a dud slather - a "no encounter" roll becomes group A.
+    if (tree->encounterGroup == TREE_GROUP_NO_ENCOUNTER) {
+        tree->encounterGroup = TREE_GROUP_A;
     }
 
+    GetTreeEncounterSlot(&tree->encounterSlot);
+    tree->encounterTableIndex = GetEncounterTableFromGroup(tree->encounterGroup);
     tree->numShakes = GetShakesFromGroup(tree->encounterGroup);
 
     SpecialEncounter_SetLastSlatheredTreeId(treeId, treeDat);

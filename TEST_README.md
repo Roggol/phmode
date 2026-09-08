@@ -170,3 +170,56 @@ tested. Guaranteed instead: **Forretress** (Sturdy — sole ability), **Cacturne
 (Shed Spines), **Gallade** (one of Justified / Sharpness), and the six
 **legendaries** (empty / identical second slot). Everything else — catch a
 couple or KO and re-encounter.
+
+---
+
+## Changed mechanics in this uncommitted batch
+
+Real gameplay changes (not test-only) made since the last commit. All are in
+`CHANGES.md` too; this is the short "what to check" list.
+
+### Will-O-Wisp accuracy 75 → 85
+`res/moves/will_o_wisp/data.json`. Follow-up to the committed accuracy pass.
+
+### Honey trees give an instant encounter
+Slather Honey on a tree → the Honey Tree battle starts immediately instead of
+after leaving and coming back 6+ hours later. A "no encounter" roll is promoted
+to group A, so a slather is never wasted; the tree still goes bare afterwards and
+can be re-slathered right away (offered automatically if you have more Honey).
+*Which* Pokémon appears is still the normal random roll.
+`src/overlay005/honey_tree.c`, `res/field/scripts/scripts_common.s`.
+
+### "HATCH" option on eggs in the party menu
+START → Pokémon → select an egg → **HATCH** hatches it on the spot (the normal
+"Oh?" hatch cutscene + nickname prompt), no walking. Only on the field party
+menu, not the bag/daycare/selection party screens.
+`src/applications/party_menu/*`, `src/start_menu.c`, `res/text/party_menu.json`.
+
+### Repel Toggle (new Key Item)
+- Given by the professor's assistant on **Route 202**, right after the catching
+  tutorial and the five Poké Balls, with the line *"Take this, I think it will
+  be helpful for your journey."* Nurse Joy hands it over as a fallback for saves
+  already past that tutorial (check-in heal after the tutorial → obtained).
+- Uses the Repel icon, registerable to Y. Using it (bag or Y) toggles it on/off
+  with a message each time; the Bag description ends with `(on)` / `(off)`.
+- While **on**: weak wild Pokémon never appear and the "REPEL's effect wore off"
+  prompt never fires, with no step limit. Turning it off resumes encounters
+  immediately. Standard Repel rule still applies — only blocks Pokémon lower
+  level than your lead.
+- `FLAG_REPEL_TOGGLE_ON` (renamed unused flag); `src/item_use_functions.c`,
+  `src/overlay006/repel_step_update.c`, `src/applications/bag/windows.c`,
+  `res/items/data/repel_toggle.json`, `res/text/bag.json`.
+
+### Register up to 6 key items to the Y button
+- Bag → key item → **Register** adds it to the Y list (up to 6); a registered
+  item shows **Deselect**. Every registered item shows the Y icon in the list.
+- Pressing **Y** in the field: 0 registered does nothing, 1 uses it directly
+  (as before), 2+ opens a small drop-down (registered items + CANCEL) — pick one
+  and it's used.
+- Stored in `VAR_REGISTERED_KEY_ITEM_0..5` (renamed unused vars), so the save
+  layout is unchanged and existing saves keep working (they just start with an
+  empty list). New module `src/registered_items.c`; picker in
+  `src/item_use_functions.c` / `src/overlay005/field_control.c`.
+- Worth a close look: the drop-down window rendering (position / frame) is
+  untested visually — register e.g. Bicycle + Repel Toggle + Vs. Seeker and
+  press Y.

@@ -177,6 +177,7 @@ static void StartMenu_ShowBerryTag(FieldTask *fieldTask, u16 berryItemID);
 static BOOL StartMenu_ExitBerryTag(FieldTask *fieldTask);
 static void StartMenu_EvolveInit(FieldTask *fieldTask);
 static void StartMenu_Evolve(FieldTask *fieldTask);
+static BOOL StartMenu_HatchEggTask(FieldTask *fieldTask);
 static BOOL StartMenu_SelectRetire(FieldTask *fieldTask);
 static void StartMenu_ProcessGivenMail(FieldSystem *fieldSystem, StartMenu *menu, u8 mode);
 
@@ -1116,6 +1117,14 @@ BOOL StartMenu_ExitPartyMenu(FieldTask *fieldTask)
         menu->taskData = FieldSystem_OpenBag(fieldSystem, &menu->itemUseCtx);
         StartMenu_SetCallback(menu, StartMenu_ExitBag);
         break;
+    case PARTY_MENU_EXIT_CODE_HATCH_EGG:
+        // phmode: the party menu already zeroed the chosen egg's cycles; run the
+        // regular hatch cutscene now instead of after more walking.
+        FieldSystem_StartFieldMap(fieldSystem);
+        menu->callback = StartMenu_HatchEggTask;
+        menu->taskData = NULL;
+        menu->state = START_MENU_STATE_NEW_TASK;
+        break;
     default:
         if (partyMenu->mode == PARTY_MENU_MODE_USE_ITEM || partyMenu->mode == PARTY_MENU_MODE_TEACH_MOVE || partyMenu->mode == PARTY_MENU_MODE_TEACH_MOVE_DONE || partyMenu->mode == PARTY_MENU_MODE_USE_EVO_ITEM || partyMenu->mode == PARTY_MENU_MODE_LEVEL_MOVE_DONE) {
             menu->taskData = FieldSystem_OpenBag(fieldSystem, &menu->itemUseCtx);
@@ -1751,6 +1760,14 @@ static void StartMenu_EvolveInit(FieldTask *fieldTask)
 
     menu->taskData = evoData;
     menu->state = START_MENU_STATE_EVOLVE;
+}
+
+static BOOL StartMenu_HatchEggTask(FieldTask *fieldTask)
+{
+    // Hand the field task over to CommonScript_HatchEgg ("Oh?" -> cutscene ->
+    // back to the overworld), the same script the daycare step check runs.
+    ScriptManager_Change(fieldTask, SCRIPT_ID(COMMON_SCRIPTS, 31), NULL);
+    return FALSE;
 }
 
 static void StartMenu_Evolve(FieldTask *fieldTask)

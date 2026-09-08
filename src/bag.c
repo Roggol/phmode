@@ -43,16 +43,6 @@ void Bag_Copy(const Bag *src, Bag *dst)
     MI_CpuCopy8(src, dst, sizeof(Bag));
 }
 
-u32 Bag_GetRegisteredItem(const Bag *bag)
-{
-    return bag->registeredItem;
-}
-
-void Bag_RegisterItem(Bag *bag, u32 item)
-{
-    bag->registeredItem = item;
-}
-
 static u32 Bag_GetPocketForItem(Bag *bag, u16 item, BagItem **outPocket, u32 *outMax, enum HeapID heapID)
 {
     u32 pocket = Item_LoadParam(item, ITEM_PARAM_FIELD_POCKET, heapID);

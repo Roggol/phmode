@@ -750,6 +750,7 @@ void PartyMenu_LoadContextMenuStrings(PartyMenuApplication *application)
     LoadMenuString(PartyMenu_Text_Enter, PARTY_MENU_STR_ENTER_2);
     LoadMenuString(PartyMenu_Text_Set, PARTY_MENU_STR_SET);
     LoadMenuString(PartyMenu_Text_ContextConfirm, PARTY_MENU_STR_CONFIRM);
+    LoadMenuString(PartyMenu_Text_Hatch, PARTY_MENU_STR_HATCH);
 
 #undef LoadMenuString
 }

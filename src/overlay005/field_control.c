@@ -173,6 +173,11 @@ void FieldInput_Update(FieldInput *input, FieldSystem *fieldSystem, u16 pressedK
 
 BOOL FieldInput_Process(const FieldInput *input, FieldSystem *fieldSystem)
 {
+    // phmode: use the key item picked from the multi-registered Y drop-down.
+    if (RegisteredItem_ConsumePendingUse(fieldSystem) == TRUE) {
+        return TRUE;
+    }
+
     if (input->dummy5 == FALSE && FieldSystem_RunInitScript(fieldSystem, INIT_SCRIPT_ON_FRAME_TABLE) == TRUE) {
         return TRUE;
     }
@@ -487,6 +492,10 @@ BOOL FieldInput_Process_UnionRoom(const FieldInput *input, FieldSystem *fieldSys
 
 int FieldInput_Process_BattleTower(const FieldInput *input, FieldSystem *fieldSystem)
 {
+    if (RegisteredItem_ConsumePendingUse(fieldSystem) == TRUE) {
+        return TRUE;
+    }
+
     if (input->dummy5 == FALSE && FieldSystem_RunInitScript(fieldSystem, INIT_SCRIPT_ON_FRAME_TABLE) == TRUE) {
         return TRUE;
     }

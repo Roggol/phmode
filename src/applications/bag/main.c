@@ -31,6 +31,7 @@
 #include "narc.h"
 #include "network_icon.h"
 #include "overlay_manager.h"
+#include "registered_items.h"
 #include "render_text.h"
 #include "render_window.h"
 #include "save_player.h"
@@ -1142,7 +1143,7 @@ static void ItemListMenuPrintCB(ListMenu *menu, u32 index, u8 yOffset)
 
     if (pocket->pocketType == POCKET_KEY_ITEMS) {
         if (index != ITEM_LIST_EMPTY_ENTRY && index != MENU_CANCEL) {
-            if (Bag_GetRegisteredItem(controller->bag) == pocket->items[index].item) {
+            if (RegisteredKeyItems_IsRegistered(SaveData_GetVarsFlags(controller->bagCtx->saveData), pocket->items[index].item) == TRUE) {
                 BagUI_DrawRegisteredIcon(controller, yOffset);
             }
         }
@@ -1984,13 +1985,15 @@ static void MakeItemActionsMenu(BagController *controller)
             }
         }
         if (Item_Get(itemData, ITEM_PARAM_CAN_REGISTER)) {
-            if (Bag_GetRegisteredItem(controller->bag) == controller->bagCtx->selectedItem) {
-                itemActions[itemActionsIdx] = ITEM_ACTION_DESELECT;
-            } else {
-                itemActions[itemActionsIdx] = ITEM_ACTION_REGISTER;
-            }
+            VarsFlags *varsFlags = SaveData_GetVarsFlags(controller->bagCtx->saveData);
 
-            itemActionsIdx++;
+            if (RegisteredKeyItems_IsRegistered(varsFlags, controller->bagCtx->selectedItem) == TRUE) {
+                itemActions[itemActionsIdx] = ITEM_ACTION_DESELECT;
+                itemActionsIdx++;
+            } else if (RegisteredKeyItems_Count(varsFlags) < MAX_REGISTERED_KEY_ITEMS) {
+                itemActions[itemActionsIdx] = ITEM_ACTION_REGISTER;
+                itemActionsIdx++;
+            }
         }
     } else if (controller->bagCtx->mode == BAG_MODE_POFFIN_SINGLEPLAYER
         || controller->bagCtx->mode == BAG_MODE_POFFIN_MULTIPLAYER) {
@@ -2486,7 +2489,7 @@ static int CheckPlayerDismissedTrashedMsg(BagController *controller)
 
 static int ItemActionFunc_Register(BagController *controller)
 {
-    Bag_RegisterItem(controller->bag, controller->bagCtx->selectedItem);
+    RegisteredKeyItems_Register(SaveData_GetVarsFlags(controller->bagCtx->saveData), controller->bagCtx->selectedItem);
     ListMenu_Draw(controller->itemList);
     BagUI_CloseItemActionsMenu(controller);
     Window_ScheduleCopyToVRAM(&controller->windows[BAG_UI_WINDOW_ITEM_DESCRIPTION]);
@@ -2497,7 +2500,7 @@ static int ItemActionFunc_Register(BagController *controller)
 
 static int ItemActionFunc_Deselect(BagController *controller)
 {
-    Bag_RegisterItem(controller->bag, ITEM_NONE);
+    RegisteredKeyItems_Unregister(SaveData_GetVarsFlags(controller->bagCtx->saveData), controller->bagCtx->selectedItem);
     ListMenu_Draw(controller->itemList);
     BagUI_CloseItemActionsMenu(controller);
     Window_ScheduleCopyToVRAM(&controller->windows[BAG_UI_WINDOW_ITEM_DESCRIPTION]);

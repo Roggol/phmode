@@ -1827,6 +1827,9 @@ static u8 GetContextMenuEntriesForPartyMon(PartyMenuApplication *application, u8
 
             count++;
         } else {
+            // phmode: eggs get a "Hatch" option ahead of "Switch".
+            menuEntriesBuffer[count] = PARTY_MENU_STR_HATCH;
+            count++;
             menuEntriesBuffer[count] = 0;
             count++;
         }

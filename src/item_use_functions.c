@@ -34,6 +34,7 @@
 #include "field_message.h"
 #include "field_system.h"
 #include "field_task.h"
+#include "font.h"
 #include "game_options.h"
 #include "heap.h"
 #include "item.h"
@@ -46,20 +47,24 @@
 #include "map_object.h"
 #include "map_object_move.h"
 #include "map_tile_behavior.h"
+#include "menu.h"
 #include "message.h"
 #include "party.h"
 #include "player_avatar.h"
 #include "player_move.h"
 #include "pokedex.h"
 #include "pokeradar.h"
+#include "registered_items.h"
 #include "render_window.h"
 #include "save_player.h"
 #include "screen_fade.h"
 #include "script_manager.h"
 #include "sound.h"
 #include "sound_playback.h"
+#include "special_encounter.h"
 #include "start_menu.h"
 #include "string_gf.h"
+#include "string_list.h"
 #include "system.h"
 #include "system_flags.h"
 #include "system_vars.h"
@@ -122,6 +127,9 @@ static BOOL UseVsRecorderInField(ItemFieldUseContext *usageContext);
 static BOOL UseGracideaInField(ItemFieldUseContext *usageContext);
 static BOOL UsePphmInField(ItemFieldUseContext *usageContext);
 static UnkStruct_02068EFC *Pphm_HealPartyAndPrepareMessage(FieldSystem *fieldSystem);
+static void UseRepelToggleFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
+static BOOL UseRepelToggleInField(ItemFieldUseContext *usageContext);
+static UnkStruct_02068EFC *RepelToggle_TogglePrepareMessage(FieldSystem *fieldSystem);
 static void *sub_02068BEC(void *some_param);
 static void *sub_02068B9C(void *some_param);
 static void *sub_02068708(void *some_param);
@@ -145,6 +153,8 @@ static BOOL RegisteredItem_GoToApp(FieldTask *task);
 static BOOL WarpWithEscapeRope(FieldTask *task);
 static BOOL sub_020685AC(FieldTask *task);
 static void PrintRegisteredKeyItemError(ItemFieldUseContext *usageContext, u32 param1);
+static void *RegisteredItemsMenu_New(FieldSystem *fieldSystem);
+static BOOL RegisteredItemsMenu_Task(FieldTask *task);
 
 // clang-format off
 static const ItemUseFuncDat sItemUseFuncs[] = {
@@ -174,6 +184,7 @@ static const ItemUseFuncDat sItemUseFuncs[] = {
     [ITEM_USE_FUNC_VS_RECORDER]  = { UseVsRecorderFromMenu,  UseVsRecorderInField,  NULL              },
     [ITEM_USE_FUNC_GRACIDEA]     = { UseGracideaFromMenu,    UseGracideaInField,    NULL              },
     [ITEM_USE_FUNC_PPHM]         = { UsePphmFromMenu,        UsePphmInField,        NULL              },
+    [ITEM_USE_FUNC_REPEL_TOGGLE] = { UseRepelToggleFromMenu, UseRepelToggleInField, NULL              },
 };
 // clang-format on
 
@@ -869,7 +880,7 @@ static BOOL UseBagMessageItem(ItemFieldUseContext *usageContext)
     v0->unk_16 = 0;
     v0->unk_10 = String_Init(128, HEAP_ID_FIELD2);
 
-    BagContext_FormatUsageMessage(usageContext->fieldSystem->saveData, v0->unk_10, Bag_GetRegisteredItem(SaveData_GetBag(usageContext->fieldSystem->saveData)), HEAP_ID_FIELD2);
+    BagContext_FormatUsageMessage(usageContext->fieldSystem->saveData, v0->unk_10, usageContext->unk_28, HEAP_ID_FIELD2);
     FieldSystem_CreateTask(usageContext->fieldSystem, PrintRegisteredKeyItemUseMessage, v0);
 
     return FALSE;
@@ -1088,24 +1099,67 @@ static BOOL UsePphmInField(ItemFieldUseContext *usageContext)
     return FALSE;
 }
 
-BOOL sub_02069238(FieldSystem *fieldSystem)
+// phmode: the Repel Toggle key item. Each use flips FLAG_REPEL_TOGGLE_ON: while
+// set, Repel_UpdateSteps keeps the repel step counter maxed so weak wild Pokemon
+// never appear and the "wore off" prompt never fires. Prepares the on/off
+// message for the field task.
+static UnkStruct_02068EFC *RepelToggle_TogglePrepareMessage(FieldSystem *fieldSystem)
+{
+    MessageLoader *msgLoader;
+    UnkStruct_02068EFC *taskData;
+    VarsFlags *varsFlags = SaveData_GetVarsFlags(fieldSystem->saveData);
+    u8 *repelSteps = SpecialEncounter_GetRepelSteps(SaveData_GetSpecialEncounters(fieldSystem->saveData));
+    BOOL turnedOn;
+
+    if (VarsFlags_CheckFlag(varsFlags, FLAG_REPEL_TOGGLE_ON) == TRUE) {
+        VarsFlags_ClearFlag(varsFlags, FLAG_REPEL_TOGGLE_ON);
+        *repelSteps = 0;
+        turnedOn = FALSE;
+    } else {
+        VarsFlags_SetFlag(varsFlags, FLAG_REPEL_TOGGLE_ON);
+        *repelSteps = 0xFF;
+        turnedOn = TRUE;
+    }
+
+    taskData = Heap_Alloc(HEAP_ID_FIELD2, sizeof(UnkStruct_02068EFC));
+    taskData->unk_16 = 0;
+    taskData->unk_10 = String_Init(128, HEAP_ID_FIELD2);
+
+    msgLoader = MessageLoader_Init(MSG_LOADER_LOAD_ON_DEMAND, NARC_INDEX_MSGDATA__PL_MSG, TEXT_BANK_BAG, HEAP_ID_FIELD2);
+    MessageLoader_GetString(msgLoader, turnedOn ? Bag_Text_RepelToggleOn : Bag_Text_RepelToggleOff, taskData->unk_10);
+    MessageLoader_Free(msgLoader);
+
+    return taskData;
+}
+
+static void UseRepelToggleFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(usageContext->fieldTask);
+    StartMenu *menu = FieldTask_GetEnv(usageContext->fieldTask);
+
+    FieldSystem_StartFieldMap(fieldSystem);
+
+    menu->callback = PrintRegisteredKeyItemUseMessage;
+    menu->taskData = RepelToggle_TogglePrepareMessage(fieldSystem);
+    menu->state = START_MENU_STATE_NEW_TASK;
+}
+
+static BOOL UseRepelToggleInField(ItemFieldUseContext *usageContext)
+{
+    FieldSystem_CreateTask(usageContext->fieldSystem, PrintRegisteredKeyItemUseMessage, RepelToggle_TogglePrepareMessage(usageContext->fieldSystem));
+    return FALSE;
+}
+
+// Dispatches a single registered key item's field-use function. Must only run
+// when no field task is active (item-use funcs create their own tasks).
+static BOOL RegisteredItem_UseInField(FieldSystem *fieldSystem, u16 item)
 {
     ItemFieldUseContext *usageContext;
     ItemFieldUseFunc useInField;
     ItemCheckUseFunc checkUse;
-    u16 item;
     u16 itemUseFuncIdx;
     BOOL usageResult;
 
-    if (FieldSystem_IsInBattleTowerSalon(fieldSystem) == TRUE) {
-        return FALSE;
-    }
-
-    if (SystemFlag_CheckInPalPark(SaveData_GetVarsFlags(fieldSystem->saveData)) == TRUE) {
-        return FALSE;
-    }
-
-    item = (u16)Bag_GetRegisteredItem(SaveData_GetBag(fieldSystem->saveData));
     itemUseFuncIdx = (u16)Item_LoadParam(item, ITEM_PARAM_FIELD_USE_FUNC, HEAP_ID_FIELD2);
     checkUse = (ItemCheckUseFunc)ItemUseFunction_Get(ITEM_FUNC_CHECK_CAN_USE, itemUseFuncIdx);
     useInField = (ItemFieldUseFunc)ItemUseFunction_Get(ITEM_FUNC_USE_IN_FIELD, itemUseFuncIdx);
@@ -1143,6 +1197,51 @@ BOOL sub_02069238(FieldSystem *fieldSystem)
     return TRUE;
 }
 
+// phmode: item chosen from the multi-item Y-button drop-down, dispatched by
+// RegisteredItem_ConsumePendingUse once the picker task has fully closed.
+static u16 sPendingRegisteredItem = ITEM_NONE;
+
+BOOL RegisteredItem_ConsumePendingUse(FieldSystem *fieldSystem)
+{
+    u16 item = sPendingRegisteredItem;
+
+    if (item == ITEM_NONE) {
+        return FALSE;
+    }
+
+    sPendingRegisteredItem = ITEM_NONE;
+    return RegisteredItem_UseInField(fieldSystem, item);
+}
+
+BOOL sub_02069238(FieldSystem *fieldSystem)
+{
+    VarsFlags *varsFlags = SaveData_GetVarsFlags(fieldSystem->saveData);
+    u32 count;
+
+    if (FieldSystem_IsInBattleTowerSalon(fieldSystem) == TRUE) {
+        return FALSE;
+    }
+
+    if (SystemFlag_CheckInPalPark(varsFlags) == TRUE) {
+        return FALSE;
+    }
+
+    count = RegisteredKeyItems_Count(varsFlags);
+
+    if (count == 0) {
+        return FALSE;
+    }
+
+    if (count == 1) {
+        return RegisteredItem_UseInField(fieldSystem, RegisteredKeyItems_GetSlot(varsFlags, 0));
+    }
+
+    // phmode: more than one registered item - open a drop-down to pick one. The
+    // chosen item is dispatched next frame from FieldInput_Process.
+    FieldSystem_CreateTask(fieldSystem, RegisteredItemsMenu_Task, RegisteredItemsMenu_New(fieldSystem));
+    return TRUE;
+}
+
 static void PrintRegisteredKeyItemError(ItemFieldUseContext *usageContext, u32 error)
 {
     UnkStruct_02068EFC *v0 = Heap_Alloc(HEAP_ID_FIELD2, sizeof(UnkStruct_02068EFC));
@@ -1152,6 +1251,122 @@ static void PrintRegisteredKeyItemError(ItemFieldUseContext *usageContext, u32 e
 
     BagContext_FormatErrorMessage(SaveData_GetTrainerInfo(usageContext->fieldSystem->saveData), v0->unk_10, usageContext->unk_28, error, HEAP_ID_FIELD2);
     FieldSystem_CreateTask(usageContext->fieldSystem, PrintRegisteredKeyItemUseMessage, v0);
+}
+
+// phmode: drop-down shown on Y when more than one key item is registered.
+#define REG_MENU_WINDOW_TILE  (1024 - 9 - (18 + 12))
+#define REG_MENU_WINDOW_PAL   11
+
+typedef struct RegisteredItemsMenu {
+    FieldSystem *fieldSystem;
+    Window window;
+    Menu *menu;
+    StringList *choices;
+    String *entryStrings[MAX_REGISTERED_KEY_ITEMS + 1];
+    u16 items[MAX_REGISTERED_KEY_ITEMS];
+    u8 count;
+    u8 state;
+} RegisteredItemsMenu;
+
+static void *RegisteredItemsMenu_New(FieldSystem *fieldSystem)
+{
+    RegisteredItemsMenu *menu = Heap_Alloc(HEAP_ID_FIELD1, sizeof(RegisteredItemsMenu));
+    VarsFlags *varsFlags = SaveData_GetVarsFlags(fieldSystem->saveData);
+
+    memset(menu, 0, sizeof(RegisteredItemsMenu));
+    menu->fieldSystem = fieldSystem;
+    menu->state = 0;
+
+    for (u32 i = 0; i < MAX_REGISTERED_KEY_ITEMS; i++) {
+        u16 item = RegisteredKeyItems_GetSlot(varsFlags, i);
+
+        if (item == ITEM_NONE) {
+            break;
+        }
+
+        menu->items[menu->count] = item;
+        menu->count++;
+    }
+
+    return menu;
+}
+
+static void RegisteredItemsMenu_Teardown(RegisteredItemsMenu *menu)
+{
+    Menu_Free(menu->menu, NULL);
+    StringList_Free(menu->choices);
+    Window_EraseStandardFrame(&menu->window, FALSE);
+    Window_Remove(&menu->window);
+
+    for (u32 i = 0; i <= menu->count; i++) {
+        String_Free(menu->entryStrings[i]);
+    }
+}
+
+static BOOL RegisteredItemsMenu_Task(FieldTask *task)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(task);
+    RegisteredItemsMenu *menu = FieldTask_GetEnv(task);
+    MessageLoader *msgLoader;
+    MenuTemplate template;
+    u8 rows;
+    s32 result;
+
+    switch (menu->state) {
+    case 0:
+        MapObjectMan_PauseAllMovement(fieldSystem->mapObjMan);
+
+        rows = (u8)(menu->count + 1); // + a Cancel entry
+
+        Window_Add(fieldSystem->bgConfig, &menu->window, 3, 18, 23 - rows * 2, 13, rows * 2, 13, 1);
+        LoadStandardWindowGraphics(fieldSystem->bgConfig, 3, REG_MENU_WINDOW_TILE, REG_MENU_WINDOW_PAL, STANDARD_WINDOW_SYSTEM, HEAP_ID_FIELD1);
+        Window_DrawStandardFrame(&menu->window, TRUE, REG_MENU_WINDOW_TILE, REG_MENU_WINDOW_PAL);
+
+        menu->choices = StringList_New(rows, HEAP_ID_FIELD1);
+
+        for (u32 i = 0; i < menu->count; i++) {
+            menu->entryStrings[i] = String_Init(24, HEAP_ID_FIELD1);
+            Item_LoadName(menu->entryStrings[i], menu->items[i], HEAP_ID_FIELD1);
+            StringList_AddFromString(menu->choices, menu->entryStrings[i], i);
+        }
+
+        msgLoader = MessageLoader_Init(MSG_LOADER_LOAD_ON_DEMAND, NARC_INDEX_MSGDATA__PL_MSG, TEXT_BANK_BAG, HEAP_ID_FIELD1);
+        menu->entryStrings[menu->count] = String_Init(16, HEAP_ID_FIELD1);
+        MessageLoader_GetString(msgLoader, Bag_Text_RegisteredMenuCancel, menu->entryStrings[menu->count]);
+        MessageLoader_Free(msgLoader);
+        StringList_AddFromString(menu->choices, menu->entryStrings[menu->count], (u32)MENU_CANCEL);
+
+        template.choices = menu->choices;
+        template.window = &menu->window;
+        template.fontID = FONT_SYSTEM;
+        template.xSize = 1;
+        template.ySize = rows;
+        template.lineSpacing = 0;
+        template.suppressCursor = FALSE;
+        template.loopAround = (rows >= 4);
+
+        menu->menu = Menu_NewAndCopyToVRAM(&template, 8, 0, 0, HEAP_ID_FIELD1, PAD_BUTTON_B);
+        menu->state = 1;
+        break;
+    case 1:
+        result = (s32)Menu_ProcessInput(menu->menu);
+
+        if (result == MENU_NOTHING_CHOSEN) {
+            break;
+        }
+
+        RegisteredItemsMenu_Teardown(menu);
+        MapObjectMan_UnpauseAllMovement(fieldSystem->mapObjMan);
+
+        if (result != MENU_CANCEL) {
+            sPendingRegisteredItem = menu->items[result];
+        }
+
+        Heap_Free(menu);
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 static BOOL RegisteredItem_GoToApp(FieldTask *task)
