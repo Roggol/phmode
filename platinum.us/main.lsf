@@ -260,6 +260,7 @@ Static main
 	Object main.nef.p/src_trainer_encounter.c.o
 	Object main.nef.p/src_dynamic_map_features.c.o
 	Object main.nef.p/src_item_use_functions.c.o
+	Object main.nef.p/src_registered_items.c.o
 	Object main.nef.p/src_pokeradar.c.o
 	Object main.nef.p/src_unk_02069BE0.c.o
 	Object main.nef.p/src_scroll_prompts.c.o

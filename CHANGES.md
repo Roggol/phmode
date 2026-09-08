@@ -72,6 +72,12 @@ save layout is untouched — this is fully compatible with existing saves.
   and `FieldInput_Process_BattleTower` (`src/overlay005/field_control.c`) — the
   picker must fully close before the item-use function can create its own task.
 * `res/text/bag.json` — `Bag_Text_RegisteredMenuCancel` ("CANCEL").
+* `platinum.us/main.lsf` — `src_registered_items.c.o` added to `Static main`. A
+  new `src/*.c` file must be listed here or `makelcf` gives it no section; the
+  linker then places it outside the resident ARM9 static image, and the first
+  overlay that calls into it (the bag app, via the key-items list draw callback)
+  jumps to an unmapped address and crashes. This is why opening the Key Items
+  pocket froze the game.
 
 ### Enemy health box shows HP numbers
 The single-battle opponent's health box now prints the raw `current / max` HP
