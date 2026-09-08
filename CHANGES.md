@@ -508,6 +508,24 @@ Because every one of these moves now has a base max PP below the
 any of them does nothing** — the party menu shows "It won't have any effect."
 This is the existing Sketch guard, not new code.
 
+### Accuracy buffs
+`res/moves/<move>/data.json` — a batch of historically unreliable moves had their
+`accuracy` raised (nothing else about them changed):
+
+* **→ 100:** Tackle (95), Submission (80), Kinesis (80), Doom Desire (85).
+* **→ 95:** Pin Missile (85), Fire Spin (70), Bounce (85), Bone Club (85),
+  Mud Bomb (85), Sand Tomb (70), Barrage (85), Bind (75), Comet Punch (85),
+  Double Slap (85), Double Hit (90), Fury Attack (85), Fury Swipes (80),
+  Mega Punch (85), Slam (75), Take Down (85), Wrap (85), Smog (70),
+  Psywave (80), Steel Wing (90), Mirror Shot (85), Clamp (75), Octazooka (85),
+  Whirlpool (70), Aqua Tail (90).
+* **→ 90:** Rock Climb (85), Head Smash (80), Rock Blast (80), Rock Tomb (80),
+  Crabhammer (85).
+* **→ 85:** Thunder (70), Focus Blast (70), Magma Storm (70), Blizzard (70),
+  Dragon Rush (75), Egg Bomb (75), Mega Kick (75), Gunk Shot (70),
+  Poison Gas (55), Poison Powder (75), Glare (75), Stone Edge (80),
+  Iron Tail (75), Hydro Pump (80).
+
 ---
 
 ## Species changes
