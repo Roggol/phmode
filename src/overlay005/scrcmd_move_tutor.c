@@ -116,78 +116,20 @@ BOOL ScrCmd_ResetMoveSlot(ScriptContext *ctx)
 
 BOOL ScrCmd_CheckCanAffordMove(ScriptContext *ctx)
 {
-    int teachableMoveIndex;
-    u8 redCost, blueCost, yellowCost, greenCost;
-
-    u16 selectedMove = ScriptContext_GetVar(ctx);
+    // phmode: the shard move tutors teach for free. Consume the move argument
+    // for parity with the original signature, then always report "can afford".
+    ScriptContext_GetVar(ctx);
     u16 *canTeach = ScriptContext_GetVarPointer(ctx);
 
-    Bag *bag = SaveData_GetBag(ctx->fieldSystem->saveData);
-
-    for (teachableMoveIndex = 0; teachableMoveIndex < NELEMS(sTeachableMoves); teachableMoveIndex++) {
-        if (selectedMove == sTeachableMoves[teachableMoveIndex].moveID) {
-            redCost = sTeachableMoves[teachableMoveIndex].redCost;
-            blueCost = sTeachableMoves[teachableMoveIndex].blueCost;
-            yellowCost = sTeachableMoves[teachableMoveIndex].yellowCost;
-            greenCost = sTeachableMoves[teachableMoveIndex].greenCost;
-            break;
-        }
-    }
-
-    if (teachableMoveIndex == NELEMS(sTeachableMoves)) {
-        GF_ASSERT(FALSE);
-        *canTeach = FALSE;
-        return FALSE;
-    }
-
     *canTeach = TRUE;
-
-    if (redCost && Bag_CanRemoveItem(bag, ITEM_RED_SHARD, redCost, HEAP_ID_FIELD3) == FALSE) {
-        *canTeach = FALSE;
-    }
-
-    if (blueCost && Bag_CanRemoveItem(bag, ITEM_BLUE_SHARD, blueCost, HEAP_ID_FIELD3) == FALSE) {
-        *canTeach = FALSE;
-    }
-
-    if (yellowCost && Bag_CanRemoveItem(bag, ITEM_YELLOW_SHARD, yellowCost, HEAP_ID_FIELD3) == FALSE) {
-        *canTeach = FALSE;
-    }
-
-    if (greenCost && Bag_CanRemoveItem(bag, ITEM_GREEN_SHARD, greenCost, HEAP_ID_FIELD3) == FALSE) {
-        *canTeach = FALSE;
-    }
-
     return FALSE;
 }
 
 BOOL ScrCmd_PayShardCost(ScriptContext *ctx)
 {
-    int teachableMovesIndex;
-    u8 redCost, blueCost, yellowCost, greenCost;
-    u16 toTeach = ScriptContext_GetVar(ctx);
-
-    Bag *bag = SaveData_GetBag(ctx->fieldSystem->saveData);
-
-    for (teachableMovesIndex = 0; teachableMovesIndex < NELEMS(sTeachableMoves); teachableMovesIndex++) {
-        if (toTeach == sTeachableMoves[teachableMovesIndex].moveID) {
-            redCost = sTeachableMoves[teachableMovesIndex].redCost;
-            blueCost = sTeachableMoves[teachableMovesIndex].blueCost;
-            yellowCost = sTeachableMoves[teachableMovesIndex].yellowCost;
-            greenCost = sTeachableMoves[teachableMovesIndex].greenCost;
-            break;
-        }
-    }
-
-    if (teachableMovesIndex == NELEMS(sTeachableMoves)) {
-        GF_ASSERT(FALSE);
-    }
-
-    Bag_TryRemoveItem(bag, ITEM_RED_SHARD, redCost, HEAP_ID_FIELD3);
-    Bag_TryRemoveItem(bag, ITEM_BLUE_SHARD, blueCost, HEAP_ID_FIELD3);
-    Bag_TryRemoveItem(bag, ITEM_YELLOW_SHARD, yellowCost, HEAP_ID_FIELD3);
-    Bag_TryRemoveItem(bag, ITEM_GREEN_SHARD, greenCost, HEAP_ID_FIELD3);
-
+    // phmode: move tutors are free, so nothing is deducted. Consume the move
+    // argument to keep the script bytecode in sync.
+    ScriptContext_GetVar(ctx);
     return FALSE;
 }
 

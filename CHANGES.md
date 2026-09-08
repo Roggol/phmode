@@ -488,6 +488,26 @@ both opponents** in a double battle: a new `Move_EffectiveRange` helper
 `BattleSystem_Defender`, the spread-damage ×0.75 check, the
 `LoopSpreadMoves` re-loop, the target-select layout, and the Pressure PP cost.
 
+### Stat-boosting moves have very low PP
+`res/moves/<move>/data.json` — every non-damaging move whose purpose is to raise
+the user's (or a random / ally) stat stages now has **3 PP**, so setup can't be
+spammed:
+
+* Acid Armor, Acupressure, Agility, Amnesia, Barrier, Belly Drum, Bulk Up,
+  Calm Mind, Charge, Cosmic Power, Curse, Defend Order, Defense Curl, Double
+  Team, Growth, Harden, Howl, Iron Defense, Meditate, Minimize, Rock Polish,
+  Sharpen, Stockpile, Tail Glow, Withdraw → **3 PP**.
+* **Swords Dance, Nasty Plot, Dragon Dance → 1 PP.**
+
+Damaging moves that happen to raise a stat (Charge Beam, Metal Claw, Ancient
+Power, …) are untouched, as are stat-*lowering* moves and Focus Energy (raises
+critical-hit ratio, not a stat).
+
+Because every one of these moves now has a base max PP below the
+`PP_UP_REQUIREMENT` of 5 (`src/item_use_pokemon.c`), a **PP Up or PP Max used on
+any of them does nothing** — the party menu shows "It won't have any effect."
+This is the existing Sketch guard, not new code.
+
 ---
 
 ## Species changes
@@ -1158,6 +1178,28 @@ A new Key Item (`ITEM_PPHM`, id 468).
   prize is a Heart Scale instead of a Max Revive.
 * `include/data/pickup.h` — the Pickup ability tables give Rare Candy where they
   gave Revive and Heart Scale where they gave Max Revive.
+
+### PP Up is no longer given out
+With stat-boosting moves capped at low PP, PP Up / PP Max are much less useful,
+and the two places that handed them out for free now give **Heart Scales**:
+
+* `include/data/pickup.h` — the `ITEM_PP_UP` slot in `sCommonPickupItems`
+  is now `ITEM_HEART_SCALE` (so high-level Pickup can roll Heart Scale where it
+  used to roll a PP Up).
+* `res/field/scripts/scripts_jubilife_tv_1f.s` — the Jubilife TV lottery
+  two-digit-match prize is a Heart Scale instead of a PP Up. (PP Max was never a
+  lottery prize here.)
+
+PP Ups can still be bought / found as fixed field items; only the random sources
+changed.
+
+### Move tutors teach for free
+`src/overlay005/scrcmd_move_tutor.c` — `ScrCmd_CheckCanAffordMove` always reports
+"can afford" and `ScrCmd_PayShardCost` deducts nothing, so the shard move tutors
+(Route 212, Survival Area, Snowpoint, and any sharing `scripts_common.s`) teach
+their moves without spending Red/Blue/Yellow/Green Shards. The "you don't have
+enough shards" branch in those scripts is now unreachable. The Battle Frontier BP
+tutors and the Heart Scale move reminder are unaffected.
 
 ### Gift Pokémon and eggs go to the PC when the party is full
 Instead of being turned away ("come back when you have room"), a gift Pokémon or

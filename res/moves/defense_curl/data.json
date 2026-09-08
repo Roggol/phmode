@@ -10,7 +10,7 @@
     "type": "TYPE_NORMAL",
     "power": 0,
     "accuracy": 0,
-    "pp": 40,
+    "pp": 3,
     "effect": {
         "type": "BATTLE_EFFECT_DEF_UP_DOUBLE_ROLLOUT_POWER",
         "chance": 0
