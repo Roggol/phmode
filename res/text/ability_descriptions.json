@@ -897,15 +897,15 @@
     {
       "id": "pl_msg_00000612_00128",
       "en_US": [
-        "Sharply boosts the Attack\n",
-        "stat when a stat is lowered."
+        "Sharply boosts Attack\n",
+        "when a stat is lowered."
       ]
     },
     {
       "id": "pl_msg_00000612_00129",
       "en_US": [
-        "Sharply raises Sp. Atk when\n",
-        "a stat is lowered by the foe."
+        "Sharply boosts Sp. Atk\n",
+        "when a stat is lowered."
       ]
     },
     {
@@ -961,7 +961,7 @@
       "id": "pl_msg_00000612_00137",
       "en_US": [
         "Normal-type moves become\n",
-        "Ice-type and do more damage."
+        "Ice-type and hit harder."
       ]
     },
     {

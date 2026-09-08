@@ -293,6 +293,12 @@ Newly implemented abilities, added to `generated/abilities.txt` (127-142) with
 `ability_descriptions.json` entries. The creation-trio abilities (Time Warp /
 Space Warp / Distortion Surge, 124-126) are covered under "Battle changes".
 
+The `ability_descriptions.json` lines for Defiant, Competitive and Refrigerate
+were reworded to stay within the ~26-character-per-line width of the summary
+screen's ability-description window (`SUMMARY_WINDOW_ABILITY_DESCRIPTION`); the
+same pass shortened the Rapid Spin, Sticky Web, Power Whip and Wild Charge move
+descriptions to fit the 23-character move-info window.
+
 * **Sheer Force** (127) — `src/battle/battle_lib.c`. A move with a non-zero
   `effectChance` deals ×1.3 damage in `BattleSystem_CalcMoveDamage`, and its
   chance-based added effect is suppressed (`BattleSystem_TriggerSecondaryEffect`
