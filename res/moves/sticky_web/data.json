@@ -1,10 +1,11 @@
 {
     "name": "Sticky Web",
     "description": [
-        "The user weaves a sticky\n",
-        "net under the foe’s feet.\n",
-        "Grounded foes that switch\n",
-        "in have their Speed cut."
+        "The user weaves a\n",
+        "sticky net under the\n",
+        "foe’s feet. Grounded\n",
+        "foes switching in\n",
+        "have their Speed cut."
     ],
     "class": "CLASS_STATUS",
     "type": "TYPE_BUG",

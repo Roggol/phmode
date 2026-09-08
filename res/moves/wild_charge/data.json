@@ -1,10 +1,11 @@
 {
     "name": "Wild Charge",
     "description": [
-        "The user shrouds itself\n",
-        "in electricity and\n",
-        "charges the foe. It also\n",
-        "hurts the user a little."
+        "The user shrouds\n",
+        "itself in electricity\n",
+        "and charges the foe.\n",
+        "It also hurts the\n",
+        "user a little."
     ],
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_ELECTRIC",

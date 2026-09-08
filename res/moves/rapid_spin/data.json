@@ -1,10 +1,11 @@
 {
     "name": "Rapid Spin",
     "description": [
-        "A spin attack that frees\n",
-        "the user from Bind, Leech\n",
-        "Seed and entry hazards.\n",
-        "Also raises the user’s Speed."
+        "A spin attack that\n",
+        "frees the user from\n",
+        "Bind, Leech Seed and\n",
+        "entry hazards, and\n",
+        "raises its own Speed."
     ],
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_NORMAL",
