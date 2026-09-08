@@ -518,6 +518,29 @@
         "Your Pokémon were restored\n",
         "to full health!"
       ]
+    },
+    {
+      "id": "Bag_Text_RepelToggleOn",
+      "en_US": [
+        "The Repel Toggle is now on.\n",
+        "Weak wild Pokémon will stay away."
+      ]
+    },
+    {
+      "id": "Bag_Text_RepelToggleOff",
+      "en_US": "The Repel Toggle is now off."
+    },
+    {
+      "id": "Bag_Text_RepelToggleStateOn",
+      "en_US": "(on)"
+    },
+    {
+      "id": "Bag_Text_RepelToggleStateOff",
+      "en_US": "(off)"
+    },
+    {
+      "id": "Bag_Text_RegisteredMenuCancel",
+      "en_US": "CANCEL"
     }
   ]
 }

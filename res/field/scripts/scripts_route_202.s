@@ -135,6 +135,12 @@ Route202_GivePokeballs:
     SetVar VAR_0x8004, ITEM_POKE_BALL
     SetVar VAR_0x8005, 5
     Common_GiveItemQuantity
+    // phmode: the professor's assistant also hands over the Repel Toggle key item
+    // right after the catching tutorial.
+    Message Route202_Text_CounterpartHereTakeThis
+    SetVar VAR_0x8004, ITEM_REPEL_TOGGLE
+    SetVar VAR_0x8005, 1
+    Common_GiveItemQuantity
     GetPlayerGender VAR_RESULT
     GoToIfEq VAR_RESULT, GENDER_MALE, Route202_DawnLeave
     GoToIfEq VAR_RESULT, GENDER_FEMALE, Route202_LucasLeave

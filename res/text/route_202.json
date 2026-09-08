@@ -221,6 +221,13 @@
         "same kind of Pokémon, you should\f",
         "consider using Repels.\r"
       ]
+    },
+    {
+      "id": "Route202_Text_CounterpartHereTakeThis",
+      "en_US": [
+        "Take this, I think it will be helpful\n",
+        "for your journey.\r"
+      ]
     }
   ]
 }

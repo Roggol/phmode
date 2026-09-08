@@ -189,6 +189,23 @@ CommonScript_NurseFarewellAfterHealGoldCard:
 @ only one sub-context slot, so nesting overwrites and leaks the running nurse script
 @ and crashes right after the item is added. The item hand-off is inlined instead.
 CommonScript_NurseTryGiveFirstVisitGift:
+    // phmode: fallback for saves that finished the Route 202 catching tutorial
+    // (where the assistant now hands out the Repel Toggle) before that gift
+    // existed. Inlined for the same sub-context reason as the PPHM hand-off.
+    GoToIfLt VAR_ROUTE_202_STATE, 1, CommonScript_NurseTryGivePphm
+    CheckItem ITEM_REPEL_TOGGLE, 1, VAR_RESULT
+    GoToIfNe VAR_RESULT, FALSE, CommonScript_NurseTryGivePphm
+    SetVar VAR_0x8004, ITEM_REPEL_TOGGLE
+    SetVar VAR_0x8005, 1
+    AddItem VAR_0x8004, VAR_0x8005, VAR_RESULT
+    PlayFanfare SEQ_FANFA3_sseq
+    BufferPlayerName 0
+    BufferItemName 1, VAR_0x8004
+    Message CommonStrings_Text_ObtainedKeyItem
+    WaitFanfare
+    WaitButton
+    CloseMessage
+CommonScript_NurseTryGivePphm:
     GoToIfSet FLAG_RECEIVED_PPHM, CommonScript_NurseFirstVisitGiftDone
     SetVar VAR_0x8004, ITEM_PPHM
     SetVar VAR_0x8005, 1
@@ -551,6 +568,9 @@ CommonScript_SlatherHoneyTree:
     Message CommonStrings_Text_BarkWasSlathered
     WaitButton
     CloseMessage
+    // phmode: honey triggers the encounter straight away instead of after a wait.
+    GetHoneyTreeStatus VAR_RESULT
+    GoToIfEq VAR_RESULT, TREE_STATUS_ENCOUNTER, CommonScript_HoneyTreeEncounter
     ReleaseAll
     End
 

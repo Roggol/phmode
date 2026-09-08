@@ -46,6 +46,33 @@ with the faster run step instead of gliding.
 * `src/applications/options_menu.c` — `ProcessMainInput` ignores left/right on
   the Battle Style row, so the player cannot switch it back to "Switch".
 
+### Register up to 6 key items to Y
+The Y button holds up to **six** registered key items instead of one. With one
+registered, pressing Y uses it as before; with two or more, Y opens a small
+drop-down of the registered items (plus CANCEL) and uses the one you pick. The
+save layout is untouched — this is fully compatible with existing saves.
+
+* `generated/vars_flags.txt` — six unused game vars renamed to
+  `VAR_REGISTERED_KEY_ITEM_0..5`; each holds one registered item ID (0 = empty).
+* `src/registered_items.c` / `include/registered_items.h` — a small module over
+  those vars: `RegisteredKeyItems_GetSlot` / `Count` / `IsRegistered` /
+  `Register` (appends to the first free slot; no-op if full or already there) /
+  `Unregister` (removes and keeps the list packed). The `Bag` struct's now-unused
+  `u32 registeredItem` field is left in place so the bag save block is
+  byte-for-byte identical.
+* `src/applications/bag/main.c` — the key-items list marks every registered item
+  with the Y icon; the item menu offers **Register** only while fewer than 6 are
+  set and **Deselect** for an already-registered one.
+* `src/item_use_functions.c` — `sub_02069238` branches on
+  `RegisteredKeyItems_Count`: 0 does nothing, 1 dispatches directly
+  (`RegisteredItem_UseInField`, factored out of the old body), 2+ opens
+  `RegisteredItemsMenu_Task` (a `Menu` in a field-task window). The chosen item
+  is stashed in `sPendingRegisteredItem` and dispatched the next frame by
+  `RegisteredItem_ConsumePendingUse`, called at the top of `FieldInput_Process`
+  and `FieldInput_Process_BattleTower` (`src/overlay005/field_control.c`) — the
+  picker must fully close before the item-use function can create its own task.
+* `res/text/bag.json` — `Bag_Text_RegisteredMenuCancel` ("CANCEL").
+
 ### Enemy health box shows HP numbers
 The single-battle opponent's health box now prints the raw `current / max` HP
 below its gauge, the same as the player's, inside an enlarged box frame.
@@ -105,6 +132,47 @@ other move — no trip to the Move Deleter required.
   move-select A-press handler (`HandleInput` for `SUMMARY_STATE_SELECT_MOVE`) is
   deleted; an HM slot is selected like any other. This covers level-up learning,
   TM/HM learning, and the Move Deleter, which all route through this screen.
+
+### Honey trees trigger the encounter instantly
+Slathering a Honey Tree now starts the Honey Tree battle right away instead of
+having to leave and come back 6+ hours later.
+
+* `src/overlay005/honey_tree.c` — `HoneyTree_SlatherTree` marks the tree
+  encounter-ready immediately (`minutesRemaining = 18 * 60`, the threshold
+  `SixHoursSinceSlathered` already treats as "ready"), and a "no encounter" group
+  roll is promoted to group A so honey is never wasted. `HoneyTree_Unslather`
+  (called from `CreateWildMon_HoneyTree` when the Pokémon spawns) still clears the
+  tree afterwards, so it goes bare again and can be re-slathered.
+* `res/field/scripts/scripts_common.s` — `CommonScript_SlatherHoneyTree` re-reads
+  the tree status after slathering and jumps straight to
+  `CommonScript_HoneyTreeEncounter`. The slot/group/shake rolls and the
+  Munchlax-tree logic are unchanged, so *which* Pokémon appears is still random;
+  only the wait is gone.
+
+### "Hatch" option on eggs in the party menu
+Selecting an egg in the field party menu (START → Pokémon) now offers **HATCH**
+alongside Summary / Switch / Cancel, which hatches it on the spot instead of
+walking it out.
+
+* `include/applications/party_menu/defs.h` — new `PARTY_MENU_STR_HATCH` (inserted
+  before `PARTY_MENU_STR_MOVE0`, kept aligned with the matching new
+  `ACTION_HATCH` before `ACTION_CUT` in `context_menu.c`) and new exit code
+  `PARTY_MENU_EXIT_CODE_HATCH_EGG`.
+* `res/text/party_menu.json` — new `PartyMenu_Text_Hatch` ("HATCH"), appended;
+  loaded in `PartyMenu_LoadContextMenuStrings` (`windows.c`).
+* `src/applications/party_menu/main.c` — `GetContextMenuEntriesForPartyMon` adds
+  the Hatch entry to the egg branch.
+* `src/applications/party_menu/context_menu.c` — `PartyMenu_SelectHatch` zeroes
+  the egg's remaining egg-cycles (stored in friendship, the same field the
+  daycare step check decrements) so `Party_GetFirstEgg` selects it, then exits
+  with `PARTY_MENU_EXIT_CODE_HATCH_EGG`.
+* `src/start_menu.c` — `StartMenu_ExitPartyMenu` handles that code by jumping the
+  field task to `StartMenu_HatchEggTask`, which runs `CommonScript_HatchEgg`
+  (`COMMON_SCRIPTS` 31) — the exact "Oh?" → hatch cutscene the daycare step
+  trigger uses.
+
+Only the START-menu party screen is affected; the selection/bag/daycare party
+modes are unchanged.
 * `src/battle_sub_menus/battle_party.c` — `CheckSelectedMoveIsHM` always returns
   `FALSE`, so a move learned mid-battle can replace an HM move too.
 * `Item_IsHMMove` itself is unchanged — it is still used to keep HM *items* from
@@ -524,7 +592,7 @@ This is the existing Sketch guard, not new code.
 * **→ 85:** Thunder (70), Focus Blast (70), Magma Storm (70), Blizzard (70),
   Dragon Rush (75), Egg Bomb (75), Mega Kick (75), Gunk Shot (70),
   Poison Gas (55), Poison Powder (75), Glare (75), Stone Edge (80),
-  Iron Tail (75), Hydro Pump (80).
+  Iron Tail (75), Hydro Pump (80), Will-O-Wisp (75).
 
 ---
 
@@ -1184,6 +1252,37 @@ A new Key Item (`ITEM_PPHM`, id 468).
   the single sub-context slot, so nesting overwrites and leaks it and crashes
   right after the item is added.
 * `res/text/common_strings.json` — new `CommonStrings_Text_PokecenterFirstVisitGift`.
+
+### Repel Toggle
+A new Key Item (`ITEM_REPEL_TOGGLE`, id 470) that keeps Repel running with no
+step limit. Using it (from the Bag or as a registered item) flips it on/off and
+pops up a message each time; while on, weak wild Pokémon never appear and the
+"REPEL's effect wore off" prompt never fires. Its Bag description ends with the
+current state — `(on)` or `(off)`.
+
+* `generated/items.txt`, `include/constants/items.h` (`ITEM_USE_FUNC_REPEL_TOGGLE`),
+  `res/items/data/repel_toggle.json` (reuses the Repel icon, `canRegister`).
+* `generated/vars_flags.txt` — `FLAG_REPEL_TOGGLE_ON` (renamed from
+  `FLAG_UNUSED_0x0095`) holds the on/off state.
+* `src/item_use_functions.c` — `UseRepelToggleFromMenu` / `UseRepelToggleInField`
+  toggle the flag, set the repel step counter to `0xFF` (on) or `0` (off), and
+  print `Bag_Text_RepelToggleOn` / `..._Off` via `PrintRegisteredKeyItemUseMessage`
+  (the same task PPHM uses).
+* `src/overlay006/repel_step_update.c` — `Repel_UpdateSteps` tops the counter back
+  up to `0xFF` and returns early (no decrement, no "wore off" script) whenever
+  `FLAG_REPEL_TOGGLE_ON` is set.
+* `src/applications/bag/windows.c` — `BagUI_PrintItemDescription` appends
+  `Bag_Text_RepelToggleStateOn` / `..._Off` to this item's description.
+* `res/text/bag.json` — the four new strings above.
+* `res/field/scripts/scripts_route_202.s` + `res/text/route_202.json` — the
+  professor's assistant (Dawn / Lucas) hands over the Repel Toggle in
+  `Route202_GivePokeballs`, right after the catching tutorial and the five Poké
+  Balls, saying *"Take this, I think it will be helpful for your journey."*
+  (`Route202_Text_CounterpartHereTakeThis`).
+* `res/field/scripts/scripts_common.s` — Nurse Joy hands it over as a fallback
+  for saves that already finished the Route 202 tutorial
+  (`VAR_ROUTE_202_STATE >= 1`) but don't have the item, checked on every heal in
+  `CommonScript_NurseTryGiveFirstVisitGift` (inlined, ahead of the PPHM check).
 
 ### Revive → Rare Candy, Max Revive → Heart Scale
 * `res/field/scripts/scripts_visible_items.s` — every field item ball that

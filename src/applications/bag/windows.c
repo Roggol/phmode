@@ -3,6 +3,9 @@
 #include <nitro.h>
 #include <string.h>
 
+#include "constants/items.h"
+#include "constants/savedata/vars_flags.h"
+
 #include "applications/bag/main.h"
 #include "applications/bag/sprites.h"
 
@@ -27,6 +30,7 @@
 #include "string_template.h"
 #include "text.h"
 #include "trainer_info.h"
+#include "vars_flags.h"
 
 #include "res/graphics/bag/bag_graphics.naix"
 #include "res/text/bank/bag.h"
@@ -225,6 +229,14 @@ void BagUI_PrintItemDescription(BagController *controller, u16 item)
     if (item != 0xffff) {
         string = String_Init(130, HEAP_ID_BAG);
         Item_LoadDescription(string, item, HEAP_ID_BAG);
+
+        // phmode: the Repel Toggle's description ends with its current state.
+        if (item == ITEM_REPEL_TOGGLE) {
+            BOOL on = VarsFlags_CheckFlag(SaveData_GetVarsFlags(controller->bagCtx->saveData), FLAG_REPEL_TOGGLE_ON);
+            String *state = MessageLoader_GetNewString(controller->bagStringsLoader, on ? Bag_Text_RepelToggleStateOn : Bag_Text_RepelToggleStateOff);
+            String_Concat(string, state);
+            String_Free(state);
+        }
     } else {
         string = MessageLoader_GetNewString(controller->bagStringsLoader, Bag_Text_CloseBagDescription);
     }

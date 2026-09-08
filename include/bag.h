@@ -41,7 +41,7 @@ typedef struct Bag {
     BagItem berries[BERRY_POCKET_SIZE];
     BagItem pokeballs[POKEBALL_POCKET_SIZE];
     BagItem battleItems[BATTLE_ITEM_POCKET_SIZE];
-    u32 registeredItem;
+    u32 registeredItem; // phmode: no longer used - the Y-button list is in VAR_REGISTERED_KEY_ITEM_0..5 (registered_items.c). Kept so the save layout is byte-for-byte unchanged.
 } Bag;
 
 typedef struct FieldBagCursor {
@@ -68,8 +68,6 @@ int Bag_SaveSize(void);
 Bag *Bag_New(enum HeapID heapID);
 void Bag_Init(Bag *bag);
 void Bag_Copy(const Bag *src, Bag *dst);
-u32 Bag_GetRegisteredItem(const Bag *bag);
-void Bag_RegisterItem(Bag *bag, u32 item);
 BOOL Bag_CanFitItem(Bag *bag, u16 item, u16 count, enum HeapID heapID);
 BOOL Bag_TryAddItem(Bag *bag, u16 item, u16 count, enum HeapID heapID);
 BOOL Bag_TryRemoveItem(Bag *bag, u16 item, u16 count, enum HeapID heapID);

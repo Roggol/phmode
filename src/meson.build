@@ -249,6 +249,7 @@ pokeplatinum_c = files(
     'pokeradar.c',
     'unk_02069BE0.c',
     'scroll_prompts.c',
+    'registered_items.c',
     'system_flags.c',
     'system_vars.c',
     'applications/town_map/context.c',

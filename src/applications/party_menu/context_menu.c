@@ -38,6 +38,7 @@
 
 static void PartyMenu_SelectSwitch(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectSummary(PartyMenuApplication *application, int *partyMenuState);
+static void PartyMenu_SelectHatch(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectFieldMove(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectCut(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectRockSmash(PartyMenuApplication *application, int *partyMenuState);
@@ -100,6 +101,7 @@ enum {
     ACTION_CLEANUP,
     ACTION_SET_CAPSULE,
     ACTION_CLEANUP_2,
+    ACTION_HATCH,
     ACTION_CUT,
     ACTION_FLY,
     ACTION_SURF,
@@ -138,6 +140,7 @@ static const union PartyMenuActionFunc sPartyMenuActions[ACTION_MAX] = {
     [ACTION_CLEANUP] =     PartyMenu_CleanupContextMenu,
     [ACTION_SET_CAPSULE] = PartyMenu_SetBallCapsuleAction,
     [ACTION_CLEANUP_2] =   PartyMenu_CleanupContextMenu2,
+    [ACTION_HATCH] =       PartyMenu_SelectHatch,
     [ACTION_CUT] =         PartyMenu_SelectCut,
     [ACTION_FLY] =         PartyMenu_SelectFly,
     [ACTION_SURF] =        PartyMenu_SelectSurf,
@@ -839,6 +842,24 @@ static void PartyMenu_SelectSummary(PartyMenuApplication *application, int *part
 
     Menu_Free(application->contextMenu, NULL);
     StringList_Free(application->contextMenuChoices);
+
+    *partyMenuState = PARTY_MENU_STATE_FADE_OUT;
+}
+
+// phmode: "Hatch" on an egg's context menu. Zero the egg's remaining egg cycles
+// (stored in friendship) so Party_GetFirstEgg picks it, then exit to the field,
+// where the start menu runs the normal hatch cutscene (CommonScript_HatchEgg).
+static void PartyMenu_SelectHatch(PartyMenuApplication *application, int *partyMenuState)
+{
+    Menu_Free(application->contextMenu, NULL);
+    StringList_Free(application->contextMenuChoices);
+
+    Pokemon *mon = Party_GetPokemonBySlotIndex(application->partyMenu->party, application->currPartySlot);
+    u8 eggCycles = 0;
+    Pokemon_SetValue(mon, MON_DATA_FRIENDSHIP, &eggCycles);
+
+    application->partyMenu->selectedMonSlot = application->currPartySlot;
+    application->partyMenu->menuSelectionResult = PARTY_MENU_EXIT_CODE_HATCH_EGG;
 
     *partyMenuState = PARTY_MENU_STATE_FADE_OUT;
 }
