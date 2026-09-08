@@ -10,7 +10,7 @@
     "type": "TYPE_MYSTERY",
     "power": 0,
     "accuracy": 0,
-    "pp": 10,
+    "pp": 3,
     "effect": {
         "type": "BATTLE_EFFECT_CURSE",
         "chance": 0

@@ -11,7 +11,7 @@
     "type": "TYPE_DARK",
     "power": 0,
     "accuracy": 0,
-    "pp": 20,
+    "pp": 1,
     "effect": {
         "type": "BATTLE_EFFECT_SP_ATK_UP_2",
         "chance": 0

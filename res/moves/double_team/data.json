@@ -10,7 +10,7 @@
     "type": "TYPE_NORMAL",
     "power": 0,
     "accuracy": 0,
-    "pp": 15,
+    "pp": 3,
     "effect": {
         "type": "BATTLE_EFFECT_EVA_UP",
         "chance": 0

@@ -19,7 +19,7 @@ static const u16 sCommonPickupItems[] = {
     ITEM_DAWN_STONE,
     ITEM_FULL_RESTORE,
     ITEM_HEART_SCALE,
-    ITEM_PP_UP,
+    ITEM_HEART_SCALE, // phmode: was ITEM_PP_UP - Pickup hands out Heart Scales instead
     ITEM_MAX_ELIXIR,
 };
 
