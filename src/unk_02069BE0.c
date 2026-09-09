@@ -17,6 +17,7 @@
 #include "map_tile_behavior.h"
 #include "overworld_anim_manager.h"
 #include "player_avatar.h"
+#include "player_move.h"
 #include "terrain_collision_manager.h"
 #include "trainer_encounter.h"
 #include "unk_020655F4.h"
@@ -200,18 +201,23 @@ static u32 sub_02069D50(MapObject *mapObj)
 
     v0 = PlayerAvatar_GetMovementAction(playerAvatar);
 
+    // phmode: the player-following NPC copies the player's movement action, but
+    // the running actions are swapped for a walk action so the NPC keeps its
+    // walk animation. Vanilla swapped RUN (2 frames/tile) for WALK_FAST, which is
+    // 4 frames/tile, so the follower dropped a tile further behind every running
+    // step. Swap for WALK_FASTER instead - same 2 frames/tile as RUN.
     switch (v0) {
-    case 0x58:
-        v0 = 0x10;
+    case MOVEMENT_ACTION_RUN_NORTH:
+        v0 = MOVEMENT_ACTION_WALK_FASTER_NORTH;
         break;
-    case 0x59:
-        v0 = 0x11;
+    case MOVEMENT_ACTION_RUN_SOUTH:
+        v0 = MOVEMENT_ACTION_WALK_FASTER_SOUTH;
         break;
-    case 0x5a:
-        v0 = 0x12;
+    case MOVEMENT_ACTION_RUN_WEST:
+        v0 = MOVEMENT_ACTION_WALK_FASTER_WEST;
         break;
-    case 0x5b:
-        v0 = 0x13;
+    case MOVEMENT_ACTION_RUN_EAST:
+        v0 = MOVEMENT_ACTION_WALK_FASTER_EAST;
         break;
     }
 
@@ -406,7 +412,13 @@ static int sub_0206A034(MapObject *mapObj, UnkStruct_02069F48 *param1)
     v1 += MapObject_GetDzFromDir(v6);
 
     if ((v0 != v2) || (v1 != v3)) {
-        u32 v7 = 0xc;
+        // phmode: a chained partner-trainer follower always stepped at
+        // WALK_NORMAL (4 frames/tile); step it at WALK_FASTER while the player is
+        // running so it keeps pace instead of trailing off.
+        PlayerAvatar *playerAvatar = FieldSystem_GetPlayerAvatar(MapObject_FieldSystem(mapObj));
+        u32 v7 = (playerAvatar != NULL && PlayerAvatar_IsRunning(playerAvatar) == TRUE)
+            ? MOVEMENT_ACTION_WALK_FASTER_NORTH
+            : MOVEMENT_ACTION_WALK_NORMAL_NORTH;
 
         v7 = MovementAction_TurnActionTowardsDir(v6, v7);
         sub_02065668(mapObj, v7);
@@ -695,7 +707,16 @@ static int sub_0206A3BC(MapObject *mapObj, UnkStruct_0206A23C *param1)
         sub_0206A37C(mapObj, v2, MOVEMENT_ACTION_WALK_NORMAL_NORTH, param1->unk_02);
         break;
     case PLAYER_ACTION_SPEED_FAST:
-        sub_0206A37C(mapObj, v2, MOVEMENT_ACTION_WALK_FAST_NORTH, param1->unk_02);
+        // phmode: the running shoes cross a tile in 2 frames (MOVEMENT_ACTION_RUN),
+        // but PLAYER_ACTION_SPEED_FAST otherwise maps the follower to WALK_FAST,
+        // which is 4 frames/tile - so a follower falls a tile further behind on
+        // every running step. When the player is actually running, step the
+        // follower at WALK_FASTER (also 2 frames/tile) so it keeps pace.
+        if (PlayerAvatar_IsRunning(fieldSystem->playerAvatar) == TRUE) {
+            sub_0206A37C(mapObj, v2, MOVEMENT_ACTION_WALK_FASTER_NORTH, param1->unk_02);
+        } else {
+            sub_0206A37C(mapObj, v2, MOVEMENT_ACTION_WALK_FAST_NORTH, param1->unk_02);
+        }
         break;
     case PLAYER_ACTION_SPEED_FASTER:
         sub_0206A37C(mapObj, v2, MOVEMENT_ACTION_WALK_FASTER_NORTH, param1->unk_02);

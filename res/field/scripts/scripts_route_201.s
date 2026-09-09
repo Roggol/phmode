@@ -1,5 +1,6 @@
 #include "macros/scrcmd.inc"
 #include "res/text/bank/route_201.h"
+#include "res/text/bank/location_names.h"
 #include "res/field/events/events_route_201.h"
 
     ScriptEntry Route201_OnTransition
@@ -284,7 +285,8 @@ Route201_Briefcase:
     FadeScreenIn
     WaitFadeScreen
     GetPlayerStarterSpecies VAR_0x8000
-    GivePokemon VAR_0x8000, 5, ITEM_NONE, VAR_RESULT
+    @ phmode: starter's "Met at" reads "Rowan's briefcase", not "Route 201"
+    GivePokemonWithMetLocation VAR_0x8000, 5, ITEM_NONE, LocationNames_Text_RowansBriefcase, VAR_RESULT
     ApplyMovement LOCALID_PROF_ROWAN, Route201_Movement_ProfRowanFacePlayerSouth
     ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalFaceWest
     ApplyMovement LOCALID_PLAYER, Route201_Movement_PlayerFaceProfRowanNorth

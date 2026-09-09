@@ -40,6 +40,26 @@ number of frames, so the overworld moves at roughly 2×:
 handler) advances the stride cycle at `FX32_ONE * 2` so the animation keeps pace
 with the faster run step instead of gliding.
 
+### Following NPCs keep up when you run
+
+`src/unk_02069BE0.c` — the player is `MOVEMENT_ACTION_RUN` (2 frames/tile), but
+the follow-the-player code translated that to a slower walk action for the
+follower, so Barry / rivals / dungeon companions fell a tile further behind on
+every running step.
+
+* `sub_02069D50` (`MOVEMENT_TYPE_FOLLOW_PLAYER`) — remapped the player's
+  `MOVEMENT_ACTION_RUN_*` to `MOVEMENT_ACTION_WALK_FASTER_*` (also 2 frames/tile)
+  instead of `..._WALK_FAST_*` (4 frames/tile).
+* `sub_0206A034` (`MOVEMENT_TYPE_FOLLOW_PARTNER_TRAINER`, e.g. the escorted
+  double-battle partners) — this stepped at `WALK_NORMAL` unconditionally; now
+  uses `WALK_FASTER` while `PlayerAvatar_IsRunning` is true.
+* `sub_0206A3BC` (the `MOVEMENT_TYPE_055`–`063` follow path) — the
+  `PLAYER_ACTION_SPEED_FAST` case likewise steps at `WALK_FASTER` when the player
+  is actually running.
+
+The follower still trails one tile behind by design; it just no longer drifts
+further back the longer you hold the run button.
+
 ### Battle style locked to "Set"
 * `src/game_options.c` — `Options_Init` defaults `battleStyle` to
   `OPTIONS_BATTLE_STYLE_SET` on a new game.
@@ -179,6 +199,29 @@ walking it out.
 
 Only the START-menu party screen is affected; the selection/bag/daycare party
 modes are unchanged.
+
+### Starter is "Met at Rowan's briefcase"
+
+The starter's summary/memo now reads **"Met at Rowan's briefcase"** instead of
+"Route 201".
+
+* `res/text/location_names.json` — new `LocationNames_Text_RowansBriefcase`
+  ("Rowan's briefcase"), appended → id 126, so no existing location id shifts.
+  Met-location values below 2000 index this bank directly; 126 is stored in the
+  Pt/HGSS data block with the DP block flagged "fateful", exactly how vanilla
+  Platinum already stores its own locations 112–125 (Iron Ruins, etc.).
+* `include/data/scripts/scrcmd.h` — new script command
+  `SCRCMD_GIVEPOKEMONWITHMETLOCATION` / `ScrCmd_GivePokemonWithMetLocation`,
+  **appended** so every existing opcode keeps its number. It is `GivePokemon`
+  plus an explicit met-location argument instead of `MapHeader_GetMapLabelTextID`
+  of the current map. Impl in `src/scrcmd_party.c`, macro in
+  `asm/macros/scrcmd.inc`.
+* `res/field/scripts/scripts_route_201.s` — the starter hand-out uses
+  `GivePokemonWithMetLocation … LocationNames_Text_RowansBriefcase …`; the file
+  now also includes `res/text/bank/location_names.h`.
+
+Reusable for any other gift Pokémon that should not inherit the map's location.
+
 * `src/battle_sub_menus/battle_party.c` — `CheckSelectedMoveIsHM` always returns
   `FALSE`, so a move learned mid-battle can replace an HM move too.
 * `Item_IsHMMove` itself is unchanged — it is still used to keep HM *items* from
@@ -1362,6 +1405,51 @@ free slot.
 
 ## Map data
 
+### Verity Lakefront — tall-grass patch
+
+`res/field/maps/data/map_data_004.bin` — the south-east quadrant of Verity
+Lakefront (matrix `map_matrix_000`, cell row 26 / col 2; neighbours
+`map_data_001`/`002`/`003`).
+
+* The 3D map model was re-exported (via DSPRE) with a patch of tall grass added
+  to the clearing east of the hop-west ledge, a few tiles south of the Lake
+  Verity entrance. The re-export also drops this quadrant's unused `puddle` and
+  `nhana` (flower) materials — the NW-corner tiles keep their
+  `TILE_BEHAVIOR_PUDDLE` behaviour (splash SFX) but no longer render as a puddle;
+  that spot is not reachable by the player. Textures still resolve against the
+  existing `map_texture_set_006` (it already contains the `nectgr` grass
+  texture).
+* BDHC (ground-height collision): the DSPRE/model-tool export produced a
+  degenerate table — one plate whose bounding box covered only a 2×2-tile
+  corner instead of the whole map, so most tiles had no height data (which
+  broke object elevation, e.g. the Trainer Tips signpost stopped blocking).
+  The map is flat and at the vanilla height, so the **vanilla BDHC** (one plate
+  over the full map, flat, `constant -16`) is grafted back onto the export.
+* Terrain attributes: local tiles X 21–24, Z 14–18 (a 4×5 block) set to
+  `TILE_BEHAVIOR_TALL_GRASS` and left walkable. No collision bits and no
+  map-edge tiles were changed, so the quadrant still stitches to its neighbours.
+
+### Verity Lakefront — dedicated encounter table
+
+* New `res/field/encounters/encounters_verity_lakefront.json`, appended to
+  `pl_enc_data_srcs` in `res/field/encounters/meson.build` and to
+  `res/field/encounters/encounters.order` (appended, so no existing archive
+  index shifts). It gets its own `encounters_verity_lakefront` archive ID.
+* `MAP_HEADER_VERITY_LAKEFRONT.wildEncountersArchiveID` now points at
+  `encounters_verity_lakefront` instead of borrowing `encounters_route_201`, so
+  the location's spawns can be tuned without touching Route 201.
+* `tools/scripts/make_pokedex_enc_platinum.py` — `file_2` (the Pokédex
+  distribution-map field-cell table) gets a new appended entry (index 51) for
+  Verity Lakefront, at Pokédex-map cell (x 27, y 3–4), between Twinleaf and
+  Route 201. `encounters_verity_lakefront.json`'s `map_category.map_number` is
+  set to 51 so the Pokédex "where does it live" map highlights the lakefront
+  itself rather than Route 201's cell. (`map_number` only drives that map screen;
+  it has no effect on which species actually spawn.)
+* The table's contents are currently a straight copy of the Route 201 roster,
+  which is itself placeholder/test data — see `TEST_README.md`.
+
+### Map headers
+
 `include/data/map_headers.h`:
 
 * `MAP_HEADER_POKEMON_LEAGUE_AARON_ROOM` — `.weather` set to `OVERWORLD_STICKY_WEB`
@@ -1382,6 +1470,9 @@ free slot.
   a blank name and crashed on use. (Upstream had this as a `# TODO`.)
 * `subprojects/SDATTool` (`1466977b3`) — an accidental gitlink with no
   `.gitmodules` and no build reference; untracked and added to `.gitignore`.
+* `/EditedMaps/` added to `.gitignore` — local staging directory for DSPRE map
+  exports before they are copied into `res/field/maps/data/`; not part of the
+  build.
 
 ---
 

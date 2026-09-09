@@ -43,6 +43,24 @@ BOOL ScrCmd_GivePokemon(ScriptContext *ctx)
     return FALSE;
 }
 
+// phmode: like GivePokemon, but the met-location is passed explicitly (a
+// location_names.gmm entry) instead of being taken from the current map header.
+// Used so the starter reads "Rowan's briefcase" rather than "Route 201".
+BOOL ScrCmd_GivePokemonWithMetLocation(ScriptContext *ctx)
+{
+    int metTerrain = TERRAIN_MAX;
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+    u16 species = ScriptContext_GetVar(ctx);
+    u16 level = ScriptContext_GetVar(ctx);
+    u16 heldItem = ScriptContext_GetVar(ctx);
+    u16 metLocation = ScriptContext_GetVar(ctx);
+    u16 *success = ScriptContext_GetVarPointer(ctx);
+
+    *success = Pokemon_GiveMonFromScript(HEAP_ID_FIELD2, fieldSystem->saveData, species, level, heldItem, metLocation, metTerrain);
+
+    return FALSE;
+}
+
 BOOL ScrCmd_GetPartyMonSpecies(ScriptContext *ctx)
 {
     FieldSystem *fieldSystem = ctx->fieldSystem;

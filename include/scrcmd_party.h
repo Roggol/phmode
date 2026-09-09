@@ -4,6 +4,7 @@
 #include "field_script_context.h"
 
 BOOL ScrCmd_GivePokemon(ScriptContext *ctx);
+BOOL ScrCmd_GivePokemonWithMetLocation(ScriptContext *ctx);
 BOOL ScrCmd_GetPartyMonSpecies(ScriptContext *ctx);
 BOOL ScrCmd_CheckIsPartyMonOutsider(ScriptContext *ctx);
 BOOL ScrCmd_GiveEgg(ScriptContext *ctx);

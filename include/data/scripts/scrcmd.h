@@ -847,6 +847,9 @@ ScriptCommand(SCRCMD_CAPITALIZEFIRSTLETTER,                                ScrCm
 ScriptCommand(SCRCMD_BUFFERFLOORNUMBER,                                    ScrCmd_BufferFloorNumber)
 ScriptCommand(SCRCMD_INFLICTPARTYMONSTATUS,                                ScrCmd_InflictPartyMonStatus)
 
+// phmode: appended so existing opcodes keep their values
+ScriptCommand(SCRCMD_GIVEPOKEMONWITHMETLOCATION,                           ScrCmd_GivePokemonWithMetLocation)
+
 // clang-format on
 
 #endif // POKEPLATINUM_DATA_SCRIPTS_SCRCMD_H
