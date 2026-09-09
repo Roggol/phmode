@@ -1006,6 +1006,17 @@
     .short \successVar
     .endm
 
+    @ phmode: like GivePokemon, but metLocation (a location_names.gmm entry) is
+    @ used for "Met at" instead of the current map's label.
+    .macro GivePokemonWithMetLocation species, level, heldItem, metLocation, successVar
+    .short SCRCMD_GIVEPOKEMONWITHMETLOCATION
+    .short \species
+    .short \level
+    .short \heldItem
+    .short \metLocation
+    .short \successVar
+    .endm
+
     @ eggGiverTextId corresponds to an entry in special_met_location_names.gmm.
     .macro GiveEgg species, eggGiverTextId, successVar
     .short SCRCMD_GIVEEGG

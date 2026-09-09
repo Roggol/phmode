@@ -125,3 +125,6 @@ compile_commands.json
 # Cheat files
 *.dct
 *.mch
+
+# Local DSPRE map staging (not part of the build)
+/EditedMaps/
