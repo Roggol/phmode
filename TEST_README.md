@@ -3,9 +3,11 @@
 Changes that make every new / changed move, ability and terrain reachable early
 for testing.
 
-The **encounter tables, route weather, the Verity Lakefront grass patch, the
-Lass battle and the guitarist gift are test-only** — revert them before shipping
-and they are deliberately *not* in `CHANGES.md`. The **ability reassignments**
+The **encounter tables, route weather, the Lass battle and the guitarist gift
+are test-only** — revert them before shipping and they are deliberately *not* in
+`CHANGES.md`. The **Verity Lakefront grass patch** (the `map_data_004.bin` model
++ tile behaviour) is now a **real change** and is in `CHANGES.md`; only its
+encounter-table / weather wiring stays test-only. The **ability reassignments**
 needed to make Defiant and Competitive testable (Farfetch'd / Mankey line /
 Purugly → Defiant, Milotic → Competitive) are real gameplay changes and *are*
 recorded in `CHANGES.md`.
@@ -19,9 +21,14 @@ Files touched (test-only):
 - `res/field/encounters/encounters_route_204_south.json`
 - `res/field/encounters/encounters_lake_verity.json`
 - `res/field/encounters/encounters_lake_verity_low_water.json` (kept identical)
-- `res/field/maps/data/map_data_004.bin` — Verity Lakefront grass patch
+- `res/field/encounters/encounters_verity_lakefront.json` — *contents only*; the
+  file, its `meson.build` / `encounters.order` entries and the map-header wiring
+  are real (see `CHANGES.md`), but the spawn list is a copy of the Route 201 test
+  roster
 - `include/data/map_headers.h` — `.weather` on Routes 201–204 + both Lake Verity
-  headers + Verity Lakefront, and Verity Lakefront `.wildEncountersArchiveID`
+  headers + Verity Lakefront (the `map_data_004.bin` grass patch and Verity
+  Lakefront's `.wildEncountersArchiveID` → `encounters_verity_lakefront` are real
+  changes — see `CHANGES.md`)
 
 Level cap is left at its existing value of **60**.
 
@@ -117,15 +124,23 @@ Ariados was dropped — Spinarak covers Sticky Web.
 
 ### Verity Lakefront — added grass patch (Harsh Sun)
 
-A 5×5 patch of encounter tiles was added to `map_data_004.bin` (top-right cell)
-at world **X 85–89, Z 846–850** — the clearing just above the ledge, east of the
-hop-west ledge, a few tiles south of the Lake Verity entrance. Only the tile
-*behavior* is set to `TILE_BEHAVIOR_TALL_GRASS`: you get the grass rustle sprite,
-the step animation, the sound and wild encounters, but the ground texture is
-unchanged (DPPt maps are 3D `BMD0`/NSBMD models shipped as binaries with no
-editable source, so there is no cheap way to paint visible grass tufts).
-`MAP_HEADER_VERITY_LAKEFRONT.wildEncountersArchiveID` was pointed at
-`encounters_route_201`, so the patch spawns the Route 201 roster under Harsh Sun.
+**The grass patch itself is now a real change** — the `map_data_004.bin` model
+was re-exported (via DSPRE) with visible tall grass, and it is documented in
+`CHANGES.md` under *Map data*. It is a **4×5** block at local tiles X 21–24,
+Z 14–18 (world X 85–88, Z 846–850) — the clearing east of the hop-west ledge, a
+few tiles south of the Lake Verity entrance. Still under test; walk it to confirm
+the collision lines up with the visible grass and that you can still cross
+between this quadrant and the rest of the lakefront.
+
+The location now has its **own** encounter table,
+`encounters_verity_lakefront` (real change, in `CHANGES.md`), wired to
+`MAP_HEADER_VERITY_LAKEFRONT`. **Its contents are still test data** — a straight
+copy of the Route 201 test roster (Honchkrow / Glalie / Drifblim / Kecleon /
+Cacturne / Gallade / Grumpig / Toxicroak, all level 50). Retune
+`res/field/encounters/encounters_verity_lakefront.json` for real before shipping.
+
+Also still test-only: `MAP_HEADER_VERITY_LAKEFRONT.weather` is
+`OVERWORLD_WEATHER_HARSH_SUN` (revert to the vanilla value before shipping).
 
 ## Route 201 Lass — repeatable double battle
 
