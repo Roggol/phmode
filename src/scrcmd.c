@@ -80,6 +80,7 @@
 #include "overlay006/swarm.h"
 #include "overlay006/trophy_garden_daily_encounters.h"
 #include "overlay006/wallpaper_passwords.h"
+#include "overlay006/wild_encounters.h"
 #include "overlay007/battle_regulation_menu.h"
 #include "overlay007/communication_club.h"
 #include "overlay007/shop_menu.h"
@@ -438,6 +439,7 @@ static BOOL ScrCmd_GetNationalDexCaughtCount(ScriptContext *ctx);
 static BOOL ScrCmd_Unused_122(ScriptContext *ctx);
 static BOOL ScrCmd_LoadPokedexRating(ScriptContext *ctx);
 static BOOL ScrCmd_StartWildBattle(ScriptContext *ctx);
+static BOOL ScrCmd_TryRockSmashEncounter(ScriptContext *ctx);
 static BOOL ScrCmd_StartLegendaryBattle(ScriptContext *ctx);
 static BOOL ScrCmd_StartFatefulEncounter(ScriptContext *ctx);
 static BOOL ScrCmd_StartFirstBattle(ScriptContext *ctx);
@@ -4003,6 +4005,24 @@ static BOOL ScrCmd_StartWildBattle(ScriptContext *ctx)
 
     Encounter_NewVsSpeciesAtLevel(ctx->task, species, level, battleResultMaskPtr, FALSE);
     return TRUE;
+}
+
+// phmode: rolls the current map's Rock Smash encounter table. Does not itself
+// start a battle - the script follows up with StartWildBattle on success, same
+// as any other scripted single-species encounter.
+static BOOL ScrCmd_TryRockSmashEncounter(ScriptContext *ctx)
+{
+    u16 *successVar = ScriptContext_GetVarPointer(ctx);
+    u16 *speciesVar = ScriptContext_GetVarPointer(ctx);
+    u16 *levelVar = ScriptContext_GetVarPointer(ctx);
+    u16 species = SPECIES_NONE;
+    u8 level = 0;
+
+    *successVar = WildEncounters_TryRockSmashEncounter(ctx->fieldSystem, &species, &level);
+    *speciesVar = species;
+    *levelVar = level;
+
+    return FALSE;
 }
 
 static BOOL ScrCmd_StartLegendaryBattle(ScriptContext *ctx)

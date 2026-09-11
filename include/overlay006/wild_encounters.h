@@ -42,7 +42,7 @@ typedef struct WildEncounters {
     int dualSlotFireredEncounters[MAX_DUAL_SLOT_ENCOUNTERS];
     int dualSlotLeafgreenEncounters[MAX_DUAL_SLOT_ENCOUNTERS];
     WaterEncounters surfEncounters;
-    WaterEncounters unused;
+    WaterEncounters rockSmashEncounters; // phmode: was "unused" - see WildEncounters_TryRockSmashEncounter
     WaterEncounters oldRodEncounters;
     WaterEncounters goodRodEncounters;
     WaterEncounters superRodEncounters;
@@ -56,6 +56,7 @@ BOOL WildEncounters_TryWildEncounter(FieldSystem *fieldSystem);
 BOOL WildEncounters_TryFishingEncounter(FieldSystem *fieldSystem, enum EncounterFishingRodType fishingRodType, FieldBattleDTO **param2);
 BOOL WildEncounters_TrySweetScentEncounter(FieldSystem *fieldSystem, FieldTask *param1);
 BOOL WildEncounters_TryMudEncounter(FieldSystem *fieldSystem, FieldBattleDTO **param1);
+BOOL WildEncounters_TryRockSmashEncounter(FieldSystem *fieldSystem, u16 *speciesOut, u8 *levelOut);
 void CreateWildMon_HoneyTree(FieldSystem *fieldSystem, FieldBattleDTO *param1);
 void CreateWildMon_Scripted(FieldSystem *fieldSystem, u16 param1, u8 param2, FieldBattleDTO *param3);
 BOOL WildEncounters_TileHasEncounterRate(FieldSystem *fieldSystem, u8 param1);

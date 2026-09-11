@@ -74,7 +74,13 @@ for version, i in itertools.product(['ruby', 'sapphire', 'emerald', 'firered', '
 
 packables.extend(u32(data['surf_rate']))
 packables.extend(convert_water(data['surf_encounters']))
-packables.extend(pad(44))
+
+# phmode: Rock Smash encounters. This used to be a padded-out "unused" water
+# table; most maps still have neither key, so default to a rate of 0 (no
+# encounter, ever) and 5 empty slots - the same all-zero bytes pad(44) wrote.
+NO_ROCK_SMASH_ENCOUNTERS = [{'level_min': 0, 'level_max': 0, 'species': 'SPECIES_NONE'}] * 5
+packables.extend(u32(data.get('rock_smash_rate', 0)))
+packables.extend(convert_water(data.get('rock_smash_encounters', NO_ROCK_SMASH_ENCOUNTERS)))
 
 for rod in ['old', 'good', 'super']:
     packables.extend(u32(data[f'{rod}_rod_rate']))

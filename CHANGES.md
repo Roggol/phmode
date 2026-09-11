@@ -129,6 +129,14 @@ the Skills page:
   the boosted stat, blue for the hindered stat, default colour for a neutral
   nature.
 
+### Battle Tower Judge: "Holy zipcode!"
+
+`res/text/battle_tower.json` — the IV Judge's "decent all around" verdict, which
+he gives when a Pokémon's total IVs are ≤ 90 (i.e. average ≤ 15), now opens with
+**"Holy zipcode!"** instead of "I see, I see...". Same threshold and same rest of
+the readout — just a louder reaction to a bad roll. Text-only, no script change
+(the `GoToIfLe VAR_0x8001, 90` branch already lines up with a 15 average).
+
 ### PC: "Inflict status" option
 The main PC boot menu ("Someone's PC / [Player]'s PC / Switch off …") gains an
 **INFLICT STATUS** entry: pick a party Pokémon, then choose Cure / Sleep /
@@ -158,6 +166,10 @@ other move — no trip to the Move Deleter required.
   move-select A-press handler (`HandleInput` for `SUMMARY_STATE_SELECT_MOVE`) is
   deleted; an HM slot is selected like any other. This covers level-up learning,
   TM/HM learning, and the Move Deleter, which all route through this screen.
+* `src/battle_sub_menus/battle_party.c` — `CheckSelectedMoveIsHM` always returns
+  `FALSE`, so a move learned mid-battle can replace an HM move too.
+* `Item_IsHMMove` itself is unchanged — it is still used to keep HM *items* from
+  being consumed when taught and to pick the "Booted up an HM" bag message.
 
 ### Honey trees trigger the encounter instantly
 Slathering a Honey Tree now starts the Honey Tree battle right away instead of
@@ -222,10 +234,31 @@ The starter's summary/memo now reads **"Met at Rowan's briefcase"** instead of
 
 Reusable for any other gift Pokémon that should not inherit the map's location.
 
-* `src/battle_sub_menus/battle_party.c` — `CheckSelectedMoveIsHM` always returns
-  `FALSE`, so a move learned mid-battle can replace an HM move too.
-* `Item_IsHMMove` itself is unchanged — it is still used to keep HM *items* from
-  being consumed when taught and to pick the "Booted up an HM" bag message.
+### Split routes and Mt. Coronet are distinct locations
+
+For the nuzlocke "one catch per area" rule, the areas that vanilla splits into
+several map headers but labels identically are now named per-segment. This is a
+plain `.mapLabelTextID` change in `include/data/map_headers.h`, so it flows
+through *everything* consistently — the name banner (which now pops when you
+cross the boundary), the "Met at" location, the journal, the save screen.
+
+* Routes **204 / 205 / 210** → `Route 20x (south)` and `Route 20x (north)`;
+  Route **211** → `Route 211 (west)` / `Route 211 (east)`; Route **212** →
+  `Route 212 (north)` / `Route 212 (south)`.
+* **Mt. Coronet** → `Mt. Coronet (Ext)` for the two outside segments
+  (`MT_CORONET_OUTSIDE_NORTH/SOUTH`) and `Mt. Coronet (Int)` for the twelve
+  interior headers (1F/2F/3F/4F/5F/6F/B1F rooms + the Iceberg Ruins access
+  room). All interior floors share one label, so there is no *new* banner
+  between them — a cave already pops its name banner on every floor warp in
+  vanilla, that just now reads "Mt. Coronet (Int)". Stepping between inside and
+  outside now shows "(Int)" ↔ "(Ext)".
+* `res/text/location_names.json` — 12 new entries appended (`…Route204South`
+  through `…MtCoronetExt`, ids 127–138), so no existing location id shifts.
+
+For the routes, the seamless-crossing banner fires on
+`MapHeader_GetMapLabelTextID` mismatch between the old and new header
+(`FieldMap_ChangeZone`), so walking across a route's internal boundary now pops
+the "(south)"/"(north)" banner where vanilla stayed silent.
 
 ---
 
@@ -1447,6 +1480,69 @@ Lakefront (matrix `map_matrix_000`, cell row 26 / col 2; neighbours
   it has no effect on which species actually spawn.)
 * The table's contents are currently a straight copy of the Route 201 roster,
   which is itself placeholder/test data — see `TEST_README.md`.
+
+### Rock Smash wild encounters (new mechanic)
+
+Vanilla Platinum's Rock Smash rocks never generate a wild encounter — this adds
+one, Gen-3-style: each rock you smash has a 50% chance to start a battle, rolled
+from a dedicated 5-slot table (20% each) separate from the map's land/water
+tables.
+
+* `include/overlay006/wild_encounters.h` / `src/overlay006/wild_encounters.c` —
+  the `WildEncounters` struct's old `unused` field (a `pad(44)` placeholder
+  between `surfEncounters` and the rod tables) is repurposed as
+  `rockSmashEncounters` (a `WaterEncounters`-shaped table). This is ROM asset
+  data, not a save-file field, so there's no save-compatibility concern.
+  `WildEncounters_TryRockSmashEncounter(fieldSystem, speciesOut, levelOut)` rolls
+  the 50% rate, then a uniform slot via new `GetRockSmashEncounterSlot()`
+  (`LCRNG_RandMod(MAX_WATER_ENCOUNTERS)` — the existing water/rod slot pickers
+  are all weighted, so Rock Smash needed its own uniform picker for the "20%
+  each" spec); it also honours an active Repel the same way
+  `WildEncounters_TryWildEncounter` does.
+* New script command `TryRockSmashEncounter successVar, speciesVar, levelVar`
+  (`SCRCMD_TRYROCKSMASHENCOUNTER` in `include/data/scripts/scrcmd.h`, macro in
+  `asm/macros/scrcmd.inc`, `ScrCmd_TryRockSmashEncounter` in `src/scrcmd.c`) —
+  wraps the C function above for scripts. On success, it hands off to the
+  pre-existing `StartWildBattle species, level` command (the same primitive
+  static/scripted encounters use), so full IV/shiny/nature generation runs
+  through the normal pipeline.
+* `res/field/scripts/scripts_field_moves.s` — both `FieldMoves_UseRockSmash*`
+  flows (from field and from the field-move menu) now call
+  `TryRockSmashEncounter` after the smash animation and, on success, start and
+  resolve the battle (loss blacks out, same as the honey-tree win/loss pattern).
+* `tools/jsoncnv/encounter.py` — packs new `rock_smash_rate` / `rock_smash_encounters`
+  JSON keys into the repurposed field; maps without the keys default to rate 0
+  with 5 empty slots (the same all-zero bytes the old `pad(44)` wrote), so every
+  existing encounter JSON keeps packing identically.
+* Real tables (5× Geodude placeholder, `rock_smash_rate: 50`) were added to
+  every map with a Rock Smash rock — 44 in total. Level ranges match each
+  map's existing land-encounter spread; see `TEST_README.md` for the
+  placeholder-species note.
+  * 11 `MAP_TYPE_OUTDOORS` maps: Route 208, Route 210 North, Route 211 East,
+    Route 211 West, Route 213, Route 214, Route 222, Route 228, Route 230,
+    Mt. Coronet Outside North, Mt. Coronet Outside South.
+  * 33 `MAP_TYPE_CAVE` interiors: Mt. Coronet 1F North Room 1, 1F South, 1F
+    Tunnel Room, 4F Rooms 1 and 2, B1F; Oreburgh Gate 1F/B1F; Oreburgh Mine
+    B2F; Ravaged Path (visually a path but coded as a cave); Snowpoint Temple
+    B2F; Stark Mountain Rooms 1–3; Turnback Cave Pillar 1 Rooms 1–6, Pillar 2
+    Rooms 1–6, Pillar 3 Rooms 1–6; Victory Road 2F; Wayward Cave 1F.
+* Two of those cave rooms had no wild-encounter archive wired up at all
+  (`.wildEncountersArchiveID = ENCOUNTERS_NONE`), so a plain JSON edit wasn't
+  possible:
+  * **Stark Mountain Room 3** truly had no encounter data — a brand-new,
+    otherwise-all-zero `encounters_stark_mountain_room_3.json` was added
+    (appended to `encounters.order` and `pl_enc_data_srcs` in
+    `res/field/encounters/meson.build`, so no existing archive index shifts),
+    and the map header now points at it. `map_category` reuses Stark
+    Mountain's existing dungeon number (9).
+  * **Turnback Cave Pillar 3 Room 6** (the antechamber right before Giratina)
+    turned out to already have a fully-authored, git-tracked ambient
+    encounter table identical in shape to its 5 sibling rooms
+    (Haunter/Bronzong/Golbat/Chimecho/Dusclops) — it was simply never wired
+    up. Per explicit direction, that ambient table is left disabled
+    (`land_rate` forced to 0, matching current/vanilla behavior) and only
+    Rock Smash was turned on for this room, so nothing new spawns there from
+    walking around.
 
 ### Map headers
 

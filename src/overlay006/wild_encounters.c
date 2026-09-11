@@ -112,6 +112,8 @@ static u8 TryFindHigherLevelSlot(const EncounterSlot *encounterTable, const Wild
 static void InitEncounterFieldParams(FieldSystem *fieldSystem, Pokemon *firstPartyMon, WildEncounters *encounterData, WildEncounters_FieldParams *param3);
 static void ModifyEncounterRateWithHeldItem(Pokemon *param0, u8 *param1);
 static void ModifyEncounterRateWithFlute(FieldSystem *fieldSystem, u8 *param1);
+static u8 GetWildMonLevel(const EncounterSlot *slot, const WildEncounters_FieldParams *encounterFieldParams);
+static u8 GetRockSmashEncounterSlot(void);
 
 static const u8 UnownMostForms[] = {
     UNOWN_FORM_A,
@@ -443,6 +445,58 @@ BOOL WildEncounters_TryFishingEncounter(FieldSystem *fieldSystem, enum Encounter
         return FALSE;
     }
 
+    return TRUE;
+}
+
+// phmode: Rock Smash encounters. Each smash has a flat rockSmashEncounters.encounterRate
+// (%) chance of triggering a battle at all; if it does, the species is a uniform pick
+// among the 5 slots (unlike the weighted grass/water tables) via GetRockSmashEncounterSlot.
+// Species/level are handed back so the caller can start the battle with the existing
+// StartWildBattle script command (Encounter_NewVsSpeciesAtLevel / CreateWildMon_Scripted),
+// same as any other scripted single-species encounter.
+BOOL WildEncounters_TryRockSmashEncounter(FieldSystem *fieldSystem, u16 *speciesOut, u8 *levelOut)
+{
+    WildEncounters *encounterData = MapHeaderData_GetWildEncounters(fieldSystem);
+    WaterEncounter *rockSmashEncounters = encounterData->rockSmashEncounters.encounters;
+    u8 encounterRate = (u8)encounterData->rockSmashEncounters.encounterRate;
+
+    if (encounterRate == 0 || LCRNG_RandMod(100) >= encounterRate) {
+        return FALSE;
+    }
+
+    u8 slotIdx = GetRockSmashEncounterSlot();
+    EncounterSlot slot;
+    slot.species = rockSmashEncounters[slotIdx].species;
+    slot.maxLevel = rockSmashEncounters[slotIdx].maxLevel;
+    slot.minLevel = rockSmashEncounters[slotIdx].minLevel;
+
+    if (slot.species == SPECIES_NONE) {
+        return FALSE;
+    }
+
+    Party *party = SaveData_GetParty(fieldSystem->saveData);
+    Pokemon *firstPartyMon = Party_GetPokemonBySlotIndex(party, 0);
+    WildEncounters_FieldParams encounterFieldParams;
+    InitEncounterFieldParams(fieldSystem, firstPartyMon, encounterData, &encounterFieldParams);
+
+    if (!SpecialEncounter_RepelStepsEmpty(SaveData_GetSpecialEncounters(fieldSystem->saveData))) {
+        Pokemon *firstLiveMon = Party_FindFirstEligibleBattler(party);
+        encounterFieldParams.repelActive = TRUE;
+        encounterFieldParams.firstBattlerLevel = Pokemon_GetValue(firstLiveMon, MON_DATA_LEVEL, NULL);
+    }
+
+    u8 level = GetWildMonLevel(&slot, &encounterFieldParams);
+
+    if (FirstMonAbilityPreventsEncounter(&encounterFieldParams, firstPartyMon, level)) {
+        return FALSE;
+    }
+
+    if (RepelPreventsEncounter(level, &encounterFieldParams) == TRUE) {
+        return FALSE;
+    }
+
+    *speciesOut = (u16)slot.species;
+    *levelOut = level;
     return TRUE;
 }
 
@@ -916,6 +970,13 @@ static u8 GetRodEncounterSlot(const int fishingRodType)
     }
 
     return encSlot;
+}
+
+// phmode: unlike the other water tables (which use fixed weighted slot odds),
+// Rock Smash's 5 slots are a flat, uniform 20% each.
+static u8 GetRockSmashEncounterSlot(void)
+{
+    return (u8)LCRNG_RandMod(MAX_WATER_ENCOUNTERS);
 }
 
 static void ModifyEncounterRateWithHeldItem(Pokemon *mon, u8 *encounterRate)
