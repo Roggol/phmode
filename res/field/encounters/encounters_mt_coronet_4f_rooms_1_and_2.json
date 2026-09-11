@@ -122,6 +122,34 @@
             "species": "SPECIES_GOLBAT"
         }
     ],
+    "rock_smash_rate": 50,
+    "rock_smash_encounters": [
+        {
+            "level_max": 39,
+            "level_min": 36,
+            "species": "SPECIES_GEODUDE"
+        },
+        {
+            "level_max": 39,
+            "level_min": 36,
+            "species": "SPECIES_GEODUDE"
+        },
+        {
+            "level_max": 39,
+            "level_min": 36,
+            "species": "SPECIES_GEODUDE"
+        },
+        {
+            "level_max": 39,
+            "level_min": 36,
+            "species": "SPECIES_GEODUDE"
+        },
+        {
+            "level_max": 39,
+            "level_min": 36,
+            "species": "SPECIES_GEODUDE"
+        }
+    ],
     "old_rod_rate": 25,
     "old_rod_encounters": [
         {

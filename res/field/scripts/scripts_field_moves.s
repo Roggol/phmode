@@ -160,7 +160,23 @@ FieldMoves_UseRockSmashFromField:
 FieldMoves_WaitForRockSmashAnimFromField:
     WaitTime 1, VAR_RESULT
     GoToIfEq VAR_0x8005, 0, FieldMoves_WaitForRockSmashAnimFromField
+    GoTo FieldMoves_TryRockSmashEncounterFromField
+    End
+
+@ phmode: each smashed rock has a chance of a wild battle, see
+@ the map's encounters JSON "rock_smash_encounters" / "rock_smash_rate" fields.
+FieldMoves_TryRockSmashEncounterFromField:
+    TryRockSmashEncounter VAR_RESULT, VAR_0x8006, VAR_0x8007
+    GoToIfEq VAR_RESULT, FALSE, FieldMoves_End
+    StartWildBattle VAR_0x8006, VAR_0x8007
+    CheckWonBattle VAR_RESULT
+    GoToIfEq VAR_RESULT, FALSE, FieldMoves_LostRockSmashBattleFromField
     GoTo FieldMoves_End
+    End
+
+FieldMoves_LostRockSmashBattleFromField:
+    BlackOutFromBattle
+    ReleaseAll
     End
 
 FieldMoves_UseRockSmashFromMenu:
@@ -177,6 +193,21 @@ FieldMoves_UseRockSmashFromMenu:
 FieldMoves_WaitForRockSmashAnimFromMenu:
     WaitTime 1, VAR_RESULT
     GoToIfEq VAR_0x8005, 0, FieldMoves_WaitForRockSmashAnimFromMenu
+    GoTo FieldMoves_TryRockSmashEncounterFromMenu
+    End
+
+FieldMoves_TryRockSmashEncounterFromMenu:
+    TryRockSmashEncounter VAR_RESULT, VAR_0x8006, VAR_0x8007
+    GoToIfEq VAR_RESULT, FALSE, FieldMoves_EndRockSmashFromMenu
+    StartWildBattle VAR_0x8006, VAR_0x8007
+    CheckWonBattle VAR_RESULT
+    GoToIfEq VAR_RESULT, FALSE, FieldMoves_LostRockSmashBattleFromMenu
+FieldMoves_EndRockSmashFromMenu:
+    ReleaseAll
+    End
+
+FieldMoves_LostRockSmashBattleFromMenu:
+    BlackOutFromBattle
     ReleaseAll
     End
 

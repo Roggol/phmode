@@ -122,6 +122,34 @@
             "species": "SPECIES_NONE"
         }
     ],
+    "rock_smash_rate": 50,
+    "rock_smash_encounters": [
+        {
+            "level_max": 9,
+            "level_min": 5,
+            "species": "SPECIES_GEODUDE"
+        },
+        {
+            "level_max": 9,
+            "level_min": 5,
+            "species": "SPECIES_GEODUDE"
+        },
+        {
+            "level_max": 9,
+            "level_min": 5,
+            "species": "SPECIES_GEODUDE"
+        },
+        {
+            "level_max": 9,
+            "level_min": 5,
+            "species": "SPECIES_GEODUDE"
+        },
+        {
+            "level_max": 9,
+            "level_min": 5,
+            "species": "SPECIES_GEODUDE"
+        }
+    ],
     "old_rod_rate": 0,
     "old_rod_encounters": [
         {

@@ -190,6 +190,7 @@ pl_enc_data_srcs = files(
     'encounters_route_226.json',
     'encounters_route_230.json',
     'encounters_verity_lakefront.json',
+    'encounters_stark_mountain_room_3.json',
 )
 
 pl_enc_tbl_narc = custom_target('pl_enc_data.narc',

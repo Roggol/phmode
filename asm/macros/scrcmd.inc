@@ -1789,6 +1789,17 @@
     .short \level
     .endm
 
+    @ phmode: rolls this map's Rock Smash encounter table (the current map's
+    @ "rock_smash_encounters" - see res/field/encounters). successVar is set
+    @ TRUE/FALSE; on TRUE, speciesVar/levelVar are filled in and can be handed
+    @ straight to StartWildBattle.
+    .macro TryRockSmashEncounter successVar, speciesVar, levelVar
+    .short SCRCMD_TRYROCKSMASHENCOUNTER
+    .short \successVar
+    .short \speciesVar
+    .short \levelVar
+    .endm
+
     .macro StartFirstBattle trainerID
     .short SCRCMD_STARTFIRSTBATTLE
     .short \trainerID

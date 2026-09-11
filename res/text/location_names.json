@@ -508,6 +508,54 @@
     {
       "id": "LocationNames_Text_RowansBriefcase",
       "en_US": "Rowan’s briefcase"
+    },
+    {
+      "id": "LocationNames_Text_Route204South",
+      "en_US": "Route 204 (south)"
+    },
+    {
+      "id": "LocationNames_Text_Route204North",
+      "en_US": "Route 204 (north)"
+    },
+    {
+      "id": "LocationNames_Text_Route205South",
+      "en_US": "Route 205 (south)"
+    },
+    {
+      "id": "LocationNames_Text_Route205North",
+      "en_US": "Route 205 (north)"
+    },
+    {
+      "id": "LocationNames_Text_Route210South",
+      "en_US": "Route 210 (south)"
+    },
+    {
+      "id": "LocationNames_Text_Route210North",
+      "en_US": "Route 210 (north)"
+    },
+    {
+      "id": "LocationNames_Text_Route211West",
+      "en_US": "Route 211 (west)"
+    },
+    {
+      "id": "LocationNames_Text_Route211East",
+      "en_US": "Route 211 (east)"
+    },
+    {
+      "id": "LocationNames_Text_Route212North",
+      "en_US": "Route 212 (north)"
+    },
+    {
+      "id": "LocationNames_Text_Route212South",
+      "en_US": "Route 212 (south)"
+    },
+    {
+      "id": "LocationNames_Text_MtCoronetInt",
+      "en_US": "Mt. Coronet (Int)"
+    },
+    {
+      "id": "LocationNames_Text_MtCoronetExt",
+      "en_US": "Mt. Coronet (Ext)"
     }
   ]
 }

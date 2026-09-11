@@ -2,97 +2,97 @@
     "land_rate": 0,
     "land_encounters": [
         {
-            "level": 35,
-            "species": "SPECIES_HAUNTER"
+            "level": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level": 35,
-            "species": "SPECIES_BRONZONG"
+            "level": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level": 36,
-            "species": "SPECIES_HAUNTER"
+            "level": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level": 37,
-            "species": "SPECIES_GOLBAT"
+            "level": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level": 37,
-            "species": "SPECIES_HAUNTER"
+            "level": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level": 37,
-            "species": "SPECIES_GOLBAT"
+            "level": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level": 38,
-            "species": "SPECIES_GOLBAT"
+            "level": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level": 36,
-            "species": "SPECIES_CHIMECHO"
+            "level": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level": 38,
-            "species": "SPECIES_DUSCLOPS"
+            "level": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level": 38,
-            "species": "SPECIES_CHIMECHO"
+            "level": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level": 38,
-            "species": "SPECIES_DUSCLOPS"
+            "level": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level": 38,
-            "species": "SPECIES_CHIMECHO"
+            "level": 0,
+            "species": "SPECIES_NONE"
         }
     ],
     "swarms": [
-        "SPECIES_HAUNTER",
-        "SPECIES_BRONZONG"
+        "SPECIES_NONE",
+        "SPECIES_NONE"
     ],
     "day": [
-        "SPECIES_HAUNTER",
-        "SPECIES_GOLBAT"
+        "SPECIES_NONE",
+        "SPECIES_NONE"
     ],
     "night": [
-        "SPECIES_DUSCLOPS",
-        "SPECIES_GOLBAT"
+        "SPECIES_NONE",
+        "SPECIES_NONE"
     ],
     "radar": [
-        "SPECIES_HAUNTER",
-        "SPECIES_GOLBAT",
-        "SPECIES_DUSCLOPS",
-        "SPECIES_CHIMECHO"
+        "SPECIES_NONE",
+        "SPECIES_NONE",
+        "SPECIES_NONE",
+        "SPECIES_NONE"
     ],
-    "rate_form0": 100,
-    "rate_form1": 100,
+    "rate_form0": 0,
+    "rate_form1": 0,
     "rate_form2": 0,
     "rate_form3": 0,
     "rate_form4": 0,
     "unown_table": 0,
     "ruby": [
-        "SPECIES_SOLROCK",
-        "SPECIES_SOLROCK"
+        "SPECIES_NONE",
+        "SPECIES_NONE"
     ],
     "sapphire": [
-        "SPECIES_LUNATONE",
-        "SPECIES_LUNATONE"
+        "SPECIES_NONE",
+        "SPECIES_NONE"
     ],
     "emerald": [
-        "SPECIES_DUSCLOPS",
-        "SPECIES_CHIMECHO"
+        "SPECIES_NONE",
+        "SPECIES_NONE"
     ],
     "firered": [
-        "SPECIES_DUSCLOPS",
-        "SPECIES_CHIMECHO"
+        "SPECIES_NONE",
+        "SPECIES_NONE"
     ],
     "leafgreen": [
-        "SPECIES_DUSCLOPS",
-        "SPECIES_CHIMECHO"
+        "SPECIES_NONE",
+        "SPECIES_NONE"
     ],
     "surf_rate": 0,
     "surf_encounters": [
@@ -125,28 +125,28 @@
     "rock_smash_rate": 50,
     "rock_smash_encounters": [
         {
-            "level_max": 38,
-            "level_min": 35,
+            "level_max": 56,
+            "level_min": 53,
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level_max": 38,
-            "level_min": 35,
+            "level_max": 56,
+            "level_min": 53,
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level_max": 38,
-            "level_min": 35,
+            "level_max": 56,
+            "level_min": 53,
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level_max": 38,
-            "level_min": 35,
+            "level_max": 56,
+            "level_min": 53,
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level_max": 38,
-            "level_min": 35,
+            "level_max": 56,
+            "level_min": 53,
             "species": "SPECIES_GEODUDE"
         }
     ],
@@ -236,6 +236,6 @@
     ],
     "map_category": {
         "map_type": "dungeon",
-        "map_number": 10
+        "map_number": 9
     }
 }
