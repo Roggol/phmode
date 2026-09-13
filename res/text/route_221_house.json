@@ -2,12 +2,11 @@
   "key": 32403,
   "messages": [
     {
-      "id": "Route221House_Text_ShowThisLevelPokemon",
+      "id": "Route221House_Text_HereAreAllThree",
       "en_US": [
-        "...I saw it!\n",
-        "Today’s number is {STRVAR_1 51, 0, 0}!\r",
-        "Show me a Pokémon that’s Lv. {STRVAR_1 51, 0, 0}.\n",
-        "If you can, I’ll reward you."
+        "You there!\n",
+        "Your trousers are falling down!\r",
+        "Take these."
       ]
     },
     {
@@ -34,19 +33,16 @@
     {
       "id": "Route221House_Text_ThankWithItem",
       "en_US": [
-        "I’ll thank you for that visual treat\n",
-        "with this {STRVAR_1 8, 2, 0}.\r"
+        "Oh, right! Let me give you the rest\n",
+        "of what I owe you."
       ]
     },
     {
-      "id": "Route221House_Text_ComeAgainTomorrow",
+      "id": "Route221House_Text_AlreadyGaveReward",
       "en_US": [
-        "High-level Pokémon were once of low\n",
-        "level.\r",
-        "Low-level Pokémon will not remain so,\n",
-        "for they can only grow.\r",
-        "That’s how it goes, youngster.\n",
-        "Come again tomorrow."
+        "What do you mean you don't\n",
+        "wear trousers?\r",
+        "Ungrateful child!"
       ]
     },
     {

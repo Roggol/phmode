@@ -49,7 +49,7 @@
             [ 25, "MOVE_PSYBEAM" ],
             [ 29, "MOVE_SUBSTITUTE" ],
             [ 32, "MOVE_RECYCLE" ],
-            [ 36, "MOVE_TRICK" ],
+            [ 36, "MOVE_KNOCK_OFF" ],
             [ 39, "MOVE_PSYCHIC" ],
             [ 43, "MOVE_ROLE_PLAY" ],
             [ 46, "MOVE_BATON_PASS" ],

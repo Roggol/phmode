@@ -47,7 +47,7 @@
             [ 36, "MOVE_CALM_MIND" ],
             [ 40, "MOVE_PSYCHIC" ],
             [ 42, "MOVE_FUTURE_SIGHT" ],
-            [ 46, "MOVE_TRICK" ]
+            [ 46, "MOVE_KNOCK_OFF" ]
         ],
         "by_tm": [
             "TM01",

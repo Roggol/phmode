@@ -47,7 +47,7 @@
             [ 38, "MOVE_EMBARGO" ],
             [ 43, "MOVE_SNATCH" ],
             [ 46, "MOVE_GRUDGE" ],
-            [ 50, "MOVE_TRICK" ]
+            [ 50, "MOVE_KNOCK_OFF" ]
         ],
         "by_tm": [
             "TM04",

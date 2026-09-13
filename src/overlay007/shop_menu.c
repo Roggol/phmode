@@ -621,8 +621,8 @@ static const ListMenuTemplate sShop_ItemListMenuTemplate = {
 };
 
 // Tracks lifetime shop-purchase limits: TMs, Wide Lens, Zoom Lens, and Metronome may only ever
-// be bought once (limit 1, backed by a save flag); the EV vitamins may only ever be bought 10
-// times total, combined across every shop that sells them (limit 10, backed by a save var).
+// be bought once (limit 1, backed by a save flag); the EV vitamins and PP Up may only ever be
+// bought 10 times total, combined across every shop that sells them (limit 10, backed by a save var).
 typedef struct ShopPurchaseLimit {
     u16 itemId;
     u8 limit;
@@ -683,6 +683,7 @@ static const ShopPurchaseLimit sShopPurchaseLimits[] = {
     { ITEM_ZINC, 10, VAR_ZINC_BOUGHT_COUNT },
     { ITEM_CARBOS, 10, VAR_CARBOS_BOUGHT_COUNT },
     { ITEM_HP_UP, 10, VAR_HP_UP_BOUGHT_COUNT },
+    { ITEM_PP_UP, 10, VAR_PP_UP_BOUGHT_COUNT },
 };
 
 static const ShopPurchaseLimit *Shop_FindPurchaseLimit(u16 itemId)

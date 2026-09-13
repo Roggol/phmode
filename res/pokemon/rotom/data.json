@@ -34,7 +34,7 @@
     "icon_palette": 0,
     "learnset": {
         "by_level": [
-            [ 1, "MOVE_TRICK" ],
+            [ 1, "MOVE_KNOCK_OFF" ],
             [ 1, "MOVE_ASTONISH" ],
             [ 1, "MOVE_THUNDER_WAVE" ],
             [ 1, "MOVE_THUNDER_SHOCK" ],

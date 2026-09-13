@@ -35,7 +35,7 @@
     "learnset": {
         "by_level": [
             [ 1, "MOVE_NIGHTMARE" ],
-            [ 1, "MOVE_SWITCHEROO" ],
+            [ 1, "MOVE_KNOCK_OFF" ],
             [ 1, "MOVE_POUND" ],
             [ 1, "MOVE_HYPNOSIS" ],
             [ 1, "MOVE_DISABLE" ],

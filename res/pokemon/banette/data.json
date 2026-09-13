@@ -50,7 +50,7 @@
             [ 35, "MOVE_SUCKER_PUNCH" ],
             [ 42, "MOVE_EMBARGO" ],
             [ 51, "MOVE_SNATCH" ],
-            [ 58, "MOVE_TRICK" ],
+            [ 58, "MOVE_KNOCK_OFF" ],
             [ 66, "MOVE_DESTINY_BOND" ]
         ],
         "by_tm": [

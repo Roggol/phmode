@@ -256,14 +256,6 @@
         "location": "TUTOR_LOCATION_SURVIVAL_AREA"
     },
     {
-        "move": "MOVE_TRICK",
-        "redCost": 0,
-        "blueCost": 4,
-        "yellowCost": 4,
-        "greenCost": 0,
-        "location": "TUTOR_LOCATION_ROUTE_212"
-    },
-    {
         "move": "MOVE_HEAT_WAVE",
         "redCost": 4,
         "blueCost": 2,

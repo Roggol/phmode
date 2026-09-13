@@ -49,7 +49,7 @@
             [ 42, "MOVE_TAUNT" ],
             [ 47, "MOVE_EMBARGO" ],
             [ 52, "MOVE_TAKE_DOWN" ],
-            [ 57, "MOVE_THIEF" ],
+            [ 57, "MOVE_KNOCK_OFF" ],
             [ 62, "MOVE_SUCKER_PUNCH" ]
         ],
         "by_tm": [

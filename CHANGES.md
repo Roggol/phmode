@@ -570,6 +570,29 @@ mirrors the full removal condition in `subscript_knock_off`: no boost when the
 item is pinned by Sticky Hold, a Substitute, Multitype, the Griseous Orb, or an
 already-triggered Quick Claw / Custap Berry.
 
+### Thief, Switcheroo, and Trick consolidated into Knock Off
+With Knock Off now the strong, modern item-removal move above, the other three
+"mess with the foe's item" moves are removed as separately learnable and folded
+into it, so every species that had one of them now learns Knock Off instead:
+
+* **Level-up learnsets** — 17 entries across
+  `res/pokemon/{kecleon,mightyena}` (Thief), `res/pokemon/{linoone,persian,hypno}`
+  (Switcheroo), and `res/pokemon/{kadabra,alakazam,mime_jr,mr_mime,shuppet,banette,rotom}`
+  + all 5 Rotom forms (Trick) — each `[level, "MOVE_X"]` entry changed in place
+  to `[level, "MOVE_KNOCK_OFF"]` at the same level. Egg-move / tutor-compatibility
+  list entries for these moves (kecleon, mime_jr, mr_mime, buneary, etc.) are
+  untouched — this only affects level-up learnsets.
+* **TM46** (`res/items/data/tm46.json`) — used to teach Thief, now teaches
+  Knock Off; description updated to match. No other TM taught Knock Off before
+  this, so there's no conflict — the 217 species with `TM46` in their `by_tm`
+  list are now TM46-compatible with Knock Off instead of Thief.
+* **Move tutor** (`res/pokemon/move_tutors.json`) — the Route 212 shard tutor
+  already separately taught Knock Off (4 Red + 4 Blue Shards) alongside its
+  Trick entry (4 Blue + 4 Yellow Shards); rather than point Trick's entry at a
+  move that'd then be listed twice in the same tutor's menu, the Trick entry is
+  deleted outright and the existing Knock Off entry (and its cost) is left as
+  the sole way to tutor it there.
+
 ### Leech Life — modern power
 `res/moves/leech_life/data.json` — base power 20 → 80 (in line with Gen 7+).
 
@@ -1317,7 +1340,7 @@ it — `Bag_Text_CannotUseUndergroundMaintenance`
 — whether the Explorer Kit is used from the Bag, in the field, or registered
 to Y.
 
-### Shop purchase limits: TMs and select held items bought once, EV vitamins capped at 10
+### Shop purchase limits: TMs and select held items bought once, EV vitamins and PP Up capped at 10
 Shops (the Veilstone Dept Store, the Battle Frontier's BP Exchange Service
 Corner, and the Game Corner's Prize Corner) previously sold every item with
 infinite stock. Two new lifetime purchase limits were added, both enforced
@@ -1332,12 +1355,16 @@ everywhere else that sells it too):
   instead of letting you buy a second one. (Shed Shell was added to this list
   later, when it replaced Poké Doll in the Veilstone Dept Store — see "Poké
   Doll replaced with Shed Shell" below.)
-* **Protein, Iron, Calcium, Zinc, Carbos, and HP Up — 10 total, ever,** summed
-  across every shop that sells them (Veilstone Dept Store 2F and the Battle
-  Frontier's BP shop). The shop's quantity picker caps out at however many of
-  the 10 you have left, and once a type hits 10 it also shows "Sold out!".
-  (Vitamins found or won elsewhere, outside a shop purchase, aren't affected
-  by this cap — only shop purchases count against it.)
+* **Protein, Iron, Calcium, Zinc, Carbos, HP Up, and PP Up — 10 total, ever,**
+  summed across every shop that sells them (Veilstone Dept Store 2F and the
+  Battle Frontier's BP shop). The shop's quantity picker caps out at however
+  many of the 10 you have left, and once a type hits 10 it also shows "Sold
+  out!". (Vitamins/PP Up found or won elsewhere, outside a shop purchase,
+  aren't affected by this cap — only shop purchases count against it.) **Note:**
+  no shop in this romhack currently sells PP Up at all (it's still obtainable
+  as a fixed hidden-item pickup in several locations) — the cap is wired up and
+  ready, but has nothing to enforce against until/unless PP Up is added to a
+  shop's stock.
 * `src/overlay007/shop_menu.c` — a new `sShopPurchaseLimits[]` table maps each
   limited item ID to its cap (1 or 10) and to the save flag/var backing its
   purchase count; `Shop_GetRemainingPurchaseAllowance`, `Shop_IsItemSoldOut`,
@@ -1360,9 +1387,10 @@ everywhere else that sells it too):
 * Save data: TMs/lenses/Metronome/Shed Shell are tracked with one save flag
   apiece (47 total — `FLAG_BOUGHT_TM04` .. `FLAG_BOUGHT_TM90`,
   `FLAG_BOUGHT_WIDE_LENS`, `FLAG_BOUGHT_ZOOM_LENS`, `FLAG_BOUGHT_METRONOME`,
-  `FLAG_BOUGHT_SHED_SHELL`); the 6 vitamins are tracked with one save var
-  apiece holding a running count 0–10 (`VAR_PROTEIN_BOUGHT_COUNT`, etc.). All
-  53 were carved out of `generated/vars_flags.txt`'s already-existing-but-genuinely-unused
+  `FLAG_BOUGHT_SHED_SHELL`); the 6 vitamins plus PP Up are tracked with one
+  save var apiece holding a running count 0–10 (`VAR_PROTEIN_BOUGHT_COUNT`,
+  ..., `VAR_PP_UP_BOUGHT_COUNT`). All 54 were carved out of
+  `generated/vars_flags.txt`'s already-existing-but-genuinely-unused
   `FLAG_UNUSED_0x*`/`VAR_UNUSED_0x*` slots (renamed in place, same numeric
   ID) rather than appended as new entries, so no existing flag/var shifts and
   no save compatibility is at risk.
@@ -1797,6 +1825,37 @@ free slot.
 ---
 
 ## Map data
+
+### Route 221 House — "Expert M" gives all 3 items at once, one time only
+This NPC used to run a daily random-level guessing minigame (`GetDailyRandomLevel`
+— show me a party Pokémon at today's number and I'll reward you), cycling
+through Black Belt → Expert Belt → Focus Sash → repeat, once per day forever
+(`FLAG_DAILY_RECEIVED_ROUTE_221_HOUSE_REWARD`). That whole daily/guessing
+mechanic is removed: talking to him now immediately gives all 3 items in one
+visit, regardless of the day, and never again after that.
+
+* `res/field/scripts/scripts_route_221_house.s` — `Route221House_ExpertM` no
+  longer calls `GetDailyRandomLevel`/checks any party Pokémon's level; it
+  loops giving Black Belt, Expert Belt, then Focus Sash via
+  `Route221House_GiveNextReward`. The existing `VAR_ROUTE_221_HOUSE_REWARD_INDEX`
+  (previously "which of the 3 is due next in the endless rotation") is reused
+  as-is for its natural new meaning — "how many of the 3 have been received
+  so far" — stopping at 3 instead of wrapping back to 0, so no new var was
+  needed. If the bag fills up partway through, progress is preserved and the
+  next visit resumes with the remaining item(s) rather than re-giving ones
+  already received. `FLAG_DAILY_RECEIVED_ROUTE_221_HOUSE_REWARD` and
+  `FLAG_COULD_NOT_RECEIVE_ROUTE_221_HOUSE_REWARD` are no longer referenced
+  anywhere and left inert.
+* `res/text/route_221_house.json` — `Route221House_Text_ShowThisLevelPokemon`
+  is repurposed in place as `Route221House_Text_HereAreAllThree` (the new
+  one-time greeting), and `Route221House_Text_ComeAgainTomorrow` as
+  `Route221House_Text_AlreadyGaveReward` (shown on any later visit).
+  `Route221House_Text_ThankWithItem` is reworded from a per-item thank-you
+  into the generic "let me give you the rest of what I owe you" line shown
+  only when resuming after a bag-full interruption.
+  `Route221House_Text_PokemonIsCorrectLevel` is now unused and left as dead
+  data. The wall sign (`Route221House_Text_WinItemsFromMe`, listing all 3
+  items) already matched the new behavior and didn't need changing.
 
 ### Oreburgh Gym — quiz-rock puzzle blocking the trainer-free path
 Two new rock objects (`LOCALID_PUZZLE_ROCK_1`/`_2`, `res/field/events/events_oreburgh_city_gym.json`,

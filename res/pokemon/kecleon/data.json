@@ -34,7 +34,7 @@
     "icon_palette": 1,
     "learnset": {
         "by_level": [
-            [ 1, "MOVE_THIEF" ],
+            [ 1, "MOVE_KNOCK_OFF" ],
             [ 1, "MOVE_TAIL_WHIP" ],
             [ 1, "MOVE_ASTONISH" ],
             [ 1, "MOVE_LICK" ],
