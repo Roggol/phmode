@@ -235,6 +235,7 @@ typedef struct PartyMenu {
     u8 minSelectionSlots : 4;
     u8 maxSelectionSlots : 4;
     u8 reqLevel;
+    u8 oldLevel; // level before a Rare Candy multi-level jump; see Pokemon_LevelUpMoveUpTo
     int levelUpMoveIndex;
     u16 evoTargetSpecies;
     u8 padding_3A[2];

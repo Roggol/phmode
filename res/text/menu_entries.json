@@ -1180,6 +1180,34 @@
     {
       "id": "MenuEntries_Text_PrizeExchange_PrizeSoldOut",
       "en_US": "{STRVAR_1 8, 0, 0}{CURSOR_X 96}Sold out!"
+    },
+    {
+      "id": "MenuEntries_Text_HardStone",
+      "en_US": "Hard Stone"
+    },
+    {
+      "id": "MenuEntries_Text_DuskBalls",
+      "en_US": "Dusk Balls"
+    },
+    {
+      "id": "MenuEntries_Text_RareCandies",
+      "en_US": "Rare Candies"
+    },
+    {
+      "id": "MenuEntries_Text_SilkScarf",
+      "en_US": "Silk Scarf"
+    },
+    {
+      "id": "MenuEntries_Text_TM27",
+      "en_US": "TM27"
+    },
+    {
+      "id": "MenuEntries_Text_GreatBalls",
+      "en_US": "Great Balls"
+    },
+    {
+      "id": "MenuEntries_Text_RepelToggle",
+      "en_US": "Repel Toggle"
     }
   ]
 }

@@ -1282,6 +1282,19 @@ A hard cap on Pokémon level, stored in `VAR_HARD_LEVEL_CAP`.
 * `src/applications/party_menu/callbacks.c` + `Pokemon_LevelUpMoveUpTo` in
   `src/pokemon.c` — after the multi-level Rare Candy jump, the party menu offers
   every level-up move that was skipped across all the gained levels.
+  **Bug fix**: `Pokemon_LevelUpMoveUpTo` originally had no lower bound at all —
+  it scanned the *entire* learnset from level 1 and used "is this move
+  currently sitting in one of the Pokémon's 4 move slots" as a stand-in for
+  "already handled." That's a false proxy for anything above roughly level
+  20-30, since normal leveling naturally forgets/overwrites most early
+  level-up moves long before reaching a higher level — so jumping a level 50
+  Pokémon to 60 with one Rare Candy re-offered its *entire* learnset back to
+  level 1, not just levels 51-60. Fixed by capturing the pre-jump level in
+  `PartyMenuCB_UseItem_RareCandy` (a new `oldLevel` field on `PartyMenu`,
+  `include/applications/party_menu/defs.h`) and threading it into
+  `Pokemon_LevelUpMoveUpTo` as an actual lower bound (`include/pokemon.h`)
+  — the move-slot check remains as a secondary guard, but no longer does the
+  range-bounding on its own.
 * Twinleaf Town guitarist (`scripts_twinleaf_town.s`,
   `res/text/twinleaf_town.json`) now gives a one-time Rare Candy.
 
@@ -1784,6 +1797,63 @@ free slot.
 ---
 
 ## Map data
+
+### Oreburgh Gym — quiz-rock puzzle blocking the trainer-free path
+Two new rock objects (`LOCALID_PUZZLE_ROCK_1`/`_2`, `res/field/events/events_oreburgh_city_gym.json`,
+using the `OBJ_EVENT_GFX_ROCK_SMASH` graphic so they look like ordinary
+smashable rocks), positioned from reference screenshots of the gym's actual
+layout: Rock 1 at (2, 21), the bottom of the staircase in the lower-left
+(near the wooden-bridge crossing); Rock 2 at (9, 12), just below the
+staircase on the middle-right (near Darius). Went through two rounds of
+in-game-screenshot corrections to get here (both were one tile too far left
+at first — Rock 1 hadn't even rendered, since it was inside the wall — then
+Rock 1 needed 2 more left and 1 down, and Rock 2 needed 2 more down).
+**Placement note:** this repo doesn't decompile compiled map tile/collision
+data to text, so these coordinates are read off reference images rather than
+the map's own data.
+
+* Pressing A on either rock does **not** trigger the normal Rock Smash flow —
+  each has its own script (`res/field/scripts/scripts_oreburgh_city_gym.s`,
+  `OreburghGym_PuzzleRock1`/`_2`, added as script indices 4/5 in the map's
+  `ScriptEntry` table) that asks a multiple-choice question instead
+  (`InitGlobalTextMenu ..., FALSE` — the `FALSE` disables canceling out with
+  B, so the question must be answered):
+  * Rock 1: *"What item did your rival give you on Route 207?"* — Hard Stone
+    / Dusk Balls / Rare Candies / **Silk Scarf** (correct — matches the Route
+    207 rival-gift change earlier in this document).
+  * Rock 2: *"What item did your rival give you on Route 202?"* — Rare
+    Candies / TM27 / Great Balls / **Repel Toggle** (correct — matches the
+    existing Repel Toggle gift on Route 202).
+* **Correct answer**: the message "Correct! The rock crumbles away." plays and
+  `RemoveObject VAR_LAST_TALKED` permanently removes that rock (same
+  mechanism ordinary Rock Smash rocks use to stay gone), opening the path.
+* **Wrong answer**: "Wrong! The rock shakes, and a wild GRAVELER bursts out to
+  attack you!" plays, then a Level 25 Graveler with **exactly** Magnitude and
+  Rock Tomb attacks — no other moves. The rock is *not* removed, so a wrong
+  answer can be retried. Losing blacks out like any other battle.
+  * Platinum's wild-encounter engine has no way to force an exact moveset on
+    a genuinely wild-spawned Pokémon (`StartWildBattle`/`StartLegendaryBattle`
+    always derive moves from the natural level-up learnset) — the only way to
+    guarantee moves is a trainer-battle-shaped encounter with an explicit
+    `moves` array. This Graveler is implemented as `StartTrainerBattle
+    TRAINER_GRAVELER_GYM_PUZZLE` (`res/trainers/data/graveler_gym_puzzle.json`,
+    `TRAINER_CLASS_HIKER`, no items, no dialogue) rather than a true wild
+    encounter. **Caveat**: I couldn't confirm from source whether the battle
+    transition/intro looks any different from a wild encounter (a "Trainer
+    wants to fight" framing vs. a wild cut-in) — worth a quick in-game check.
+  * This repurposes the previously-unused `TRAINER_DUMMY_005` roster slot
+    (confirmed zero references anywhere in the game before this change)
+    rather than appending a new trainer: `generated/trainers.txt` is capped at
+    exactly one save flag per trainer with **zero spare capacity** (929
+    trainers defined vs. 928 available trainer-defeated flags fails the
+    build outright), so growing the roster would have meant expanding that
+    flag range — a save-data change — for one puzzle encounter. Renaming an
+    already-dead slot in place avoids that entirely.
+* The gym's front-desk guide (`OreburghGym_GymGuide`,
+  `res/text/oreburgh_city_gym.json`) now warns before the fight: *"Roark uses
+  a lot of speed-lowering moves and likes to set up Stealth Rock, too. The
+  rocks in this gym will ask you questions. Pay attention when you interact
+  with them!"* — added to his existing pre-badge advice, same message slot.
 
 ### Verity Lakefront — tall-grass patch
 

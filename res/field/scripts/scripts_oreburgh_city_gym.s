@@ -1,10 +1,13 @@
 #include "macros/scrcmd.inc"
+#include "res/text/bank/menu_entries.h"
 #include "res/text/bank/oreburgh_city_gym.h"
 
 
     ScriptEntry OreburghGym_Roark
     ScriptEntry OreburghGym_GymGuide
     ScriptEntry OreburghGym_GymStatue
+    ScriptEntry OreburghGym_PuzzleRock1
+    ScriptEntry OreburghGym_PuzzleRock2
     ScriptEntryEnd
 
 OreburghGym_Roark:
@@ -114,6 +117,59 @@ OreburghGym_GymStatueAfterBadge:
     Message OreburghGym_Text_GymStatueAfterBadge
     WaitButton
     CloseMessage
+    ReleaseAll
+    End
+
+OreburghGym_PuzzleRock1:
+    PlaySE SE_CONFIRM_sseq_3
+    LockAll
+    FacePlayer
+    Message OreburghGym_Text_PuzzleQuestion1
+    InitGlobalTextMenu 20, 8, 0, VAR_RESULT, FALSE
+    AddMenuEntry MenuEntries_Text_HardStone, 0
+    AddMenuEntry MenuEntries_Text_DuskBalls, 1
+    AddMenuEntry MenuEntries_Text_RareCandies, 2
+    AddMenuEntry MenuEntries_Text_SilkScarf, 3
+    ShowMenu
+    GoToIfEq VAR_RESULT, 3, OreburghGym_PuzzleCorrect
+    GoTo OreburghGym_PuzzleWrong
+    End
+
+OreburghGym_PuzzleRock2:
+    PlaySE SE_CONFIRM_sseq_3
+    LockAll
+    FacePlayer
+    Message OreburghGym_Text_PuzzleQuestion2
+    InitGlobalTextMenu 20, 8, 0, VAR_RESULT, FALSE
+    AddMenuEntry MenuEntries_Text_RareCandies, 0
+    AddMenuEntry MenuEntries_Text_TM27, 1
+    AddMenuEntry MenuEntries_Text_GreatBalls, 2
+    AddMenuEntry MenuEntries_Text_RepelToggle, 3
+    ShowMenu
+    GoToIfEq VAR_RESULT, 3, OreburghGym_PuzzleCorrect
+    GoTo OreburghGym_PuzzleWrong
+    End
+
+OreburghGym_PuzzleCorrect:
+    Message OreburghGym_Text_PuzzleCorrect
+    WaitButton
+    CloseMessage
+    RemoveObject VAR_LAST_TALKED
+    ReleaseAll
+    End
+
+OreburghGym_PuzzleWrong:
+    Message OreburghGym_Text_PuzzleWrong
+    WaitButton
+    CloseMessage
+    StartTrainerBattle TRAINER_GRAVELER_GYM_PUZZLE
+    CheckWonBattle VAR_RESULT
+    GoToIfEq VAR_RESULT, FALSE, OreburghGym_PuzzleLostBattle
+    ReleaseAll
+    End
+
+OreburghGym_PuzzleLostBattle:
+    BlackOutFromBattle
     ReleaseAll
     End
 

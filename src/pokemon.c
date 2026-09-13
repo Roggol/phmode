@@ -4005,7 +4005,7 @@ u16 Pokemon_LevelUpMove(Pokemon *mon, int *index, u16 *moveID)
     return result;
 }
 
-u16 Pokemon_LevelUpMoveUpTo(Pokemon *mon, int *index, u16 *moveID)
+u16 Pokemon_LevelUpMoveUpTo(Pokemon *mon, u8 oldLevel, int *index, u16 *moveID)
 {
     int i;
     u16 result = MOVE_NONE;
@@ -4021,13 +4021,15 @@ u16 Pokemon_LevelUpMoveUpTo(Pokemon *mon, int *index, u16 *moveID)
 
     Pokemon_LoadLevelUpMovesOf(monSpecies, monForm, monLevelUpMoves);
 
-    // Scan forward from *index for the next level-up move the Pokemon can learn by
-    // its current level but does not already know. One call resolves one move; the
+    // Scan forward from *index for the next level-up move learned strictly after
+    // oldLevel and by monLevel at the latest. One call resolves one move; the
     // caller loops until this returns MOVE_NONE. Used by the Rare Candy multi-level
     // jump so the player is offered every move across all the skipped levels at
-    // once. Like the Move Reminder, this scans the whole learnset (never breaks
-    // early) so out-of-order learnset entries are still handled, and it works off
-    // the Pokemon's known moves rather than a remembered "from" level.
+    // once, without also re-offering moves from levels at or below oldLevel that
+    // the Pokemon may have long since forgotten (it only has LEARNED_MOVES_MAX
+    // slots, so "not currently known" is not a safe proxy for "not yet handled").
+    // The known-moves check remains as a secondary guard against re-offering a
+    // move already sitting in a slot (e.g. taught early via TM/Move Relearner).
     while (monLevelUpMoves[*index] != LEARNSET_SENTINEL_ENTRY) {
         u16 entry = monLevelUpMoves[*index];
         u8 entryLevel = (entry & 0xFE00) >> 9;
@@ -4036,7 +4038,7 @@ u16 Pokemon_LevelUpMoveUpTo(Pokemon *mon, int *index, u16 *moveID)
 
         (*index)++;
 
-        if (entryLevel > monLevel) {
+        if (entryLevel <= oldLevel || entryLevel > monLevel) {
             continue;
         }
 
