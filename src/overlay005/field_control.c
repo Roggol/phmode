@@ -21,7 +21,6 @@
 #include "overlay005/ov5_021EA714.h"
 #include "overlay005/ov5_021EF4BC.h"
 #include "overlay005/villa_furniture.h"
-#include "overlay005/vs_seeker.h"
 #include "overlay006/repel_step_update.h"
 #include "overlay006/wild_encounters.h"
 #include "overlay008/gym_features.h"
@@ -79,7 +78,6 @@ static BOOL Field_CheckTransition(FieldSystem *fieldSystem, const int playerX, c
 static BOOL Field_UpdateDaycare(FieldSystem *fieldSystem);
 static BOOL Field_UpdatePoison(FieldSystem *fieldSystem);
 static BOOL Field_UpdateSafari(FieldSystem *fieldSystem);
-static BOOL Field_UpdateVsSeeker(FieldSystem *fieldSystem);
 static BOOL Field_UpdatePokeRadar(FieldSystem *fieldSystem);
 static BOOL Field_CheckSign(FieldSystem *fieldSystem);
 static BOOL Field_UpdateRepel(FieldSystem *fieldSystem);
@@ -753,10 +751,6 @@ static BOOL Field_ProcessStep(FieldSystem *fieldSystem)
         return TRUE;
     }
 
-    if (Field_UpdateVsSeeker(fieldSystem) == TRUE) {
-        return TRUE;
-    }
-
     if (Field_UpdatePokeRadar(fieldSystem) == TRUE) {
         return TRUE;
     }
@@ -847,12 +841,6 @@ static BOOL Field_UpdateDaycare(FieldSystem *fieldSystem)
         return TRUE;
     }
 
-    return FALSE;
-}
-
-static BOOL Field_UpdateVsSeeker(FieldSystem *fieldSystem)
-{
-    VsSeeker_UpdateStepCount(fieldSystem);
     return FALSE;
 }
 

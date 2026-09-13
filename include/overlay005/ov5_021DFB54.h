@@ -22,7 +22,5 @@ void ov5_021E0E94(PlayerAvatar *playerAvatar);
 void ov5_021E0EEC(PlayerAvatar *playerAvatar);
 SysTask *ov5_021E1000(FieldSystem *fieldSystem);
 void ov5_021E100C(SysTask *param0);
-SysTask *FieldSystem_StartVsSeekerTask(FieldSystem *fieldSystem);
-void FieldSystem_EndVsSeekerTask(SysTask *param0);
 
 #endif // POKEPLATINUM_OV5_021DFB54_H

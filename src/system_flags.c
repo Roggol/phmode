@@ -101,21 +101,6 @@ BOOL SystemFlag_CheckStep(VarsFlags *varsFlags)
     return CheckFlag(varsFlags, FLAG_STEP);
 }
 
-void SystemFlag_SetVsSeekerUsed(VarsFlags *varsFlags)
-{
-    SetFlag(varsFlags, FLAG_VS_SEEKER_USED);
-}
-
-void SystemFlag_ClearVsSeekerUsed(VarsFlags *varsFlags)
-{
-    ClearFlag(varsFlags, FLAG_VS_SEEKER_USED);
-}
-
-BOOL SystemFlag_CheckVsSeekerUsed(VarsFlags *varsFlags)
-{
-    return CheckFlag(varsFlags, FLAG_VS_SEEKER_USED);
-}
-
 void SystemFlag_SetEnteredUnderground(VarsFlags *varsFlags)
 {
     SetFlag(varsFlags, FLAG_ENTERED_UNDERGROUND);
@@ -193,35 +178,6 @@ BOOL SystemFlag_CheckContestMaster(VarsFlags *varsFlags, enum PokemonContestType
 
     case CONTEST_TYPE_TOUGH:
         result = CheckFlag(varsFlags, FLAG_CONTEST_MASTER_TOUGH);
-        break;
-    }
-
-    return result;
-}
-
-BOOL SystemFlag_CheckUnlockedVsSeekerLevel(VarsFlags *varsFlags, int level)
-{
-    BOOL result = FALSE;
-
-    switch (level) {
-    case 1:
-        result = CheckFlag(varsFlags, FLAG_UNLOCKED_VS_SEEKER_LVL_1);
-        break;
-
-    case 2:
-        result = CheckFlag(varsFlags, FLAG_UNLOCKED_VS_SEEKER_LVL_2);
-        break;
-
-    case 3:
-        result = CheckFlag(varsFlags, FLAG_UNLOCKED_VS_SEEKER_LVL_3);
-        break;
-
-    case 4:
-        result = CheckFlag(varsFlags, FLAG_UNLOCKED_VS_SEEKER_LVL_4);
-        break;
-
-    case 5:
-        result = CheckFlag(varsFlags, FLAG_UNLOCKED_VS_SEEKER_LVL_5);
         break;
     }
 

@@ -3,9 +3,8 @@
   "plural": "Vs. Seekers",
   "article": "a",
   "description": [
-    "A device that indicates Trainers who\n",
-    "want to battle. Its battery charges\n",
-    "while you walk."
+    "This old device no longer serves\n",
+    "any purpose."
   ],
   "icon": {
     "sprite": "vs_seeker_NCGR",
@@ -20,11 +19,11 @@
   "flingPower": 0,
   "naturalGiftPower": 0,
   "naturalGiftType": null,
-  "preventToss": true,
-  "canRegister": true,
+  "preventToss": false,
+  "canRegister": false,
   "fieldPocket": "POCKET_KEY_ITEMS",
   "battlePocket": "BATTLE_POCKET_MASK_NONE",
-  "fieldUseFunc": "ITEM_USE_FUNC_VS_SEEKER",
+  "fieldUseFunc": "ITEM_USE_FUNC_NONE",
   "battleUseFunc": 0,
   "itemUseParams": null
 }

@@ -475,7 +475,6 @@ Overlay overlay5
 	Object main.nef.p/src_overlay005_ov5_021D5BC0.c.o
 	Object main.nef.p/src_overlay005_texture_resource_manager.c.o
 	Object main.nef.p/src_overlay005_ov5_021D5EB8.c.o
-	Object main.nef.p/src_overlay005_vs_seeker.c.o
 	Object main.nef.p/src_overlay005_field_menu.c.o
 	Object main.nef.p/src_overlay005_script_message.c.o
 	Object main.nef.p/src_overlay005_map_name_popup.c.o

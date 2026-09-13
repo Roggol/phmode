@@ -190,7 +190,7 @@ static int SubTask_Waterfall_InitDescent(WaterfallTaskEnv *taskEnv);
 static int SubTask_Waterfall_Descend(WaterfallTaskEnv *taskEnv);
 static int SubTask_Waterfall_FinishDescent(WaterfallTaskEnv *taskEnv);
 
-static void (*const sPlayerAvatarRequestStateTbl[10])(PlayerAvatar *);
+static void (*const sPlayerAvatarRequestStateTbl[9])(PlayerAvatar *);
 
 typedef int (*RockClimbTaskFunc)(RockClimbTaskEnv *);
 typedef int (*WaterfallTaskFunc)(WaterfallTaskEnv *);
@@ -238,7 +238,7 @@ void PlayerAvatar_RequestChangeState(PlayerAvatar *playerAvatar)
         }
 
         flag >>= 1;
-    } while (++state < 10);
+    } while (++state < 9);
 
     PlayerAvatar_SetRequestStateFlag(playerAvatar, 0);
 }
@@ -397,13 +397,7 @@ static void PlayerAvatar_RequestStateHeal(PlayerAvatar *playerAvatar)
     PlayerAvatar_Redraw(playerAvatar, v0);
 }
 
-static void ov5_021DFDC4(PlayerAvatar *playerAvatar)
-{
-    int v0 = Player_GetSpriteFromStateAndGender(PLAYER_AVATAR_VS_SEEKER, PlayerAvatar_GetGender(playerAvatar));
-    PlayerAvatar_Redraw(playerAvatar, v0);
-}
-
-static void (*const sPlayerAvatarRequestStateTbl[10])(PlayerAvatar *) = {
+static void (*const sPlayerAvatarRequestStateTbl[9])(PlayerAvatar *) = {
     PlayerAvatar_RequestStateWalking,
     PlayerAvatar_RequestStateCycle,
     PlayerAvatar_RequestStateSurf,
@@ -412,8 +406,7 @@ static void (*const sPlayerAvatarRequestStateTbl[10])(PlayerAvatar *) = {
     ov5_021DFD0C,
     PlayerAvatar_RequestStatePoketch,
     PlayerAvatar_RequestStateSave,
-    PlayerAvatar_RequestStateHeal,
-    ov5_021DFDC4
+    PlayerAvatar_RequestStateHeal
 };
 
 int ov5_021DFDE0(FieldSystem *fieldSystem, PlayerAvatar *playerAvatar, enum FaceDirection dir, int param3)
@@ -1692,16 +1685,6 @@ SysTask *ov5_021E1000(FieldSystem *fieldSystem)
 }
 
 void ov5_021E100C(SysTask *param0)
-{
-    ov5_021E0FC0(param0);
-}
-
-SysTask *FieldSystem_StartVsSeekerTask(FieldSystem *fieldSystem)
-{
-    return ov5_021E0F54(fieldSystem, PLAYER_TRANSITION_x0200);
-}
-
-void FieldSystem_EndVsSeekerTask(SysTask *param0)
 {
     ov5_021E0FC0(param0);
 }

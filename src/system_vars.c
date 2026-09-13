@@ -114,32 +114,6 @@ BOOL SystemVars_SetSizeContestRecord(VarsFlags *varsFlags, u16 value)
     return TrySetVarToValue(varsFlags, VAR_SIZE_CONTEST_RECORD, value);
 }
 
-void SystemVars_ResetVsSeeker(VarsFlags *varsFlags)
-{
-    SystemFlag_ClearVsSeekerUsed(varsFlags);
-    SystemVars_SetVsSeekerStepCount(varsFlags, 0);
-}
-
-u16 SystemVars_GetVsSeekerBattery(VarsFlags *varsFlags)
-{
-    return TryGetVarValue(varsFlags, VAR_VS_SEEKER_BATTERY_LEVEL);
-}
-
-BOOL SystemVars_SetVsSeekerBattery(VarsFlags *varsFlags, u16 battery)
-{
-    return TrySetVarToValue(varsFlags, VAR_VS_SEEKER_BATTERY_LEVEL, battery);
-}
-
-u16 SystemVars_GetVsSeekerStepCount(VarsFlags *varsFlags)
-{
-    return TryGetVarValue(varsFlags, VAR_VS_SEEKER_STEP_COUNT);
-}
-
-BOOL SystemVars_SetVsSeekerStepCount(VarsFlags *varsFlags, u16 stepCount)
-{
-    return TrySetVarToValue(varsFlags, VAR_VS_SEEKER_STEP_COUNT, stepCount);
-}
-
 static const u16 sDistributionEventMagicNumbers[] = {
     [DISTRIBUTION_EVENT_DARKRAI] = 0x1209,
     [DISTRIBUTION_EVENT_SHAYMIN] = 0x1112,

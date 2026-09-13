@@ -85,7 +85,6 @@ StarkMountainRoom3_Heatran:
     CheckWonBattle VAR_RESULT
     GoToIfEq VAR_RESULT, FALSE, StarkMountainRoom3_LostBattle
     CheckLostBattle VAR_RESULT
-    CallIfEq VAR_RESULT, FALSE, StarkMountainRoom3_UnlockVSSeekerLvl5
     CheckDidNotCapture VAR_RESULT
     GoToIfEq VAR_RESULT, TRUE, StarkMountainRoom3_HeatranDisappeared
     GoTo StarkMountainRoom3_CaughtHeatran
@@ -111,10 +110,6 @@ StarkMountainRoom3_LostBattle:
 
 StarkMountainRoom3_SetFlagBattledHeatran:
     SetFlag FLAG_BATTLED_STARK_MOUNTAIN_ROOM_3_HEATRAN
-    Return
-
-StarkMountainRoom3_UnlockVSSeekerLvl5:
-    SetFlag FLAG_UNLOCKED_VS_SEEKER_LVL_5
     Return
 
 StarkMountainRoom3_Movement_Unused4:
