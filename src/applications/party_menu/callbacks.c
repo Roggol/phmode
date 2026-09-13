@@ -682,6 +682,8 @@ static enum PartyMenuState PartyMenuCB_UseItem_RareCandy(PartyMenuApplication *a
     application->monStats[STAT_SPECIAL_ATTACK] = (u16)Pokemon_GetValue(mon, MON_DATA_SP_DEF, NULL);
     application->monStats[STAT_SPECIAL_DEFENSE] = (u16)Pokemon_GetValue(mon, MON_DATA_SPEED, NULL);
 
+    application->partyMenu->oldLevel = (u8)Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
+
     Party_ApplyItemEffectsToMember(application->partyMenu->party, application->partyMenu->usedItemID, application->currPartySlot, 0, GetCurrentMapLabel(application), HEAP_ID_PARTY_MENU);
 
     application->partyMembers[application->currPartySlot].level = Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
@@ -752,7 +754,7 @@ static enum PartyMenuState PartyMenuCB_LevelUp(PartyMenuApplication *application
     case LEVELUP_STATE_CHECK_LEARNSET:
         mon = Party_GetPokemonBySlotIndex(application->partyMenu->party, application->currPartySlot);
 
-        switch (Pokemon_LevelUpMoveUpTo(mon, &application->partyMenu->levelUpMoveIndex, &application->partyMenu->learnedMove)) {
+        switch (Pokemon_LevelUpMoveUpTo(mon, application->partyMenu->oldLevel, &application->partyMenu->levelUpMoveIndex, &application->partyMenu->learnedMove)) {
         case MOVE_NONE:
             application->callbackState = LEVELUP_STATE_CHECK_EVOLUTION;
             break;

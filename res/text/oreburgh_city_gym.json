@@ -89,6 +89,12 @@
         "Going after a Rock-type Pokémon\n",
         "with a Fire-type Pokémon won’t be\f",
         "easy, either.\r",
+        "Roark uses a lot of speed-lowering\n",
+        "moves and likes to set up Stealth\f",
+        "Rock, too.\r",
+        "The rocks in this gym will ask you\n",
+        "questions. Pay attention when you\f",
+        "interact with them!\r",
         "That’s all the advice I can give.\n",
         "Thanks for listening!"
       ]
@@ -121,6 +127,37 @@
         "Certified Trainers:\n",
         "{STRVAR_1 3, 0, 0}\f",
         "{STRVAR_1 3, 1, 0}"
+      ]
+    },
+    {
+      "id": "OreburghGym_Text_PuzzleQuestion1",
+      "en_US": [
+        "The rock seems to be testing you...\r",
+        "What item did your rival give you\n",
+        "on Route 207?"
+      ]
+    },
+    {
+      "id": "OreburghGym_Text_PuzzleQuestion2",
+      "en_US": [
+        "The rock seems to be testing you...\r",
+        "What item did your rival give you\n",
+        "on Route 202?"
+      ]
+    },
+    {
+      "id": "OreburghGym_Text_PuzzleCorrect",
+      "en_US": [
+        "Correct!\n",
+        "The rock crumbles away."
+      ]
+    },
+    {
+      "id": "OreburghGym_Text_PuzzleWrong",
+      "en_US": [
+        "Wrong!\n",
+        "The rock shakes, and a wild GRAVELER\f",
+        "bursts out to attack you!"
       ]
     }
   ]

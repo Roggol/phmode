@@ -1,0 +1,19 @@
+{
+    "name": "Graveler",
+    "class": "TRAINER_CLASS_HIKER",
+    "items": [],
+    "ai_flags": ["AI_FLAG_BASIC", "AI_FLAG_EVAL_ATTACK"],
+    "double_battle": false,
+    "party": [
+        {
+            "species": "SPECIES_GRAVELER",
+            "form": 0,
+            "level": 25,
+            "item": null,
+            "moves": ["MOVE_MAGNITUDE", "MOVE_ROCK_TOMB"],
+            "iv_scale": 0,
+            "ball_seal": 0
+        }
+    ],
+    "messages": []
+}

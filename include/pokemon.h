@@ -624,22 +624,26 @@ void Pokemon_SetMoveSlot(Pokemon *mon, u16 moveID, u8 moveSlot);
 u16 Pokemon_LevelUpMove(Pokemon *mon, int *index, u16 *moveID);
 
 /**
- * @brief Like Pokemon_LevelUpMove, but resolves the next level-up move the
- * Pokemon can learn by its current level and does not already know, rather than
- * only moves learned at its exact current level.
+ * @brief Like Pokemon_LevelUpMove, but resolves every level-up move learned in
+ * the range (oldLevel, current level], rather than only moves learned at its
+ * exact current level.
  *
  * Call repeatedly with the same monotonically-advancing @p index until it
  * returns MOVE_NONE. Intended for the Rare Candy multi-level jump, where several
  * levels are gained at once and the player should be offered every move that was
- * skipped. It reads the Pokemon's known moves, so it needs no "from" level.
+ * skipped, without re-offering moves from at or below oldLevel — the Pokemon's
+ * currently known moves are not a safe proxy for that, since it only has
+ * LEARNED_MOVES_MAX slots and may have long since forgotten an earlier move.
  *
  * @param mon
+ * @param oldLevel The Pokemon's level before the jump; moves learned at or
+ * below this level are not offered.
  * @param index   Learnset cursor; initialise to 0 and reuse across calls.
  * @param moveID  Out param: the move that was offered/learned.
  * @return MOVE_NONE, LEARNSET_ALL_SLOTS_FILLED, or the learned move ID — same
  * contract as Pokemon_LevelUpMove (a move already known is skipped internally).
  */
-u16 Pokemon_LevelUpMoveUpTo(Pokemon *mon, int *index, u16 *moveID);
+u16 Pokemon_LevelUpMoveUpTo(Pokemon *mon, u8 oldLevel, int *index, u16 *moveID);
 
 /**
  * @brief Swaps the places of two moves on a Pokemon
