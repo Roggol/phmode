@@ -75,10 +75,7 @@ FuegoIronworksBuilding_TryTrade:
 FuegoIronworksBuilding_Trade1StarPiece:
     IncrementGameRecord RECORD_STAR_PIECES_TRADED
     RemoveItem ITEM_STAR_PIECE, 1, VAR_RESULT
-    AddItem ITEM_RED_SHARD, 1, VAR_RESULT
-    AddItem ITEM_BLUE_SHARD, 1, VAR_RESULT
-    AddItem ITEM_YELLOW_SHARD, 1, VAR_RESULT
-    AddItem ITEM_GREEN_SHARD, 1, VAR_RESULT
+    AddItem ITEM_HEART_SCALE, 1, VAR_RESULT
     GoTo FuegoIronworksBuilding_ThereYouAre
     End
 
@@ -100,10 +97,7 @@ FuegoIronworksBuilding_AskTrade10StarPieces:
 FuegoIronworksBuilding_Trade10StarPieces:
     SubVar VAR_0x8007, 1
     IncrementGameRecord RECORD_STAR_PIECES_TRADED
-    AddItem ITEM_RED_SHARD, 1, VAR_RESULT
-    AddItem ITEM_BLUE_SHARD, 1, VAR_RESULT
-    AddItem ITEM_YELLOW_SHARD, 1, VAR_RESULT
-    AddItem ITEM_GREEN_SHARD, 1, VAR_RESULT
+    AddItem ITEM_HEART_SCALE, 1, VAR_RESULT
     RemoveItem ITEM_STAR_PIECE, 1, VAR_RESULT
     GoToIfEq VAR_0x8007, 0, FuegoIronworksBuilding_ThereYouAre
     GoTo FuegoIronworksBuilding_Trade10StarPieces

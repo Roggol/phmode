@@ -12,7 +12,7 @@
     "palette": "heart_scale_NCLR"
   },
   "gbaID": "GBA_ITEM_HEART_SCALE",
-  "price": 100,
+  "price": 10000,
   "effectParam": 0,
   "holdEffect": "HOLD_EFFECT_NONE",
   "pluckEffect": "PLUCK_EFFECT_NONE",

@@ -620,6 +620,130 @@ static const ListMenuTemplate sShop_ItemListMenuTemplate = {
     .parent = NULL,
 };
 
+// Tracks lifetime shop-purchase limits: TMs, Wide Lens, Zoom Lens, and Metronome may only ever
+// be bought once (limit 1, backed by a save flag); the EV vitamins may only ever be bought 10
+// times total, combined across every shop that sells them (limit 10, backed by a save var).
+typedef struct ShopPurchaseLimit {
+    u16 itemId;
+    u8 limit;
+    u16 flagOrVarId;
+} ShopPurchaseLimit;
+
+static const ShopPurchaseLimit sShopPurchaseLimits[] = {
+    { ITEM_WIDE_LENS, 1, FLAG_BOUGHT_WIDE_LENS },
+    { ITEM_ZOOM_LENS, 1, FLAG_BOUGHT_ZOOM_LENS },
+    { ITEM_METRONOME, 1, FLAG_BOUGHT_METRONOME },
+    { ITEM_SHED_SHELL, 1, FLAG_BOUGHT_SHED_SHELL },
+    { ITEM_TM90, 1, FLAG_BOUGHT_TM90 },
+    { ITEM_TM58, 1, FLAG_BOUGHT_TM58 },
+    { ITEM_TM75, 1, FLAG_BOUGHT_TM75 },
+    { ITEM_TM32, 1, FLAG_BOUGHT_TM32 },
+    { ITEM_TM44, 1, FLAG_BOUGHT_TM44 },
+    { ITEM_TM89, 1, FLAG_BOUGHT_TM89 },
+    { ITEM_TM10, 1, FLAG_BOUGHT_TM10 },
+    { ITEM_TM27, 1, FLAG_BOUGHT_TM27 },
+    { ITEM_TM21, 1, FLAG_BOUGHT_TM21 },
+    { ITEM_TM35, 1, FLAG_BOUGHT_TM35 },
+    { ITEM_TM24, 1, FLAG_BOUGHT_TM24 },
+    { ITEM_TM13, 1, FLAG_BOUGHT_TM13 },
+    { ITEM_TM29, 1, FLAG_BOUGHT_TM29 },
+    { ITEM_TM74, 1, FLAG_BOUGHT_TM74 },
+    { ITEM_TM68, 1, FLAG_BOUGHT_TM68 },
+    { ITEM_TM83, 1, FLAG_BOUGHT_TM83 },
+    { ITEM_TM17, 1, FLAG_BOUGHT_TM17 },
+    { ITEM_TM54, 1, FLAG_BOUGHT_TM54 },
+    { ITEM_TM20, 1, FLAG_BOUGHT_TM20 },
+    { ITEM_TM33, 1, FLAG_BOUGHT_TM33 },
+    { ITEM_TM16, 1, FLAG_BOUGHT_TM16 },
+    { ITEM_TM70, 1, FLAG_BOUGHT_TM70 },
+    { ITEM_TM38, 1, FLAG_BOUGHT_TM38 },
+    { ITEM_TM25, 1, FLAG_BOUGHT_TM25 },
+    { ITEM_TM14, 1, FLAG_BOUGHT_TM14 },
+    { ITEM_TM22, 1, FLAG_BOUGHT_TM22 },
+    { ITEM_TM52, 1, FLAG_BOUGHT_TM52 },
+    { ITEM_TM15, 1, FLAG_BOUGHT_TM15 },
+    { ITEM_TM06, 1, FLAG_BOUGHT_TM06 },
+    { ITEM_TM73, 1, FLAG_BOUGHT_TM73 },
+    { ITEM_TM61, 1, FLAG_BOUGHT_TM61 },
+    { ITEM_TM45, 1, FLAG_BOUGHT_TM45 },
+    { ITEM_TM40, 1, FLAG_BOUGHT_TM40 },
+    { ITEM_TM31, 1, FLAG_BOUGHT_TM31 },
+    { ITEM_TM08, 1, FLAG_BOUGHT_TM08 },
+    { ITEM_TM04, 1, FLAG_BOUGHT_TM04 },
+    { ITEM_TM81, 1, FLAG_BOUGHT_TM81 },
+    { ITEM_TM30, 1, FLAG_BOUGHT_TM30 },
+    { ITEM_TM53, 1, FLAG_BOUGHT_TM53 },
+    { ITEM_TM36, 1, FLAG_BOUGHT_TM36 },
+    { ITEM_TM59, 1, FLAG_BOUGHT_TM59 },
+    { ITEM_TM71, 1, FLAG_BOUGHT_TM71 },
+    { ITEM_TM26, 1, FLAG_BOUGHT_TM26 },
+    { ITEM_PROTEIN, 10, VAR_PROTEIN_BOUGHT_COUNT },
+    { ITEM_IRON, 10, VAR_IRON_BOUGHT_COUNT },
+    { ITEM_CALCIUM, 10, VAR_CALCIUM_BOUGHT_COUNT },
+    { ITEM_ZINC, 10, VAR_ZINC_BOUGHT_COUNT },
+    { ITEM_CARBOS, 10, VAR_CARBOS_BOUGHT_COUNT },
+    { ITEM_HP_UP, 10, VAR_HP_UP_BOUGHT_COUNT },
+};
+
+static const ShopPurchaseLimit *Shop_FindPurchaseLimit(u16 itemId)
+{
+    for (int i = 0; i < NELEMS(sShopPurchaseLimits); i++) {
+        if (sShopPurchaseLimits[i].itemId == itemId) {
+            return &sShopPurchaseLimits[i];
+        }
+    }
+
+    return NULL;
+}
+
+// Returns the number of this item still purchasable this save, or 0xFFFF if it has no limit.
+u16 Shop_GetRemainingPurchaseAllowance(VarsFlags *varsFlags, u16 itemId)
+{
+    const ShopPurchaseLimit *limit = Shop_FindPurchaseLimit(itemId);
+
+    if (limit == NULL) {
+        return 0xFFFF;
+    }
+
+    u16 count;
+    if (limit->limit == 1) {
+        count = VarsFlags_CheckFlag(varsFlags, limit->flagOrVarId) ? 1 : 0;
+    } else {
+        count = *VarsFlags_GetVarAddress(varsFlags, limit->flagOrVarId);
+    }
+
+    if (count >= limit->limit) {
+        return 0;
+    }
+
+    return limit->limit - count;
+}
+
+BOOL Shop_IsItemSoldOut(VarsFlags *varsFlags, u16 itemId)
+{
+    return Shop_GetRemainingPurchaseAllowance(varsFlags, itemId) == 0;
+}
+
+void Shop_RecordItemPurchase(VarsFlags *varsFlags, u16 itemId, u16 quantity)
+{
+    const ShopPurchaseLimit *limit = Shop_FindPurchaseLimit(itemId);
+
+    if (limit == NULL) {
+        return;
+    }
+
+    if (limit->limit == 1) {
+        VarsFlags_SetFlag(varsFlags, limit->flagOrVarId);
+    } else {
+        u16 *count = VarsFlags_GetVarAddress(varsFlags, limit->flagOrVarId);
+        *count += quantity;
+
+        if (*count > limit->limit) {
+            *count = limit->limit;
+        }
+    }
+}
+
 static u32 Shop_GetItemId(ShopMenu *shopMenu, u16 itemId)
 {
     if (shopMenu->martType == MART_TYPE_DECOR) {
@@ -774,17 +898,23 @@ static void Shop_MenuPrintCallback(ListMenu *menu, u32 index, u8 yOffset)
             FontSpecialChars_DrawPartyScreenText(shopMenu->unk_2B4, 2, itemId, 2, 2, &shopMenu->windows[SHOP_WINDOW_ITEM_LIST], 0, yOffset + 4);
         }
 
-        price = Shop_GetItemPrice(shopMenu, index);
         string = String_Init(12, HEAP_ID_FIELD2);
 
-        if (shopMenu->martType == MART_TYPE_FRONTIER) {
-            fmtString = MessageLoader_GetNewString(shopMenu->msgLoader, pl_msg_00000543_00032);
+        if (Shop_IsItemSoldOut(shopMenu->varsFlags, index) == TRUE) {
+            fmtString = MessageLoader_GetNewString(shopMenu->msgLoader, pl_msg_00000543_00039);
+            StringTemplate_Format(shopMenu->strTemplate, string, fmtString);
         } else {
-            fmtString = MessageLoader_GetNewString(shopMenu->msgLoader, pl_msg_00000543_00009);
-        }
+            price = Shop_GetItemPrice(shopMenu, index);
 
-        StringTemplate_SetNumber(shopMenu->strTemplate, 0, price, 4, PADDING_MODE_SPACES, CHARSET_MODE_EN);
-        StringTemplate_Format(shopMenu->strTemplate, string, fmtString);
+            if (shopMenu->martType == MART_TYPE_FRONTIER) {
+                fmtString = MessageLoader_GetNewString(shopMenu->msgLoader, pl_msg_00000543_00032);
+            } else {
+                fmtString = MessageLoader_GetNewString(shopMenu->msgLoader, pl_msg_00000543_00009);
+            }
+
+            StringTemplate_SetNumber(shopMenu->strTemplate, 0, price, 4, PADDING_MODE_SPACES, CHARSET_MODE_EN);
+            StringTemplate_Format(shopMenu->strTemplate, string, fmtString);
+        }
 
         strWidth = Font_CalcStringWidth(FONT_SYSTEM, string, 0);
 
@@ -900,6 +1030,16 @@ static u8 Shop_SelectBuyMenu(ShopMenu *shopMenu)
         shopMenu->itemAmount = 1;
         shopMenu->itemPrice = Shop_GetItemPrice(shopMenu, shopMenu->itemId);
 
+        if (Shop_IsItemSoldOut(shopMenu->varsFlags, shopMenu->itemId) == TRUE) {
+            string = MessageLoader_GetNewString(shopMenu->msgLoader, pl_msg_00000543_00039);
+
+            StringTemplate_Format(shopMenu->strTemplate, shopMenu->string, string);
+            String_Free(string);
+
+            shopMenu->fieldMsgPrinterId = FieldMessage_Print(&shopMenu->windows[SHOP_WINDOW_MESSAGE], shopMenu->string, shopMenu->options, TRUE);
+            return SHOP_STATE_FINISH_PURCHASE;
+        }
+
         currMoney = Shop_GetCurrentMoney(shopMenu);
 
         if (currMoney < shopMenu->itemPrice) {
@@ -925,6 +1065,13 @@ static u8 Shop_SelectBuyMenu(ShopMenu *shopMenu)
 
         if (shopMenu->itemAmountMax > 99) {
             shopMenu->itemAmountMax = 99;
+        }
+
+        {
+            u16 remainingAllowance = Shop_GetRemainingPurchaseAllowance(shopMenu->varsFlags, shopMenu->itemId);
+            if (shopMenu->itemAmountMax > remainingAllowance) {
+                shopMenu->itemAmountMax = remainingAllowance;
+            }
         }
 
         Shop_SetItemNameToIndex(shopMenu, shopMenu->itemId, 0);
@@ -1227,6 +1374,10 @@ static u8 Shop_ConfirmItemPurchase(ShopMenu *shopMenu)
     }
 
     Shop_TakeMoney(shopMenu, shopMenu->itemPrice * shopMenu->itemAmount);
+
+    if ((shopMenu->martType == MART_TYPE_NORMAL) || (shopMenu->martType == MART_TYPE_FRONTIER)) {
+        Shop_RecordItemPurchase(shopMenu->varsFlags, shopMenu->itemId, shopMenu->itemAmount);
+    }
 
     if (shopMenu->martType == MART_TYPE_FRONTIER) {
         GameRecords_AddToRecordValue(shopMenu->records, RECORD_BATTLE_POINTS_SPENT, shopMenu->itemPrice * shopMenu->itemAmount);

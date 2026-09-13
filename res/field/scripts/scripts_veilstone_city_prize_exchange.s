@@ -12,7 +12,7 @@ VeilstoneCityPrizeExchange_Receptionist:
     PlaySE SE_CONFIRM_sseq_3
     LockAll
     FacePlayer
-    SetVar VAR_MAP_LOCAL_0x01, 19
+    SetVar VAR_MAP_LOCAL_0x01, 18
     Message VeilstoneCityPrizeExchange_Text_ExchangeCoinsForPrizes
     ShowCoins 21, 1
     SetVar VAR_0x8005, 0
@@ -26,6 +26,8 @@ VeilstoneCityPrizeExchange_TryBuyPrize:
     GoToIfEq VAR_RESULT, MENU_CANCEL, VeilstoneCityPrizeExchange_DontBuyAPrize
     GoToIfEq VAR_RESULT, VAR_MAP_LOCAL_0x01, VeilstoneCityPrizeExchange_DontBuyAPrize
     GetGameCornerPrizeData VAR_RESULT, VAR_0x8000, VAR_0x8001
+    CheckShopItemSoldOut VAR_0x8000, VAR_RESULT
+    GoToIfEq VAR_RESULT, TRUE, VeilstoneCityPrizeExchange_PrizeSoldOut
     CallIfLt VAR_0x8000, ITEM_TM01, VeilstoneCityPrizeExchange_IsYourChoiceThisItem
     CallIfGe VAR_0x8000, ITEM_TM01, VeilstoneCityPrizeExchange_IsYourChoiceThisTM
     ShowYesNoMenu VAR_RESULT
@@ -36,9 +38,15 @@ VeilstoneCityPrizeExchange_TryBuyPrize:
     Message VeilstoneCityPrizeExchange_Text_HereYouGo
     AddItem VAR_0x8000, 1, VAR_RESULT
     SubtractCoins VAR_0x8001
+    RecordShopItemPurchase VAR_0x8000, 1
     UpdateCoinDisplay
     PlaySE SEQ_SE_DP_REGI_sseq
     WaitSE SEQ_SE_DP_REGI_sseq
+    GoTo VeilstoneCityPrizeExchange_TryBuyPrize
+    End
+
+VeilstoneCityPrizeExchange_PrizeSoldOut:
+    Message VeilstoneCityPrizeExchange_Text_PrizeSoldOut
     GoTo VeilstoneCityPrizeExchange_TryBuyPrize
     End
 
@@ -82,8 +90,17 @@ VeilstoneCityPrizeExchange_InitPrizeMenu:
 VeilstoneCityPrizeExchange_AddPrizeToMenu:
     GetGameCornerPrizeData VAR_0x8008, VAR_0x8000, VAR_0x8001
     BufferItemName 0, VAR_0x8000
+    CheckShopItemSoldOut VAR_0x8000, VAR_RESULT
+    GoToIfEq VAR_RESULT, TRUE, VeilstoneCityPrizeExchange_AddSoldOutPrizeToMenu
     BufferVarPaddingDigits 1, VAR_0x8001, PADDING_MODE_SPACES, 5
     AddListMenuEntry MenuEntries_Text_PrizeExchange_Prize, VAR_0x8008
+    AddVar VAR_0x8008, 1
+    GoToIfLt VAR_0x8008, VAR_MAP_LOCAL_0x01, VeilstoneCityPrizeExchange_AddPrizeToMenu
+    GoTo VeilstoneCityPrizeExchange_FinishMenu
+    End
+
+VeilstoneCityPrizeExchange_AddSoldOutPrizeToMenu:
+    AddListMenuEntry MenuEntries_Text_PrizeExchange_PrizeSoldOut, VAR_0x8008
     AddVar VAR_0x8008, 1
     GoToIfLt VAR_0x8008, VAR_MAP_LOCAL_0x01, VeilstoneCityPrizeExchange_AddPrizeToMenu
     GoTo VeilstoneCityPrizeExchange_FinishMenu

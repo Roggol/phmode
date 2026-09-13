@@ -17,37 +17,38 @@
     {
       "id": "FuegoIronworksBuilding_Text_TradeStarPiecesForShards",
       "en_US": [
-        "Mr. Fuego: My ironworks makes iron by\n",
-        "removing impurities from iron ore.\r",
-        "In the process, we find a variety of\n",
-        "colored Shards.\r",
+        "Mr. Fuego: We cool the furnaces here\n",
+        "with water pumped up from below.\r",
+        "Every so often, a Heart Scale turns up\n",
+        "in the intake filters.\r",
         "If you’d like, we can trade Star Pieces\n",
-        "for these Shards."
+        "for those Heart Scales."
       ]
     },
     {
       "id": "FuegoIronworksBuilding_Text_AskTradeStarPiecesForShards",
       "en_US": [
-        "Mr. Fuego: My ironworks makes iron by\n",
-        "removing impurities from iron ore.\r",
-        "In the process, we find a variety of\n",
-        "colored Shards.\r",
+        "Mr. Fuego: We cool the furnaces here\n",
+        "with water pumped up from below.\r",
+        "Every so often, a Heart Scale turns up\n",
+        "in the intake filters.\r",
         "If you’d like, we can trade Star Pieces\n",
-        "for these Shards?"
+        "for those Heart Scales?"
       ]
     },
     {
       "id": "FuegoIronworksBuilding_Text_AnyStarPieces",
       "en_US": [
         "Mr. Fuego: Do you have any Star Pieces?\n",
-        "You can trade them for various Shards."
+        "You can trade them for Heart Scales."
       ]
     },
     {
       "id": "FuegoIronworksBuilding_Text_WantToTrade",
       "en_US": [
         "Mr. Fuego: Are you interested?\n",
-        "Want to trade Star Pieces for Shards?"
+        "Want to trade Star Pieces for Heart\n",
+        "Scales?"
       ]
     },
     {
@@ -62,8 +63,7 @@
       "id": "FuegoIronworksBuilding_Text_ThereYouAre",
       "en_US": [
         "Mr. Fuego: There you are--\n",
-        "red, blue, yellow, and green.\f",
-        "Shards in different colors!\r"
+        "shiny as always!\r"
       ]
     },
     {

@@ -201,6 +201,12 @@ void BagContext_FormatErrorMessage(TrainerInfo *playerInfo, String *dstString, u
         MessageLoader_Free(msgLoader);
         break;
 
+    case ITEM_USE_CANNOT_USE_UNDERGROUND_MAINTENANCE:
+        msgLoader = MessageLoader_Init(MSG_LOADER_LOAD_ON_DEMAND, NARC_INDEX_MSGDATA__PL_MSG, TEXT_BANK_BAG, heapID);
+        MessageLoader_GetString(msgLoader, Bag_Text_CannotUseUndergroundMaintenance, dstString);
+        MessageLoader_Free(msgLoader);
+        break;
+
     default:
         msgLoader = MessageLoader_Init(MSG_LOADER_LOAD_ON_DEMAND, NARC_INDEX_MSGDATA__PL_MSG, TEXT_BANK_COMMON_STRINGS, heapID);
         template = StringTemplate_Default(heapID);

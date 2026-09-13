@@ -20,7 +20,6 @@ BOOL ScrCmd_GetGameCornerPrizeData(ScriptContext *ctx)
     u16 *price = ScriptContext_GetVarPointer(ctx);
 
     static const GameCornerPrize sGameCornerPrizeData[] = {
-        { ITEM_SILK_SCARF, 1000 },
         { ITEM_WIDE_LENS, 1000 },
         { ITEM_ZOOM_LENS, 1000 },
         { ITEM_METRONOME, 1000 },

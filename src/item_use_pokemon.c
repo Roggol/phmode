@@ -22,6 +22,26 @@
 #define MAX_EV_VITAMIN 100
 #define EV_UNCHANGED   -1
 
+// phmode: a Pokémon may only ever have an EV vitamin (Protein/Iron/Calcium/Zinc/Carbos/HP Up)
+// successfully used on it MAX_VITAMIN_USES_PER_POKEMON times, tracked via the otherwise-unused
+// MON_DATA_UNUSED_113 byte (Platinum has no Shiny Leaf feature, so this byte is free to reuse).
+#define MAX_VITAMIN_USES_PER_POKEMON 4
+
+static BOOL IsEVVitamin(u16 itemId)
+{
+    switch (itemId) {
+    case ITEM_PROTEIN:
+    case ITEM_IRON:
+    case ITEM_CALCIUM:
+    case ITEM_ZINC:
+    case ITEM_CARBOS:
+    case ITEM_HP_UP:
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
 #define HEAL_FULL_HP    255
 #define HEAL_HALF_HP    254
 #define HEAL_QUARTER_HP 253
@@ -206,6 +226,11 @@ u8 Pokemon_CheckItemEffects(Pokemon *mon, u16 itemId, u16 moveSlot, enum HeapID 
         }
     }
 
+    if (IsEVVitamin(itemId) == TRUE && Pokemon_GetValue(mon, MON_DATA_UNUSED_113, NULL) >= MAX_VITAMIN_USES_PER_POKEMON) {
+        Heap_Free(item);
+        return FALSE;
+    }
+
     vCheckEVHP = Pokemon_GetValue(mon, MON_DATA_HP_EV, NULL);
     vCheckEVAttack = Pokemon_GetValue(mon, MON_DATA_ATK_EV, NULL);
     vCheckEVDefense = Pokemon_GetValue(mon, MON_DATA_DEF_EV, NULL);
@@ -364,6 +389,11 @@ u8 Pokemon_ApplyItemEffects(Pokemon *mon, u16 itemId, u16 moveSlot, u16 location
     APPLY_EV_EFFECT(ITEM_PARAM_GIVE_SPEED_EVS, ITEM_PARAM_SPEED_EVS, MON_DATA_SPEED_EV, vApplyEVSpeed, APPLY_EFFECTS_EV_SUM_EXCLUDE_SPEED);
     APPLY_EV_EFFECT(ITEM_PARAM_GIVE_SPATK_EVS, ITEM_PARAM_SPATK_EVS, MON_DATA_SPATK_EV, vApplyEVSpAttack, APPLY_EFFECTS_EV_SUM_EXCLUDE_SPATTACK);
     APPLY_EV_EFFECT(ITEM_PARAM_GIVE_SPDEF_EVS, ITEM_PARAM_SPDEF_EVS, MON_DATA_SPDEF_EV, vApplyEVSpDefense, APPLY_EFFECTS_EV_SUM_EXCLUDE_SPDEFENSE);
+
+    if (IsEVVitamin(itemId) == TRUE && effectApplied == TRUE) {
+        u32 vitaminUses = Pokemon_GetValue(mon, MON_DATA_UNUSED_113, NULL) + 1;
+        Pokemon_SetValue(mon, MON_DATA_UNUSED_113, &vitaminUses);
+    }
 
     if ((effectApplied == FALSE) && (effectFound == TRUE)) {
         Heap_Free(item);

@@ -12,31 +12,7 @@ GreatMarsh6_AceTrainerM:
     FacePlayer
     GoToIfSet FLAG_DAILY_RECEIVED_GREAT_MARSH_6_RANDOM_SHARD, GreatMarsh6_IllTryFindingMore
     Message GreatMarsh6_Text_IPickedThisUp
-    GetRandom VAR_0x8004, 4
-    SetVar VAR_0x8008, VAR_0x8004
-    GoToIfEq VAR_0x8008, 0, GreatMarsh6_SetRedShard
-    GoToIfEq VAR_0x8008, 1, GreatMarsh6_SetBlueShard
-    GoToIfEq VAR_0x8008, 2, GreatMarsh6_SetYellowShard
-    GoTo GreatMarsh6_SetGreenShard
-    End
-
-GreatMarsh6_SetRedShard:
-    SetVar VAR_0x8004, ITEM_RED_SHARD
-    GoTo GreatMarsh6_TryGiveShard
-    End
-
-GreatMarsh6_SetBlueShard:
-    SetVar VAR_0x8004, ITEM_BLUE_SHARD
-    GoTo GreatMarsh6_TryGiveShard
-    End
-
-GreatMarsh6_SetYellowShard:
-    SetVar VAR_0x8004, ITEM_YELLOW_SHARD
-    GoTo GreatMarsh6_TryGiveShard
-    End
-
-GreatMarsh6_SetGreenShard:
-    SetVar VAR_0x8004, ITEM_GREEN_SHARD
+    SetVar VAR_0x8004, ITEM_HEART_SCALE
     GoTo GreatMarsh6_TryGiveShard
     End
 
