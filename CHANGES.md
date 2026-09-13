@@ -1400,6 +1400,134 @@ their moves without spending Red/Blue/Yellow/Green Shards. The "you don't have
 enough shards" branch in those scripts is now unreachable. The Battle Frontier BP
 tutors and the Heart Scale move reminder are unaffected.
 
+### Vs. Seeker removed, along with trainer rematches and the Pokémon Center daily trainers
+
+The Vs. Seeker (and the trainer-rematch system it exclusively powered) and the
+Pokémon Center daily-rotation trainer minigame (Grace, Kinsey, Tevin, Lee, Roxy
+& Oli, Ariel, Arturo) have both been removed. Investigation found that in this
+codebase Vs. Seeker's "flag a defeated trainer to spin and re-battle" mechanic
+*is* the only trainer-rematch system that exists — every trainer's 2nd-through-
+6th fight (`gVsSeekerRematchData` in the old `vs_seeker.c`) was reachable only
+through it, so removing the item removes every rematch battle in the game as a
+side effect. The Pokémon Center trainers are a separate, self-contained walk-up
+NPC minigame that never needed the item or its mechanic — it only checked story
+flags that happened to be named after Vs. Seeker's unlock levels — but the user
+asked for it gone too.
+
+**Vs. Seeker item**: kept as a reserved-but-inert item ID rather than deleted
+outright, since deleting `ITEM_VS_SEEKER` from `generated/items.txt` would
+renumber every item after it and corrupt item IDs already stored in existing
+saves' Bag/PC. `res/items/data/vs_seeker.json` now has `fieldUseFunc:
+ITEM_USE_FUNC_NONE`, `canRegister: false`, `preventToss: false`, and a
+description noting it "no longer serves any purpose"; it can no longer be
+obtained (see Route 207 below) or used. `include/constants/items.h`'s
+`ITEM_USE_FUNC_VS_SEEKER` slot and its three functions in
+`src/item_use_functions.c` are removed since nothing points at them anymore.
+
+**Mechanic removed entirely**: `src/overlay005/vs_seeker.c` /
+`include/overlay005/vs_seeker.h` / `include/constants/vs_seeker.h` deleted
+(and `src/meson.build`'s reference to the `.c` file removed). Everywhere it was
+wired into shared/generic code got the Vs.-Seeker-specific piece stripped back
+out, with the generic behavior left intact:
+
+* `src/overlay005/ov5_021DFB54.c` / `.h` — the player's Vs.-Seeker-pose redraw
+  function and its slot in `sPlayerAvatarRequestStateTbl` (now 9 entries, was
+  10 — it was the last slot, so nothing else shifted) removed;
+  `FieldSystem_StartVsSeekerTask` / `EndVsSeekerTask` (the only user of the
+  `PLAYER_TRANSITION_x0200` bit) removed.
+* `src/overlay005/ov5_021FAF40.c` — the 6 dedicated graphics-lookup rows and the
+  `BILLBOARD_FRAME_SEQ_VS_SEEKER` enum value (last entry, safe to drop) removed;
+  `PLAYER_AVATAR_VS_SEEKER` removed from `include/constants/player_avatar.h` and
+  its two `src/player_avatar.c` switch cases. The now-unreferenced graphics/sound
+  assets (`player_{f,m}_vs_seeker.png`, `vs_seeker.bin`, the Vs. Seeker SFX) are
+  left as inert packed-but-unused data rather than touched, since their `.order`/
+  `.naix` files are themselves position-significant.
+* `src/system_vars.c` / `.h`, `src/system_flags.c` / `.h` — the battery/step-count
+  vars and the `VsSeekerUsed`/`UnlockedVsSeekerLevel` flag helpers removed (the
+  underlying `VAR_VS_SEEKER_*` / `FLAG_VS_SEEKER_USED` / `FLAG_UNLOCKED_VS_SEEKER_LVL_1-5`
+  slots in `generated/vars_flags.txt` are left in place, unused, for the same
+  save-numbering reason as the item).
+* `src/field_map_change.c`, `src/overlay005/field_control.c` — the per-map-change
+  reset and the per-step battery/rematch-timeout update call removed.
+* `src/scrcmd.c` / `include/data/scripts/scrcmd.h` / `asm/macros/scrcmd.inc` —
+  `GetRematchTrainerID` and `StartVsSeeker` are gone as script commands; since
+  this project avoids renumbering the `SCRCMD_*` table (it's positional), their
+  two slots became inert `SCRCMD_UNUSED_VSSEEKER_1/2` stubs (`ScrCmd_Unused_VsSeeker1/2`,
+  matching the existing `ScrCmd_Unused_09C`-style pattern already used elsewhere
+  in this file) instead of being deleted outright. `SetMoveCodeForFacingDirection`
+  is **kept** — it's called after every trainer battle in the game, not just
+  rematches — but its body (turning the trainer, and their double-battle partner,
+  to face the player) was pulled out of `vs_seeker.c` and rewritten in place as
+  static helpers in `scrcmd.c` (`SetTrainerMoveCodeForFacingDirection`,
+  `GetDoubleBattlePartnerTrainer`) with no Vs.-Seeker dependency.
+* `res/field/scripts/scripts_vs_seeker.s`, `res/text/vs_seeker.json` — the
+  item's own use-script is now an inert one-`End` stub and its text bank has zero
+  messages (both files, and their `TEXT_BANK_VS_SEEKER` / script-ID-offset
+  registrations, had to stay *present* rather than be deleted, since
+  `res/text/meson.build` and `res/field/scripts/scripts.order` both require
+  every declared bank/script file to physically exist).
+* `res/field/scripts/scripts_battles.s` — `Battles_Trainer` no longer routes a
+  defeated trainer through `Battles_TryRematch`/`GetRematchTrainerID`; it goes
+  straight to `Battles_PostBattleMessage` (the ordinary "we already fought"
+  line), so no trainer in the game can be re-battled anymore. The now-unreachable
+  `Battles_TryRematch`, `Battles_Rematch`, `Battles_StartRematchEncounter` labels
+  are deleted. The ~240 base trainers' `*_REMATCH_1..5` data entries
+  (`res/trainers/data/*_rematch_*.json`, `generated/trainers.txt`) are left in
+  place as inert, unreferenced data rather than deleted, for the same ordinal-
+  numbering reason as the item.
+* `res/field/scripts/scripts_route_207.s` + `res/text/route_207.json` — Dawn/
+  Lucas's coin-flip scene no longer gives the Vs. Seeker or sets
+  `FLAG_UNLOCKED_VS_SEEKER_LVL_1`; the Dowsing Machine Poketch app gift is
+  unaffected. In the Vs. Seeker's old spot, the rival now hands over a
+  **Silk Scarf** (`Route207_GiveSilkScarf`, same `Common_GiveItemQuantity`
+  pattern as the old item grant) with the line *"Here, take this. It gets cold
+  in these caves!"*. The two "you want the Vs. Seeker" / "have this too"
+  message slots were reworded in place (same array positions, per this
+  project's append-only text-bank convention) into the new Silk Scarf line
+  and the Pokétch-gift line, respectively.
+* `res/field/scripts/scripts_celestic_town.s`, `scripts_spear_pillar.s`,
+  `scripts_pokemon_league_hall_of_fame.s`, `scripts_stark_mountain_room_3.s` —
+  the four other `SetFlag FLAG_UNLOCKED_VS_SEEKER_LVL_2/3/4/5` story-milestone
+  lines removed, since nothing reads those flags anymore (Stark Mountain's
+  dedicated `StarkMountainRoom3_UnlockVSSeekerLvl5` label/call is deleted
+  outright, being otherwise-unreachable dead code).
+* `res/field/scripts/scripts_hearthome_city.s` + `res/text/hearthome_city.json`
+  — the Black Belt NPC's one Vs.-Seeker flavor line was reworded in place
+  (renamed `HearthomeCity_Text_BlackBelt2Flavor`, same slot) to drop the item
+  reference while keeping the rest of his anecdote.
+
+**Pokémon Center daily trainers removed**:
+
+* `src/script_manager.c` / `include/script_manager.h` — the
+  `scripts_pokemon_center_daily_trainers` script-ID-offset registration removed
+  (confirmed hand-assigned/non-sequential, safe to delete outright).
+* `res/field/scripts/scripts_init_new_game.s` — now sets
+  `FLAG_HIDE_POKECENTER_DAILY_TRAINER_1` / `_2` on a fresh save (mirroring the
+  existing `FLAG_HIDE_ROUTE_207_COUNTERPART` pattern), since the deleted
+  minigame script was the *only* place that ever set those hide flags; without
+  this, the placeholder NPC objects in all 14 Pokémon Centers would spawn
+  visible with no working script behind them.
+* 14 maps' `scripts_init_<city>_pokecenter_1f.s` — the
+  `InitScriptEntry_OnTransition` call into the now-gone daily-trainers script
+  removed from each.
+* `res/field/scripts/scripts_pokemon_center_daily_trainers.s` is now an inert
+  one-`End` stub rather than deleted, and its text bank
+  (`res/text/pokemon_center_daily_trainers.json` / `TEXT_BANK_POKEMON_CENTER_DAILY_TRAINERS`)
+  and the 7 trainers' `res/trainers/data/*.json` entries are left in place as
+  unreferenced data — both `scripts.order` (physical NARC packing order) and
+  `generated/trainers.txt` are ordinal lists where deleting an entry outright
+  breaks the build or risks renumbering, matching the precedent set everywhere
+  else in this change.
+* The 7 NPCs' object-event placements in each Pokémon Center's `events_*.json`
+  are untouched: their visibility already keys off the same
+  `FLAG_HIDE_POKECENTER_DAILY_TRAINER_1/2` flags, which now stay permanently set,
+  so they stay permanently hidden and non-interactive without needing any
+  per-map object edits.
+* Not retroactive: a save that had already unlocked the daily trainers before
+  this change (i.e. already cleared the hide flags) keeps them visible, since
+  there's no flag-migration mechanism in this codebase for any one-time story
+  flag. A fresh save is unaffected.
+
 ### Gift Pokémon and eggs go to the PC when the party is full
 Instead of being turned away ("come back when you have room"), a gift Pokémon or
 gifted egg whose party is full is deposited straight into the first PC box with a

@@ -15,21 +15,17 @@
       ]
     },
     {
-      "id": "Route207_Text_DawnYouWantTheVsSeeker",
+      "id": "Route207_Text_DawnHereYouGo",
       "en_US": [
-        "Dawn: I see...\n",
-        "You want the Vs. Seeker.\r",
-        "I’m impressed, {STRVAR_1 3, 0, 0}.\n",
-        "You know what’s important.\r"
+        "Dawn: Good pick, {STRVAR_1 3, 0, 0}!\n",
+        "Here, take this.\r",
+        "It gets cold in these caves!\r"
       ]
     },
     {
       "id": "Route207_Text_DawnHaveThisTooThen",
       "en_US": [
-        "Dawn: Using that Vs. Seeker, you can\n",
-        "find Trainers who want a rematch\f",
-        "with you.\r",
-        "Oh, {STRVAR_1 3, 0, 0}, do you also have\n",
+        "Dawn: Oh, {STRVAR_1 3, 0, 0}, do you also have\n",
         "a Pokétch?\r",
         "Yup, you do.\n",
         "You can have this too, then.\r",
@@ -66,21 +62,17 @@
       ]
     },
     {
-      "id": "Route207_Text_LucasYouWantTheVsSeeker",
+      "id": "Route207_Text_LucasHereYouGo",
       "en_US": [
-        "Lucas: Oh yeah.\n",
-        "You want the Vs. Seeker.\r",
-        "Yup, {STRVAR_1 3, 0, 0}, you know what’s\n",
-        "important.\r"
+        "Lucas: Good pick, {STRVAR_1 3, 0, 0}!\n",
+        "Here, take this.\r",
+        "It gets cold in these caves!\r"
       ]
     },
     {
       "id": "Route207_Text_LucasHaveThisTooThen",
       "en_US": [
-        "Lucas: Using that Vs. Seeker, you can\n",
-        "find Trainers who want to battle with\f",
-        "you again.\r",
-        "{STRVAR_1 3, 0, 0}, what about a Pokétch?\n",
+        "Lucas: {STRVAR_1 3, 0, 0}, what about a Pokétch?\n",
         "Do you have one?\r",
         "Yup, you do.\n",
         "You can have this too, then.\r",

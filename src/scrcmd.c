@@ -25,6 +25,7 @@
 #include "generated/pokemon_contest_ranks.h"
 #include "generated/save_types.h"
 #include "generated/signpost_commands.h"
+#include "generated/trainer_types.h"
 
 #include "struct_decls/map_object.h"
 #include "struct_decls/map_object_manager.h"
@@ -66,7 +67,6 @@
 #include "overlay005/script_message.h"
 #include "overlay005/signpost.h"
 #include "overlay005/size_contest.h"
-#include "overlay005/vs_seeker.h"
 #include "overlay006/elevator_animation.h"
 #include "overlay006/great_marsh_tram.h"
 #include "overlay006/healing_machine_animation.h"
@@ -354,7 +354,7 @@ static BOOL ScrCmd_Unused_06E(ScriptContext *ctx);
 static BOOL ScrCmd_CountSealOccurence(ScriptContext *ctx);
 static BOOL ScrCmd_GiveOrTakeSeal(ScriptContext *ctx);
 static BOOL ScrCmd_GetPartyMonForm(ScriptContext *ctx);
-static BOOL ScrCmd_GetRematchTrainerID(ScriptContext *ctx);
+static BOOL ScrCmd_Unused_VsSeeker1(ScriptContext *ctx);
 static BOOL ScrCmd_GetOverworldWeather(ScriptContext *ctx);
 static BOOL ScrCmd_Unused_09C(ScriptContext *ctx);
 static BOOL ScrCmd_Unused_09D(ScriptContext *ctx);
@@ -369,7 +369,9 @@ static BOOL ScrCmd_GetCurNetID(ScriptContext *ctx);
 static BOOL ScrCmd_DrawPokemonPreview(ScriptContext *ctx);
 static void FieldSystem_WriteSpeciesSeen(FieldSystem *fieldSystem, u16 param1);
 static BOOL ScrCmd_RemovePokemonPreview(ScriptContext *ctx);
-static BOOL ScrCmd_StartVsSeeker(ScriptContext *ctx);
+static BOOL ScrCmd_Unused_VsSeeker2(ScriptContext *ctx);
+static MapObject *GetDoubleBattlePartnerTrainer(FieldSystem *fieldSystem, MapObject *trainerObj);
+static void SetTrainerMoveCodeForFacingDirection(FieldSystem *fieldSystem, MapObject *trainerObj);
 static BOOL ScrCmd_SetMoveCodeForFacingDirection(ScriptContext *ctx);
 static BOOL ScrCmd_0A5(ScriptContext *ctx);
 static BOOL ScrCmd_30E(ScriptContext *ctx);
@@ -2820,13 +2822,8 @@ static BOOL ScrCmd_GetSummarySelectedMoveSlot(ScriptContext *ctx)
     return TRUE;
 }
 
-static BOOL ScrCmd_GetRematchTrainerID(ScriptContext *ctx)
+static BOOL ScrCmd_Unused_VsSeeker1(ScriptContext *ctx)
 {
-    MapObject **trainerObj = FieldSystem_GetScriptMemberPtr(ctx->fieldSystem, SCRIPT_MANAGER_TARGET_OBJECT);
-    u16 trainerID = ScriptContext_GetVar(ctx);
-    u16 *destVar = ScriptContext_GetVarPointer(ctx);
-
-    *destVar = VsSeeker_GetRematchTrainerID(ctx->fieldSystem, *trainerObj, trainerID);
     return FALSE;
 }
 
@@ -3071,13 +3068,70 @@ static BOOL ScriptContext_WaitForPreviewAnimFinished(ScriptContext *ctx)
     return TRUE;
 }
 
-static BOOL ScrCmd_StartVsSeeker(ScriptContext *ctx)
+static BOOL ScrCmd_Unused_VsSeeker2(ScriptContext *ctx)
 {
-    u16 destVar = ScriptContext_ReadHalfWord(ctx);
-    StringTemplate **strTemplate = FieldSystem_GetScriptMemberPtr(ctx->fieldSystem, SCRIPT_MANAGER_STR_TEMPLATE);
+    return FALSE;
+}
 
-    VsSeeker_Start(ctx->task, *strTemplate, FieldSystem_GetVarPointer(ctx->fieldSystem, destVar));
-    return TRUE;
+static MapObject *GetDoubleBattlePartnerTrainer(FieldSystem *fieldSystem, MapObject *trainerObj)
+{
+    u32 objEventCount = MapHeaderData_GetNumObjectEvents(fieldSystem);
+    u32 scriptID = MapObject_GetScript(trainerObj);
+    u16 trainerID = Script_GetTrainerID(scriptID);
+
+    if (Script_IsTrainerDoubleBattle(trainerID) == FALSE) {
+        return NULL;
+    }
+
+    for (u32 i = 0; i < objEventCount; i++) {
+        MapObject *mapObj = MapObjMan_LocalMapObjByIndex(fieldSystem->mapObjMan, i);
+
+        if (mapObj == NULL) {
+            continue;
+        }
+
+        switch (MapObject_GetTrainerType(mapObj)) {
+        case TRAINER_TYPE_NORMAL:
+        case TRAINER_TYPE_VIEW_ALL_DIRECTIONS:
+        case TRAINER_TYPE_FACE_SIDES:
+        case TRAINER_TYPE_FACE_COUNTERCLOCKWISE:
+        case TRAINER_TYPE_FACE_CLOCKWISE:
+        case TRAINER_TYPE_SPIN_COUNTERCLOCKWISE:
+        case TRAINER_TYPE_SPIN_CLOCKWISE: {
+            u32 secondScriptID = MapObject_GetScript(mapObj);
+            u16 secondTrainerID = Script_GetTrainerID(secondScriptID);
+
+            if (scriptID != secondScriptID && trainerID == secondTrainerID) {
+                return mapObj;
+            }
+        }
+        }
+    }
+
+    return NULL;
+}
+
+static void SetTrainerMoveCodeForFacingDirection(FieldSystem *fieldSystem, MapObject *trainerObj)
+{
+    int dir = MapObject_GetFacingDir(trainerObj);
+
+    u32 moveCode;
+    if (dir == DIR_NORTH) {
+        moveCode = MOVEMENT_TYPE_LOOK_NORTH;
+    } else if (dir == DIR_SOUTH) {
+        moveCode = MOVEMENT_TYPE_LOOK_SOUTH;
+    } else if (dir == DIR_WEST) {
+        moveCode = MOVEMENT_TYPE_LOOK_WEST;
+    } else {
+        moveCode = MOVEMENT_TYPE_LOOK_EAST;
+    }
+
+    MapObject *secondTrainer = GetDoubleBattlePartnerTrainer(fieldSystem, trainerObj);
+    if (secondTrainer != NULL) {
+        MapObject_SwitchMovementType(secondTrainer, moveCode);
+    }
+
+    MapObject_SwitchMovementType(trainerObj, moveCode);
 }
 
 static BOOL ScrCmd_SetMoveCodeForFacingDirection(ScriptContext *ctx)
@@ -3086,7 +3140,7 @@ static BOOL ScrCmd_SetMoveCodeForFacingDirection(ScriptContext *ctx)
 
     if (*mapObj != NULL) {
         if (!PersistedMapFeatures_IsCurrentDynamicMap(ctx->fieldSystem, DYNAMIC_MAP_FEATURES_HEARTHOME_GYM) || HearthomeGym_SetTrainerPostBattleMovement(ctx->fieldSystem, *mapObj) == FALSE) {
-            VsSeeker_SetMoveCodeForFacingDirection(ctx->fieldSystem, *mapObj);
+            SetTrainerMoveCodeForFacingDirection(ctx->fieldSystem, *mapObj);
         }
     }
 

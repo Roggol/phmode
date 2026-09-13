@@ -61,8 +61,8 @@ Route207_Dawn:
     AddListMenuEntry MenuEntries_Text_CounterpartHand_Right, 0
     AddListMenuEntry MenuEntries_Text_CounterpartHand_Left, 1
     ShowListMenu
-    Message Route207_Text_DawnYouWantTheVsSeeker
-    Call Route207_GiveVsSeeker
+    Message Route207_Text_DawnHereYouGo
+    Call Route207_GiveSilkScarf
     Message Route207_Text_DawnHaveThisTooThen
     Call Route207_GivePoketchAppDowsingMachine
     Message Route207_Text_DawnUseDowsingMachineOften
@@ -76,16 +76,15 @@ Route207_Lucas:
     AddListMenuEntry MenuEntries_Text_CounterpartHand_Right, 0
     AddListMenuEntry MenuEntries_Text_CounterpartHand_Left, 1
     ShowListMenu
-    Message Route207_Text_LucasYouWantTheVsSeeker
-    Call Route207_GiveVsSeeker
+    Message Route207_Text_LucasHereYouGo
+    Call Route207_GiveSilkScarf
     Message Route207_Text_LucasHaveThisTooThen
     Call Route207_GivePoketchAppDowsingMachine
     Message Route207_Text_LucasTryTouchingDowsingMachine
     GoTo Route207_CounterpartLeave
 
-Route207_GiveVsSeeker:
-    SetFlag FLAG_UNLOCKED_VS_SEEKER_LVL_1
-    SetVar VAR_0x8004, ITEM_VS_SEEKER
+Route207_GiveSilkScarf:
+    SetVar VAR_0x8004, ITEM_SILK_SCARF
     SetVar VAR_0x8005, 1
     Common_GiveItemQuantity
     Return

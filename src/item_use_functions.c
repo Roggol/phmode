@@ -99,7 +99,6 @@ static void UsePokeRadarFromMenu(ItemMenuUseContext *usageContext, const ItemUse
 static void UseSprayDuckFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseMulchFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseHoneyFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
-static void UseVsSeekerFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseOldRodFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseGoodRodFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseSuperRodFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
@@ -121,7 +120,6 @@ static BOOL UsePalPadInField(ItemFieldUseContext *usageContext);
 static BOOL UseExplorerKitInField(ItemFieldUseContext *usageContext);
 static BOOL UsePokeRadarInField(ItemFieldUseContext *usageContext);
 static BOOL UseSprayDuckInField(ItemFieldUseContext *usageContext);
-static BOOL UseVsSeekerInField(ItemFieldUseContext *usageContext);
 static BOOL UseAzureFluteInField(ItemFieldUseContext *usageContext);
 static BOOL UseVsRecorderInField(ItemFieldUseContext *usageContext);
 static BOOL UseGracideaInField(ItemFieldUseContext *usageContext);
@@ -142,7 +140,6 @@ static enum ItemUseCheckResult CanUseBerry(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUsePokeRadar(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseSprayDuck(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseMulch(const ItemUseContext *usageContext);
-static enum ItemUseCheckResult CanUseVsSeeker(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseFishingRod(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseEscapeRope(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseAzureFlute(const ItemUseContext *usageContext);
@@ -173,7 +170,6 @@ static const ItemUseFuncDat sItemUseFuncs[] = {
     [ITEM_USE_FUNC_SPRAYDUCK]    = { UseSprayDuckFromMenu,   UseSprayDuckInField,   CanUseSprayDuck   },
     [ITEM_USE_FUNC_MULCH]        = { UseMulchFromMenu,       NULL,                  CanUseMulch       },
     [ITEM_USE_FUNC_HONEY]        = { UseHoneyFromMenu,       NULL,                  NULL              },
-    [ITEM_USE_FUNC_VS_SEEKER]    = { UseVsSeekerFromMenu,    UseVsSeekerInField,    CanUseVsSeeker    },
     [ITEM_USE_FUNC_OLD_ROD]      = { UseOldRodFromMenu,      UseOldRodInField,      CanUseFishingRod  },
     [ITEM_USE_FUNC_GOOD_ROD]     = { UseGoodRodFromMenu,     UseGoodRodInField,     CanUseFishingRod  },
     [ITEM_USE_FUNC_SUPER_ROD]    = { UseSuperRodFromMenu,    UseSuperRodInField,    CanUseFishingRod  },
@@ -756,26 +752,6 @@ static void UseHoneyFromMenu(ItemMenuUseContext *usageContext, const ItemUseCont
     menu->state = START_MENU_STATE_NEW_TASK;
 
     Bag_TryRemoveItem(SaveData_GetBag(fieldSystem->saveData), usageContext->item, 1, HEAP_ID_FIELD2);
-}
-
-static void UseVsSeekerFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext)
-{
-    sub_02068540(usageContext, additionalContext, SCRIPT_ID(VS_SEEKER, 0));
-}
-
-static BOOL UseVsSeekerInField(ItemFieldUseContext *usageContext)
-{
-    sub_02068584(usageContext, SCRIPT_ID(VS_SEEKER, 0));
-    return FALSE;
-}
-
-static enum ItemUseCheckResult CanUseVsSeeker(const ItemUseContext *usageContext)
-{
-    if (MapHeader_IsOnMainMatrix(usageContext->mapHeaderID)) {
-        return ITEM_USE_CAN_USE;
-    }
-
-    return ITEM_USE_CANNOT_USE_GENERIC;
 }
 
 static void UseOldRodFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext)

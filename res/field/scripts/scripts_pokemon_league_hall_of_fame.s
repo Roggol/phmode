@@ -44,7 +44,6 @@ PokemonLeagueHallOfFame_EnterHallOfFame:
     WaitMovement
     Message PokemonLeagueHallOfFame_Text_RecordYourNameAndPokemon
     CloseMessage
-    SetFlag FLAG_UNLOCKED_VS_SEEKER_LVL_4
     GetNationalDexEnabled VAR_RESULT
     CallIfEq VAR_RESULT, TRUE, PokemonLeagueHallOfFame_EnableHiddenLocationSpringPath
     CallIfEq VAR_DUMMY_0x40F4, 0, PokemonLeagueHallOfFame_IncreaseDummyVar

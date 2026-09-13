@@ -18,7 +18,6 @@
     ScriptEntryEnd
 
 CelesticTown_OnTransition:
-    SetFlag FLAG_UNLOCKED_VS_SEEKER_LVL_2
     End
 
 CelesticTown_GruntM:

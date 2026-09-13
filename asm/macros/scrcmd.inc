@@ -59,7 +59,6 @@
 #include "constants/tv_broadcast.h"
 #include "constants/union_room_message_types.h"
 #include "constants/villa_visitors.h"
-#include "constants/vs_seeker.h"
 
 #include "data/scripts/scrcmd.h"
 #include "macros/movement.inc"
@@ -1043,12 +1042,6 @@
     .short SCRCMD_FINDPARTYSLOTWITHMOVE
     .short \destVar
     .short \move
-    .endm
-
-    .macro GetRematchTrainerID trainerID, destVar
-    .short SCRCMD_GETREMATCHTRAINERID
-    .short \trainerID
-    .short \destVar
     .endm
 
     .macro ScrCmd_Unused_09C
@@ -3044,11 +3037,6 @@
 
     .macro RemovePokemonPreview
     .short SCRCMD_REMOVEPOKEMONPREVIEW
-    .endm
-
-    .macro StartVsSeeker destVar
-    .short SCRCMD_STARTVSSEEKER
-    .short \destVar
     .endm
 
     .macro SetMoveCodeForFacingDirection

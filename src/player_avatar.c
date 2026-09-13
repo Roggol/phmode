@@ -872,8 +872,6 @@ int Player_GetSpriteFromStateAndGender(int playerState, int gender)
             return OBJ_EVENT_GFX_PLAYER_M_SAVE;
         case PLAYER_AVATAR_HEAL:
             return OBJ_EVENT_GFX_UNK_200;
-        case PLAYER_AVATAR_VS_SEEKER:
-            return OBJ_EVENT_GFX_PLAYER_M_VS_SEEKER;
         case PLAYER_AVATAR_DISTORTION_WORLD:
             return OBJ_EVENT_GFX_DIST_WORLD_PLAYER_M;
         case PLAYER_AVATAR_DISTORTION_WORLD_SURF:
@@ -911,8 +909,6 @@ int Player_GetSpriteFromStateAndGender(int playerState, int gender)
             return OBJ_EVENT_GFX_PLAYER_F_SAVE;
         case PLAYER_AVATAR_HEAL:
             return OBJ_EVENT_GFX_UNK_201;
-        case PLAYER_AVATAR_VS_SEEKER:
-            return OBJ_EVENT_GFX_PLAYER_F_VS_SEEKER;
         case PLAYER_AVATAR_DISTORTION_WORLD:
             return OBJ_EVENT_GFX_DIST_WORLD_PLAYER_F;
         case PLAYER_AVATAR_DISTORTION_WORLD_SURF:

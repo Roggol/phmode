@@ -576,7 +576,7 @@ HearthomeCity_Artist:
     End
 
 HearthomeCity_BlackBelt2:
-    NPCMessage HearthomeCity_Text_UsedVsSeekerALot
+    NPCMessage HearthomeCity_Text_BlackBelt2Flavor
     End
 
     .balign 4, 0

@@ -32,7 +32,6 @@
 #define SCRIPT_RANGE_TABLE(Entry) \
     Entry(SCRIPT_ID_OFFSET_SCRATCH_OFF_CARDS,              scripts_scratch_off_cards,              TEXT_BANK_SCRATCH_OFF_CARDS) \
     Entry(SCRIPT_ID_OFFSET_BATTLE_FRONTIER_RECORDS,        scripts_battle_frontier_records,        TEXT_BANK_BATTLE_FRONTIER_RECORDS) \
-    Entry(SCRIPT_ID_OFFSET_POKEMON_CENTER_DAILY_TRAINERS,  scripts_pokemon_center_daily_trainers,  TEXT_BANK_POKEMON_CENTER_DAILY_TRAINERS) \
     Entry(SCRIPT_ID_OFFSET_COUNTERPART_TALK,               scripts_counterpart_talk,               TEXT_BANK_COUNTERPART_TALK) \
     Entry(SCRIPT_ID_OFFSET_MYSTERY_GIFT_DELIVERYMAN,       scripts_mystery_gift_deliveryman,       TEXT_BANK_MYSTERY_GIFT_DELIVERYMAN) \
     Entry(SCRIPT_ID_OFFSET_TV_REPORTER_INTERVIEWS,         scripts_tv_reporter_interviews,         TEXT_BANK_TV_REPORTER_INTERVIEWS) \
@@ -50,7 +49,6 @@
     Entry(SCRIPT_ID_OFFSET_COMMUNICATION_CLUB,             scripts_communication_club,             TEXT_BANK_COMMUNICATION_CLUB) \
     Entry(SCRIPT_ID_OFFSET_POKEMON_CENTER_2F_COMMON,       scripts_pokemon_center_2f_common,       TEXT_BANK_POKEMON_CENTER_2F_COMMON) \
     Entry(SCRIPT_ID_OFFSET_POKE_RADAR,                     scripts_poke_radar,                     TEXT_BANK_BAG) \
-    Entry(SCRIPT_ID_OFFSET_VS_SEEKER,                      scripts_vs_seeker,                      TEXT_BANK_VS_SEEKER) \
     Entry(SCRIPT_ID_OFFSET_RECORD_CHATOT_CRY,              scripts_record_chatot_cry,              TEXT_BANK_RECORD_CHATOT_CRY) \
     Entry(SCRIPT_ID_OFFSET_SAFARI_GAME,                    scripts_safari_game,                    TEXT_BANK_SAFARI_GAME) \
     Entry(SCRIPT_ID_OFFSET_HIDDEN_ITEMS,                   scripts_hidden_items,                   TEXT_BANK_HIDDEN_ITEMS) \
