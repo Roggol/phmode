@@ -1176,6 +1176,10 @@
     {
       "id": "MenuEntries_Text_PC_InflictStatusParalyze",
       "en_US": "Paralyze"
+    },
+    {
+      "id": "MenuEntries_Text_PrizeExchange_PrizeSoldOut",
+      "en_US": "{STRVAR_1 8, 0, 0}{CURSOR_X 96}Sold out!"
     }
   ]
 }

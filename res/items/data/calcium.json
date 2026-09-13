@@ -27,7 +27,7 @@
   "fieldUseFunc": "ITEM_USE_FUNC_HEALING",
   "battleUseFunc": 0,
   "itemUseParams": {
-    "spatkEVs": 10,
+    "spatkEVs": 50,
     "friendshipLow": 5,
     "friendshipMed": 3,
     "friendshipHigh": 2

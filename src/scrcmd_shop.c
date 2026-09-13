@@ -125,3 +125,21 @@ BOOL ScrCmd_ShowAccessoryShop(ScriptContext *ctx)
     AccessoryShop_Init(ctx->fieldSystem->task);
     return TRUE;
 }
+
+BOOL ScrCmd_CheckShopItemSoldOut(ScriptContext *ctx)
+{
+    u16 itemId = ScriptContext_GetVar(ctx);
+    u16 *destVar = ScriptContext_GetVarPointer(ctx);
+
+    *destVar = Shop_IsItemSoldOut(SaveData_GetVarsFlags(ctx->fieldSystem->saveData), itemId);
+    return FALSE;
+}
+
+BOOL ScrCmd_RecordShopItemPurchase(ScriptContext *ctx)
+{
+    u16 itemId = ScriptContext_GetVar(ctx);
+    u16 quantity = ScriptContext_GetVar(ctx);
+
+    Shop_RecordItemPurchase(SaveData_GetVarsFlags(ctx->fieldSystem->saveData), itemId, quantity);
+    return FALSE;
+}

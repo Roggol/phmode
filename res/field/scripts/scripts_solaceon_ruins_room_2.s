@@ -36,7 +36,7 @@ SolaceonRuinsRoom2_AskLoanHMDefog:
 
 SolaceonRuinsRoom2_LoanHMDefog:
     Message SolaceonRuinsRoom2_Text_ThanksYoureMyRescuer
-    SetVar VAR_0x8004, ITEM_GREEN_SHARD
+    SetVar VAR_0x8004, ITEM_HEART_SCALE
     SetVar VAR_0x8005, 1
     GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, SolaceonRuinsRoom2_BagIsFull
     SetFlag FLAG_RECEIVED_SOLACEON_RUINS_ROOM_2_GREEN_SHARD

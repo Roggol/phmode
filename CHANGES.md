@@ -1289,6 +1289,225 @@ A hard cap on Pokémon level, stored in `VAR_HARD_LEVEL_CAP`.
 
 ## Items
 
+### Underground disabled entirely
+The Underground can no longer be entered at all. `CanUseExplorerKit`
+(`src/item_use_functions.c`) — the sole entry point (its "return to the
+surface" counterpart in `src/underground/menus.c` is only reachable from
+inside an already-active Underground session, so gating this one function is
+sufficient) — now unconditionally returns a new
+`ITEM_USE_CANNOT_USE_UNDERGROUND_MAINTENANCE` result instead of running its
+old checks (Mystery Zone, cycling road, Safari Game, surfing, etc. — all now
+moot and removed). `include/item_use_functions.h` adds that enum value, and
+`BagContext_FormatErrorMessage` (`src/bag_context.c`) prints a new message for
+it — `Bag_Text_CannotUseUndergroundMaintenance`
+(`res/text/bag.json`): *"Sorry, the underground is undergoing maintenance."*
+— whether the Explorer Kit is used from the Bag, in the field, or registered
+to Y.
+
+### Shop purchase limits: TMs and select held items bought once, EV vitamins capped at 10
+Shops (the Veilstone Dept Store, the Battle Frontier's BP Exchange Service
+Corner, and the Game Corner's Prize Corner) previously sold every item with
+infinite stock. Two new lifetime purchase limits were added, both enforced
+per save file and per item ID (so buying a TM from one shop marks it bought
+everywhere else that sells it too):
+
+* **TMs, Wide Lens, Zoom Lens, Metronome, and Shed Shell — one purchase, ever.**
+  Every TM sold anywhere (Veilstone Dept Store 3F, the Battle Frontier's BP
+  shop, and the Prize Corner) plus these four held items can each only be
+  bought once per save. Once bought, the shop's item list shows **"Sold out!"**
+  in place of the price, and trying to select it shows the same message
+  instead of letting you buy a second one. (Shed Shell was added to this list
+  later, when it replaced Poké Doll in the Veilstone Dept Store — see "Poké
+  Doll replaced with Shed Shell" below.)
+* **Protein, Iron, Calcium, Zinc, Carbos, and HP Up — 10 total, ever,** summed
+  across every shop that sells them (Veilstone Dept Store 2F and the Battle
+  Frontier's BP shop). The shop's quantity picker caps out at however many of
+  the 10 you have left, and once a type hits 10 it also shows "Sold out!".
+  (Vitamins found or won elsewhere, outside a shop purchase, aren't affected
+  by this cap — only shop purchases count against it.)
+* `src/overlay007/shop_menu.c` — a new `sShopPurchaseLimits[]` table maps each
+  limited item ID to its cap (1 or 10) and to the save flag/var backing its
+  purchase count; `Shop_GetRemainingPurchaseAllowance`, `Shop_IsItemSoldOut`,
+  and `Shop_RecordItemPurchase` (all exposed via `include/overlay007/shop_menu.h`)
+  are hooked into `Shop_MenuPrintCallback` (the "Sold out!" label),
+  `Shop_SelectBuyMenu` (blocking the purchase and clamping the quantity
+  picker's max), and `Shop_ConfirmItemPurchase` (recording the purchase) — this
+  covers every shop of `MART_TYPE_NORMAL` and `MART_TYPE_FRONTIER`, i.e. every
+  money- or BP-based shop in the game, with no per-shop code needed.
+* The Game Corner's Prize Corner (`res/field/scripts/scripts_veilstone_city_prize_exchange.s`,
+  data in `src/scrcmd_game_corner_prize.c`) doesn't use the shared shop engine
+  at all — it's a bespoke script-driven coin shop — so it got two new script
+  commands instead, `CheckShopItemSoldOut`/`RecordShopItemPurchase`
+  (`ScrCmd_CheckShopItemSoldOut`/`ScrCmd_RecordShopItemPurchase` in
+  `src/scrcmd_shop.c`), which just call the same three C functions above. Its
+  menu-building loop now shows `MenuEntries_Text_PrizeExchange_PrizeSoldOut`
+  ("Sold out!") in place of the price for an already-bought prize, and
+  `VeilstoneCityPrizeExchange_TryBuyPrize` rejects the purchase with the same
+  message if the item is sold out.
+* Save data: TMs/lenses/Metronome/Shed Shell are tracked with one save flag
+  apiece (47 total — `FLAG_BOUGHT_TM04` .. `FLAG_BOUGHT_TM90`,
+  `FLAG_BOUGHT_WIDE_LENS`, `FLAG_BOUGHT_ZOOM_LENS`, `FLAG_BOUGHT_METRONOME`,
+  `FLAG_BOUGHT_SHED_SHELL`); the 6 vitamins are tracked with one save var
+  apiece holding a running count 0–10 (`VAR_PROTEIN_BOUGHT_COUNT`, etc.). All
+  53 were carved out of `generated/vars_flags.txt`'s already-existing-but-genuinely-unused
+  `FLAG_UNUSED_0x*`/`VAR_UNUSED_0x*` slots (renamed in place, same numeric
+  ID) rather than appended as new entries, so no existing flag/var shifts and
+  no save compatibility is at risk.
+
+### Overworld X-items replaced with treasure, Shards replaced with EV vitamins
+Every hidden item (Dowsing Machine) and visible ground-item-ball placement in
+the game that used to give an "X item" (X Speed/Attack/Defense/Sp. Atk/Sp.
+Def/Accuracy, Guard Spec., Dire Hit) or one of the 4 Shards (Red/Blue/Yellow/Green)
+was reassigned to a different item. This only covers items you find lying
+around or dig up — shop stock was already handled separately (see above). At
+the time, a small number of *NPC-given or NPC-traded* Shards were deliberately
+left alone as out of scope; two of those have since also been converted (see
+"Gifted Shards now give a Heart Scale" below).
+
+* **X-items → treasure**, scaled roughly to when you'd first reach the spot
+  (`res/field/scripts/scripts_visible_items.s`; no X-item was ever a hidden
+  item, so only visible ground-item balls needed changing, and none of the 8
+  are in a cave, so Nugget/Rare Bone weren't needed here): Route 203 (X
+  Defense) and the Jubilife Trainers' School (X Attack) both → Tiny Mushroom;
+  Oreburgh City (Dire Hit) and Route 205 South (X Sp. Def) both → Pearl;
+  Route 205 North (Guard Spec.) → Big Mushroom; Team Galactic's Eterna
+  building 2F (X Speed) → Stardust; its 3F (X Sp. Atk) → Big Pearl; Route 218
+  (X Accuracy) → Star Piece.
+* **Shards → EV vitamins**, cycled round-robin (Protein/Iron/Calcium/Zinc/
+  Carbos/HP Up) with no particular progression logic, across:
+  * 13 hidden-item table rows in `include/data/field/hidden_items.h` — all of
+    Wayward Cave 1F's and Mt. Coronet's (1F North Rooms 1/2, 1F Tunnel Room
+    ×2, B1F, 2F, 4F Rooms 1&2, Outside South) Shard entries.
+  * 24 visible ground-item balls in `scripts_visible_items.s` — Oreburgh
+    City, Eterna Forest, the Team Galactic Eterna building 4F, Routes 210
+    North/212 North/212 South/213/214/217/225/227/230, all 4 Great Marsh
+    areas, all 4 Fuego Ironworks building placements, Galactic HQ 2F, both
+    Iron Island rooms, and Survival Area.
+* Every change is a same-slot edit to an existing `HIDDEN_ITEM_ENTRY`'s
+  `.item` field or an existing label's `SetVar VAR_0x8008, ITEM_x` line — no
+  new flags, table rows, or object-event placements were added or removed, so
+  there's no save-compatibility concern (the "already picked up" flags are
+  unchanged; only what you receive differs).
+
+### Gifted Shards now give a Heart Scale
+Of the three NPC Shard sources left alone in the change above, two actually
+*give* you a Shard outright (as opposed to trading for one) and are now
+changed to give a Heart Scale instead:
+
+* **Solaceon Ruins, Room 2** — the Hiker's one-time Green Shard reward for
+  lending him HM Defog (`res/field/scripts/scripts_solaceon_ruins_room_2.s`,
+  `SolaceonRuinsRoom2_LoanHMDefog`) now gives `ITEM_HEART_SCALE`. His dialogue
+  never named the item, so no text changed.
+* **Great Marsh, Area 6** — the daily Ace Trainer who used to hand out one
+  random Shard (`res/field/scripts/scripts_great_marsh_6.s`,
+  `GreatMarsh6_AceTrainerM`) now always gives a Heart Scale; the now-pointless
+  4-way random branch/labels are removed rather than left dead. His two lines
+  that explicitly said "Shards" (`res/text/great_marsh_6.json`) are reworded
+  to say "Heart Scales" instead.
+* **Mr. Fuego's Fuego Ironworks counter reworked**, since his old trade (give
+  1 Star Piece, receive one of each of the 4 Shards) drew on a resource that
+  no longer exists anywhere in the game after the changes above (checked and
+  confirmed no species holds a Shard as a wild held item either — that part
+  of the original request turned out to already be true, nothing to remove).
+  He now trades **1 Star Piece for 1 Heart Scale** instead (same "trade 10 at
+  once" bulk option still works) — `res/field/scripts/scripts_fuego_ironworks_building.s`,
+  `FuegoIronworksBuilding_Trade1StarPiece` / `_Trade10StarPieces` now
+  `AddItem ITEM_HEART_SCALE` instead of the 4 `AddItem ITEM_*_SHARD` calls.
+  His dialogue (`res/text/fuego_ironworks_building.json`) was reworded to
+  match — he now finds Heart Scales in the ironworks' water intake filters
+  instead of Shards in the iron ore.
+
+### Poké Doll replaced with Shed Shell; Revive/Max Revive/Revival Herb purged from hidden items
+An audit of "does this item have any use once you can't use items on your own
+Pokémon in battle" turned up two categories of finding:
+
+* **Poké Doll** — its *only* function was fleeing a wild battle
+  (`fieldUseFunc: ITEM_USE_FUNC_NONE`, `battlePocket: BATTLE_POCKET_MASK_...`
+  battle-only), so with the battle-item block in place it could never do
+  anything, ever, while still being genuinely obtainable (Veilstone Dept
+  Store 1F Left, and a hidden item at Galactic HQ 2F). It's replaced with
+  **Shed Shell** in both spots (`include/data/mart_items.h`,
+  `include/data/field/hidden_items.h`) — a held item (`HOLD_EFFECT_SWITCH`,
+  lets the holder always switch out) that works passively and isn't affected
+  by the battle-item restriction at all. The shop copy is added to the
+  one-purchase-ever list (see "Shop purchase limits" above); the hidden-item
+  copy needs no extra limit since finding it is already a one-time pickup.
+  Fluffy Tail (the same "flee battle" role) and the Red/Blue/Yellow Flutes
+  (battle-only status-cure items whose `battleUseFunc` is already `0`/disabled
+  in vanilla Platinum) were also checked and found to already be unobtainable
+  anywhere in the game, so nothing needed doing for those.
+* **Revive, Max Revive, and Revival Herb** — corrected from an earlier pass:
+  these don't just get blocked in battle, they let you undo a Pokémon fainting
+  at all (`itemUseParams.revive: true`), which a hardcore nuzlocke ruleset
+  (fainted = dead, no exceptions) makes just as much off-limits as any
+  battle-only item, regardless of whether they're used mid-battle or from the
+  party screen afterward. Shops already had them removed (see "Revive, Max
+  Revive, and Revival Herb removed from every shop" above); the 16 remaining
+  hidden-item placements in `include/data/field/hidden_items.h` (Route 209,
+  215, 207, 213, 217 ×2, 221, Floaroma Meadow ×2, Victory Road 1F, Mt. Coronet
+  4F Rooms 1&2, Mt. Coronet 1F South, Mt. Coronet Outside North/South, Stark
+  Mountain Room 2, and the Grand Lake/Route 213 Northeast House) are replaced
+  with a mix of Full Restore, Max Potion, Hyper Potion, Full Heal, and Rare
+  Candy — all of which fully heal a *living* Pokémon but, unlike the items
+  they replace, can't cheat a faint.
+
+### Silk Scarf removed from the Prize Corner
+Now that the rival gives you one directly on Route 207 (see "Vs. Seeker
+removed" above), Silk Scarf is no longer one of the Prize Corner's coin
+prizes (`src/scrcmd_game_corner_prize.c`), and the prize count passed to the
+list-menu builder (`VAR_MAP_LOCAL_0x01` in
+`scripts_veilstone_city_prize_exchange.s`) was updated from 19 to 18 to match.
+
+### Veilstone Dept Store 2F: X Items replaced with Heart Scale (10,000)
+`VeilstoneDeptStoreStock_2F_UP` (`include/data/mart_items.h`) no longer sells
+X Speed/Attack/Defense/Sp. Atk/Sp. Def/Accuracy, Guard Spec., or Dire Hit —
+it's now a single Heart Scale listing, priced at 10,000 (`res/items/data/heart_scale.json`'s
+`price` field, which also affects its sell-back price everywhere else, since
+price is per-item, not per-shop). No shop in the game sells in-battle-only
+stat-boost items anymore. The floor's two attendant NPCs who used to plug
+Dire Hit / X Accuracy (`VeilstoneStore2F_Text_DireHitIsForYou` /
+`_TreatItToXAccuracy` in `res/text/veilstone_store_2f.json`) now talk about
+Heart Scales and the Pastoria move-relearner instead, so their dialogue
+matches what's actually for sale.
+
+### Revive, Max Revive, and Revival Herb removed from every shop
+* `PokeMartCommonItems` (`include/data/mart_items.h`) — the badge-gated Revive
+  entry shared by every regular town/city Mart is removed.
+* `VeilstoneDeptStoreStock_1F_RIGHT` — its Revive entry is removed.
+* `EternaHerbShopStock` — its Revival Herb entry is removed (Heal Powder,
+  Energy Powder, and Energy Root are unaffected).
+* Max Revive was not sold in any shop already, so nothing needed removing
+  there. These items are still obtainable as fixed field items / found drops;
+  only the ability to buy them changed.
+
+### EV vitamins give 50 EV per use, capped at 4 uses per Pokémon
+Protein, Iron, Calcium, Zinc, Carbos, and HP Up each now grant **50 EVs**
+per use (`res/items/data/{protein,iron,calcium,zinc,carbos,hp_up}.json`'s
+per-stat `*EVs` field, up from vanilla's 10). Since battling already grants no
+EVs at all in this romhack (see "No EVs from battle" under Battle changes),
+vitamins are now the *only* source of EVs, and two limits shape how far they
+go:
+
+* **Max 2 successful uses per stat** falls out for free from the existing
+  100-EV-per-stat vitamin soft cap (`MAX_EV_VITAMIN` in
+  `src/item_use_pokemon.c`) once each use gives 50 — 2×50 reaches the cap
+  exactly, and a 3rd use on that stat has no effect (same "won't have any
+  effect" message vanilla already shows at the cap), so no new code was
+  needed for this part. This is separate from the shop's 10-per-type
+  lifetime purchase cap above — that limits how many you can ever buy, not
+  how many you can use on one Pokémon.
+* **Max 4 successful uses per Pokémon, across all 6 vitamin types combined,**
+  is new: `src/item_use_pokemon.c` repurposes the previously-fully-unused
+  `MON_DATA_UNUSED_113` byte (Platinum has no Shiny Leaf feature, so this byte
+  — normally used for that in HGSS — was dead weight) as a per-Pokémon
+  counter. `Pokemon_CheckItemEffects` refuses to let any of the 6 vitamins be
+  used once this counter reaches 4 (`MAX_VITAMIN_USES_PER_POKEMON`), and
+  `Pokemon_ApplyItemEffects` increments it by 1 every time a vitamin actually
+  changes a stat's EVs (not on a "no effect" use). Since this reuses an
+  existing byte inside the encrypted Pokémon data blocks rather than growing
+  the struct, there's no save-compatibility impact — every existing Pokémon's
+  counter starts at 0.
+
 ### Link Cable — trade evolutions no longer require an actual trade
 A new item, **Link Cable** (`ITEM_LINK_CABLE`, uses the Pal Pad icon), simulates
 a link trade when used on a party Pokémon from the bag. Every trade evolution in

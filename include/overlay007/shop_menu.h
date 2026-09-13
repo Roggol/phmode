@@ -120,5 +120,8 @@ typedef struct {
 
 void Shop_Start(FieldTask *task, FieldSystem *fieldSystem, u16 *shopItems, u8 martType, BOOL incBuyCount);
 BOOL FieldTask_InitShop(FieldTask *task);
+u16 Shop_GetRemainingPurchaseAllowance(VarsFlags *varsFlags, u16 itemId);
+BOOL Shop_IsItemSoldOut(VarsFlags *varsFlags, u16 itemId);
+void Shop_RecordItemPurchase(VarsFlags *varsFlags, u16 itemId, u16 quantity);
 
 #endif // POKEPLATINUM_SHOP_MENU_H

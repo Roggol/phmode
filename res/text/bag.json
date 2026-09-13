@@ -541,6 +541,13 @@
     {
       "id": "Bag_Text_RegisteredMenuCancel",
       "en_US": "CANCEL"
+    },
+    {
+      "id": "Bag_Text_CannotUseUndergroundMaintenance",
+      "en_US": [
+        "Sorry, the underground is undergoing\n",
+        "maintenance."
+      ]
     }
   ]
 }

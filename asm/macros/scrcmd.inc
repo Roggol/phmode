@@ -4081,6 +4081,18 @@
     .short \price
     .endm
 
+    .macro CheckShopItemSoldOut item, destVar
+    .short SCRCMD_CHECKSHOPITEMSOLDOUT
+    .short \item
+    .short \destVar
+    .endm
+
+    .macro RecordShopItemPurchase item, quantity
+    .short SCRCMD_RECORDSHOPITEMPURCHASE
+    .short \item
+    .short \quantity
+    .endm
+
     .macro CheckItemIsPlate item, destVar
     .short SCRCMD_CHECKITEMISPLATE
     .short \item

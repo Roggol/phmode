@@ -850,6 +850,8 @@ ScriptCommand(SCRCMD_INFLICTPARTYMONSTATUS,                                ScrCm
 // phmode: appended so existing opcodes keep their values
 ScriptCommand(SCRCMD_GIVEPOKEMONWITHMETLOCATION,                           ScrCmd_GivePokemonWithMetLocation)
 ScriptCommand(SCRCMD_TRYROCKSMASHENCOUNTER,                                ScrCmd_TryRockSmashEncounter)
+ScriptCommand(SCRCMD_CHECKSHOPITEMSOLDOUT,                                 ScrCmd_CheckShopItemSoldOut)
+ScriptCommand(SCRCMD_RECORDSHOPITEMPURCHASE,                               ScrCmd_RecordShopItemPurchase)
 
 // clang-format on
 

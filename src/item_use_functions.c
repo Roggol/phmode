@@ -382,44 +382,8 @@ static BOOL UseExplorerKitInField(ItemFieldUseContext *usageContext)
 
 static enum ItemUseCheckResult CanUseExplorerKit(const ItemUseContext *usageContext)
 {
-    if (MapHeader_GetMapLabelTextID(usageContext->mapHeaderID) == LocationNames_Text_MysteryZone) {
-        return ITEM_USE_CANNOT_USE_GENERIC;
-    }
-
-    if (!MapHeader_IsOnMainMatrix(usageContext->mapHeaderID)) {
-        return ITEM_USE_CANNOT_USE_GENERIC;
-    }
-
-    if (PlayerAvatar_IsOnCyclingRoad(usageContext->playerAvatar) == TRUE) {
-        return ITEM_USE_CANNOT_USE_GENERIC;
-    }
-
-    if (SystemFlag_CheckSafariGameActive(SaveData_GetVarsFlags(usageContext->fieldSystem->saveData)) == TRUE
-        || SystemFlag_CheckInPalPark(SaveData_GetVarsFlags(usageContext->fieldSystem->saveData)) == TRUE) {
-        return ITEM_USE_CANNOT_USE_GENERIC;
-    }
-
-    if (PlayerAvatar_GetPlayerState(usageContext->playerAvatar) == PLAYER_AVATAR_SURFING) {
-        return ITEM_USE_CANNOT_USE_GENERIC;
-    }
-
-    if (TileBehavior_IsBridge(usageContext->currTileBehavior) == TRUE) {
-        return ITEM_USE_CANNOT_USE_GENERIC;
-    }
-
-    if (TileBehavior_ForbidsExplorationKit(usageContext->currTileBehavior) == TRUE) {
-        return ITEM_USE_CANNOT_USE_GENERIC;
-    }
-
-    u16 x = PlayerAvatar_GetXPos(usageContext->fieldSystem->playerAvatar);
-    u16 z = PlayerAvatar_GetZPos(usageContext->fieldSystem->playerAvatar);
-
-    // doesn't match as !MapHeaderData_IsPosFreeOfObjectEvents
-    if (MapHeaderData_IsPosFreeOfObjectEvents(usageContext->fieldSystem, x, z) == FALSE) {
-        return ITEM_USE_CANNOT_USE_GENERIC;
-    }
-
-    return ITEM_USE_CAN_USE;
+    // phmode: the Underground is closed for maintenance and cannot be entered at all.
+    return ITEM_USE_CANNOT_USE_UNDERGROUND_MAINTENANCE;
 }
 
 static void UseBicycleFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext)

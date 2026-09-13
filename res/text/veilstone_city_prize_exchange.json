@@ -114,6 +114,10 @@
         "They have prizes I really want.\n",
         "But Coins, I have none!"
       ]
+    },
+    {
+      "id": "VeilstoneCityPrizeExchange_Text_PrizeSoldOut",
+      "en_US": "Sold out!"
     }
   ]
 }

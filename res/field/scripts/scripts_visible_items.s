@@ -435,7 +435,7 @@ VisibleItems_Route205South_HealBall:
     End
 
 VisibleItems_Route205South_XSpDef:
-    SetVar VAR_0x8008, ITEM_X_SP_DEF
+    SetVar VAR_0x8008, ITEM_PEARL
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -459,7 +459,7 @@ VisibleItems_EternaForest_NetBall:
     End
 
 VisibleItems_EternaForest_GreenShard:
-    SetVar VAR_0x8008, ITEM_GREEN_SHARD
+    SetVar VAR_0x8008, ITEM_PROTEIN
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -471,7 +471,7 @@ VisibleItems_OldChateauSideRooms_OldGateau:
     End
 
 VisibleItems_Route205North_GuardSpec:
-    SetVar VAR_0x8008, ITEM_GUARD_SPEC
+    SetVar VAR_0x8008, ITEM_BIG_MUSHROOM
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -729,7 +729,7 @@ VisibleItems_Route212South_Revive:
     End
 
 VisibleItems_GreatMarsh1_YellowShard:
-    SetVar VAR_0x8008, ITEM_YELLOW_SHARD
+    SetVar VAR_0x8008, ITEM_IRON
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -741,7 +741,7 @@ VisibleItems_GreatMarsh1_PokeBall:
     End
 
 VisibleItems_GreatMarsh2_BlueShard:
-    SetVar VAR_0x8008, ITEM_BLUE_SHARD
+    SetVar VAR_0x8008, ITEM_CALCIUM
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -759,7 +759,7 @@ VisibleItems_GreatMarsh3_GreatBall:
     End
 
 VisibleItems_GreatMarsh4_GreenShard:
-    SetVar VAR_0x8008, ITEM_GREEN_SHARD
+    SetVar VAR_0x8008, ITEM_ZINC
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -771,7 +771,7 @@ VisibleItems_GreatMarsh5_GreatBall:
     End
 
 VisibleItems_GreatMarsh6_RedShard:
-    SetVar VAR_0x8008, ITEM_RED_SHARD
+    SetVar VAR_0x8008, ITEM_CARBOS
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -795,7 +795,7 @@ VisibleItems_Route213_TM40:
     End
 
 VisibleItems_Route213_YellowShard:
-    SetVar VAR_0x8008, ITEM_YELLOW_SHARD
+    SetVar VAR_0x8008, ITEM_HP_UP
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -1011,7 +1011,7 @@ VisibleItems_Route214_BigRoot:
     End
 
 VisibleItems_Route214_RedShard:
-    SetVar VAR_0x8008, ITEM_RED_SHARD
+    SetVar VAR_0x8008, ITEM_PROTEIN
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -1863,13 +1863,13 @@ VisibleItems_Route204North_Awakening:
     End
 
 VisibleItems_Route203_XDefense:
-    SetVar VAR_0x8008, ITEM_X_DEFENSE
+    SetVar VAR_0x8008, ITEM_TINYMUSHROOM
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_Route218_XAccuracy:
-    SetVar VAR_0x8008, ITEM_X_ACCURACY
+    SetVar VAR_0x8008, ITEM_STAR_PIECE
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -1881,19 +1881,19 @@ VisibleItems_JubilifeCity_Potion:
     End
 
 VisibleItems_TrainersSchool_XAttack:
-    SetVar VAR_0x8008, ITEM_X_ATTACK
+    SetVar VAR_0x8008, ITEM_TINYMUSHROOM
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_OreburghCity_DireHit:
-    SetVar VAR_0x8008, ITEM_DIRE_HIT
+    SetVar VAR_0x8008, ITEM_PEARL
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_OreburghCity_YellowShard:
-    SetVar VAR_0x8008, ITEM_YELLOW_SHARD
+    SetVar VAR_0x8008, ITEM_IRON
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -1905,19 +1905,19 @@ VisibleItems_MtCoronet1FNorthRoom1_IceHeal:
     End
 
 VisibleItems_TeamGalacticEternaBuilding2F_XSpeed:
-    SetVar VAR_0x8008, ITEM_X_SPEED
+    SetVar VAR_0x8008, ITEM_STARDUST
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_TeamGalacticEternaBuilding3F_XSpecial:
-    SetVar VAR_0x8008, ITEM_X_SPECIAL
+    SetVar VAR_0x8008, ITEM_BIG_PEARL
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_TeamGalacticEternaBuilding4F_BlueShard:
-    SetVar VAR_0x8008, ITEM_BLUE_SHARD
+    SetVar VAR_0x8008, ITEM_CALCIUM
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -1971,13 +1971,13 @@ VisibleItems_Route212North_Iron:
     End
 
 VisibleItems_Route212North_GreenShard:
-    SetVar VAR_0x8008, ITEM_GREEN_SHARD
+    SetVar VAR_0x8008, ITEM_ZINC
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_Route212South_BlueShard:
-    SetVar VAR_0x8008, ITEM_BLUE_SHARD
+    SetVar VAR_0x8008, ITEM_CARBOS
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -2001,7 +2001,7 @@ VisibleItems_TeamGalacticEternaBuilding4F_Revive:
     End
 
 VisibleItems_Route210North_RedShard:
-    SetVar VAR_0x8008, ITEM_RED_SHARD
+    SetVar VAR_0x8008, ITEM_HP_UP
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -2013,25 +2013,25 @@ VisibleItems_Route210North_Zinc:
     End
 
 VisibleItems_FuegoIronworksBuilding_BlueShard:
-    SetVar VAR_0x8008, ITEM_BLUE_SHARD
+    SetVar VAR_0x8008, ITEM_PROTEIN
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_FuegoIronworksBuilding_RedShard:
-    SetVar VAR_0x8008, ITEM_RED_SHARD
+    SetVar VAR_0x8008, ITEM_IRON
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_FuegoIronworksBuilding_GreenShard:
-    SetVar VAR_0x8008, ITEM_GREEN_SHARD
+    SetVar VAR_0x8008, ITEM_CALCIUM
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_FuegoIronworksBuilding_YellowShard:
-    SetVar VAR_0x8008, ITEM_YELLOW_SHARD
+    SetVar VAR_0x8008, ITEM_ZINC
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -2049,13 +2049,13 @@ VisibleItems_FloaromaMeadow_RareCandy:
     End
 
 VisibleItems_IronIslandB2FLeftRoom_RedShard:
-    SetVar VAR_0x8008, ITEM_RED_SHARD
+    SetVar VAR_0x8008, ITEM_CARBOS
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_IronIslandB1FLeftRoom_YellowShard:
-    SetVar VAR_0x8008, ITEM_YELLOW_SHARD
+    SetVar VAR_0x8008, ITEM_HP_UP
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -2085,7 +2085,7 @@ VisibleItems_Route216_Revive:
     End
 
 VisibleItems_Route217_BlueShard:
-    SetVar VAR_0x8008, ITEM_BLUE_SHARD
+    SetVar VAR_0x8008, ITEM_PROTEIN
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -2121,7 +2121,7 @@ VisibleItems_GalacticHQ1F_DubiousDisc:
     End
 
 VisibleItems_GalacticHQ2F_GreenShard:
-    SetVar VAR_0x8008, ITEM_GREEN_SHARD
+    SetVar VAR_0x8008, ITEM_IRON
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -2169,19 +2169,19 @@ VisibleItems_Route224_UltraBall:
     End
 
 VisibleItems_Route225_GreenShard:
-    SetVar VAR_0x8008, ITEM_GREEN_SHARD
+    SetVar VAR_0x8008, ITEM_CALCIUM
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_Route227_YellowShard:
-    SetVar VAR_0x8008, ITEM_YELLOW_SHARD
+    SetVar VAR_0x8008, ITEM_ZINC
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_Route230_BlueShard:
-    SetVar VAR_0x8008, ITEM_BLUE_SHARD
+    SetVar VAR_0x8008, ITEM_CARBOS
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
@@ -2199,7 +2199,7 @@ VisibleItems_SnowpointCity_UltraBall:
     End
 
 VisibleItems_SurvivalArea_RedShard:
-    SetVar VAR_0x8008, ITEM_RED_SHARD
+    SetVar VAR_0x8008, ITEM_HP_UP
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
