@@ -500,6 +500,44 @@ trio that `BattleMessage_CheckSide` expects for `TAG_NICKNAME`/`TAG_NICKNAME_ABI
 Normalize now gets a ×1.2 power boost on the moves it converts, matching the
 modern ability (previously it only changed the move's type).
 
+### Trainer AI bug fixes (vanilla decomp bugs, not phmode-introduced)
+Three pre-existing bugs in the trainer AI — already flagged with `// BUG:`
+comments in the decomp, or independently confirmed by re-reading the logic —
+were actually fixed rather than left as documented-but-live bugs:
+
+* **Dry Skin was never recognized as a Water immunity.**
+  `src/battle/trainer_ai/script.s`, `Basic_CheckForImmunity` — the ability chain
+  (Volt Absorb / Motor Drive / Water Absorb / Flash Fire / Wonder Guard /
+  Levitate) had a final entry that checked `ABILITY_LEVITATE` a second time
+  instead of `ABILITY_DRY_SKIN`. Since the line above it already branches away
+  whenever the ability *is* Levitate, the duplicate check could never be true —
+  dead code — so the AI never treated Dry Skin as a Water-move immunity/heal
+  when scoring any move against a Dry Skin holder. Now checks `ABILITY_DRY_SKIN`
+  as originally intended.
+* **Metal Burst's speed check looked for a Shiny Stone instead of a Lagging
+  Tail.** `src/battle/trainer_ai/script.s`, `Basic_CheckMetalBurst` — deciding
+  whether either battler reliably moves last (relevant to a move that wants to
+  go after being hit) checked `IfHeldItemEqualTo ..., ITEM_SHINY_STONE` for both
+  the attacker and defender — an unrelated evolution item with no bearing on
+  turn order. Replaced with `LoadHeldItemEffect` + `HOLD_EFFECT_PRIORITY_DOWN`
+  (the hold effect shared by Lagging Tail and Full Incense, both of which force
+  the holder to always move last), matching what the existing "BUG:" comments
+  said this check should have been doing all along.
+* **The AI could dump its entire remaining item pool in one decision.**
+  `src/battle/trainer_ai/trainer_ai.c`, `TrainerAI_ShouldUseItem` — this loops
+  over every item slot in the trainer's tracked inventory and, on finding one
+  that should be used this turn, sets a shared `result` flag to `TRUE` and
+  records that slot. The loop never stopped there, though, and `result` was
+  never reset back to `FALSE` for the next iteration — so every *subsequent*
+  slot's `if (result == TRUE) { ...; trainerItems[i] = 0; }` fired too,
+  regardless of whether that later item's own condition was ever met, silently
+  zeroing every remaining item out of the trainer's list as if each had been
+  used, while only the last one processed actually got recorded as `usedItem`.
+  This is the "AI seems to use up all its items at once" bug — a single
+  qualifying item earlier in the list could wipe out every item after it in the
+  same turn's check. Fixed by `break`ing out of the loop the moment one item is
+  chosen, since only one item is ever actually used per turn anyway.
+
 ---
 
 ## Abilities

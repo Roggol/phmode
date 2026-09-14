@@ -75,7 +75,7 @@ Basic_CheckForImmunity:
     IfLoadedEqualTo ABILITY_FLASH_FIRE, Basic_CheckFireAbsorption
     IfLoadedEqualTo ABILITY_WONDER_GUARD, Basic_CheckWonderGuard
     IfLoadedEqualTo ABILITY_LEVITATE, Basic_CheckGroundAbsorption
-    IfLoadedEqualTo ABILITY_LEVITATE, Basic_CheckWaterAbsorption2 // BUG: This line should branch on Dry Skin rather than Levitate
+    IfLoadedEqualTo ABILITY_DRY_SKIN, Basic_CheckWaterAbsorption2 // phmode bug fix: was checking ABILITY_LEVITATE again, which can never be true here
     GoTo Basic_NoImmunityAbility
 
 Basic_CheckElectricAbsorption:
@@ -1161,19 +1161,22 @@ Basic_CheckMetalBurst:
     // If the target is immune to Metal Burst due to its typing (?), score -10.
     IfMoveEffectivenessEquals TYPE_MULTI_IMMUNE, ScoreMinus10
 
-    // If the target's ability is Stall or they are holding a Shiny Stone, score -10.
-    // BUG: This should use the command LoadHeldItemEffect to check for the Lagging Tail
-    // effect.
+    // If the target's ability is Stall or they are holding a Lagging Tail (or Full Incense -
+    // same "always moves last" hold effect), score -10.
+    // phmode bug fix: was checking for the unrelated item Shiny Stone instead of using
+    // LoadHeldItemEffect to check for the Lagging Tail effect, as this comment always said it should.
     LoadBattlerAbility AI_BATTLER_DEFENDER
     IfLoadedEqualTo ABILITY_STALL, ScoreMinus10
-    IfHeldItemEqualTo AI_BATTLER_DEFENDER, ITEM_SHINY_STONE, ScoreMinus10
+    LoadHeldItemEffect AI_BATTLER_DEFENDER
+    IfLoadedEqualTo HOLD_EFFECT_PRIORITY_DOWN, ScoreMinus10
 
-    // If the attacker's ability is Stall or they are holding a Shiny Stone, terminate.
-    // BUG: This should use the command LoadHeldItemEffect to check for the Lagging Tail
-    // effect.
+    // If the attacker's ability is Stall or they are holding a Lagging Tail (or Full Incense),
+    // terminate.
+    // phmode bug fix: same Shiny-Stone-instead-of-Lagging-Tail mistake as above.
     LoadBattlerAbility AI_BATTLER_ATTACKER
     IfLoadedEqualTo ABILITY_STALL, Basic_CheckMetalBurst_Terminate
-    IfHeldItemEqualTo AI_BATTLER_ATTACKER, ITEM_SHINY_STONE, Basic_CheckMetalBurst_Terminate
+    LoadHeldItemEffect AI_BATTLER_ATTACKER
+    IfLoadedEqualTo HOLD_EFFECT_PRIORITY_DOWN, Basic_CheckMetalBurst_Terminate
 
     // If the attacker is faster than the target, score -10.
     IfSpeedCompareEqualTo COMPARE_SPEED_FASTER, ScoreMinus10

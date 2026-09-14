@@ -4198,6 +4198,13 @@ static BOOL TrainerAI_ShouldUseItem(BattleSystem *battleSys, int battler)
             if (result == TRUE) {
                 AI_CONTEXT.usedItem[battler >> 1] = item;
                 AI_CONTEXT.trainerItems[battler >> 1][i] = 0;
+                // phmode bug fix: without this break, `result` (never reset between iterations)
+                // stayed TRUE for every slot after the first match, so this block re-ran for
+                // every remaining item regardless of whether ITS condition was met, zeroing them
+                // all out of the trainer's item list as if each had been used this turn. That's
+                // the "AI dumps its whole inventory at once" bug - stop as soon as one item is
+                // chosen, matching the fact that only one item can actually be used per turn.
+                break;
             }
         }
     }

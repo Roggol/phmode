@@ -134,6 +134,14 @@ less tedious to play.
 - **The battle AI understands terrain**, not just weather — trainers will
   now factor an active terrain into their decision-making the same way
   they already did for weather.
+- **Three long-standing trainer AI bugs from the original game are fixed:**
+  trainers now correctly recognize that Dry Skin makes a Pokémon immune to
+  (and healed by) Water-type moves; a move that cares about who moves last
+  now correctly checks for a held Lagging Tail or Full Incense instead of a
+  completely unrelated item; and trainers no longer sometimes silently lose
+  their entire remaining item inventory in a single turn due to a decision-
+  making bug — something that could previously make trainers seem to
+  "run out of items" much earlier than they actually should have.
 - **Dialga, Palkia, and Giratina have new signature abilities** in place
   of their old ones (see the Pokémon-by-Pokémon list below for details).
 - **The Normalize ability now also boosts the power of the Normal-type
