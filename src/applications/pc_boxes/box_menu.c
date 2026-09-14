@@ -50,6 +50,8 @@ void BoxMenu_FillTopLevelMenuItems(BoxApplication *boxApp)
 
         if (preview->isEgg == FALSE) {
             BoxMenu_AddMenuItem(menu, BOX_MENU_ITEM);
+            // phmode: lets the player rename the previewed mon right here, like the Name Rater.
+            BoxMenu_AddMenuItem(menu, BOX_MENU_RENAME_MON);
         }
 
         BoxMenu_AddMenuItem(menu, (BoxApp_GetCursorLocation(boxApp) == CURSOR_IN_BOX) ? BOX_MENU_WITHDRAW : BOX_MENU_STORE);

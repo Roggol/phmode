@@ -1819,6 +1819,10 @@ static u8 GetContextMenuEntriesForPartyMon(PartyMenuApplication *application, u8
             menuEntriesBuffer[count] = 0;
             count++;
 
+            // phmode: non-egg party mons get a "Rename" option, same spot as "Hatch" for eggs.
+            menuEntriesBuffer[count] = PARTY_MENU_STR_RENAME;
+            count++;
+
             if (Item_IsMail(application->partyMembers[application->currPartySlot].heldItem) == TRUE) {
                 menuEntriesBuffer[count] = 5;
             } else {

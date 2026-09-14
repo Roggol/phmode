@@ -138,6 +138,7 @@ static void BoxAppMan_CheckShouldMonReturn(BoxApplicationManager *boxAppMan);
 static void CheckLastMonWithReleaseBlockingMove(SysTask *task, void *releaseMon);
 static BOOL BoxPokemon_HasMove(BoxPokemon *boxMon, u16 move);
 static void BoxAppMan_RenameBoxAction(BoxApplicationManager *boxAppMan, u32 *state);
+static void BoxAppMan_RenameMonAction(BoxApplicationManager *boxAppMan, u32 *state);
 static void BoxAppMan_OpenSummaryAction(BoxApplicationManager *boxAppMan, u32 *state);
 static void BoxApp_SetCursorPosToSummaryMonPos(BoxApplication *boxApp, BoxApplicationManager *boxAppMan);
 static void BoxAppMan_GiveItemFromBagAction(BoxApplicationManager *boxAppMan, u32 *state);
@@ -1119,6 +1120,9 @@ static void BoxAppMan_MonCursorMenuAction(BoxApplicationManager *boxAppMan, u32 
                 BoxAppMan_RegisterBoxApplicationAction(boxAppMan, BoxAppMan_MonItemHeldAction);
             }
         } break;
+        case BOX_MENU_RENAME_MON:
+            BoxAppMan_RegisterBoxApplicationAction(boxAppMan, BoxAppMan_RenameMonAction);
+            break;
         case BOX_MENU_SET_ON_LEFT:
         case BOX_MENU_SET_ON_RIGHT:
             BoxApp_ToggleCompareMonSlot(&boxAppMan->boxApp);
@@ -2481,6 +2485,65 @@ static void BoxAppMan_RenameBoxAction(BoxApplicationManager *boxAppMan, u32 *sta
             PCBoxes_RenameBox(boxAppMan->pcBoxes, boxID, boxAppMan->namingScreenArgs->textInputStr);
 
             PCBoxes_LoadCustomization(boxAppMan->pcBoxes, &boxAppMan->boxApp.customization);
+            BoxGraphics_Load(&boxAppMan->unk_114, &boxAppMan->boxApp, boxAppMan);
+            BoxAppMan_RegisterBoxApplicationAction(boxAppMan, BoxAppMan_ReturnToBoxFade1Action);
+        }
+        break;
+    }
+}
+
+// phmode: "Rename" on a box mon's context menu, letting the player nickname it the same
+// way the Name Rater NPC does, without leaving the PC. Mirrors BoxAppMan_RenameBoxAction
+// above, but launches a fresh NAMING_SCREEN_TYPE_POKEMON args struct for the previewed mon
+// instead of reusing boxAppMan's persistent (NAMING_SCREEN_TYPE_BOX) one, and applies the
+// result to that mon's nickname instead of the current box's name.
+enum RenameMonStates {
+    RENAME_MON_START,
+    RENAME_MON_LAUNCH_TEXT_INPUT_APP,
+    RENAME_MON_RETURN_TO_BOX
+};
+
+static void BoxAppMan_RenameMonAction(BoxApplicationManager *boxAppMan, u32 *state)
+{
+    switch (*state) {
+    case RENAME_MON_START:
+        BoxGraphics_TaskHandler(boxAppMan->unk_114, FUNC_BoxGraphics_ScreenFadeBothToBlack2);
+        (*state)++;
+        break;
+    case RENAME_MON_LAUNCH_TEXT_INPUT_APP:
+        if (BoxGraphics_IsSysTaskDone(boxAppMan->unk_114, FUNC_BoxGraphics_ScreenFadeBothToBlack2)) {
+            BoxPokemon *previewedMon = boxAppMan->boxApp.pcMonPreview.mon;
+
+            BoxGraphics_Free(boxAppMan->unk_114);
+            Heap_Destroy(HEAP_ID_BOX_GRAPHICS);
+
+            boxAppMan->monRenameArgs = NamingScreenArgs_Init(HEAP_ID_BOX_DATA, NAMING_SCREEN_TYPE_POKEMON, BoxPokemon_GetValue(previewedMon, MON_DATA_SPECIES, NULL), MON_NAME_LEN, boxAppMan->options);
+            boxAppMan->monRenameArgs->monGender = BoxPokemon_GetValue(previewedMon, MON_DATA_GENDER, NULL);
+            boxAppMan->monRenameArgs->monForm = BoxPokemon_GetValue(previewedMon, MON_DATA_FORM, NULL);
+
+            boxAppMan->ApplicationManager = ApplicationManager_New(&gNamingScreenAppTemplate, boxAppMan->monRenameArgs, HEAP_ID_BOX_DATA);
+            (*state)++;
+        }
+        break;
+    case RENAME_MON_RETURN_TO_BOX:
+        if (ApplicationManager_Exec(boxAppMan->ApplicationManager)) {
+            BoxPokemon *previewedMon = boxAppMan->boxApp.pcMonPreview.mon;
+
+            ApplicationManager_Free(boxAppMan->ApplicationManager);
+            Heap_Create(HEAP_ID_APPLICATION, HEAP_ID_BOX_GRAPHICS, 245760);
+
+            if (boxAppMan->monRenameArgs->returnCode == NAMING_SCREEN_CODE_OK) {
+                BoxPokemon_SetValue(previewedMon, MON_DATA_NICKNAME_AND_FLAG, (u8 *)&boxAppMan->monRenameArgs->nameInputRaw);
+                BoxPokemon_GetValue(previewedMon, MON_DATA_NICKNAME_STRING, boxAppMan->boxApp.pcMonPreview.nickname);
+
+                if (BoxApp_GetCursorLocation(&boxAppMan->boxApp) == CURSOR_IN_BOX && BoxApp_GetPreviewMonSource(&boxAppMan->boxApp) == PREVIEW_MON_UNDER_CURSOR) {
+                    SaveData_SetFullSaveRequired();
+                }
+            }
+
+            NamingScreenArgs_Free(boxAppMan->monRenameArgs);
+            boxAppMan->monRenameArgs = NULL;
+
             BoxGraphics_Load(&boxAppMan->unk_114, &boxAppMan->boxApp, boxAppMan);
             BoxAppMan_RegisterBoxApplicationAction(boxAppMan, BoxAppMan_ReturnToBoxFade1Action);
         }

@@ -67,6 +67,10 @@ enum BoxMenuItem {
     BOX_MENU_SET_ON_RIGHT,
     BOX_MENU_YES,
     BOX_MENU_NO,
+    // phmode: "Rename" for a mon selected in a box or the party. Appended right before the
+    // marking range so every existing menu-item's text-bank offset (24 + value, see
+    // ov19_021DB2FC.c) stays unshifted.
+    BOX_MENU_RENAME_MON,
     BOX_MENU_FIRST_MARKING,
     BOX_MENU_CIRCLE = BOX_MENU_FIRST_MARKING,
     BOX_MENU_TRIANGLE,

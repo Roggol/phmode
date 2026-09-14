@@ -39,6 +39,7 @@
 static void PartyMenu_SelectSwitch(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectSummary(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectHatch(PartyMenuApplication *application, int *partyMenuState);
+static void PartyMenu_SelectRename(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectFieldMove(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectCut(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectRockSmash(PartyMenuApplication *application, int *partyMenuState);
@@ -102,6 +103,7 @@ enum {
     ACTION_SET_CAPSULE,
     ACTION_CLEANUP_2,
     ACTION_HATCH,
+    ACTION_RENAME,
     ACTION_CUT,
     ACTION_FLY,
     ACTION_SURF,
@@ -141,6 +143,7 @@ static const union PartyMenuActionFunc sPartyMenuActions[ACTION_MAX] = {
     [ACTION_SET_CAPSULE] = PartyMenu_SetBallCapsuleAction,
     [ACTION_CLEANUP_2] =   PartyMenu_CleanupContextMenu2,
     [ACTION_HATCH] =       PartyMenu_SelectHatch,
+    [ACTION_RENAME] =      PartyMenu_SelectRename,
     [ACTION_CUT] =         PartyMenu_SelectCut,
     [ACTION_FLY] =         PartyMenu_SelectFly,
     [ACTION_SURF] =        PartyMenu_SelectSurf,
@@ -860,6 +863,19 @@ static void PartyMenu_SelectHatch(PartyMenuApplication *application, int *partyM
 
     application->partyMenu->selectedMonSlot = application->currPartySlot;
     application->partyMenu->menuSelectionResult = PARTY_MENU_EXIT_CODE_HATCH_EGG;
+
+    *partyMenuState = PARTY_MENU_STATE_FADE_OUT;
+}
+
+// phmode: "Rename" on a party mon's context menu, mirrors "Hatch" above. Exits to the field,
+// where the start menu opens the naming screen for this slot (see StartMenu_ExitPartyMenu).
+static void PartyMenu_SelectRename(PartyMenuApplication *application, int *partyMenuState)
+{
+    Menu_Free(application->contextMenu, NULL);
+    StringList_Free(application->contextMenuChoices);
+
+    application->partyMenu->selectedMonSlot = application->currPartySlot;
+    application->partyMenu->menuSelectionResult = PARTY_MENU_EXIT_CODE_RENAME;
 
     *partyMenuState = PARTY_MENU_STATE_FADE_OUT;
 }

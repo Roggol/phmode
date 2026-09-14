@@ -155,6 +155,7 @@ static void StartMenu_ApplicationRun(FieldTask *fieldTask);
 static BOOL StartMenu_SelectPokedex(FieldTask *fieldTask);
 static BOOL StartMenu_OpenPokedex(FieldTask *fieldTask);
 static BOOL StartMenu_ExitPokedex(FieldTask *fieldTask);
+static BOOL StartMenu_ExitRenameMon(FieldTask *fieldTask);
 static BOOL StartMenu_SelectTrainerCase(FieldTask *fieldTask);
 static BOOL StartMenu_TrainerCase(FieldTask *fieldTask);
 static BOOL StartMenu_ExitTrainerCase(FieldTask *fieldTask);
@@ -922,6 +923,28 @@ static BOOL StartMenu_ExitPokedex(FieldTask *fieldTask)
     return FALSE;
 }
 
+static BOOL StartMenu_ExitRenameMon(FieldTask *fieldTask)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(fieldTask);
+    StartMenu *menu = FieldTask_GetEnv(fieldTask);
+    NamingScreenArgs *nameArgs = menu->taskData;
+    u32 slot = *(u32 *)menu->additionalTaskContext;
+
+    Heap_FreeExplicit(HEAP_ID_FIELD2, menu->additionalTaskContext);
+
+    if (nameArgs->returnCode == NAMING_SCREEN_CODE_OK) {
+        Pokemon *mon = Party_GetPokemonBySlotIndex(SaveData_GetParty(fieldSystem->saveData), slot);
+        Pokemon_SetValue(mon, MON_DATA_NICKNAME_AND_FLAG, (u8 *)&nameArgs->nameInputRaw);
+    }
+
+    NamingScreenArgs_Free(nameArgs);
+
+    FieldSystem_StartFieldMap(fieldSystem);
+    menu->state = START_MENU_STATE_REINIT;
+
+    return FALSE;
+}
+
 static BOOL StartMenu_SelectPokemon(FieldTask *fieldTask)
 {
     StartMenu *menu = FieldTask_GetEnv(fieldTask);
@@ -1125,6 +1148,28 @@ BOOL StartMenu_ExitPartyMenu(FieldTask *fieldTask)
         menu->taskData = NULL;
         menu->state = START_MENU_STATE_NEW_TASK;
         break;
+    case PARTY_MENU_EXIT_CODE_RENAME: {
+        // phmode: "Rename" from the party menu's context menu. Opens the naming screen as a
+        // proper child process (like Summary/Pokedex above), not via sub_0203DFE8's FieldTask
+        // stack-push — that helper is built for a script's own task to resume afterward, but
+        // StartMenu_ApplicationRun re-invokes menu->callback once FieldSystem_IsRunningApplication
+        // goes false, so leaving menu->callback/state untouched made it double-fire this case
+        // and double-free menu->taskData.
+        Pokemon *mon = Party_GetPokemonBySlotIndex(SaveData_GetParty(fieldSystem->saveData), partyMenu->selectedMonSlot);
+        NamingScreenArgs *nameArgs = NamingScreenArgs_Init(HEAP_ID_FIELD2, NAMING_SCREEN_TYPE_POKEMON, Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL), MON_NAME_LEN, SaveData_GetOptions(fieldSystem->saveData));
+
+        nameArgs->monGender = Pokemon_GetValue(mon, MON_DATA_GENDER, NULL);
+        nameArgs->monForm = Pokemon_GetValue(mon, MON_DATA_FORM, NULL);
+
+        u32 *slot = (u32 *)Heap_Alloc(HEAP_ID_FIELD2, sizeof(u32));
+        *slot = partyMenu->selectedMonSlot;
+        menu->additionalTaskContext = slot;
+
+        FieldSystem_StartChildProcess(fieldSystem, &gNamingScreenAppTemplate, nameArgs);
+
+        menu->taskData = nameArgs;
+        StartMenu_SetCallback(menu, StartMenu_ExitRenameMon);
+    } break;
     default:
         if (partyMenu->mode == PARTY_MENU_MODE_USE_ITEM || partyMenu->mode == PARTY_MENU_MODE_TEACH_MOVE || partyMenu->mode == PARTY_MENU_MODE_TEACH_MOVE_DONE || partyMenu->mode == PARTY_MENU_MODE_USE_EVO_ITEM || partyMenu->mode == PARTY_MENU_MODE_LEVEL_MOVE_DONE) {
             menu->taskData = FieldSystem_OpenBag(fieldSystem, &menu->itemUseCtx);

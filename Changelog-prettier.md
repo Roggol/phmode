@@ -44,6 +44,11 @@ less tedious to play.
   the bar — the same way your own Pokémon's HP is displayed.
 - **HP bars drain about 4x faster** when a Pokémon gets hit, so you're not
   stuck watching a slow crawl on a big hit against a high-HP Pokémon.
+- **You can rename a Pokémon right from the party menu or a PC box.**
+  Selecting a Pokémon (that isn't an egg) from your party (START → Pokémon) or
+  from inside a PC Storage Box now offers a **RENAME** option, which opens the
+  same nickname keyboard the Name Rater NPC uses — no need to make the trip to
+  see him just to fix a nickname.
 - **The Summary screen can show hidden stat details.** On a Pokémon's
   Skills page, hold **L** to see its Effort Values (EVs) in place of the
   normal stat numbers, or hold **R** to see its Individual Values (IVs).

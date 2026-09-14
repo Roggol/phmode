@@ -222,6 +222,62 @@ walking it out.
 Only the START-menu party screen is affected; the selection/bag/daycare party
 modes are unchanged.
 
+### "Rename" option in the party menu and PC boxes
+Selecting a non-egg Pokémon in the field party menu (START → Pokémon) or in a
+PC Storage Box now offers a **RENAME** option that opens the same nickname-entry
+keyboard the Name Rater NPC uses, without a trip to Route 213.
+
+* **Party menu** (`include/applications/party_menu/defs.h`,
+  `src/applications/party_menu/{context_menu.c,main.c,windows.c}`) — new
+  `PARTY_MENU_STR_RENAME` (inserted before `PARTY_MENU_STR_MOVE0`, kept aligned
+  with a new `ACTION_RENAME` before `ACTION_CUT` in `context_menu.c`, the same
+  pairing convention `PARTY_MENU_STR_HATCH`/`ACTION_HATCH` already established)
+  and a new exit code `PARTY_MENU_EXIT_CODE_RENAME`, appended after
+  `PARTY_MENU_EXIT_CODE_HATCH_EGG`. `GetContextMenuEntriesForPartyMon` adds the
+  entry for every non-egg party mon, right after Switch. `PartyMenu_SelectRename`
+  records the slot and exits with the new code. New string `PartyMenu_Text_Rename`
+  ("RENAME") in `res/text/party_menu.json`.
+* **Bug fix**: `StartMenu_ExitPartyMenu` (`src/start_menu.c`) originally handled
+  this by calling `sub_0203DFE8` — the same low-level helper
+  `ScrCmd_OpenPokemonNamingScreen` (the Name Rater's script command) uses —
+  which opens the naming screen by pushing a new frame onto the FieldTask call
+  stack (`FieldTask_InitCall`) rather than as a tracked child process. That's the
+  right tool for a script's own task to resume linearly afterward, but the start
+  menu's `StartMenu_ApplicationRun` re-invokes `menu->callback` on its own once
+  `FieldSystem_IsRunningApplication` goes false, and this path never updated
+  `menu->callback`/`menu->state` away from `StartMenu_ExitPartyMenu` — so once the
+  naming screen closed and control popped back, `StartMenu_ExitPartyMenu` fired a
+  second time against an already-freed `menu->taskData`, corrupting the heap
+  (symptom: a blank screen right after confirming the new nickname). Fixed by
+  opening the naming screen the same way Summary/Pokedex do —
+  `FieldSystem_StartChildProcess(fieldSystem, &gNamingScreenAppTemplate, nameArgs)`
+  — and adding a dedicated `StartMenu_ExitRenameMon` callback (set via
+  `StartMenu_SetCallback`) that applies the result once the screen actually
+  closes, then returns to the field the same way `StartMenu_ExitPokedex` does.
+  The party slot is threaded through via `menu->additionalTaskContext`, the same
+  mechanism the Fly-destination and TM/level-up move-overwrite flows already use
+  for an extra value alongside `menu->taskData`.
+* **PC boxes** (`include/applications/pc_boxes/{struct_box_menu.h,box_app_manager.h}`,
+  `src/applications/pc_boxes/{box_menu.c,box_app_manager.c}`) — new
+  `BOX_MENU_RENAME_MON`, appended immediately before `BOX_MENU_FIRST_MARKING` so
+  every existing `BoxMenuItem`'s text-bank offset (`24 + value`, see
+  `ov19_021DB2FC.c`) stays put; a matching string is appended to
+  `res/text/pokemon_storage_system.json` (index 80,
+  `PokemonStorageSystem_Text_RenameMon`, "RENAME"). `BoxMenu_FillTopLevelMenuItems`
+  adds the entry for every non-egg mon in the default (move-mons) mode, right
+  after Item — exactly `MAX_MENU_ITEMS` (8) entries in the worst case, so no
+  overflow. `BoxAppMan_RenameMonAction` (modeled on the existing
+  `BoxAppMan_RenameBoxAction`, which already renames the *box itself* the same
+  way) allocates a fresh `NAMING_SCREEN_TYPE_POKEMON` `NamingScreenArgs` (a new
+  `BoxApplicationManager::monRenameArgs` field, since the existing
+  `namingScreenArgs` field is permanently configured for box names) for whichever
+  mon is currently under the cursor (`boxApp.pcMonPreview.mon`, which already
+  transparently points at the right `BoxPokemon` whether that mon is sitting in
+  a box or in the party column), applies the result via
+  `BoxPokemon_SetValue(..., MON_DATA_NICKNAME_AND_FLAG, ...)` when the naming
+  screen reports `NAMING_SCREEN_CODE_OK` (a cancelled entry changes nothing),
+  and refreshes the on-screen preview nickname before returning to the box.
+
 ### Starter is "Met at Rowan's briefcase"
 
 The starter's summary/memo now reads **"Met at Rowan's briefcase"** instead of

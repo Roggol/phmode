@@ -320,6 +320,10 @@
     {
       "id": "pl_msg_00000018_00079",
       "en_US": "No"
+    },
+    {
+      "id": "PokemonStorageSystem_Text_RenameMon",
+      "en_US": "RENAME"
     }
   ]
 }

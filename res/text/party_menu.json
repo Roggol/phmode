@@ -1010,6 +1010,10 @@
     {
       "id": "PartyMenu_Text_Hatch",
       "en_US": "HATCH"
+    },
+    {
+      "id": "PartyMenu_Text_Rename",
+      "en_US": "RENAME"
     }
   ]
 }

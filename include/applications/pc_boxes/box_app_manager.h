@@ -98,6 +98,7 @@ typedef struct BoxApplicationManager {
     PCBoxes *pcBoxes;
     Party *party;
     NamingScreenArgs *namingScreenArgs;
+    NamingScreenArgs *monRenameArgs; // phmode: temp NAMING_SCREEN_TYPE_POKEMON args for BoxAppMan_RenameMonAction
     PokemonSummary monSummary;
     ReleaseMon releaseMon;
     TouchScreenActions *mainBoxAndCompareButtonsAction;
