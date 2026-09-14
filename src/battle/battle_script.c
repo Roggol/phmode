@@ -4643,7 +4643,10 @@ static BOOL BtlCmd_TryDisable(BattleSystem *battleSys, BattleContext *battleCtx)
     if (DEFENDING_MON.moveEffectsData.disabledMove == MOVE_NONE
         && moveSlot != LEARNED_MOVES_MAX
         && DEFENDING_MON.ppCur[moveSlot]
-        && DEFENDER_LAST_MOVE) {
+        && DEFENDER_LAST_MOVE
+        // phmode fix: Disable never checked for the target's Substitute, so it worked
+        // straight through one.
+        && (DEFENDING_MON.statusVolatile & VOLATILE_CONDITION_SUBSTITUTE) == FALSE) {
         battleCtx->msgMoveTemp = DEFENDER_LAST_MOVE;
         DEFENDING_MON.moveEffectsData.disabledMove = battleCtx->msgMoveTemp;
         DEFENDING_MON.moveEffectsData.disabledTurns = BattleSystem_RandNext(battleSys) % 4 + 3; // range: [3-6]
@@ -4790,7 +4793,10 @@ static BOOL BtlCmd_TryEncore(BattleSystem *battleSys, BattleContext *battleCtx)
     if (DEFENDING_MON.moveEffectsData.encoredMove == MOVE_NONE
         && moveSlot != LEARNED_MOVES_MAX
         && DEFENDING_MON.ppCur[moveSlot]
-        && DEFENDER_LAST_MOVE) {
+        && DEFENDER_LAST_MOVE
+        // phmode fix: Encore never checked for the target's Substitute, so it worked
+        // straight through one.
+        && (DEFENDING_MON.statusVolatile & VOLATILE_CONDITION_SUBSTITUTE) == FALSE) {
         battleCtx->msgMoveTemp = DEFENDER_LAST_MOVE;
         DEFENDING_MON.moveEffectsData.encoredMove = battleCtx->msgMoveTemp;
         DEFENDING_MON.moveEffectsData.encoredMoveSlot = moveSlot;
@@ -5909,7 +5915,10 @@ static BOOL BtlCmd_TryAttract(BattleSystem *battleSys, BattleContext *battleCtx)
     if (battleCtx->battleMons[battleCtx->msgBattlerTemp].gender == battleCtx->battleMons[battleCtx->sideEffectMon].gender
         || battleCtx->battleMons[battleCtx->sideEffectMon].statusVolatile & VOLATILE_CONDITION_ATTRACT
         || battleCtx->battleMons[battleCtx->msgBattlerTemp].gender == GENDER_NONE
-        || battleCtx->battleMons[battleCtx->sideEffectMon].gender == GENDER_NONE) {
+        || battleCtx->battleMons[battleCtx->sideEffectMon].gender == GENDER_NONE
+        // phmode fix: Attract never checked for the target's Substitute, so it worked
+        // straight through one.
+        || battleCtx->battleMons[battleCtx->sideEffectMon].statusVolatile & VOLATILE_CONDITION_SUBSTITUTE) {
         BattleScript_Iter(battleCtx, jumpOnFail);
     } else {
         battleCtx->battleMons[battleCtx->sideEffectMon].statusVolatile |= FlagIndex(battleCtx->msgBattlerTemp) << VOLATILE_CONDITION_ATTRACT_SHIFT;

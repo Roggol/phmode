@@ -134,6 +134,54 @@ less tedious to play.
 - **The battle AI understands terrain**, not just weather — trainers will
   now factor an active terrain into their decision-making the same way
   they already did for weather.
+- **The AI also reacts to what each terrain actually does, not just that
+  one is active.** Trainers now avoid sleep-inducing moves (and Rest)
+  against a grounded target while Electric Terrain is up, since it would
+  just fail; avoid priority moves against a grounded target under Psychic
+  Terrain for the same reason; and under Distortion Terrain, heavily avoid
+  any move that would normally guarantee raising their own stats (since
+  it'd backfire into a stat drop instead), with a smaller reluctance
+  toward moves that only have a *chance* to raise a stat on a hit. The same
+  logic runs in reverse too: a move like Superpower or Close Combat, whose
+  own drawback is a guaranteed stat drop, is now seen as *more* appealing
+  under Distortion Terrain (since that drawback backfires into a benefit),
+  while a move that would normally guarantee lowering the opponent's
+  stats (Growl, Leer, Tickle, and the like) is now heavily avoided, since
+  it would actually help them instead — with the same lighter reluctance
+  for moves that only have a chance to do that on a hit. None of this
+  applies to a trainer's Sheer Force Pokémon, since Sheer Force already
+  removes those chance-based effects entirely.
+- **Trainers now also weigh Sticky Web the same way they already do Stealth
+  Rock, Spikes, and Toxic Spikes** — they won't bother laying it again if
+  it's already active on your side, and won't bother at all if you're down
+  to your last Pokémon.
+- **Trainers now correctly recognize that a Sturdy or Focus Sash Pokémon at
+  full HP will survive an otherwise-fatal hit**, instead of assuming the
+  hit is a guaranteed knockout. This doesn't apply to Focus Band, since its
+  "hang on" effect is a random chance rather than a guaranteed save.
+- **Trainers now recognize when your Substitute would block their move
+  entirely**, and avoid wasting a turn on status moves like Thunder Wave,
+  Toxic, or Growl against it.
+- **Fixed a bug where Disable, Taunt, Torment, Encore, and Attract could
+  be used right through a Substitute** as if it weren't there. All five now
+  correctly fail against one, like every other status move, and trainers
+  know to avoid them too.
+- **Trainers now pay attention to entry hazards on their own side when
+  switching.** If Stealth Rock, Spikes, Toxic Spikes, or Sticky Web are
+  already down on their side and they have a Pokémon that knows Defog or
+  Rapid Spin, they'll occasionally switch to it specifically to clear the
+  hazards, and they'll now generally prefer bringing that Pokémon in first
+  whenever they need to pick a replacement for any reason while hazards are
+  up.
+- **Fixed a documented bug in how trainers pick a replacement Pokémon after
+  a KO**, where a quad-effective type matchup (4x super effective) could be
+  undervalued compared to a merely double-effective one due to an internal
+  scoring error.
+- **Trainers now favor Sucker Punch more when you've been attacking.** Since
+  Sucker Punch only works if you use a damaging move that same turn, a
+  trainer now checks whether your *last* move was an attack (rather than a
+  status move or nothing yet) and leans into Sucker Punch noticeably more
+  when it was.
 - **Three long-standing trainer AI bugs from the original game are fixed:**
   trainers now correctly recognize that Dry Skin makes a Pokémon immune to
   (and healed by) Water-type moves; a move that cares about who moves last
@@ -142,6 +190,12 @@ less tedious to play.
   their entire remaining item inventory in a single turn due to a decision-
   making bug — something that could previously make trainers seem to
   "run out of items" much earlier than they actually should have.
+- **Trainers are now a little more cautious about moves that might not
+  work.** If a trainer hasn't seen your Pokémon's ability yet, but it could
+  be one of two possible abilities and one of them would block or absorb
+  the move they're considering (like Water Absorb, Flash Fire, or
+  Levitate), they'll lean away from that move slightly — without ever
+  assuming they know for sure what your ability actually is.
 - **Dialga, Palkia, and Giratina have new signature abilities** in place
   of their old ones (see the Pokémon-by-Pokémon list below for details).
 - **The Normalize ability now also boosts the power of the Normal-type

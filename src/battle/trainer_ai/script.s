@@ -53,6 +53,25 @@ Basic_Main:
     // Ignore this flag on partner battlers.
     IfTargetIsPartner Terminate
 
+    // phmode: Psychic Terrain blocks a priority move against a grounded opponent
+    // outright. IfTargetIsPartner above already guarantees the defender here is a
+    // genuine opponent, matching the terrain's "opposing side only" restriction.
+    IfFieldConditionsMask FIELD_CONDITION_PSYCHIC_TERRAIN, Basic_CheckPsychicTerrainPriority
+    GoTo Basic_CheckOHKO
+
+Basic_CheckPsychicTerrainPriority:
+    LoadCurrentMovePriority
+    IfLoadedLessThan 1, Basic_CheckOHKO
+    IfFieldConditionsMask FIELD_CONDITION_GRAVITY, ScoreMinus10
+    LoadHeldItemEffect AI_BATTLER_DEFENDER
+    IfLoadedEqualTo HOLD_EFFECT_SPEED_DOWN_GROUNDED, ScoreMinus10
+    LoadBattlerAbility AI_BATTLER_DEFENDER
+    IfLoadedEqualTo ABILITY_LEVITATE, Basic_CheckOHKO
+    FlagBattlerIsType AI_BATTLER_DEFENDER, TYPE_FLYING
+    IfLoadedEqualTo AI_HAVE, Basic_CheckOHKO
+    GoTo ScoreMinus10
+
+Basic_CheckOHKO:
     // Skip damage scoring for OHKO moves (only Fissure and Horn Drill)
     IfMoveEqualTo MOVE_FISSURE, Basic_CheckForImmunity
     IfMoveEqualTo MOVE_HORN_DRILL, Basic_CheckForImmunity
@@ -76,7 +95,7 @@ Basic_CheckForImmunity:
     IfLoadedEqualTo ABILITY_WONDER_GUARD, Basic_CheckWonderGuard
     IfLoadedEqualTo ABILITY_LEVITATE, Basic_CheckGroundAbsorption
     IfLoadedEqualTo ABILITY_DRY_SKIN, Basic_CheckWaterAbsorption2 // phmode bug fix: was checking ABILITY_LEVITATE again, which can never be true here
-    GoTo Basic_NoImmunityAbility
+    GoTo Basic_CheckPossibleImmunityAbility
 
 Basic_CheckElectricAbsorption:
     LoadTypeFrom LOAD_MOVE_TYPE
@@ -108,6 +127,49 @@ Basic_CheckWaterAbsorption2:
     IfTempEqualTo TYPE_WATER, ScoreMinus12
     GoTo Basic_NoImmunityAbility
 
+// phmode: none of the checks above found a *confirmed or guessed* immunity ability, but the
+// defender's ability might still be genuinely unknown - one of its two possible abilities could
+// be an immunity to this move's type without us knowing for sure it's the one it actually has.
+// CheckBattlerAbility (unlike LoadBattlerAbility above) doesn't guess in that case; it reports
+// AI_UNKNOWN instead. Rather than gamble on the full immunity-level penalty, just nudge the
+// score down a little, so the AI leans away from a move that *might* be walled without fully
+// assuming it will be.
+Basic_CheckPossibleImmunityAbility:
+    LoadTypeFrom LOAD_MOVE_TYPE
+    IfLoadedEqualTo TYPE_ELECTRIC, Basic_CheckPossibleElectricImmunity
+    IfLoadedEqualTo TYPE_WATER, Basic_CheckPossibleWaterImmunity
+    IfLoadedEqualTo TYPE_FIRE, Basic_CheckPossibleFireImmunity
+    IfLoadedEqualTo TYPE_GROUND, Basic_CheckPossibleGroundImmunity
+    GoTo Basic_NoImmunityAbility
+
+Basic_CheckPossibleElectricImmunity:
+    CheckBattlerAbility AI_BATTLER_DEFENDER, ABILITY_VOLT_ABSORB
+    IfLoadedEqualTo AI_UNKNOWN, Basic_PossibleImmunityScoreMinus2
+    CheckBattlerAbility AI_BATTLER_DEFENDER, ABILITY_MOTOR_DRIVE
+    IfLoadedEqualTo AI_UNKNOWN, Basic_PossibleImmunityScoreMinus2
+    GoTo Basic_NoImmunityAbility
+
+Basic_CheckPossibleWaterImmunity:
+    CheckBattlerAbility AI_BATTLER_DEFENDER, ABILITY_WATER_ABSORB
+    IfLoadedEqualTo AI_UNKNOWN, Basic_PossibleImmunityScoreMinus2
+    CheckBattlerAbility AI_BATTLER_DEFENDER, ABILITY_DRY_SKIN
+    IfLoadedEqualTo AI_UNKNOWN, Basic_PossibleImmunityScoreMinus2
+    GoTo Basic_NoImmunityAbility
+
+Basic_CheckPossibleFireImmunity:
+    CheckBattlerAbility AI_BATTLER_DEFENDER, ABILITY_FLASH_FIRE
+    IfLoadedEqualTo AI_UNKNOWN, Basic_PossibleImmunityScoreMinus2
+    GoTo Basic_NoImmunityAbility
+
+Basic_CheckPossibleGroundImmunity:
+    CheckBattlerAbility AI_BATTLER_DEFENDER, ABILITY_LEVITATE
+    IfLoadedEqualTo AI_UNKNOWN, Basic_PossibleImmunityScoreMinus2
+    GoTo Basic_NoImmunityAbility
+
+Basic_PossibleImmunityScoreMinus2:
+    AddToMoveScore -2
+    GoTo Basic_NoImmunityAbility
+
 Basic_NoImmunityAbility:
     FlagMoveDamageScore USE_MAX_DAMAGE
     IfLoadedEqualTo AI_NO_COMPARISON_MADE, Basic_CheckSoundproof
@@ -130,7 +192,205 @@ Basic_CheckSoundproof:
     IfMoveEqualTo MOVE_BUG_BUZZ, ScoreMinus10
     IfMoveEqualTo MOVE_CHATTER, ScoreMinus10
 
+// phmode: a Substitute intercepts almost every status effect and stat-lowering hit aimed at
+// its holder - verified against the actual battle scripts, not assumed (subscript_paralyze.s,
+// subscript_poison.s, subscript_confuse.s, subscript_leech_seed_start.s, subscript_yawn.s,
+// subscript_mean_look.s, subscript_embargo_start.s, subscript_heal_block_start.s,
+// subscript_suppress_target_ability.s, subscript_nightmare_start.s, subscript_fall_asleep.s,
+// and BtlCmd_ChangeStatStage's own jumpBlockedBySubstitute branch all gate on it). The AI
+// never accounted for this at all, so it would previously score these moves normally against
+// a target it can plainly see is behind a Substitute. Checked first, ahead of Distortion
+// Terrain below, since a move a Substitute blocks outright never reaches the point where
+// Distortion Terrain's stat-inversion would even matter.
+//
+// Disable, Taunt, Torment, Encore, and Attract are included below too, now that their own
+// BtlCmd_Try*/subscript implementations were fixed to actually check the target's Substitute
+// (they previously didn't, a separate pre-existing decomp bug - see the main changelog).
 Basic_ScoreMoveEffect:
+    IfVolatileStatus AI_BATTLER_DEFENDER, VOLATILE_CONDITION_SUBSTITUTE, Basic_CheckSubstituteBlockedMove
+    IfFieldConditionsMask FIELD_CONDITION_DISTORTION_TERRAIN, Basic_CheckDistortionStatMove
+    GoTo Basic_ScoreMoveEffect_Dispatch
+
+Basic_CheckSubstituteBlockedMove:
+    LoadCurrentMoveEffect
+    // A pure status/stat-lowering move has nothing left to do if it's fully blocked - same
+    // -10 used elsewhere for "this will just flatly fail" cases.
+    IfLoadedInTable Basic_SubstituteBlockedStatusEffects, ScoreMinus10
+
+    // A damaging move with only a secondary CHANCE to lower the target's stat on hit still
+    // deals its normal damage to the Substitute - only the bonus effect is lost - so this is
+    // a much lighter nudge, matching the light penalty used for the same tables elsewhere.
+    IfLoadedInTable Basic_SubstituteBlockedChanceEffects, ScoreMinus1
+    IfFieldConditionsMask FIELD_CONDITION_DISTORTION_TERRAIN, Basic_CheckDistortionStatMove
+    GoTo Basic_ScoreMoveEffect_Dispatch
+
+Basic_SubstituteBlockedStatusEffects:
+    TableEntry BATTLE_EFFECT_STATUS_SLEEP
+    TableEntry BATTLE_EFFECT_STATUS_SLEEP_NEXT_TURN
+    TableEntry BATTLE_EFFECT_STATUS_POISON
+    TableEntry BATTLE_EFFECT_STATUS_BADLY_POISON
+    TableEntry BATTLE_EFFECT_STATUS_PARALYZE
+    TableEntry BATTLE_EFFECT_STATUS_CONFUSE
+    TableEntry BATTLE_EFFECT_STATUS_LEECH_SEED
+    TableEntry BATTLE_EFFECT_STATUS_NIGHTMARE
+    TableEntry BATTLE_EFFECT_PREVENT_ESCAPE
+    TableEntry BATTLE_EFFECT_PREVENT_ITEM_USE
+    TableEntry BATTLE_EFFECT_PREVENT_HEALING
+    TableEntry BATTLE_EFFECT_SUPRESS_ABILITY
+    TableEntry BATTLE_EFFECT_ATK_DOWN
+    TableEntry BATTLE_EFFECT_ATK_DOWN_2
+    TableEntry BATTLE_EFFECT_DEF_DOWN
+    TableEntry BATTLE_EFFECT_DEF_DOWN_2
+    TableEntry BATTLE_EFFECT_SPEED_DOWN
+    TableEntry BATTLE_EFFECT_SPEED_DOWN_2
+    TableEntry BATTLE_EFFECT_SP_ATK_DOWN
+    TableEntry BATTLE_EFFECT_SP_ATK_DOWN_2
+    TableEntry BATTLE_EFFECT_SP_DEF_DOWN
+    TableEntry BATTLE_EFFECT_SP_DEF_DOWN_2
+    TableEntry BATTLE_EFFECT_ACC_DOWN
+    TableEntry BATTLE_EFFECT_ACC_DOWN_2
+    TableEntry BATTLE_EFFECT_EVA_DOWN
+    TableEntry BATTLE_EFFECT_EVA_DOWN_2
+    TableEntry BATTLE_EFFECT_ATK_DEF_DOWN
+    TableEntry BATTLE_EFFECT_SP_ATK_DOWN_2_OPPOSITE_GENDER
+    TableEntry BATTLE_EFFECT_DISABLE
+    TableEntry BATTLE_EFFECT_TAUNT
+    TableEntry BATTLE_EFFECT_TORMENT
+    TableEntry BATTLE_EFFECT_ENCORE
+    TableEntry BATTLE_EFFECT_INFATUATE
+    TableEntry TABLE_END
+
+Basic_SubstituteBlockedChanceEffects:
+    TableEntry BATTLE_EFFECT_LOWER_ATTACK_HIT
+    TableEntry BATTLE_EFFECT_LOWER_DEFENSE_HIT
+    TableEntry BATTLE_EFFECT_LOWER_SPEED_HIT
+    TableEntry BATTLE_EFFECT_LOWER_SP_ATK_HIT
+    TableEntry BATTLE_EFFECT_LOWER_SP_DEF_HIT
+    TableEntry BATTLE_EFFECT_LOWER_SP_DEF_2_HIT
+    TableEntry BATTLE_EFFECT_LOWER_ACCURACY_HIT
+    TableEntry BATTLE_EFFECT_LOWER_EVASION_HIT
+    TableEntry TABLE_END
+
+// phmode: Distortion Terrain inverts every stat-stage change on the field (see the main
+// changelog), so any move that GUARANTEES a stat change - the user's own, or the target's -
+// has that change flipped for real, and a move with a mere CHANCE to change a stat on hit
+// has that chance turned against whoever it was supposed to help. None of BATTLE_EFFECT_
+// RAISE_*_HIT/LOWER_*_HIT (the four "chance on hit" effects checked below) have any other
+// entry in the dispatch table below anyway, so scoring them here and terminating outright
+// (rather than falling through) costs nothing either way.
+Basic_CheckDistortionStatMove:
+    LoadCurrentMoveEffect
+    IfLoadedInTable Basic_DistortionGuaranteedSelfBoostEffects, ScoreMinus8
+    IfLoadedInTable Basic_DistortionGuaranteedSelfLowerEffects, Basic_DistortionSelfLowerScorePlus8
+
+    // phmode: a move that GUARANTEES lowering the *target's* stat(s) - Growl, Leer, Tickle,
+    // Captivate, and the rest - would actually raise them instead, directly helping the
+    // opponent. Same heavy -8 deterrent as a guaranteed self-boost backfiring above.
+    IfLoadedInTable Basic_DistortionGuaranteedOpponentLowerEffects, ScoreMinus8
+
+    // Sheer Force suppresses ANY move's secondary "chance to change a stat" effect entirely,
+    // so none of the chance-based tables below have anything left to invert for a Sheer
+    // Force user.
+    LoadBattlerAbility AI_BATTLER_ATTACKER
+    IfLoadedEqualTo ABILITY_SHEER_FORCE, Basic_ScoreMoveEffect_Dispatch
+
+    LoadCurrentMoveEffect
+    IfLoadedInTable Basic_DistortionChanceSelfBoostEffects, ScoreMinus1
+
+    // Damaging moves with a secondary chance to lower the *target's* stat on hit (Rock
+    // Smash, Crunch, Psychic, Shadow Ball, Acid, Iron Tail, ...) would have that chance
+    // help the target instead - same light -1 as a chance-based self-boost backfiring.
+    IfLoadedInTable Basic_DistortionChanceOpponentLowerEffects, ScoreMinus1
+    GoTo Basic_ScoreMoveEffect_Dispatch
+
+// The mirror image of the table above: a move whose drawback is GUARANTEED to lower the
+// user's own stat(s) (Superpower, Close Combat, Overheat/Draco Meteor/Psycho Boost, Hammer
+// Arm) has that drawback become a genuine bonus instead under Distortion Terrain - so give
+// it a matching +8, then continue into the normal dispatch below rather than skipping it
+// outright, since (unlike the pure setup moves above) these moves are primarily valued for
+// their damage, and that part of their scoring is unaffected and still needs to happen.
+Basic_DistortionSelfLowerScorePlus8:
+    AddToMoveScore 8
+    GoTo Basic_ScoreMoveEffect_Dispatch
+
+Basic_DistortionGuaranteedSelfBoostEffects:
+    TableEntry BATTLE_EFFECT_ATK_UP
+    TableEntry BATTLE_EFFECT_ATK_UP_2
+    TableEntry BATTLE_EFFECT_DEF_UP
+    TableEntry BATTLE_EFFECT_DEF_UP_2
+    TableEntry BATTLE_EFFECT_SPEED_UP
+    TableEntry BATTLE_EFFECT_SPEED_UP_2
+    TableEntry BATTLE_EFFECT_SP_ATK_UP
+    TableEntry BATTLE_EFFECT_SP_ATK_UP_2
+    TableEntry BATTLE_EFFECT_SP_DEF_UP
+    TableEntry BATTLE_EFFECT_SP_DEF_UP_2
+    TableEntry BATTLE_EFFECT_ACC_UP
+    TableEntry BATTLE_EFFECT_ACC_UP_2
+    TableEntry BATTLE_EFFECT_EVA_UP
+    TableEntry BATTLE_EFFECT_EVA_UP_2
+    TableEntry BATTLE_EFFECT_EVA_UP_2_MINIMIZE
+    TableEntry BATTLE_EFFECT_DEF_SPD_UP
+    TableEntry BATTLE_EFFECT_ATK_DEF_UP
+    TableEntry BATTLE_EFFECT_SP_ATK_SP_DEF_UP
+    TableEntry BATTLE_EFFECT_ATK_SPD_UP
+    TableEntry BATTLE_EFFECT_RANDOM_STAT_UP_2
+    TableEntry BATTLE_EFFECT_MAX_ATK_LOSE_HALF_MAX_HP
+    TableEntry TABLE_END
+
+// Damaging moves with a secondary chance to raise the user's own stat on hit (Metal Claw,
+// Steel Wing, Ancient Power, Charge Beam) - a much smaller deterrent than the table above,
+// since the move still does its normal job most of the time either way.
+Basic_DistortionChanceSelfBoostEffects:
+    TableEntry BATTLE_EFFECT_RAISE_ATTACK_HIT
+    TableEntry BATTLE_EFFECT_RAISE_DEF_HIT
+    TableEntry BATTLE_EFFECT_RAISE_SP_ATK_HIT
+    TableEntry BATTLE_EFFECT_RAISE_ALL_STATS_HIT
+    TableEntry TABLE_END
+
+// Damaging moves whose own drawback GUARANTEES lowering the user's stat(s) - Superpower,
+// Close Combat, Overheat/Draco Meteor/Psycho Boost, Hammer Arm.
+Basic_DistortionGuaranteedSelfLowerEffects:
+    TableEntry BATTLE_EFFECT_LOWER_OWN_ATK_AND_DEF
+    TableEntry BATTLE_EFFECT_DEF_SPD_DOWN_HIT
+    TableEntry BATTLE_EFFECT_USER_SP_ATK_DOWN_2
+    TableEntry BATTLE_EFFECT_SPEED_DOWN_HIT
+    TableEntry TABLE_END
+
+// Status moves that GUARANTEE lowering the target's stat(s) - Growl, Leer, Tail Whip,
+// String Shot, Sand Attack, Screech, Tickle, Captivate, and the rest.
+Basic_DistortionGuaranteedOpponentLowerEffects:
+    TableEntry BATTLE_EFFECT_ATK_DOWN
+    TableEntry BATTLE_EFFECT_ATK_DOWN_2
+    TableEntry BATTLE_EFFECT_DEF_DOWN
+    TableEntry BATTLE_EFFECT_DEF_DOWN_2
+    TableEntry BATTLE_EFFECT_SPEED_DOWN
+    TableEntry BATTLE_EFFECT_SPEED_DOWN_2
+    TableEntry BATTLE_EFFECT_SP_ATK_DOWN
+    TableEntry BATTLE_EFFECT_SP_ATK_DOWN_2
+    TableEntry BATTLE_EFFECT_SP_DEF_DOWN
+    TableEntry BATTLE_EFFECT_SP_DEF_DOWN_2
+    TableEntry BATTLE_EFFECT_ACC_DOWN
+    TableEntry BATTLE_EFFECT_ACC_DOWN_2
+    TableEntry BATTLE_EFFECT_EVA_DOWN
+    TableEntry BATTLE_EFFECT_EVA_DOWN_2
+    TableEntry BATTLE_EFFECT_ATK_DEF_DOWN
+    TableEntry BATTLE_EFFECT_SP_ATK_DOWN_2_OPPOSITE_GENDER
+    TableEntry TABLE_END
+
+// Damaging moves with a secondary chance to lower the target's stat on hit (Rock Smash,
+// Crunch, Psychic, Shadow Ball, Acid, Iron Tail, ...).
+Basic_DistortionChanceOpponentLowerEffects:
+    TableEntry BATTLE_EFFECT_LOWER_ATTACK_HIT
+    TableEntry BATTLE_EFFECT_LOWER_DEFENSE_HIT
+    TableEntry BATTLE_EFFECT_LOWER_SPEED_HIT
+    TableEntry BATTLE_EFFECT_LOWER_SP_ATK_HIT
+    TableEntry BATTLE_EFFECT_LOWER_SP_DEF_HIT
+    TableEntry BATTLE_EFFECT_LOWER_SP_DEF_2_HIT
+    TableEntry BATTLE_EFFECT_LOWER_ACCURACY_HIT
+    TableEntry BATTLE_EFFECT_LOWER_EVASION_HIT
+    TableEntry TABLE_END
+
+Basic_ScoreMoveEffect_Dispatch:
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_STATUS_SLEEP, Basic_CheckCannotSleep
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_HALVE_DEFENSE, Basic_CheckCannotExplode
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_RECOVER_DAMAGE_SLEEP, Basic_CheckDreamEater
@@ -173,8 +433,12 @@ Basic_ScoreMoveEffect:
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SPEED_DOWN_2, Basic_CheckLowStatStage_Speed
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SP_ATK_DOWN_2, Basic_CheckLowStatStage_SpAttack
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SP_DEF_DOWN_2, Basic_CheckLowStatStage_SpDefense
-    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_EVA_DOWN_2, Basic_CheckLowStatStage_Accuracy
-    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_ACC_DOWN_2, Basic_CheckLowStatStage_Evasion
+    // phmode fix: these two were swapped, mismatching the ATK/DEF/SPEED/SP_ATK/SP_DEF/ACC/EVA
+    // ordering every other stat pair in this dispatch follows (see the UP_2/DOWN_2 blocks
+    // above). Dead code either way today - no move currently uses either effect - but fixed
+    // for whenever one does.
+    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_ACC_DOWN_2, Basic_CheckLowStatStage_Accuracy
+    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_EVA_DOWN_2, Basic_CheckLowStatStage_Evasion
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SET_REFLECT, Basic_CheckAlreadyUnderReflect
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_STATUS_POISON, Basic_CheckCannotPoison
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_STATUS_PARALYZE, Basic_CheckCannotParalyze
@@ -282,8 +546,9 @@ Basic_ScoreMoveEffect:
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_TRICK_ROOM, Basic_CheckTrickRoom
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SP_ATK_DOWN_2_OPPOSITE_GENDER, Basic_CheckCaptivate
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_STEALTH_ROCK, Basic_CheckStealthRock
+    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_STICKY_WEB, Basic_CheckStickyWebMove
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_FAINT_FULL_RESTORE_NEXT_MON, Basic_CheckLunarDance
-    PopOrEnd 
+    PopOrEnd
 
 Basic_CheckCannotSleep:
     // If the target cannot be put to sleep for any reason, score -10.
@@ -292,7 +557,24 @@ Basic_CheckCannotSleep:
     LoadBattlerAbility AI_BATTLER_DEFENDER
     IfLoadedEqualTo ABILITY_INSOMNIA, ScoreMinus10
     IfLoadedEqualTo ABILITY_VITAL_SPIRIT, ScoreMinus10
-    PopOrEnd 
+
+    // phmode: Electric Terrain keeps a grounded target awake, so a sleep move (or Yawn,
+    // which also routes here) against one would just fail outright - same -10 as above.
+    IfFieldConditionsMask FIELD_CONDITION_ELECTRIC_TERRAIN, Basic_CheckCannotSleep_TerrainGrounded
+    PopOrEnd
+
+Basic_CheckCannotSleep_TerrainGrounded:
+    IfFieldConditionsMask FIELD_CONDITION_GRAVITY, ScoreMinus10
+    LoadHeldItemEffect AI_BATTLER_DEFENDER
+    IfLoadedEqualTo HOLD_EFFECT_SPEED_DOWN_GROUNDED, ScoreMinus10
+    LoadBattlerAbility AI_BATTLER_DEFENDER
+    IfLoadedEqualTo ABILITY_LEVITATE, Basic_CheckCannotSleep_End
+    FlagBattlerIsType AI_BATTLER_DEFENDER, TYPE_FLYING
+    IfLoadedEqualTo AI_HAVE, Basic_CheckCannotSleep_End
+    GoTo ScoreMinus10
+
+Basic_CheckCannotSleep_End:
+    PopOrEnd
 
 Basic_CheckCannotExplode:
     // If the target is immune, score -10.
@@ -1547,7 +1829,16 @@ Basic_CheckStealthRock:
     // If the target is on their last Pokemon, score -10.
     CountAlivePartyBattlers AI_BATTLER_DEFENDER
     IfLoadedEqualTo 0, ScoreMinus10
-    PopOrEnd 
+    PopOrEnd
+
+Basic_CheckStickyWebMove:
+    // If the target's side of the field is already under the effect of Sticky Web, score -10.
+    IfSideCondition AI_BATTLER_DEFENDER, SIDE_CONDITION_STICKY_WEB, ScoreMinus10
+
+    // If the target is on their last Pokemon, score -10.
+    CountAlivePartyBattlers AI_BATTLER_DEFENDER
+    IfLoadedEqualTo 0, ScoreMinus10
+    PopOrEnd
 
 Basic_CheckLunarDance:
     // Start at -20
@@ -1675,8 +1966,10 @@ Expert_Main:
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SPEED_DOWN_2, Expert_StatusSpeedDown
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SP_ATK_DOWN_2, Expert_StatusSpAttackDown
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SP_DEF_DOWN_2, Expert_StatusSpDefenseDown
-    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_EVA_DOWN_2, Expert_StatusAccuracyDown
-    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_ACC_DOWN_2, Expert_StatusEvasionDown
+    // phmode fix: swapped the same way as the matching pair in Basic_ScoreMoveEffect_Dispatch
+    // above - dead code today (no move uses either effect), fixed for future-proofing.
+    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_ACC_DOWN_2, Expert_StatusAccuracyDown
+    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_EVA_DOWN_2, Expert_StatusEvasionDown
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SET_REFLECT, Expert_Reflect
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_STATUS_POISON, Expert_StatusPoison
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_STATUS_PARALYZE, Expert_StatusParalyze
@@ -2755,6 +3048,24 @@ Expert_Rest:
     // If the opponent does not know Snatch, 96.1% chance of score +3.
     //
     // If the opponent knows Snatch, 77.3% chance of score +3.
+    //
+    // phmode: Electric Terrain keeps a grounded Pokemon from voluntarily falling asleep
+    // too, so Rest would just fail outright for a grounded user - checked first, ahead
+    // of all of the above.
+    IfFieldConditionsMask FIELD_CONDITION_ELECTRIC_TERRAIN, Expert_Rest_CheckTerrainGrounded
+    GoTo Expert_Rest_SpeedCheck
+
+Expert_Rest_CheckTerrainGrounded:
+    IfFieldConditionsMask FIELD_CONDITION_GRAVITY, ScoreMinus10
+    LoadHeldItemEffect AI_BATTLER_ATTACKER
+    IfLoadedEqualTo HOLD_EFFECT_SPEED_DOWN_GROUNDED, ScoreMinus10
+    LoadBattlerAbility AI_BATTLER_ATTACKER
+    IfLoadedEqualTo ABILITY_LEVITATE, Expert_Rest_SpeedCheck
+    FlagBattlerIsType AI_BATTLER_ATTACKER, TYPE_FLYING
+    IfLoadedEqualTo AI_HAVE, Expert_Rest_SpeedCheck
+    GoTo ScoreMinus10
+
+Expert_Rest_SpeedCheck:
     IfSpeedCompareEqualTo COMPARE_SPEED_SLOWER, Expert_Rest_SlowerCheckHP
     IfHPPercentNotEqualTo AI_BATTLER_ATTACKER, 100, Expert_Rest_FasterCheckHP
     AddToMoveScore -8
@@ -5998,10 +6309,23 @@ Expert_WorrySeed_End:
 Expert_SuckerPunch:
     // If the opponent resists or is immune to the move, score -1.
     //
-    // 75% chance of score +1.
+    // phmode: if the opponent's last used move dealt damage (i.e. wasn't a status move, and
+    // they didn't just switch in with no move history yet), score +2 - Sucker Punch only
+    // works if the target attacks this turn, and a target who just attacked is more likely to
+    // keep attacking than switch to a status move. This is genuinely known information (their
+    // own last move, already visible), not a guess at what they're about to do this turn.
+    //
+    // 75% chance of an additional score +1.
     IfMoveEffectivenessEquals TYPE_MULTI_IMMUNE, Expert_SuckerPunch_ScoreMinus1
     IfMoveEffectivenessEquals TYPE_MULTI_HALF_DAMAGE, Expert_SuckerPunch_ScoreMinus1
     IfMoveEffectivenessEquals TYPE_MULTI_QUARTER_DAMAGE, Expert_SuckerPunch_ScoreMinus1
+
+    LoadBattlerPreviousMove AI_BATTLER_DEFENDER
+    LoadPowerOfLoadedMove
+    IfLoadedEqualTo 0, Expert_SuckerPunch_TryScorePlus1
+    AddToMoveScore 2
+
+Expert_SuckerPunch_TryScorePlus1:
     IfRandomLessThan 64, Expert_SuckerPunch_End
     AddToMoveScore 1
     GoTo Expert_SuckerPunch_End
@@ -6010,7 +6334,7 @@ Expert_SuckerPunch_ScoreMinus1:
     AddToMoveScore -1
 
 Expert_SuckerPunch_End:
-    PopOrEnd 
+    PopOrEnd
 
 Expert_ToxicSpikes:
     // 50% chance to ignore all further scoring.

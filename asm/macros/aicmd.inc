@@ -629,6 +629,13 @@
     .long \battler
     .endm
 
+    // phmode: exposes the current move's raw priority value (e.g. Quick Attack = 1,
+    // Extreme Speed = 2, Whirlwind = -6) to the AI script, for Psychic Terrain's
+    // "blocks priority moves against a grounded target" check.
+    .macro LoadCurrentMovePriority
+    .long AICMD_LOADCURRENTMOVEPRIORITY
+    .endm
+
     .equ TABLE_END, 0xFFFFFFFF
 
     .macro TableEntry entry:req

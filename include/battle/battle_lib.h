@@ -1524,6 +1524,16 @@ int BattleAI_PostKOSwitchIn(BattleSystem *battleSys, int battler);
 int BattleAI_SwitchedSlot(BattleSystem *battleSys, int battler);
 
 /**
+ * @brief Check whether a Pokemon knows a move that clears entry hazards (Defog or Rapid
+ * Spin). Shared by BattleAI_PostKOSwitchIn's hazard-clearing preference and
+ * AI_ShouldSwitchForHazards in trainer_ai.c.
+ *
+ * @param mon
+ * @return TRUE if the Pokemon knows Defog or Rapid Spin.
+ */
+BOOL Pokemon_KnowsHazardRemovalMove(Pokemon *mon);
+
+/**
  * @brief Compute the variable-type of a move, given its use by a given Pokemon.
  *
  * This is used by moves such as Natural Gift, Hidden Power, and Weather Ball.

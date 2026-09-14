@@ -451,6 +451,245 @@ active, and the Expert-tier Rain Dance / Sunny Day / Hail handlers in
 `src/battle/trainer_ai/script.s` now add +1 for overriding an active terrain the
 same way they do for overriding another weather.
 
+### AI move-choice now accounts for each terrain's actual mechanical effect
+The change above only covers weather-setting moves treating terrain like
+weather. This covers the terrains' own gameplay effects (sleep prevention,
+priority blocking, stat inversion) actually feeding into move scoring, all in
+`src/battle/trainer_ai/script.s` unless noted:
+
+* **Electric Terrain** — `Basic_CheckCannotSleep` (used for every direct
+  sleep-inducing move via `BATTLE_EFFECT_STATUS_SLEEP`, and for Yawn via
+  `BATTLE_EFFECT_STATUS_SLEEP_NEXT_TURN`, since both already routed through
+  this same handler) gets a new branch: if Electric Terrain is active and the
+  target is grounded, score -10 — the same penalty already used for "this
+  can't work" cases like an already-statused target, matching
+  `subscript_fall_asleep.s`'s own real block. `Expert_Rest` gets the same
+  check against the *attacker* instead (Rest sleeps the user, not the
+  target), ahead of its existing HP/speed-based scoring, matching
+  `subscript_rest.s`. "Grounded" is approximated the same way in both
+  (mirroring `BattlerIsGrounded` in `battle_lib.c`, minus a Magnet Rise check
+  the AI script has no way to make): Gravity active, or a held
+  `HOLD_EFFECT_SPEED_DOWN_GROUNDED` item (Iron Ball) forces grounding; absent
+  those, Levitate or a Flying typing means airborne; otherwise grounded.
+* **Psychic Terrain** — a new check at the very top of `Basic_Main` (ahead of
+  the existing OHKO-move special case, now split out as `Basic_CheckOHKO`):
+  if Psychic Terrain is active, the move has positive priority, and the
+  defender is grounded (same approximation as above), score -10. The
+  existing `IfTargetIsPartner Terminate` immediately above already guarantees
+  the defender is a genuine opponent and not our own partner, matching the
+  real block's "opposing side only" restriction in
+  `Move_BlockedByPsychicTerrain` (`battle_lib.c`). Reading the move's
+  priority required a new AI script command, since nothing previously
+  exposed it: `LoadCurrentMovePriority` (`AICMD_LOADCURRENTMOVEPRIORITY` in
+  `include/data/scripts/aicmd.h`, macro in `asm/macros/aicmd.inc`,
+  `AICmd_LoadCurrentMovePriority` in `trainer_ai.c`), mirroring the existing
+  `LoadCurrentMoveEffect`/`AICmd_LoadCurrentMoveEffect` exactly, but for
+  `MOVE_DATA(...).priority` instead of `.effect`.
+* **Distortion Terrain** — a new check at the top of `Basic_ScoreMoveEffect`
+  (renamed to `Basic_ScoreMoveEffect_Dispatch` for the original per-effect
+  chain, with `Basic_ScoreMoveEffect` now this new check followed by a fall-
+  through into the dispatch): if Distortion Terrain is active, the current
+  move's effect is looked up in one of two new tables. A move that
+  *guarantees* the user raises its own stat(s) — the same set of moves this
+  hack already gave 1-3 PP for their strength — scores a flat -8 and skips
+  the normal per-effect dispatch entirely (the usual "don't bother, you're
+  already maxed" checks below don't matter anymore, since the move is bad
+  regardless of current stat stage). A damaging move with a mere *chance* to
+  raise the user's stat on a hit (Metal Claw, Steel Wing, Ancient Power,
+  Charge Beam) instead scores a much lighter -1, and terminates the same way
+  as the guaranteed case above (none of the four `RAISE_*_HIT`/`LOWER_*_HIT`
+  effects have any other entry in `Basic_ScoreMoveEffect_Dispatch`, so
+  terminating here instead of falling through costs nothing).
+
+### Distortion Terrain also rewards/penalizes stat-LOWERING effects, and gates chance-based effects behind Sheer Force
+Extends the Distortion Terrain work above (`Basic_CheckDistortionStatMove`,
+`src/battle/trainer_ai/script.s`) with the mirror-image cases it was missing:
+
+* A move whose own drawback *guarantees* lowering the user's stat(s) —
+  Superpower, Close Combat, Overheat/Draco Meteor/Psycho Boost, Hammer Arm —
+  has that drawback become a genuine benefit under Distortion Terrain. New
+  table `Basic_DistortionGuaranteedSelfLowerEffects` + handler
+  `Basic_DistortionSelfLowerScorePlus8` score **+8** and then continue into
+  the normal dispatch afterward (unlike every other case here, these moves
+  are primarily valued for their damage, and that scoring still needs to run).
+* A move that *guarantees* lowering the **target's** stat(s) — Growl, Leer,
+  Tail Whip, String Shot, Sand Attack, Screech, Tickle, Captivate, and the
+  rest — would actually raise them instead, directly helping the opponent.
+  New table `Basic_DistortionGuaranteedOpponentLowerEffects` scores a matching
+  **-8** deterrent and terminates.
+* A damaging move with a mere *chance* to lower the target's stat on a hit
+  (Rock Smash, Crunch, Psychic, Shadow Ball, Acid, Iron Tail, ...) would have
+  that chance help the target instead. New table
+  `Basic_DistortionChanceOpponentLowerEffects` scores a lighter **-1** and
+  terminates, same as the existing chance-based self-boost case.
+* **Sheer Force gate**: Sheer Force suppresses *any* move's secondary
+  chance-based effect entirely (its `effect_chance` is 0 to begin with for a
+  Sheer Force attacker — verified against the move data, e.g. Metal Claw's
+  `chance: 10` vs. Superpower's `chance: 0`), so there's nothing left for
+  Distortion Terrain to invert for either chance-based table. A new check —
+  `LoadBattlerAbility AI_BATTLER_ATTACKER; IfLoadedEqualTo ABILITY_SHEER_FORCE,
+  Basic_ScoreMoveEffect_Dispatch` — skips straight past both chance-based
+  tables for a Sheer Force attacker. The two *guaranteed* tables are
+  deliberately **not** gated by this, since a guaranteed effect isn't the kind
+  of secondary chance Sheer Force touches.
+
+### The AI now knows Sticky Web hasn't been evaluated as a hazard move
+`src/battle/trainer_ai/script.s` — Sticky Web (added earlier as a new move,
+see the Move changes section) had zero AI evaluation at all, unlike Stealth
+Rock/Spikes/Toxic Spikes which each have a dedicated check. Added
+`Basic_CheckStickyWebMove`, wired into `Basic_ScoreMoveEffect_Dispatch` via
+`IfCurrentMoveEffectEqualTo BATTLE_EFFECT_STICKY_WEB, Basic_CheckStickyWebMove`,
+mirroring `Basic_CheckStealthRock` exactly: -10 if the target's side already
+has Sticky Web set, or -10 if the target is down to their last Pokemon.
+
+### The AI's "does this move kill?" check now accounts for Sturdy and Focus Sash
+`src/battle/trainer_ai/trainer_ai.c` — `AICmd_IfCurrentMoveKills` and
+`AICmd_IfCurrentMoveDoesNotKill` (which back the `IfCurrentMoveKills`/
+`IfCurrentMoveDoesNotKill` script commands used throughout `script.s`,
+including kill-bonus scoring in `EvalAttack_ApplyKillBonuses` and
+`TagStrategy_ScoreMove`) previously only compared the target's current HP to
+the predicted damage, with no awareness that a full-HP target with Sturdy or a
+held Focus Sash survives an otherwise-lethal hit at 1 HP instead of fainting
+(the modernized Sturdy behavior from this hack's ability changes; Focus Sash's
+`HOLD_EFFECT_ENDURE` behaves identically at full HP —
+`BtlCmd_CheckHoldOnWith1HP` in `battle_script.c`). This meant the AI could
+mis-predict a "kill" against either, missing that the target actually survives
+to attack back or switch out. Fixed with a new read-only helper,
+`TrainerAI_DefenderSurvivesLethalHitAtOneHP`, checked before both commands
+treat a hit as lethal: true only when the defender is at full HP *and* either
+holds a Focus Sash, or has Sturdy and the attacker's ability isn't Mold
+Breaker. Deliberately implemented by hand rather than by calling the existing
+`Battler_IgnorableAbility` helper, since that function has a mutating side
+effect (marking Mold Breaker as "activated" for the turn) meant to fire once
+during real move execution — calling it from AI evaluation, which
+speculatively scores many candidate moves per turn, would trip that side
+effect for moves that are never even chosen. Does not model Focus Band
+(`HOLD_EFFECT_MAYBE_ENDURE`), since that's a random per-hit chance rather than
+a guaranteed save the AI can rely on when predicting whether a move finishes
+its target.
+
+### The AI now recognizes when a Substitute blocks its move entirely
+`src/battle/trainer_ai/script.s`, `Basic_ScoreMoveEffect` — a Substitute
+intercepts almost every status effect and stat-lowering hit aimed at its
+holder, but the AI never checked for this at all and would score these moves
+completely normally against a target it can plainly see is behind one. This
+was double-checked against the actual battle scripts before implementing,
+not assumed: `subscript_paralyze.s`, `subscript_poison.s`,
+`subscript_confuse.s`, `subscript_leech_seed_start.s`, `subscript_yawn.s`,
+`subscript_mean_look.s`, `subscript_embargo_start.s`,
+`subscript_heal_block_start.s`, `subscript_suppress_target_ability.s`,
+`subscript_nightmare_start.s`, `subscript_fall_asleep.s`, and
+`BtlCmd_ChangeStatStage`'s own `jumpBlockedBySubstitute` branch
+(`battle_script.c`) all confirm the target's Substitute gates their effect.
+
+Added a new check at the very top of `Basic_ScoreMoveEffect`, checked before
+the existing Distortion Terrain check (a move a Substitute blocks outright
+never reaches the point where Distortion Terrain's stat-inversion would even
+matter): if the defender has an active Substitute, the current move's effect
+is looked up in one of two new tables.
+
+* **`Basic_SubstituteBlockedStatusEffects`** — pure status/stat-lowering
+  moves whose entire effect is blocked (Thunder Wave, Toxic, Will-O-Wisp,
+  Confuse Ray, Leech Seed, Nightmare, Mean Look, Embargo, Heal Block, Gastro
+  Acid, Growl/Leer/Screech/Captivate and the rest of the guaranteed
+  opponent-stat-lowering moves) score a flat **-10**, matching the existing
+  "this will just fail" penalty used elsewhere, and terminate.
+* **`Basic_SubstituteBlockedChanceEffects`** — a damaging move with only a
+  secondary *chance* to lower the target's stat on hit (Rock Smash, Crunch,
+  Psychic, Shadow Ball, Acid, Iron Tail, ...) still deals its normal damage
+  to the Substitute; only the bonus effect is lost. These get a much lighter
+  **-1** nudge instead, reusing the same effect list as
+  `Basic_DistortionChanceOpponentLowerEffects` since both describe the exact
+  same set of moves.
+
+**Deliberately excludes** Disable, Taunt, Torment, Encore, and Attract.
+Verifying this fix meant reading each relevant move's actual implementation
+first, which surfaced five separate **pre-existing vanilla decomp bugs**
+(not phmode-introduced, and not fixed here — flagged for a separate,
+explicit decision): `BtlCmd_TryDisable`, `BtlCmd_TryEncore`, and
+`BtlCmd_TryAttract` (`battle_script.c`), plus `subscript_taunt_start.s` and
+`subscript_torment_start.s`, never check the target's Substitute at all, so
+those five moves currently still work against one in this build. Scoring
+them as blocked in the AI would have made trainers wrongly avoid a move that
+actually functions fine today.
+
+### Fixed Disable, Taunt, Torment, Encore, and Attract not checking for a Substitute
+Confirmed vanilla decomp bugs (not phmode-introduced), found while double-checking
+the AI Substitute fix above before deciding what to include in it:
+
+* `BtlCmd_TryDisable`, `BtlCmd_TryEncore`, and `BtlCmd_TryAttract`
+  (`src/battle/battle_script.c`) never checked `VOLATILE_CONDITION_SUBSTITUTE`
+  on the target at all, so all three worked straight through one.
+* `subscript_taunt_start.s` and `subscript_torment_start.s`
+  (`res/battle/scripts/subscripts/`) had the same gap — neither called the
+  existing `CheckSubstitute` battle-script command that every comparable
+  status effect (Mean Look, Nightmare, Heal Block, Embargo, ...) already
+  uses.
+
+All five now correctly fail (`MOVE_STATUS_FAILED`, "But it failed!") against
+a target behind a Substitute, matching every other status effect in the
+game. `Basic_SubstituteBlockedStatusEffects` (`script.s`, added just above)
+now includes `BATTLE_EFFECT_DISABLE`, `BATTLE_EFFECT_TAUNT`,
+`BATTLE_EFFECT_TORMENT`, `BATTLE_EFFECT_ENCORE`, and
+`BATTLE_EFFECT_INFATUATE`, so the AI now avoids all five the same way it
+avoids Thunder Wave or Growl against a Substitute. (Taunt previously had no
+AI scoring at all, for any reason — this is its first.)
+
+### Fixed the documented Post-KO Switch-In AI scoring overflow
+`src/battle/battle_lib.c`, `BattleAI_PostKOSwitchIn` — `docs/bugs_and_glitches.md`
+already documented this exact bug and its one-line fix, just not yet applied
+here: `score`/`maxScore` (Stage 1's type-matchup score, which can reach up to
+320 for a quad-effective dual-type attacker) were declared as `u8`, silently
+wrapping a quad-effective matchup down to 64. Changed both to `u32`, so the
+AI's switch-in selection after a KO (or any switch that defers to this same
+routine) now scores quad-effective matchups correctly instead of sometimes
+undervaluing them relative to a merely-double-effective one.
+
+### AI switch decisions now account for entry hazards on their own side
+Two additions, both gated on the AI's own side already having Stealth Rock,
+Spikes, Toxic Spikes, or Sticky Web up (`sideConditionsMask` checked against
+all four):
+
+* **`AI_ShouldSwitchForHazards`** (new, `src/battle/trainer_ai/trainer_ai.c`)
+  — a small (1-in-6) chance to voluntarily switch out to a benched Pokemon
+  that knows Defog or Rapid Spin. Checked in `TrainerAI_ShouldSwitch` right
+  after the existing "don't switch, we already have the advantage" gates
+  (`AI_HasSuperEffectiveMove`/`AI_IsHeavilyStatBoosted`), so it's a mild
+  nudge that never overrides a clearly winning matchup, and directly picks
+  the hazard-remover's party slot rather than deferring to generic
+  matchup-based switch-in logic.
+* **`BattleAI_PostKOSwitchIn` Stage 0** (new, `src/battle/battle_lib.c`) —
+  before the existing type-matchup (Stage 1) and damage-score (Stage 2)
+  logic, a 2-in-3 chance to prefer a benched Defog/Rapid Spin user over
+  whatever those stages would otherwise pick. This is the routine used for
+  *every* switch that doesn't already have a specific target in mind
+  (fainting, Perish Song, the Natural Cure branches, and the new hazard
+  check above when it defers), so this is the more broadly-applicable half
+  of the two changes.
+
+Both share a new `Pokemon_KnowsHazardRemovalMove` helper
+(`src/battle/battle_lib.c`, declared in `include/battle/battle_lib.h`) that
+checks a Pokemon's moveset for `MOVE_DEFOG`/`MOVE_RAPID_SPIN`. Previously,
+neither "should I switch" nor "what should I switch into" gave any weight at
+all to hazards already sitting on the AI's own field.
+
+### Sucker Punch now weighs whether the target is likely to attack again
+`src/battle/trainer_ai/script.s`, `Expert_SuckerPunch` — Sucker Punch only
+works if the target uses a damaging move this turn, something the AI has no
+way to know for certain in advance (it never sees the player's pending
+choice for the turn — confirmed while investigating this). It now uses a
+fair, already-known signal instead: `LoadBattlerPreviousMove
+AI_BATTLER_DEFENDER` + `LoadPowerOfLoadedMove` (the same pattern
+`Expert_Counter` already uses for its own "did they attack" check) checks
+whether the target's *last* used move dealt damage — i.e. wasn't a status
+move, and they weren't just switched in with no move history yet. If so,
+score **+2**, independent of and in addition to the move's existing 75%
+chance of +1. A target with no such signal (their last move was a status
+move, or this is the first turn) just gets the existing baseline chance,
+unchanged. The resisted/immune check above this still short-circuits to a
+flat -1 regardless, since Sucker Punch is a poor choice either way if it
+won't do meaningful damage.
+
 ### Creation-trio signature abilities
 Dialga, Palkia and Giratina lose Pressure/Levitate and get a new ability each.
 Three abilities were added to `generated/abilities.txt` (124-126) with entries in
@@ -537,6 +776,33 @@ were actually fixed rather than left as documented-but-live bugs:
   qualifying item earlier in the list could wipe out every item after it in the
   same turn's check. Fixed by `break`ing out of the loop the moment one item is
   chosen, since only one item is ever actually used per turn anyway.
+
+### Trainer AI: a small penalty for moves that *might* be walled by an unrevealed ability
+`src/battle/trainer_ai/script.s`, `Basic_CheckForImmunity` — previously, once the
+existing confirmed-or-guessed ability check (`LoadBattlerAbility`, which either
+already knows the defender's ability or coin-flips between its two possible
+ones) found no immunity, the move was scored with no further caution at all,
+even if the *other*, un-guessed possible ability would have granted one.
+
+Now, when none of that finds a confirmed/guessed immunity, a new
+`Basic_CheckPossibleImmunityAbility` step runs: for the move's type, it checks
+each relevant immunity ability (Volt Absorb/Motor Drive for Electric,
+Water Absorb/Dry Skin for Water, Flash Fire for Fire, Levitate for Ground) via
+`CheckBattlerAbility`. That command — unlike `LoadBattlerAbility` — doesn't
+guess: if the ability being asked about is one of the defender's two possible
+abilities but hasn't been confirmed in battle, it deterministically reports
+`AI_UNKNOWN` rather than picking one. `AI_UNKNOWN` already existed as a result
+value but was never actually checked anywhere in the AI scripts before this.
+When it comes back, the move gets a small `-2` (not the full `-10`/`-12` a
+confirmed immunity gets) — enough to make the AI lean away from a move that
+*might* be walled, without it ever assuming for certain that it will be.
+Wonder Guard is deliberately excluded: its only vanilla holder (Shedinja) has
+just one possible ability, so there's never a genuine "could be either" case
+for it to matter.
+
+Modeled in `ai_tests/` as `AI_PossibleImmunityPenalty` (see
+`ai_tests/scenarios/ability_interactions.c`), alongside the existing
+`AI_IsImmuneToMove` model of the confirmed/guessed check this complements.
 
 ---
 

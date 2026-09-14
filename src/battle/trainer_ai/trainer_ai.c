@@ -177,6 +177,7 @@ static void AICmd_CheckIfHighestDamageWithPartner(BattleSystem *battleSys, Battl
 static void AICmd_IfBattlerFainted(BattleSystem *battleSys, BattleContext *battleCtx);
 static void AICmd_IfBattlerNotFainted(BattleSystem *battleSys, BattleContext *battleCtx);
 static void AICmd_LoadAbility(BattleSystem *battleSys, BattleContext *battleCtx);
+static void AICmd_LoadCurrentMovePriority(BattleSystem *battleSys, BattleContext *battleCtx);
 
 static u8 TrainerAI_MainSingles(BattleSystem *battleSys, BattleContext *battleCtx);
 static u8 TrainerAI_MainDoubles(BattleSystem *battleSys, BattleContext *battleCtx);
@@ -201,6 +202,7 @@ static BOOL AI_HasAbsorbAbilityInParty(BattleSystem *battleSys, BattleContext *b
 static BOOL AI_HasPartyMemberWithSuperEffectiveMove(BattleSystem *battleSys, BattleContext *battleCtx, int battler, u32 checkEffectiveness, u8 rand);
 static BOOL AI_IsAsleepWithNaturalCure(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
 static BOOL AI_IsHeavilyStatBoosted(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
+static BOOL AI_ShouldSwitchForHazards(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
 static BOOL TrainerAI_ShouldSwitch(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
 static BOOL TrainerAI_ShouldUseItem(BattleSystem *battleSys, int battler);
 
@@ -1529,6 +1531,34 @@ static void AICmd_IfStatStageNotEqualTo(BattleSystem *battleSys, BattleContext *
     }
 }
 
+/*
+ * phmode: mirrors the guaranteed part of BtlCmd_CheckHoldOnWith1HP (battle_script.c) -
+ * a defender at full HP with Sturdy (unless the attacker's ability ignores it, i.e. Mold
+ * Breaker) or a held Focus Sash (HOLD_EFFECT_ENDURE) survives an otherwise-lethal hit at
+ * 1 HP instead of fainting. Deliberately checked by hand rather than via
+ * Battler_IgnorableAbility, since that function has a mutating side effect (marking Mold
+ * Breaker as activated for the turn) that must only happen once, during real move
+ * execution - not every time the AI speculatively evaluates a candidate move. Doesn't
+ * model Focus Band's HOLD_EFFECT_MAYBE_ENDURE, since that's a random chance rather than a
+ * guaranteed save the AI can rely on when deciding whether a move will finish its target.
+ */
+static BOOL TrainerAI_DefenderSurvivesLethalHitAtOneHP(BattleContext *battleCtx, int attacker, int defender)
+{
+    if (battleCtx->battleMons[defender].curHP != battleCtx->battleMons[defender].maxHP) {
+        return FALSE;
+    }
+
+    if (Battler_HeldItemEffect(battleCtx, defender) == HOLD_EFFECT_ENDURE) {
+        return TRUE;
+    }
+
+    if (Battler_Ability(battleCtx, attacker) == ABILITY_MOLD_BREAKER) {
+        return FALSE;
+    }
+
+    return Battler_Ability(battleCtx, defender) == ABILITY_STURDY;
+}
+
 static void AICmd_IfCurrentMoveKills(BattleSystem *battleSys, BattleContext *battleCtx)
 {
     AIScript_Iter(battleCtx, 1);
@@ -1574,7 +1604,8 @@ static void AICmd_IfCurrentMoveKills(BattleSystem *battleSys, BattleContext *bat
             battleCtx->battleMons[AI_CONTEXT.attacker].moveEffectsData.embargoTurns,
             roll);
 
-        if (battleCtx->battleMons[AI_CONTEXT.defender].curHP <= damage) {
+        if (battleCtx->battleMons[AI_CONTEXT.defender].curHP <= damage
+            && !TrainerAI_DefenderSurvivesLethalHitAtOneHP(battleCtx, AI_CONTEXT.attacker, AI_CONTEXT.defender)) {
             AIScript_Iter(battleCtx, jump);
         }
     }
@@ -1625,7 +1656,8 @@ static void AICmd_IfCurrentMoveDoesNotKill(BattleSystem *battleSys, BattleContex
             battleCtx->battleMons[AI_CONTEXT.attacker].moveEffectsData.embargoTurns,
             roll);
 
-        if (battleCtx->battleMons[AI_CONTEXT.defender].curHP > damage) {
+        if (battleCtx->battleMons[AI_CONTEXT.defender].curHP > damage
+            || TrainerAI_DefenderSurvivesLethalHitAtOneHP(battleCtx, AI_CONTEXT.attacker, AI_CONTEXT.defender)) {
             AIScript_Iter(battleCtx, jump);
         }
     }
@@ -2666,6 +2698,15 @@ static void AICmd_LoadAbility(BattleSystem *battleSys, BattleContext *battleCtx)
     u8 battler = AIScript_Battler(battleCtx, inBattler);
 
     AI_CONTEXT.calcTemp = Battler_Ability(battleCtx, battler);
+}
+
+// phmode: exposes the current move's raw priority (signed, e.g. Quick Attack = 1,
+// Whirlwind = -6) for Psychic Terrain's "blocks priority moves against a grounded
+// target" check in script.s - nothing previously loaded this into the AI's scoring.
+static void AICmd_LoadCurrentMovePriority(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    AIScript_Iter(battleCtx, 1);
+    AI_CONTEXT.calcTemp = MOVE_DATA(AI_CONTEXT.move).priority;
 }
 
 /**
@@ -3891,6 +3932,61 @@ static BOOL AI_IsHeavilyStatBoosted(BattleSystem *battleSys, BattleContext *batt
 }
 
 /**
+ * @brief Check if the AI should proactively switch out to bring in a benched Pokemon that
+ * knows Defog or Rapid Spin, because its own side of the field already has an entry hazard
+ * up. This is a light nudge, not a priority - it's checked after the "don't switch, we
+ * already have the advantage" gates above, and only succeeds a small fraction of the time,
+ * so it won't give up a good matchup just to go clear hazards.
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @param battler   The AI's battler.
+ * @return TRUE if the AI has a switch to make, FALSE otherwise.
+ */
+static BOOL AI_ShouldSwitchForHazards(BattleSystem *battleSys, BattleContext *battleCtx, int battler)
+{
+    int i;
+    u8 aiSlot1, aiSlot2;
+    int start, end;
+    Pokemon *mon;
+
+    if ((battleCtx->sideConditionsMask[BattleSystem_GetBattlerSide(battleSys, battler)]
+            & (SIDE_CONDITION_SPIKES | SIDE_CONDITION_STEALTH_ROCK | SIDE_CONDITION_TOXIC_SPIKES | SIDE_CONDITION_STICKY_WEB))
+        == 0) {
+        return FALSE;
+    }
+
+    aiSlot1 = battler;
+    if ((BattleSystem_GetBattleType(battleSys) & BATTLE_TYPE_TAG) || (BattleSystem_GetBattleType(battleSys) & BATTLE_TYPE_2vs2)) {
+        aiSlot2 = aiSlot1;
+    } else {
+        aiSlot2 = BattleSystem_GetPartner(battleSys, battler);
+    }
+
+    start = 0;
+    end = BattleSystem_GetPartyCount(battleSys, battler);
+
+    for (i = start; i < end; i++) {
+        mon = BattleSystem_GetPartyPokemon(battleSys, battler, i);
+
+        if (Pokemon_GetValue(mon, MON_DATA_HP, NULL) != 0
+            && Pokemon_GetValue(mon, MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_NONE
+            && Pokemon_GetValue(mon, MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG
+            && i != battleCtx->selectedPartySlot[aiSlot1]
+            && i != battleCtx->selectedPartySlot[aiSlot2]
+            && i != battleCtx->aiSwitchedPartySlot[aiSlot1]
+            && i != battleCtx->aiSwitchedPartySlot[aiSlot2]
+            && Pokemon_KnowsHazardRemovalMove(mon)
+            && BattleSystem_RandNext(battleSys) % 6 == 0) {
+            battleCtx->aiSwitchedPartySlot[battler] = i;
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+/**
  * @brief Check if the AI should switch for turn.
  *
  * @param battleSys
@@ -3975,6 +4071,12 @@ static BOOL TrainerAI_ShouldSwitch(BattleSystem *battleSys, BattleContext *battl
         // Never switch if the active battler has 4+ positive stat stages.
         if (AI_IsHeavilyStatBoosted(battleSys, battleCtx, battler)) {
             return FALSE;
+        }
+
+        // phmode: a small nudge toward switching when our own side already has an entry
+        // hazard up and a benched Pokemon can clear it.
+        if (AI_ShouldSwitchForHazards(battleSys, battleCtx, battler)) {
+            return TRUE;
         }
 
         // 33% of the time, switch to a party member with an immunity to the last move that hit

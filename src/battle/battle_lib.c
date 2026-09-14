@@ -8240,6 +8240,22 @@ static int CalcMoveType(BattleSystem *battleSys, BattleContext *battleCtx, int i
     return type;
 }
 
+BOOL Pokemon_KnowsHazardRemovalMove(Pokemon *mon)
+{
+    int i;
+    u16 move;
+
+    for (i = 0; i < LEARNED_MOVES_MAX; i++) {
+        move = Pokemon_GetValue(mon, MON_DATA_MOVE1 + i, NULL);
+
+        if (move == MOVE_DEFOG || move == MOVE_RAPID_SPIN) {
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
 int BattleAI_PostKOSwitchIn(BattleSystem *battleSys, int battler)
 {
     // Must keep C89-style declaration to match
@@ -8250,7 +8266,10 @@ int BattleAI_PostKOSwitchIn(BattleSystem *battleSys, int battler)
     u16 move;
     int moveType;
     u8 battlersDisregarded;
-    u8 score, maxScore; // BUG: Post-KO Switch-In AI Scoring Overflow (see docs/bugs_and_glitches.md)
+    // phmode fix: was u8, which overflows for a quad-effective type matchup (score 320 wraps
+    // to 64) - see the now-resolved "Post-KO Switch-In AI Scoring Overflow" entry in
+    // docs/bugs_and_glitches.md.
+    u32 score, maxScore;
     u8 picked = 6;
     u8 slot1, slot2;
     u32 moveStatusFlags;
@@ -8269,6 +8288,30 @@ int BattleAI_PostKOSwitchIn(BattleSystem *battleSys, int battler)
     defender = BattleSystem_RandomOpponent(battleSys, battleCtx, battler);
     partySize = BattleSystem_GetPartyCount(battleSys, battler);
     battlersDisregarded = 0;
+
+    // phmode: Stage 0 - if our own side already has an entry hazard up, prefer bringing in a
+    // benched Pokemon that can clear it (Defog/Rapid Spin) over the usual matchup-based picks
+    // below, most (but not all) of the time - clearing hazards now can matter more than the
+    // single best matchup against whichever mon happened to just faint into this decision.
+    if (battleCtx->sideConditionsMask[BattleSystem_GetBattlerSide(battleSys, battler)]
+        & (SIDE_CONDITION_SPIKES | SIDE_CONDITION_STEALTH_ROCK | SIDE_CONDITION_TOXIC_SPIKES | SIDE_CONDITION_STICKY_WEB)) {
+        for (i = 0; i < partySize; i++) {
+            mon = BattleSystem_GetPartyPokemon(battleSys, battler, i);
+            monSpecies = Pokemon_GetValue(mon, MON_DATA_SPECIES_OR_EGG, NULL);
+
+            if (monSpecies != SPECIES_NONE
+                && monSpecies != SPECIES_EGG
+                && Pokemon_GetValue(mon, MON_DATA_HP, NULL)
+                && battleCtx->selectedPartySlot[slot1] != i
+                && battleCtx->selectedPartySlot[slot2] != i
+                && i != battleCtx->aiSwitchedPartySlot[slot1]
+                && i != battleCtx->aiSwitchedPartySlot[slot2]
+                && Pokemon_KnowsHazardRemovalMove(mon)
+                && BattleSystem_RandNext(battleSys) % 3 < 2) {
+                return i;
+            }
+        }
+    }
 
     // Stage 1: Loop through all the party slots and find the one with the most favorable
     // offensive type-matchup against the chosen defender which also has a super-effective

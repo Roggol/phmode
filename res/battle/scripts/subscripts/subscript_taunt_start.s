@@ -4,6 +4,9 @@
 _000:
     CompareMonDataToValue OPCODE_NEQ, BTLSCR_DEFENDER, BATTLEMON_TAUNTED_TURNS, 0, _028
     CompareVarToValue OPCODE_FLAG_SET, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_MISSED|MOVE_STATUS_SEMI_INVULNERABLE, _028
+    // phmode fix: Taunt never checked for the target's Substitute, so it worked straight
+    // through one.
+    CheckSubstitute BTLSCR_DEFENDER, _028
     Call BATTLE_SUBSCRIPT_ATTACK_MESSAGE_AND_ANIMATION
     Random 2, 3
     UpdateMonDataFromVar OPCODE_SET, BTLSCR_DEFENDER, BATTLEMON_TAUNTED_TURNS, BTLVAR_CALC_TEMP
