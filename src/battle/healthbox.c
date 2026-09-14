@@ -61,6 +61,11 @@
 #define HEALTHBOX_HP_CELL_COUNT  6
 #define HEALTHBOX_EXP_CELL_COUNT 12
 
+// phmode: HP points drained from the gauge per frame once a Pokémon's max HP exceeds the
+// gauge's pixel width (see UpdateGauge) - vanilla drains 1 HP/frame, which is a slow, multi-
+// second crawl for anything with more than ~100 HP. Raised for a snappier drain animation.
+#define HEALTHBOX_HP_GAUGE_DRAIN_RATE 4
+
 #define VRAM_TRANSFER_DST(vram, transferTable, index_0, index_1, imgProxy) ( \
     (void *)((u32)vram + transferTable[index_0][index_1].pos + imgProxy->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DMAIN]))
 
@@ -1401,7 +1406,7 @@ static s32 HealthBox_DrawGauge(HealthBox *healthbox, enum HealthBoxGaugeType gau
     s32 fillOffset;
 
     if (gaugeType == HEALTHBOX_GAUGE_HP) {
-        result = UpdateGauge(healthbox->maxHP, healthbox->curHP, healthbox->damage, &healthbox->hpTemp, HEALTHBOX_HP_CELL_COUNT, 1);
+        result = UpdateGauge(healthbox->maxHP, healthbox->curHP, healthbox->damage, &healthbox->hpTemp, HEALTHBOX_HP_CELL_COUNT, HEALTHBOX_HP_GAUGE_DRAIN_RATE);
     } else {
         fillOffset = CalcGaugeFill(healthbox->curExp, healthbox->expReward, healthbox->maxExp, HEALTHBOX_EXP_CELL_COUNT);
 

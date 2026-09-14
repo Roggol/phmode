@@ -119,6 +119,16 @@ below its gauge, the same as the player's, inside an enlarged box frame.
   number row sits neatly within the frame. The pointed tail stays at the HP-bar
   row.
 
+### HP gauge drains faster
+`src/battle/healthbox.c` — `HealthBox_DrawGauge` passes a new
+`HEALTHBOX_HP_GAUGE_DRAIN_RATE` (4) into `UpdateGauge` in place of a hardcoded
+`1`. Once a Pokémon's max HP exceeds the gauge's pixel width (`HEALTHBOX_HP_CELL_COUNT
+* HEALTHBOX_NAME_BLOCK_COUNT_X` = 48, i.e. almost every real Pokémon), `UpdateGauge`
+drains this many raw HP points off the animated gauge per frame instead of 1, so
+a big hit's health-bar animation finishes in a quarter of the time. Pokémon with
+low enough max HP to fall under the pixel-interpolation branch (`max < corrected`)
+were already fast and are unaffected — this only speeds up the common case.
+
 ### Summary screen: EV / IV view and nature colours
 `src/applications/pokemon_summary_screen/` (`main.c`, `window.c`, `main.h`) — on
 the Skills page:
