@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_MACHOKE",
             "form": 0,
-            "level": 28,
+            "level": 41,
             "item": null,
             "moves": [
                 "MOVE_SEISMIC_TOSS",
@@ -25,7 +25,7 @@
         {
             "species": "SPECIES_BRONZOR",
             "form": 0,
-            "level": 28,
+            "level": 41,
             "item": null,
             "moves": [
                 "MOVE_EXTRASENSORY",

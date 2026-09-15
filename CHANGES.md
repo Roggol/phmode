@@ -1417,7 +1417,7 @@ ability; any slot not mentioned is unchanged.
 * Stats: Atk 50 → 26, Sp. Atk 76 → 100. BST 442 (unchanged).
 
 ### Ledian
-* Stats: Sp. Atk 55 → 20, Sp. Def 110 → 90. BST 390 (unchanged).
+* Stats: Atk 35 → 90, Sp. Atk 55 → 20, Sp. Def 110 → 90. BST 390 (unchanged).
 
 ### Spinarak
 * Learnset: Spider Web at level 29 → **Sticky Web**.
@@ -1871,10 +1871,14 @@ Base Rotom stays Electric / Ghost.
 A hard cap on Pokémon level, stored in `VAR_HARD_LEVEL_CAP`.
 
 * Seeded to `DEFAULT_HARD_LEVEL_CAP` (14) by `scripts_init_new_game.s`. A stored
-  0 (pre-feature save) is treated as 14. Scripts only ever raise it — currently
-  the starter-selection scene on Route 201 and the Twinleaf Town guitarist/rival
-  both set it to 14. Add `SetVar VAR_HARD_LEVEL_CAP, <level>` at later badge
-  points to open the cap up.
+  0 (pre-feature save) is treated as 14. Scripts only ever raise it — the
+  starter-selection scene on Route 201 and the Twinleaf Town guitarist/rival
+  both also set it to 14 (matching the starting tier, not raising it further).
+* A full 9-tier ladder, one `SetVar VAR_HARD_LEVEL_CAP, <level>` added right
+  after each gym leader's `GiveBadge`/`IncrementTrainerScore2
+  TRAINER_SCORE_EVENT_BADGE_EARNED` lines in their gym script: 14 (start) → 23
+  (Roark) → 30 (Gardenia) → 37 (Fantina) → 45 (Maylene) → 51 (Wake) → 57
+  (Byron) → 62 (Candice) → 67 (Volkner).
 * Helpers in `src/pokemon.c`: `Pokemon_GetHardLevelCap`,
   `Pokemon_ClampExpToHardLevelCap`, `Pokemon_BelowHardLevelCap`. Var accessors
   `SystemVars_GetHardLevelCap` / `SystemVars_SetHardLevelCap` in
@@ -1903,6 +1907,61 @@ A hard cap on Pokémon level, stored in `VAR_HARD_LEVEL_CAP`.
   range-bounding on its own.
 * Twinleaf Town guitarist (`scripts_twinleaf_town.s`,
   `res/text/twinleaf_town.json`) now gives a one-time Rare Candy.
+
+### Every pre-Elite-Four trainer relevelled to match the cap ladder
+All 434 in-scope trainer files under `res/trainers/data/*.json` (every
+line-of-sight or scripted trainer battle up to and including Volkner, minus
+Battle Frontier, rematch, unused, dummy, leader/E4/champion, and other
+postgame-only encounters) had every Pokémon in their party set to a single
+target level derived from the map(s) they battle on, so trainer strength
+tracks the 9-tier level-cap ladder (14/23/30/37/45/51/57/62/67) instead of the
+vanilla decomp's levels:
+* **Gym trainers** (identified by battling on one of the gym maps) →
+  `(cap active when entering that gym, i.e. the previous milestone's cap) − 1`
+  — Roark's gym is the first, so its trainers use the starting cap (14) minus
+  1, not the cap Roark himself unlocks.
+* **Team Galactic grunts** (`class` containing `GALACTIC_GRUNT`) →
+  `(map tier's cap) − 3`.
+* **Team Galactic bosses/commanders** (`class` containing `GALACTIC_BOSS` or
+  `COMMANDER`) → `(map tier's cap) − 2`.
+* **Rival battles** (`class` is `TRAINER_CLASS_RIVAL` — Route 201, Route 203,
+  Route 209, Pastoria City, Canalave City, Spear Pillar, Pokémon League North
+  Pokécenter; 21 files, 7 encounters × 3 starter variants) → `(map tier's
+  cap) − 2`, same as a Galactic boss/commander. **Exception:** the very first
+  rival battle (`rival_route_201_{chimchar,piplup,turtwig}.json`) keeps its
+  vanilla level 5 instead — the level-cap ladder hasn't started yet at that
+  point (Tier 1's cap of 14 wouldn't kick in until 2 levels below it, level
+  12, which is too high for a level-5-or-6 starter fight).
+* **Everyone else** → `(map tier's cap) − 4`.
+* A trainer whose maps span more than one tier uses the lowest (earliest)
+  tier/cap among them.
+* The 5 `*_battleground.json` roaming trainers (Cheryl, Riley, Marley, Buck,
+  Mira) were left untouched — `battleground` is physically connected to and
+  functionally part of the postgame Survival Area
+  (`res/field/events/events_battleground.json` references
+  `MAP_HEADER_SURVIVAL_AREA`), despite not matching the existing postgame map
+  name filters.
+* The whole Team Galactic climax — Galactic HQ (all floors/Control Room),
+  Lake Verity, Lake Valor Drained, Valor Cavern, Spear Pillar, and Distortion
+  World B7F — is tiered as happening between Candice and Volkner (the 7th and
+  8th badges), not after Volkner, so it uses the post-Candice cap (62)
+  instead of the post-Volkner one (67).
+* Applied via a one-off script (not checked into the repo) that reads each
+  trainer JSON, sets every `party[].level` to the computed target, and
+  rewrites the file with `json.dump(..., indent=4, ensure_ascii=False)`,
+  preserving each file's original trailing-newline convention.
+
+### Level cap increases are announced in-game
+Each of the 8 gym scripts now prints "The level cap has been raised to
+`X`!" right after the badge is awarded and `VAR_HARD_LEVEL_CAP` is set to
+the new value (`res/field/scripts/scripts_{oreburgh,eterna,hearthome}_city_gym{,_leader_room}.s`,
+`scripts_{veilstone,pastoria,canalave,snowpoint}_city_gym.s`,
+`scripts_sunyshore_city_gym_room_3.s`) — `BufferNumber 0,
+VAR_HARD_LEVEL_CAP` followed by a new `<Gym>_Text_LevelCapRaised` message
+(`{STRVAR_1 52, 0, 0}` in the text) reads the cap straight back out of the
+variable that was just set, so the number can't drift out of sync with the
+`SetVar` above it. The very first cap set (game start, 14) is the initial
+value rather than an increase, so it doesn't get a message.
 
 ---
 

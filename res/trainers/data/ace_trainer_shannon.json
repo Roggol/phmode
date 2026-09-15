@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_CHERRIM",
             "form": 0,
-            "level": 34,
+            "level": 58,
             "item": null,
             "moves": [
                 "MOVE_PETAL_DANCE",
@@ -25,7 +25,7 @@
         {
             "species": "SPECIES_AZUMARILL",
             "form": 0,
-            "level": 34,
+            "level": 58,
             "item": null,
             "moves": [
                 "MOVE_DOUBLE_EDGE",
@@ -38,7 +38,7 @@
         {
             "species": "SPECIES_LOPUNNY",
             "form": 0,
-            "level": 35,
+            "level": 58,
             "item": null,
             "moves": [
                 "MOVE_JUMP_KICK",

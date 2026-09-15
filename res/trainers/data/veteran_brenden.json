@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_FORRETRESS",
             "form": 0,
-            "level": 54,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_FLASH_CANNON",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_GYARADOS",
             "form": 0,
-            "level": 54,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_EARTHQUAKE",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_HIPPOWDON",
             "form": 0,
-            "level": 54,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_DIG",

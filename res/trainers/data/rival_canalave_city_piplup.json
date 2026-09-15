@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_STARAPTOR",
             "form": 0,
-            "level": 36,
+            "level": 49,
             "item": null,
             "moves": [
                 "MOVE_AERIAL_ACE",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_FLOATZEL",
             "form": 0,
-            "level": 35,
+            "level": 49,
             "item": null,
             "moves": [
                 "MOVE_AQUA_JET",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_HERACROSS",
             "form": 0,
-            "level": 37,
+            "level": 49,
             "item": null,
             "moves": [
                 "MOVE_BRICK_BREAK",
@@ -54,7 +54,7 @@
         {
             "species": "SPECIES_RAPIDASH",
             "form": 0,
-            "level": 35,
+            "level": 49,
             "item": null,
             "moves": [
                 "MOVE_FIRE_SPIN",
@@ -68,7 +68,7 @@
         {
             "species": "SPECIES_TORTERRA",
             "form": 0,
-            "level": 38,
+            "level": 49,
             "item": null,
             "moves": [
                 "MOVE_RAZOR_LEAF",

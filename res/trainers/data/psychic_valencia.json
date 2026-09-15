@@ -11,7 +11,7 @@
         {
             "species": "SPECIES_CHIMECHO",
             "form": 0,
-            "level": 44,
+            "level": 63,
             "item": null,
             "moves": null,
             "iv_scale": 0,
@@ -20,7 +20,7 @@
         {
             "species": "SPECIES_ABSOL",
             "form": 0,
-            "level": 45,
+            "level": 63,
             "item": null,
             "moves": null,
             "iv_scale": 0,
@@ -29,7 +29,7 @@
         {
             "species": "SPECIES_DUSKNOIR",
             "form": 0,
-            "level": 46,
+            "level": 63,
             "item": null,
             "moves": null,
             "iv_scale": 0,

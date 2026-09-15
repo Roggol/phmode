@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_GASTLY",
             "form": 0,
-            "level": 21,
+            "level": 29,
             "item": null,
             "moves": [
                 "MOVE_NIGHT_SHADE",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_GASTLY",
             "form": 0,
-            "level": 22,
+            "level": 29,
             "item": null,
             "moves": [
                 "MOVE_NIGHT_SHADE",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_HAUNTER",
             "form": 0,
-            "level": 24,
+            "level": 29,
             "item": null,
             "moves": [
                 "MOVE_SHADOW_BALL",

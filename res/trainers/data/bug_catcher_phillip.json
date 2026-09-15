@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_WURMPLE",
             "form": 0,
-            "level": 11,
+            "level": 19,
             "item": null,
             "moves": [
                 "MOVE_TACKLE",
@@ -23,7 +23,7 @@
         {
             "species": "SPECIES_CASCOON",
             "form": 0,
-            "level": 13,
+            "level": 19,
             "item": null,
             "moves": [
                 "MOVE_TACKLE",
@@ -37,7 +37,7 @@
         {
             "species": "SPECIES_DUSTOX",
             "form": 0,
-            "level": 15,
+            "level": 19,
             "item": null,
             "moves": [
                 "MOVE_TACKLE",

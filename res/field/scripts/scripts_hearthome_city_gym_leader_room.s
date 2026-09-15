@@ -70,6 +70,9 @@ HearthomeGym_FantinaMain:
     WaitFanfare
     GiveBadge BADGE_ID_RELIC
     IncrementTrainerScore2 TRAINER_SCORE_EVENT_BADGE_EARNED
+    SetVar VAR_HARD_LEVEL_CAP, 37
+    BufferNumber 0, VAR_HARD_LEVEL_CAP
+    Message HearthomeGym_Text_LevelCapRaised
     SetTrainerFlag TRAINER_CAMPER_DREW
     SetTrainerFlag TRAINER_ACE_TRAINER_ALLEN
     SetTrainerFlag TRAINER_ACE_TRAINER_CATHERINE

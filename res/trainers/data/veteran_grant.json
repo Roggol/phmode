@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_RIOLU",
             "form": 0,
-            "level": 34,
+            "level": 10,
             "item": null,
             "moves": [
                 "MOVE_FORCE_PALM",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_STARAPTOR",
             "form": 0,
-            "level": 34,
+            "level": 10,
             "item": null,
             "moves": [
                 "MOVE_AERIAL_ACE",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_GRAVELER",
             "form": 0,
-            "level": 34,
+            "level": 10,
             "item": null,
             "moves": [
                 "MOVE_EARTHQUAKE",

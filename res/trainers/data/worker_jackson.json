@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_MAGNEMITE",
             "form": 0,
-            "level": 34,
+            "level": 50,
             "item": null,
             "moves": [
                 "MOVE_MAGNET_BOMB",
@@ -23,7 +23,7 @@
         {
             "species": "SPECIES_MAGNEMITE",
             "form": 0,
-            "level": 34,
+            "level": 50,
             "item": null,
             "moves": [
                 "MOVE_MAGNET_BOMB",
@@ -36,7 +36,7 @@
         {
             "species": "SPECIES_MAGNEMITE",
             "form": 0,
-            "level": 34,
+            "level": 50,
             "item": null,
             "moves": [
                 "MOVE_MAGNET_BOMB",

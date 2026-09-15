@@ -36,6 +36,13 @@
       ]
     },
     {
+      "id": "EternaGym_Text_LevelCapRaised",
+      "en_US": [
+        "The level cap has been raised to\n",
+        "{STRVAR_1 52, 0, 0}!"
+      ]
+    },
+    {
       "id": "EternaGym_Text_GardeniaExplainForestBadge",
       "en_US": [
         "With the Forest Badge, your Pokémon\n",

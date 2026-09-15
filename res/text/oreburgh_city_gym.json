@@ -38,6 +38,13 @@
       ]
     },
     {
+      "id": "OreburghGym_Text_LevelCapRaised",
+      "en_US": [
+        "The level cap has been raised to\n",
+        "{STRVAR_1 52, 0, 0}!"
+      ]
+    },
+    {
       "id": "OreburghGym_Text_RoarkExplainCoalBadge",
       "en_US": [
         "Having that Coal Badge means your\n",

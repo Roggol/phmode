@@ -13,7 +13,7 @@
         {
             "species": "SPECIES_PICHU",
             "form": 0,
-            "level": 19,
+            "level": 26,
             "item": "ITEM_SITRUS_BERRY",
             "moves": null,
             "iv_scale": 0,
@@ -22,7 +22,7 @@
         {
             "species": "SPECIES_PICHU",
             "form": 0,
-            "level": 19,
+            "level": 26,
             "item": "ITEM_SITRUS_BERRY",
             "moves": null,
             "iv_scale": 0,
@@ -31,7 +31,7 @@
         {
             "species": "SPECIES_PIKACHU",
             "form": 0,
-            "level": 22,
+            "level": 26,
             "item": "ITEM_SITRUS_BERRY",
             "moves": null,
             "iv_scale": 0,

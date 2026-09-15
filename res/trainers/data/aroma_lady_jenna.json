@@ -11,7 +11,7 @@
         {
             "species": "SPECIES_BUDEW",
             "form": 0,
-            "level": 15,
+            "level": 22,
             "item": null,
             "moves": [
                 "MOVE_ABSORB",
@@ -24,7 +24,7 @@
         {
             "species": "SPECIES_BUDEW",
             "form": 0,
-            "level": 16,
+            "level": 22,
             "item": null,
             "moves": [
                 "MOVE_ABSORB",
@@ -37,7 +37,7 @@
         {
             "species": "SPECIES_BUDEW",
             "form": 0,
-            "level": 17,
+            "level": 22,
             "item": null,
             "moves": [
                 "MOVE_ABSORB",

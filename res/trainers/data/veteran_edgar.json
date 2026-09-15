@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_PORYGON_Z",
             "form": 0,
-            "level": 46,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_HYPER_BEAM",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_TANGROWTH",
             "form": 0,
-            "level": 46,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_POWER_WHIP",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_EMPOLEON",
             "form": 0,
-            "level": 46,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_BRINE",

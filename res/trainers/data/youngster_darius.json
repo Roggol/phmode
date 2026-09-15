@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_GEODUDE",
             "form": 0,
-            "level": 9,
+            "level": 13,
             "item": null,
             "moves": [
                 "MOVE_TACKLE",
@@ -22,7 +22,7 @@
         {
             "species": "SPECIES_ONIX",
             "form": 0,
-            "level": 9,
+            "level": 13,
             "item": null,
             "moves": [
                 "MOVE_ROCK_THROW",

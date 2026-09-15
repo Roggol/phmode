@@ -35,6 +35,13 @@
       ]
     },
     {
+      "id": "VeilstoneGym_Text_LevelCapRaised",
+      "en_US": [
+        "The level cap has been raised to\n",
+        "{STRVAR_1 52, 0, 0}!"
+      ]
+    },
+    {
       "id": "VeilstoneGym_Text_MayleneExplainBadge",
       "en_US": [
         "Um... I should explain about that\n",

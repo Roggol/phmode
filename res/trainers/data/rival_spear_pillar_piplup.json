@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_MUNCHLAX",
             "form": 0,
-            "level": 40,
+            "level": 60,
             "item": null,
             "moves": [
                 "MOVE_BODY_SLAM",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_STARAPTOR",
             "form": 0,
-            "level": 42,
+            "level": 60,
             "item": null,
             "moves": [
                 "MOVE_CLOSE_COMBAT",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_FLOATZEL",
             "form": 0,
-            "level": 40,
+            "level": 60,
             "item": null,
             "moves": [
                 "MOVE_AQUA_JET",
@@ -54,7 +54,7 @@
         {
             "species": "SPECIES_HERACROSS",
             "form": 0,
-            "level": 42,
+            "level": 60,
             "item": null,
             "moves": [
                 "MOVE_CLOSE_COMBAT",
@@ -68,7 +68,7 @@
         {
             "species": "SPECIES_RAPIDASH",
             "form": 0,
-            "level": 40,
+            "level": 60,
             "item": null,
             "moves": [
                 "MOVE_FIRE_BLAST",
@@ -82,7 +82,7 @@
         {
             "species": "SPECIES_TORTERRA",
             "form": 0,
-            "level": 44,
+            "level": 60,
             "item": null,
             "moves": [
                 "MOVE_GIGA_DRAIN",

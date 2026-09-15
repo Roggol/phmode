@@ -34,6 +34,9 @@ SnowpointGym_Candice:
     WaitFanfare
     GiveBadge BADGE_ID_ICICLE
     IncrementTrainerScore2 TRAINER_SCORE_EVENT_BADGE_EARNED
+    SetVar VAR_HARD_LEVEL_CAP, 62
+    BufferNumber 0, VAR_HARD_LEVEL_CAP
+    Message SnowpointGym_Text_LevelCapRaised
     SetTrainerFlag TRAINER_ACE_TRAINER_SERGIO
     SetTrainerFlag TRAINER_ACE_TRAINER_ISAIAH
     SetTrainerFlag TRAINER_ACE_TRAINER_ANTON

@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_AZURILL",
             "form": 0,
-            "level": 27,
+            "level": 44,
             "item": null,
             "moves": [
                 "MOVE_WATER_GUN",
@@ -23,7 +23,7 @@
         {
             "species": "SPECIES_MARILL",
             "form": 0,
-            "level": 29,
+            "level": 44,
             "item": null,
             "moves": [
                 "MOVE_BUBBLE_BEAM",
@@ -37,7 +37,7 @@
         {
             "species": "SPECIES_AZUMARILL",
             "form": 0,
-            "level": 31,
+            "level": 44,
             "item": null,
             "moves": [
                 "MOVE_BUBBLE_BEAM",

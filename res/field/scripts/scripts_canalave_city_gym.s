@@ -30,6 +30,9 @@ CanalaveGym_Byron:
     WaitFanfare
     GiveBadge BADGE_ID_MINE
     IncrementTrainerScore2 TRAINER_SCORE_EVENT_BADGE_EARNED
+    SetVar VAR_HARD_LEVEL_CAP, 57
+    BufferNumber 0, VAR_HARD_LEVEL_CAP
+    Message CanalaveGym_Text_LevelCapRaised
     SetTrainerFlag TRAINER_BLACK_BELT_DAVID
     SetTrainerFlag TRAINER_WORKER_JACKSON
     SetTrainerFlag TRAINER_WORKER_GARY

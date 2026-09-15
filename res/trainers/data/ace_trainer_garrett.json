@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_MR_MIME",
             "form": 0,
-            "level": 37,
+            "level": 53,
             "item": null,
             "moves": [
                 "MOVE_PSYBEAM",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_DUSCLOPS",
             "form": 0,
-            "level": 39,
+            "level": 53,
             "item": null,
             "moves": [
                 "MOVE_WILL_O_WISP",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_SCYTHER",
             "form": 0,
-            "level": 39,
+            "level": 53,
             "item": null,
             "moves": [
                 "MOVE_SLASH",

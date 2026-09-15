@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_CLEFAIRY",
             "form": 0,
-            "level": 25,
+            "level": 33,
             "item": null,
             "moves": [
                 "MOVE_METRONOME",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_KADABRA",
             "form": 0,
-            "level": 25,
+            "level": 33,
             "item": null,
             "moves": [
                 "MOVE_PSYBEAM",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_MONFERNO",
             "form": 0,
-            "level": 27,
+            "level": 33,
             "item": null,
             "moves": [
                 "MOVE_FLAME_WHEEL",

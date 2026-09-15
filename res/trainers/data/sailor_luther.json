@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_WINGULL",
             "form": 0,
-            "level": 41,
+            "level": 58,
             "item": null,
             "moves": null,
             "iv_scale": 0,
@@ -19,7 +19,7 @@
         {
             "species": "SPECIES_MACHOKE",
             "form": 0,
-            "level": 42,
+            "level": 58,
             "item": null,
             "moves": null,
             "iv_scale": 0,
@@ -28,7 +28,7 @@
         {
             "species": "SPECIES_GASTRODON",
             "form": 0,
-            "level": 43,
+            "level": 58,
             "item": null,
             "moves": null,
             "iv_scale": 0,

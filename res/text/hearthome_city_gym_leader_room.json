@@ -38,6 +38,13 @@
       ]
     },
     {
+      "id": "HearthomeGym_Text_LevelCapRaised",
+      "en_US": [
+        "The level cap has been raised to\n",
+        "{STRVAR_1 52, 0, 0}!"
+      ]
+    },
+    {
       "id": "HearthomeGym_Text_FantinaExplainRelicBadge",
       "en_US": [
         "That Badge will let you use the\n",

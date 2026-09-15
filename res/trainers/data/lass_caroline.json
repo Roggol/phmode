@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_CHERUBI",
             "form": 0,
-            "level": 17,
+            "level": 22,
             "item": null,
             "moves": [
                 "MOVE_TACKLE",
@@ -22,7 +22,7 @@
         {
             "species": "SPECIES_ROSELIA",
             "form": 0,
-            "level": 17,
+            "level": 22,
             "item": null,
             "moves": [
                 "MOVE_MEGA_DRAIN",

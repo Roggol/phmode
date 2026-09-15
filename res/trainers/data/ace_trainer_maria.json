@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_GOLDUCK",
             "form": 0,
-            "level": 38,
+            "level": 53,
             "item": null,
             "moves": [
                 "MOVE_WATER_PULSE",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_RAPIDASH",
             "form": 0,
-            "level": 39,
+            "level": 53,
             "item": null,
             "moves": [
                 "MOVE_FIRE_BLAST",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_SUDOWOODO",
             "form": 0,
-            "level": 38,
+            "level": 53,
             "item": null,
             "moves": [
                 "MOVE_ROCK_SLIDE",

@@ -13,7 +13,7 @@
         {
             "species": "SPECIES_KADABRA",
             "form": 0,
-            "level": 20,
+            "level": 26,
             "item": null,
             "moves": [
                 "MOVE_CONFUSION"

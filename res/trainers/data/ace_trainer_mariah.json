@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_BLISSEY",
             "form": 0,
-            "level": 45,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_DOUBLE_EDGE",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_GLALIE",
             "form": 0,
-            "level": 46,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_ICE_BEAM",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_MAGNEZONE",
             "form": 0,
-            "level": 48,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_DISCHARGE",

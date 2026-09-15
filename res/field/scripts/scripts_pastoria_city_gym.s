@@ -57,6 +57,9 @@ PastoriaGym_Wake:
     WaitFanfare
     GiveBadge BADGE_ID_FEN
     IncrementTrainerScore2 TRAINER_SCORE_EVENT_BADGE_EARNED
+    SetVar VAR_HARD_LEVEL_CAP, 51
+    BufferNumber 0, VAR_HARD_LEVEL_CAP
+    Message PastoriaGym_Text_LevelCapRaised
     SetTrainerFlag TRAINER_FISHERMAN_ERICK
     SetTrainerFlag TRAINER_SAILOR_DAMIAN
     SetTrainerFlag TRAINER_FISHERMAN_WALTER

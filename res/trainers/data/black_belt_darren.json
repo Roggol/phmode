@@ -11,7 +11,7 @@
         {
             "species": "SPECIES_MACHOP",
             "form": 0,
-            "level": 25,
+            "level": 36,
             "item": null,
             "moves": [
                 "MOVE_KARATE_CHOP",
@@ -23,7 +23,7 @@
         {
             "species": "SPECIES_MEDITITE",
             "form": 0,
-            "level": 25,
+            "level": 36,
             "item": null,
             "moves": [
                 "MOVE_CONFUSION",
@@ -35,7 +35,7 @@
         {
             "species": "SPECIES_MACHOKE",
             "form": 0,
-            "level": 25,
+            "level": 36,
             "item": null,
             "moves": [
                 "MOVE_KARATE_CHOP",

@@ -33,6 +33,9 @@ VeilstoneGym_Maylene:
     WaitFanfare
     GiveBadge BADGE_ID_COBBLE
     IncrementTrainerScore2 TRAINER_SCORE_EVENT_BADGE_EARNED
+    SetVar VAR_HARD_LEVEL_CAP, 45
+    BufferNumber 0, VAR_HARD_LEVEL_CAP
+    Message VeilstoneGym_Text_LevelCapRaised
     SetTrainerFlag TRAINER_BLACK_BELT_COLBY
     SetTrainerFlag TRAINER_BLACK_BELT_DARREN
     SetTrainerFlag TRAINER_BLACK_BELT_RAFAEL

@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_CLEFABLE",
             "form": 0,
-            "level": 47,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_METEOR_MASH",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_TORTERRA",
             "form": 0,
-            "level": 48,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_EARTHQUAKE",

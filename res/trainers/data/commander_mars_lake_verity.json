@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_GOLBAT",
             "form": 0,
-            "level": 38,
+            "level": 60,
             "item": "ITEM_NONE",
             "moves": [
                 "MOVE_AIR_CUTTER",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_BRONZOR",
             "form": 0,
-            "level": 38,
+            "level": 60,
             "item": "ITEM_NONE",
             "moves": [
                 "MOVE_GYRO_BALL",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_PURUGLY",
             "form": 0,
-            "level": 40,
+            "level": 60,
             "item": "ITEM_SITRUS_BERRY",
             "moves": [
                 "MOVE_SLASH",

@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_RHYDON",
             "form": 0,
-            "level": 47,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_STONE_EDGE",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_CARNIVINE",
             "form": 0,
-            "level": 48,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_WRING_OUT",

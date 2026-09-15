@@ -35,6 +35,13 @@
       ]
     },
     {
+      "id": "PastoriaGym_Text_LevelCapRaised",
+      "en_US": [
+        "The level cap has been raised to\n",
+        "{STRVAR_1 52, 0, 0}!"
+      ]
+    },
+    {
       "id": "PastoriaGym_Text_WakeExplainFenBadge",
       "en_US": [
         "You need that Fen Badge to use the\n",

@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_MAGNEMITE",
             "form": 0,
-            "level": 37,
+            "level": 50,
             "item": null,
             "moves": [
                 "MOVE_SPARK",

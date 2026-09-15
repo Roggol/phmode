@@ -11,7 +11,7 @@
         {
             "species": "SPECIES_NOSEPASS",
             "form": 0,
-            "level": 35,
+            "level": 47,
             "item": null,
             "moves": null,
             "iv_scale": 0,
@@ -20,7 +20,7 @@
         {
             "species": "SPECIES_ONIX",
             "form": 0,
-            "level": 33,
+            "level": 47,
             "item": null,
             "moves": null,
             "iv_scale": 0,
@@ -29,7 +29,7 @@
         {
             "species": "SPECIES_STEELIX",
             "form": 0,
-            "level": 34,
+            "level": 47,
             "item": null,
             "moves": null,
             "iv_scale": 0,

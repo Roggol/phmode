@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_ROSELIA",
             "form": 0,
-            "level": 24,
+            "level": 41,
             "item": null,
             "moves": [
                 "MOVE_TOXIC_SPIKES",
@@ -25,7 +25,7 @@
         {
             "species": "SPECIES_RALTS",
             "form": 0,
-            "level": 24,
+            "level": 41,
             "item": null,
             "moves": [
                 "MOVE_PSYCHIC",
@@ -39,7 +39,7 @@
         {
             "species": "SPECIES_LICKITUNG",
             "form": 0,
-            "level": 25,
+            "level": 41,
             "item": null,
             "moves": [
                 "MOVE_SUPERSONIC",

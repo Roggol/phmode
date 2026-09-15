@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_STARAVIA",
             "form": 0,
-            "level": 17,
+            "level": 26,
             "item": null,
             "moves": null,
             "iv_scale": 0,
@@ -19,7 +19,7 @@
         {
             "species": "SPECIES_SHELLOS",
             "form": 0,
-            "level": 20,
+            "level": 26,
             "item": null,
             "moves": null,
             "iv_scale": 0,
@@ -28,7 +28,7 @@
         {
             "species": "SPECIES_PONYTA",
             "form": 0,
-            "level": 20,
+            "level": 26,
             "item": null,
             "moves": null,
             "iv_scale": 0,

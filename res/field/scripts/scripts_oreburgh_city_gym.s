@@ -30,6 +30,9 @@ OreburghGym_Roark:
     SetTrainerFlag TRAINER_YOUNGSTER_DARIUS
     GiveBadge BADGE_ID_COAL
     IncrementTrainerScore2 TRAINER_SCORE_EVENT_BADGE_EARNED
+    SetVar VAR_HARD_LEVEL_CAP, 23
+    BufferNumber 0, VAR_HARD_LEVEL_CAP
+    Message OreburghGym_Text_LevelCapRaised
     SetTrainerFlag TRAINER_YOUNGSTER_JONATHON
     SetTrainerFlag TRAINER_YOUNGSTER_DARIUS
     SetFlag FLAG_HIDE_POKECENTER_BASEMENT_BLOCKADE

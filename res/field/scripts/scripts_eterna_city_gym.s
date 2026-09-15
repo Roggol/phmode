@@ -75,6 +75,9 @@ EternaGym_Gardenia:
     WaitFanfare
     GiveBadge BADGE_ID_FOREST
     IncrementTrainerScore2 TRAINER_SCORE_EVENT_BADGE_EARNED
+    SetVar VAR_HARD_LEVEL_CAP, 30
+    BufferNumber 0, VAR_HARD_LEVEL_CAP
+    Message EternaGym_Text_LevelCapRaised
     SetTrainerFlag TRAINER_AROMA_LADY_JENNA
     SetTrainerFlag TRAINER_AROMA_LADY_ANGELA
     SetTrainerFlag TRAINER_LASS_CAROLINE

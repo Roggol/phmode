@@ -511,6 +511,7 @@ Pokémon received the exact same change — nothing is merged.
 - SpA: 76 -> 100
 
 ### Ledian
+- Atk: 35 -> 90
 - SpA: 55 -> 20
 - SpD: 110 -> 90
 
@@ -1041,16 +1042,51 @@ Pokémon received the exact same change — nothing is merged.
 
 To keep pacing under control, there's a **hard level cap** — your Pokémon
 simply cannot gain any more Exp. once they hit it, no matter how many
-battles you win. The cap starts fairly low and is raised at certain story
-milestones as you progress, opening up as you earn more badges. This
-applies everywhere Exp. is normally gained, including from battling and
-from leaving a Pokémon at the Day Care.
+battles you win. This applies everywhere Exp. is normally gained,
+including from battling and from leaving a Pokémon at the Day Care.
+
+The cap starts at **14** and rises each time you earn a badge:
+
+| After beating... | Cap |
+| --- | --- |
+| (start) | 14 |
+| Roark | 23 |
+| Gardenia | 30 |
+| Fantina | 37 |
+| Maylene | 45 |
+| Wake | 51 |
+| Byron | 57 |
+| Candice | 62 |
+| Volkner | 67 |
 
 If you use a Rare Candy, it jumps the Pokémon straight to the current
 level cap in one go (rather than one level at a time), and it correctly
 offers every move that Pokémon would have learned along the way, so you
 won't miss out on level-up moves just because you skipped several levels
 at once.
+
+Every time you earn a badge and the cap rises, a message tells you right
+away: *"The level cap has been raised to 23!"* (or whatever the new
+number is), so you always know exactly where you stand.
+
+**Every trainer battle before the Elite Four has been re-leveled to match
+this ladder**, based on where you actually encounter them: an ordinary
+trainer's whole team sits 4 levels under the cap that's active in that
+area, and a rival battle or a named Team Galactic boss (Mars, Jupiter,
+Saturn, Cyrus) sits just 2 under it — the toughest fights you'll have
+outside of a Gym Leader. Team Galactic grunts split the difference at 3
+under. A trainer inside a gym is tuned to the cap that was active when
+you *walked into* that gym, not the one its own leader unlocks — so
+Roark's gym trainers, fought before you have any badges, sit 1 level
+under the starting cap, not 1 under what beating Roark unlocks. The one
+exception to all of this is your very first rival battle on Route 201,
+which keeps its original level 5 instead of scaling with the cap. The
+whole Team Galactic endgame — the Lakes, Galactic HQ, Spear Pillar, and
+the Distortion World — is tuned as happening between Candice and Volkner,
+matching where it falls in the story, so it uses the cap from right after
+Candice rather than the one after Volkner. The intent is that trainer
+difficulty now tracks the cap directly, rather than following the
+original game's leveling curve.
 
 ---
 
@@ -1251,10 +1287,14 @@ A new item, the **Link Cable**, lets you evolve any Pokémon that normally
 needs to be traded, just by using the item on it instead. This covers
 every trade evolution in the game — Kadabra, Machoke, Graveler, and
 Haunter now evolve when you use a Link Cable on them, and Pokémon that
-needed to be traded *while holding* a specific item (like Onix holding a
-Metal Coat, or Poliwhirl holding a King's Rock) now evolve when you simply
-use that same held item on them directly from the Bag, the same way you'd
-use an Evolution Stone.
+needed to be traded *while holding* a specific item now evolve when you
+simply use that same held item on them directly from the Bag, the same
+way you'd use an Evolution Stone: Onix (Metal Coat), Seadra (Dragon
+Scale), Scyther (Metal Coat), Porygon (Up-Grade), Porygon2 (Dubious
+Disc), Clamperl (Deep Sea Tooth → Huntail, Deep Sea Scale → Gorebyss),
+Poliwhirl (King's Rock), Slowpoke (King's Rock), Dusclops (Reaper
+Cloth), Electabuzz (Electirizer), Magmar (Magmarizer), and Rhydon
+(Protector).
 
 ### PPHM — a portable full heal
 A new key item, the **PPHM (Portable Pokémon Healing Machine)**, fully

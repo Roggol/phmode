@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_PARASECT",
             "form": 0,
-            "level": 53,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_X_SCISSOR",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_RHYDON",
             "form": 0,
-            "level": 54,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_HAMMER_ARM",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_MAGMAR",
             "form": 0,
-            "level": 55,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_FIRE_BLAST",

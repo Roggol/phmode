@@ -11,7 +11,7 @@
         {
             "species": "SPECIES_CROAGUNK",
             "form": 0,
-            "level": 26,
+            "level": 36,
             "item": null,
             "moves": [
                 "MOVE_SWAGGER",
@@ -24,7 +24,7 @@
         {
             "species": "SPECIES_MACHOKE",
             "form": 0,
-            "level": 26,
+            "level": 36,
             "item": null,
             "moves": [
                 "MOVE_KARATE_CHOP",

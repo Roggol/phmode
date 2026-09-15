@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_GOLDEEN",
             "form": 0,
-            "level": 28,
+            "level": 44,
             "item": null,
             "moves": [
                 "MOVE_WATER_PULSE",
@@ -24,7 +24,7 @@
         {
             "species": "SPECIES_SEAKING",
             "form": 0,
-            "level": 31,
+            "level": 44,
             "item": null,
             "moves": [
                 "MOVE_WATER_PULSE",
@@ -38,7 +38,7 @@
         {
             "species": "SPECIES_GYARADOS",
             "form": 0,
-            "level": 31,
+            "level": 44,
             "item": null,
             "moves": [
                 "MOVE_THRASH",

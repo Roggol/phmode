@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_STARAPTOR",
             "form": 0,
-            "level": 50,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_CLOSE_COMBAT",
@@ -24,7 +24,7 @@
         {
             "species": "SPECIES_AMBIPOM",
             "form": 0,
-            "level": 50,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_DOUBLE_HIT",

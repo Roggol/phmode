@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_STARLY",
             "form": 0,
-            "level": 7,
+            "level": 12,
             "item": null,
             "moves": [
                 "MOVE_QUICK_ATTACK",
@@ -24,7 +24,7 @@
         {
             "species": "SPECIES_PIPLUP",
             "form": 0,
-            "level": 9,
+            "level": 12,
             "item": null,
             "moves": [
                 "MOVE_POUND",

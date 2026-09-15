@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_SNEASEL",
             "form": 0,
-            "level": 40,
+            "level": 56,
             "item": null,
             "moves": [
                 "MOVE_ICE_SHARD",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_SNORUNT",
             "form": 0,
-            "level": 40,
+            "level": 56,
             "item": null,
             "moves": [
                 "MOVE_ICE_FANG",
@@ -39,7 +39,7 @@
         {
             "species": "SPECIES_SNOVER",
             "form": 0,
-            "level": 41,
+            "level": 56,
             "item": null,
             "moves": [
                 "MOVE_ICE_SHARD",

@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_GEODUDE",
             "form": 0,
-            "level": 11,
+            "level": 13,
             "item": null,
             "moves": [
                 "MOVE_TACKLE",

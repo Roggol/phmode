@@ -13,7 +13,7 @@
         {
             "species": "SPECIES_MAGNEMITE",
             "form": 0,
-            "level": 30,
+            "level": 33,
             "item": null,
             "moves": [
                 "MOVE_SPARK",
@@ -25,7 +25,7 @@
         {
             "species": "SPECIES_KADABRA",
             "form": 0,
-            "level": 26,
+            "level": 33,
             "item": null,
             "moves": [
                 "MOVE_PSYBEAM",

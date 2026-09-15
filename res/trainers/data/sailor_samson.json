@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_WINGULL",
             "form": 0,
-            "level": 29,
+            "level": 44,
             "item": null,
             "moves": [
                 "MOVE_WATER_PULSE",
@@ -23,7 +23,7 @@
         {
             "species": "SPECIES_SHELLOS",
             "form": 0,
-            "level": 30,
+            "level": 44,
             "item": null,
             "moves": [
                 "MOVE_WATER_PULSE",
@@ -36,7 +36,7 @@
         {
             "species": "SPECIES_GOLDUCK",
             "form": 0,
-            "level": 31,
+            "level": 44,
             "item": null,
             "moves": [
                 "MOVE_FURY_SWIPES",

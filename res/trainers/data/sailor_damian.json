@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_WINGULL",
             "form": 0,
-            "level": 31,
+            "level": 44,
             "item": null,
             "moves": [
                 "MOVE_WATER_PULSE",
@@ -23,7 +23,7 @@
         {
             "species": "SPECIES_PELIPPER",
             "form": 0,
-            "level": 31,
+            "level": 44,
             "item": null,
             "moves": [
                 "MOVE_WATER_PULSE",

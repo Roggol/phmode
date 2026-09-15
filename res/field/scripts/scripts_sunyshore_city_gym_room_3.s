@@ -40,6 +40,9 @@ SunyshoreGymRoom3_Volkner:
     WaitFanfare
     GiveBadge BADGE_ID_BEACON
     IncrementTrainerScore2 TRAINER_SCORE_EVENT_BADGE_EARNED
+    SetVar VAR_HARD_LEVEL_CAP, 67
+    BufferNumber 0, VAR_HARD_LEVEL_CAP
+    Message SunyshoreGymRoom3_Text_LevelCapRaised
     SetTrainerFlag TRAINER_ACE_TRAINER_ZACHERY
     SetTrainerFlag TRAINER_ACE_TRAINER_DESTINY
     SetTrainerFlag TRAINER_GUITARIST_JERRY

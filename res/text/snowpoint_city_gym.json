@@ -34,6 +34,13 @@
       ]
     },
     {
+      "id": "SnowpointGym_Text_LevelCapRaised",
+      "en_US": [
+        "The level cap has been raised to\n",
+        "{STRVAR_1 52, 0, 0}!"
+      ]
+    },
+    {
       "id": "SnowpointGym_Text_CandiceExplainIcicleBadge",
       "en_US": [
         "That Icicle Badge I just gave you?\r",

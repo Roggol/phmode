@@ -13,7 +13,7 @@
         {
             "species": "SPECIES_KIRLIA",
             "form": 0,
-            "level": 40,
+            "level": 58,
             "item": null,
             "moves": [
                 "MOVE_PSYCHIC",
@@ -27,7 +27,7 @@
         {
             "species": "SPECIES_KADABRA",
             "form": 0,
-            "level": 40,
+            "level": 58,
             "item": null,
             "moves": [
                 "MOVE_PSYCHIC",

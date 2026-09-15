@@ -41,7 +41,7 @@ TwinleafTown_Guitarist:
     Message TwinleafTown_Text_GuitaristRareCandyGift
     SetVar VAR_0x8004, ITEM_MASTER_BALL
     SetVar VAR_0x8005, 99
-    SetVar VAR_HARD_LEVEL_CAP, 60
+    SetVar VAR_HARD_LEVEL_CAP, 14
     GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, TwinleafTown_GuitaristBagIsFull
     SetFlag FLAG_RECEIVED_TWINLEAF_TOWN_GUITARIST_RARE_CANDY
     Common_GiveItemQuantity
@@ -81,7 +81,7 @@ TwinleafTown_EveryoneGoesOnAdventures:
 TwinleafTown_RivalWentTearingOffOuch:
     BufferRivalName 0
     Message TwinleafTown_Text_RivalWentTearingOffOuch
-    SetVar VAR_HARD_LEVEL_CAP, 60
+    SetVar VAR_HARD_LEVEL_CAP, 14
     WaitButton
     CloseMessage
     ReleaseAll

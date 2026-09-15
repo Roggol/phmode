@@ -11,7 +11,7 @@
         {
             "species": "SPECIES_STEELIX",
             "form": 0,
-            "level": 35,
+            "level": 50,
             "item": null,
             "moves": [
                 "MOVE_IRON_TAIL",
@@ -25,7 +25,7 @@
         {
             "species": "SPECIES_STEELIX",
             "form": 0,
-            "level": 37,
+            "level": 50,
             "item": null,
             "moves": [
                 "MOVE_IRON_TAIL",

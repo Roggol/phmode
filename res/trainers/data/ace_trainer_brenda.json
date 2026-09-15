@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_LOPUNNY",
             "form": 0,
-            "level": 38,
+            "level": 47,
             "item": null,
             "moves": null,
             "iv_scale": 50,
@@ -21,7 +21,7 @@
         {
             "species": "SPECIES_KIRLIA",
             "form": 0,
-            "level": 36,
+            "level": 47,
             "item": null,
             "moves": null,
             "iv_scale": 50,
@@ -30,7 +30,7 @@
         {
             "species": "SPECIES_MEDICHAM",
             "form": 0,
-            "level": 35,
+            "level": 47,
             "item": null,
             "moves": null,
             "iv_scale": 50,

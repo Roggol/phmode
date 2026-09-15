@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_STARAVIA",
             "form": 0,
-            "level": 34,
+            "level": 43,
             "item": null,
             "moves": [
                 "MOVE_WING_ATTACK",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_BUIZEL",
             "form": 0,
-            "level": 32,
+            "level": 43,
             "item": null,
             "moves": [
                 "MOVE_AQUA_JET",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_ROSELIA",
             "form": 0,
-            "level": 32,
+            "level": 43,
             "item": null,
             "moves": [
                 "MOVE_MEGA_DRAIN",
@@ -54,7 +54,7 @@
         {
             "species": "SPECIES_MONFERNO",
             "form": 0,
-            "level": 36,
+            "level": 43,
             "item": null,
             "moves": [
                 "MOVE_FLAME_WHEEL",

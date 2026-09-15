@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_PICHU",
             "form": 0,
-            "level": 26,
+            "level": 41,
             "item": "ITEM_SITRUS_BERRY",
             "moves": null,
             "iv_scale": 0,
@@ -19,7 +19,7 @@
         {
             "species": "SPECIES_PACHIRISU",
             "form": 0,
-            "level": 26,
+            "level": 41,
             "item": "ITEM_SITRUS_BERRY",
             "moves": null,
             "iv_scale": 0,

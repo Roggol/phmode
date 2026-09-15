@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_BUIZEL",
             "form": 0,
-            "level": 32,
+            "level": 58,
             "item": null,
             "moves": [
                 "MOVE_AQUA_JET",
@@ -24,7 +24,7 @@
         {
             "species": "SPECIES_MEDICHAM",
             "form": 0,
-            "level": 32,
+            "level": 58,
             "item": null,
             "moves": [
                 "MOVE_CONFUSION",
@@ -38,7 +38,7 @@
         {
             "species": "SPECIES_SEAKING",
             "form": 0,
-            "level": 32,
+            "level": 58,
             "item": null,
             "moves": [
                 "MOVE_WATER_PULSE",

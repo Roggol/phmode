@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_GLAMEOW",
             "form": 0,
-            "level": 33,
+            "level": 59,
             "item": null,
             "moves": [
                 "MOVE_FURY_SWIPES",
@@ -24,7 +24,7 @@
         {
             "species": "SPECIES_GOLBAT",
             "form": 0,
-            "level": 33,
+            "level": 59,
             "item": null,
             "moves": [
                 "MOVE_AIR_CUTTER",
@@ -38,7 +38,7 @@
         {
             "species": "SPECIES_MURKROW",
             "form": 0,
-            "level": 36,
+            "level": 59,
             "item": null,
             "moves": [
                 "MOVE_FAINT_ATTACK",

@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_MACHOP",
             "form": 0,
-            "level": 8,
+            "level": 10,
             "item": null,
             "moves": [
                 "MOVE_LOW_KICK",

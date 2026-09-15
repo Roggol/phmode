@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_PILOSWINE",
             "form": 0,
-            "level": 44,
+            "level": 56,
             "item": null,
             "moves": [
                 "MOVE_EARTHQUAKE",

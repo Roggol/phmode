@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_GASTRODON",
             "form": 0,
-            "level": 54,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_MUDDY_WATER",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_BEEDRILL",
             "form": 0,
-            "level": 54,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_POISON_JAB",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_ELECTRODE",
             "form": 0,
-            "level": 55,
+            "level": 63,
             "item": null,
             "moves": [
                 "MOVE_THUNDERBOLT",

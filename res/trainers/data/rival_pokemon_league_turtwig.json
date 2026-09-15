@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_STARAPTOR",
             "form": 0,
-            "level": 48,
+            "level": 65,
             "item": null,
             "moves": [
                 "MOVE_CLOSE_COMBAT",
@@ -26,7 +26,7 @@
         {
             "species": "SPECIES_FLOATZEL",
             "form": 0,
-            "level": 47,
+            "level": 65,
             "item": null,
             "moves": [
                 "MOVE_AQUA_JET",
@@ -40,7 +40,7 @@
         {
             "species": "SPECIES_HERACROSS",
             "form": 0,
-            "level": 48,
+            "level": 65,
             "item": null,
             "moves": [
                 "MOVE_CLOSE_COMBAT",
@@ -54,7 +54,7 @@
         {
             "species": "SPECIES_ROSERADE",
             "form": 0,
-            "level": 47,
+            "level": 65,
             "item": null,
             "moves": [
                 "MOVE_POISON_JAB",
@@ -68,7 +68,7 @@
         {
             "species": "SPECIES_SNORLAX",
             "form": 0,
-            "level": 49,
+            "level": 65,
             "item": null,
             "moves": [
                 "MOVE_BODY_SLAM",
@@ -82,7 +82,7 @@
         {
             "species": "SPECIES_INFERNAPE",
             "form": 0,
-            "level": 51,
+            "level": 65,
             "item": null,
             "moves": [
                 "MOVE_FLAMETHROWER",

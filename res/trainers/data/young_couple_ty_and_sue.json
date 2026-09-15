@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_BUNEARY",
             "form": 0,
-            "level": 23,
+            "level": 26,
             "item": null,
             "moves": [
                 "MOVE_FORESIGHT",
@@ -24,7 +24,7 @@
         {
             "species": "SPECIES_BUIZEL",
             "form": 0,
-            "level": 23,
+            "level": 26,
             "item": null,
             "moves": [
                 "MOVE_AQUA_JET",

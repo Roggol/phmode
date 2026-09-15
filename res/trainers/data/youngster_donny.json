@@ -10,7 +10,7 @@
         {
             "species": "SPECIES_GASTLY",
             "form": 0,
-            "level": 20,
+            "level": 29,
             "item": null,
             "moves": [
                 "MOVE_SUCKER_PUNCH",
@@ -24,7 +24,7 @@
         {
             "species": "SPECIES_DRIFLOON",
             "form": 0,
-            "level": 22,
+            "level": 29,
             "item": null,
             "moves": [
                 "MOVE_SPIT_UP",

@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_CARNIVINE",
             "form": 0,
-            "level": 28,
+            "level": 33,
             "item": null,
             "moves": null,
             "iv_scale": 50,
@@ -21,7 +21,7 @@
         {
             "species": "SPECIES_LUXIO",
             "form": 0,
-            "level": 30,
+            "level": 33,
             "item": null,
             "moves": null,
             "iv_scale": 50,
