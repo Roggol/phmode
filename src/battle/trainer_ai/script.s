@@ -558,6 +558,18 @@ Basic_CheckCannotSleep:
     IfLoadedEqualTo ABILITY_INSOMNIA, ScoreMinus10
     IfLoadedEqualTo ABILITY_VITAL_SPIRIT, ScoreMinus10
 
+    // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Sleep
+    // Powder and Spore are both flagged MOVE_FLAG_POWDER (Yawn, which also routes here,
+    // isn't).
+    LoadCurrentMoveFlags
+    IfLoadedMask MOVE_FLAG_POWDER, Basic_CheckCannotSleep_PowderMove
+    GoTo Basic_CheckCannotSleep_TerrainCheck
+
+Basic_CheckCannotSleep_PowderMove:
+    FlagBattlerIsType AI_BATTLER_DEFENDER, TYPE_GRASS
+    IfLoadedEqualTo AI_HAVE, ScoreMinus10
+
+Basic_CheckCannotSleep_TerrainCheck:
     // phmode: Electric Terrain keeps a grounded target awake, so a sleep move (or Yawn,
     // which also routes here) against one would just fail outright - same -10 as above.
     IfFieldConditionsMask FIELD_CONDITION_ELECTRIC_TERRAIN, Basic_CheckCannotSleep_TerrainGrounded
@@ -722,6 +734,16 @@ Basic_CheckLowStatStage_Speed:
     IfStatStageEqualTo AI_BATTLER_DEFENDER, BATTLE_STAT_SPEED, 0, ScoreMinus10
     CheckBattlerAbility AI_BATTLER_DEFENDER, ABILITY_SPEED_BOOST
     IfLoadedEqualTo AI_HAVE, ScoreMinus10
+
+    // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Cotton
+    // Spore is flagged MOVE_FLAG_POWDER (String Shot, which also routes here, isn't).
+    LoadCurrentMoveFlags
+    IfLoadedMask MOVE_FLAG_POWDER, Basic_CheckLowStatStage_Speed_PowderMove
+    GoTo Basic_CheckClearBodyEffect
+
+Basic_CheckLowStatStage_Speed_PowderMove:
+    FlagBattlerIsType AI_BATTLER_DEFENDER, TYPE_GRASS
+    IfLoadedEqualTo AI_HAVE, ScoreMinus10
     GoTo Basic_CheckClearBodyEffect
 
 Basic_CheckLowStatStage_SpAttack:
@@ -807,6 +829,17 @@ Basic_CheckCannotPoison:
     IfLoadedEqualTo TYPE_STEEL, ScoreMinus10
     IfLoadedEqualTo TYPE_POISON, ScoreMinus10
 
+    // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Poison
+    // Powder is flagged MOVE_FLAG_POWDER.
+    LoadCurrentMoveFlags
+    IfLoadedMask MOVE_FLAG_POWDER, Basic_CheckCannotPoison_PowderMove
+    GoTo Basic_CheckCannotPoison_Ability
+
+Basic_CheckCannotPoison_PowderMove:
+    FlagBattlerIsType AI_BATTLER_DEFENDER, TYPE_GRASS
+    IfLoadedEqualTo AI_HAVE, ScoreMinus10
+
+Basic_CheckCannotPoison_Ability:
     // Check for immunity by ability
     LoadBattlerAbility AI_BATTLER_DEFENDER
     IfLoadedEqualTo ABILITY_IMMUNITY, ScoreMinus10
@@ -894,6 +927,24 @@ Basic_CheckAlreadyUnderReflect:
 Basic_CheckCannotParalyze:
     // If the target cannot be paralyzed for any reason, score -10.
     IfMoveEffectivenessEquals TYPE_MULTI_IMMUNE, ScoreMinus10
+    // phmode: Electric-types are immune to paralysis (modern mechanic, not a type-chart
+    // interaction, so the effectiveness check above doesn't already cover it).
+    LoadTypeFrom LOAD_DEFENDER_TYPE_1
+    IfLoadedEqualTo TYPE_ELECTRIC, ScoreMinus10
+    LoadTypeFrom LOAD_DEFENDER_TYPE_2
+    IfLoadedEqualTo TYPE_ELECTRIC, ScoreMinus10
+
+    // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Stun Spore
+    // is flagged MOVE_FLAG_POWDER.
+    LoadCurrentMoveFlags
+    IfLoadedMask MOVE_FLAG_POWDER, Basic_CheckCannotParalyze_PowderMove
+    GoTo Basic_CheckCannotParalyze_Ability
+
+Basic_CheckCannotParalyze_PowderMove:
+    FlagBattlerIsType AI_BATTLER_DEFENDER, TYPE_GRASS
+    IfLoadedEqualTo AI_HAVE, ScoreMinus10
+
+Basic_CheckCannotParalyze_Ability:
     LoadBattlerAbility AI_BATTLER_DEFENDER
     IfLoadedEqualTo ABILITY_LIMBER, ScoreMinus10
     IfLoadedEqualTo ABILITY_MAGIC_GUARD, ScoreMinus10
@@ -956,7 +1007,13 @@ Basic_CheckLockOn:
 Basic_CheckMeanLook:
     // If the target is already under the effect of Mean Look, score -10.
     IfVolatileStatus AI_BATTLER_DEFENDER, VOLATILE_CONDITION_MEAN_LOOK, ScoreMinus10
-    PopOrEnd 
+    // phmode: Ghost-types are immune to Mean Look/Block/Spider Web entirely (modern
+    // mechanic), so this would just fail outright.
+    LoadTypeFrom LOAD_DEFENDER_TYPE_1
+    IfLoadedEqualTo TYPE_GHOST, ScoreMinus10
+    LoadTypeFrom LOAD_DEFENDER_TYPE_2
+    IfLoadedEqualTo TYPE_GHOST, ScoreMinus10
+    PopOrEnd
 
 Basic_CheckCurse:
     // Branch for a Ghost-type using Curse
@@ -3117,6 +3174,13 @@ Expert_SuperFang_End:
     PopOrEnd 
 
 Expert_BindingMove:
+    // phmode: Ghost-types are immune to being trapped at all (modern mechanic), so there's no
+    // "lock them in for the kill" value to any of this against one.
+    LoadTypeFrom LOAD_DEFENDER_TYPE_1
+    IfLoadedEqualTo TYPE_GHOST, Expert_BindingMove_End
+    LoadTypeFrom LOAD_DEFENDER_TYPE_2
+    IfLoadedEqualTo TYPE_GHOST, Expert_BindingMove_End
+
     // If the target is under any of the following conditions or effects, 50% chance of score +1:
     // - Toxic
     // - Curse

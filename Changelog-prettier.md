@@ -177,11 +177,59 @@ less tedious to play.
   a KO**, where a quad-effective type matchup (4x super effective) could be
   undervalued compared to a merely double-effective one due to an internal
   scoring error.
+- **Ghost-type Pokémon can no longer be trapped**, by anything — Mean Look,
+  Block, Spider Web, Wrap-style binding moves, Shadow Tag, Arena Trap, and
+  Magnet Pull all fail to stop one from switching out or fleeing, matching
+  modern games. (Ingrain still holds a Ghost-type in place, since that's
+  its own choice to root itself.) Trainers know about this too, and won't
+  bother trying to trap your Ghost-types anymore.
+- **Grass-type Pokémon are now immune to powder moves** — Cotton Spore,
+  Poison Powder, Sleep Powder, Spore, and Stun Spore all fail outright
+  against one, matching modern games. Trainers know about this too.
+- **Rapid Spin now only clears hazards from your own side of the field**,
+  matching modern games, instead of clearing both sides. Defog is
+  unchanged and still clears both sides.
+- **Several mechanics were reviewed against how they work in modern
+  Pokémon games, and a few were deliberately updated:**
+  - Steel-type Pokémon **no longer resist Ghost- or Dark-type moves**,
+    matching modern games.
+  - Confusion now has a **33% chance to hit yourself**, down from the
+    classic 50% coin flip.
+  - Sleep now lasts a **flat 1-3 turns**, instead of the old 2-5 turn
+    range.
+  - **Weather set by an ability** (Drought, Drizzle, Sand Stream, Snow
+    Warning) **stays permanent**, and the **critical hit rate keeps its
+    classic odds** (1/16 base) — both were deliberately left as-is rather
+    than switched to their modern equivalents.
+- **Fixed the "Inflict status" debug menu's Sleep option** to always leave
+  exactly 1 turn of sleep remaining, instead of 3.
 - **Trainers now favor Sucker Punch more when you've been attacking.** Since
   Sucker Punch only works if you use a damaging move that same turn, a
   trainer now checks whether your *last* move was an attack (rather than a
   status move or nothing yet) and leans into Sucker Punch noticeably more
   when it was.
+- **Paralysis now works like it does in modern Pokémon games:** it only
+  halves Speed instead of cutting it to a quarter, full paralysis (failing
+  to act at all) now happens 12.5% of the time instead of 25%, and
+  **Electric-type Pokémon are now completely immune to paralysis**,
+  regardless of what caused it. Trainers know about the Electric-type
+  immunity too, and won't waste a turn on Thunder Wave or similar moves
+  against one.
+- **A handful of long-standing bugs from the original game were fixed**,
+  none of which were things this hack changed on purpose: a bizarre glitch
+  where knocking out a switching-out Pokémon with Pursuit while weather (or
+  Trick Room, or Gravity) was active could cause every weather type to
+  apply at once; Fire Fang being able to hit through Wonder Guard when it
+  shouldn't; switching away from Rage wiping out every *other* status
+  effect instead of just clearing Rage; trainer Pokémon with alternate forms
+  (like Wormadam or Rotom) using the wrong form's stats; Sticky Hold and
+  Suction Cups not actually doubling the fishing encounter rate like they're
+  supposed to; Magnet Pull failing to force Steel-type wild encounters while
+  surfing or fishing; HM05's Bag icon using the wrong color palette; the
+  Giratina title screen model's hover animation having a smaller range of
+  motion than intended; and a few battle animations (Facade, DynamicPunch,
+  Helping Hand, Strength, Spit Up) that left the Pokémon's sprite
+  permanently nudged out of position afterward.
 - **Three long-standing trainer AI bugs from the original game are fixed:**
   trainers now correctly recognize that Dry Skin makes a Pokémon immune to
   (and healed by) Water-type moves; a move that cares about who moves last

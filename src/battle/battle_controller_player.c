@@ -857,8 +857,7 @@ static void BattleControllerPlayer_CheckPreMoveActions(BattleSystem *battleSys, 
             for (battler = 0; battler < maxBattlers; battler++) {
                 if (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_RAGE
                     && Battler_SelectedMove(battleCtx, battler) != MOVE_RAGE) {
-                    // bug: clears every volatile status except rage
-                    battleCtx->battleMons[battler].statusVolatile &= VOLATILE_CONDITION_RAGE;
+                    battleCtx->battleMons[battler].statusVolatile &= ~VOLATILE_CONDITION_RAGE;
                 }
             }
 
@@ -2056,7 +2055,10 @@ static void BattleControllerPlayer_FleeCommand(BattleSystem *battleSys, BattleCo
 
     if (BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker)
         && (BattleSystem_GetBattleType(battleSys) & BATTLE_TYPE_LINK) == FALSE) {
-        if (ATTACKING_MON.statusVolatile & (VOLATILE_CONDITION_BIND | VOLATILE_CONDITION_MEAN_LOOK)) {
+        // phmode: Ghost-types are immune to Mean Look/Block/Spider Web and binding moves, so
+        // they can still flee even while affected by either.
+        if ((ATTACKING_MON.statusVolatile & (VOLATILE_CONDITION_BIND | VOLATILE_CONDITION_MEAN_LOOK))
+            && MON_HAS_TYPE(battleCtx->attacker, TYPE_GHOST) == FALSE) {
             LOAD_SUBSEQ(subscript_enemy_escape_failed);
             battleCtx->scriptCursor = 0;
             battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
@@ -2697,7 +2699,9 @@ static BOOL BattleControllerPlayer_CheckStatusDisruption(BattleSystem *battleSys
                 ATTACKING_MON.statusVolatile -= (1 << VOLATILE_CONDITION_CONFUSION_SHIFT);
 
                 if (ATTACKING_MON.statusVolatile & VOLATILE_CONDITION_CONFUSION) {
-                    if (BattleSystem_RandNext(battleSys) & 1) {
+                    // phmode: modern confusion self-hit chance is 33% (1-in-3), not the
+                    // vanilla 50% coin flip.
+                    if (BattleSystem_RandNext(battleSys) % 3 != 0) {
                         LOAD_SUBSEQ(subscript_confused);
                         battleCtx->commandNext = battleCtx->command;
                         battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
@@ -2731,7 +2735,8 @@ static BOOL BattleControllerPlayer_CheckStatusDisruption(BattleSystem *battleSys
         case CHECK_STATUS_STATE_PARALYSIS:
             if ((ATTACKING_MON.status & MON_CONDITION_PARALYSIS)
                 && Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_MAGIC_GUARD) {
-                if (BattleSystem_RandNext(battleSys) % 4 == 0) {
+                // phmode: modern full-paralysis chance is 12.5% (1-in-8), not the vanilla 25%.
+                if (BattleSystem_RandNext(battleSys) % 8 == 0) {
                     battleCtx->moveFailFlags[battleCtx->attacker].paralyzed = TRUE;
 
                     LOAD_SUBSEQ(subscript_fully_paralyzed);

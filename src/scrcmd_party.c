@@ -860,7 +860,7 @@ BOOL ScrCmd_InflictPartyMonStatus(ScriptContext *ctx)
         status = MON_CONDITION_NONE;
         break;
     case 1:
-        status = MON_CONDITION_SLEEP_0 | MON_CONDITION_SLEEP_1; // 3 turns
+        status = MON_CONDITION_SLEEP_0; // phmode: always 1 turn remaining
         break;
     case 2:
         status = MON_CONDITION_POISON;

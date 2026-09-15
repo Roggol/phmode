@@ -690,6 +690,219 @@ unchanged. The resisted/immune check above this still short-circuits to a
 flat -1 regardless, since Sucker Punch is a poor choice either way if it
 won't do meaningful damage.
 
+### Fixed several documented vanilla decomp bugs (from docs/bugs_and_glitches.md)
+Every "easy win" from the project's own known-bugs list was applied, in
+addition to the Post-KO Switch-In overflow and Disable/Taunt/Torment/Encore/
+Attract Substitute bugs already fixed above:
+
+* **Acid Rain** — `res/battle/scripts/subscripts/subscript_pursuit.s`. A
+  parameter swap in Pursuit's KO-while-switching-out handling (`SUB_TO_ZERO`
+  against the field-conditions bitmask instead of setting the fainted-mon
+  variable) could flip on every weather type simultaneously as if all of
+  them were permanently active. Fixed to set `BTLVAR_FAINTED_MON` as
+  intended.
+* **Fire Fang Always Bypasses Wonder Guard** — `src/battle/battle_lib.c`,
+  `MoveIsOnDamagingTurn`. An off-by-one copy/paste (`BATTLE_EFFECT_
+  FLINCH_BURN_HIT`, Fire Fang's effect, instead of `BATTLE_EFFECT_
+  SHADOW_FORCE`) let Fire Fang execute against Wonder Guard regardless of
+  whether it would actually deal damage. Fixed to check the correct effect.
+* **Using a Non-Rage Move After Rage Clears Every Volatile Status Except
+  Rage** — `src/battle/battle_controller_player.c`. A backwards bitmask
+  (`&= VOLATILE_CONDITION_RAGE` instead of `&= ~VOLATILE_CONDITION_RAGE`)
+  meant switching off of Rage wiped every *other* volatile condition
+  (Confusion, Substitute, Leech Seed, etc.) while leaving Rage itself
+  intact — the exact opposite of the intended effect. Fixed to negate the
+  mask.
+* **Trainers Do Not Use the Correct Stats of Pokémon Forms** —
+  `src/trainer_data.c`. Trainer Pokémon with a form that changes base stats
+  (Wormadam, Rotom, etc.) were built using the base form's stats regardless
+  of which form was actually assigned. Added `Pokemon_CalcStats(mon)` after
+  each of the four `Pokemon_SetValue(mon, MON_DATA_FORM, &form)` call sites.
+* **Defog HM Uses Water Palette** — `res/items/data/hm05.json`. The Bag icon
+  for HM05 (Defog, a Flying-type move) used the Water-type TM/HM palette.
+  Fixed to the Flying-type palette.
+* **Fishing Encounters Ignore Sticky Hold and Suction Cups** —
+  `src/overlay006/wild_encounters.c`. A statement with no effect
+  (`newEncRate * 2;` instead of `newEncRate *= 2;`) meant these abilities
+  never actually doubled the fishing encounter rate as intended.
+* **Surfing and Fishing Encounters Ignore Magnet Pull** — same file. Static's
+  encounter-slot check ran unconditionally after Magnet Pull's for Surf and
+  fishing encounters (missing the `if (!forcedSlot)` guard land encounters
+  already have), so Static always overwrote whatever slot Magnet Pull had
+  already forced. Fixed to only check Static when Magnet Pull didn't already
+  find a match, matching the land-encounter logic.
+* **Giratina Hover Range** (title screen) —
+  `src/applications/title_screen.c`. The hover angle was needlessly rescaled
+  before being passed to `CalcSineDegrees_Wraparound`, which already expects
+  plain degrees, shrinking the intended range of motion. Fixed to pass the
+  angle directly.
+* **Battle animation sprite drift** — four small overlapping-delay/missing-
+  reset bugs that permanently nudged a sprite's position over the course of
+  an animation: Facade (`res/moves/facade/anim.s`, delays increased from 8
+  to 10 frames, matching sound-effect timing), DynamicPunch
+  (`res/moves/dynamic_punch/anim.s`, 3 → 4 frames), Helping Hand
+  (`res/moves/helping_hand/anim.s`, moved a `Delay 1` inside its loop),
+  Strength, and Spit Up (`src/battle_anim/script_funcs_0.c` /
+  `script_funcs_3.c`, both now reset the sprite's X position via
+  `BattleAnimUtil_GetBattlerDefaultPos` once their shake-and-scale sequence
+  ends, rather than leaving it wherever the last shake increment left it).
+
+Not fixed: the 3D-rendering `G3DPipeline_InitEx` VRAM-manager bug, since the
+project's own documentation notes it never actually triggers in the shipped
+game (the affected parameter is always set to the other value) — there is no
+player-visible behavior to correct.
+
+### Paralysis now uses modern (Gen 9-style) mechanics
+Three related changes, all in the base paralysis mechanic rather than any
+one move:
+
+* **Electric-types are now immune to paralysis entirely**, regardless of
+  what would have caused it (Thunder Wave, Stun Spore, Glare, or a damaging
+  move's paralysis chance). Added to `subscript_paralyze.s`
+  (`res/battle/scripts/subscripts/`): a new `BATTLEMON_TYPE_1`/`_TYPE_2`
+  check for `TYPE_ELECTRIC`, placed the same way `subscript_burn.s` already
+  checks for Fire-type immunity to burns. This reuses a message block
+  ("It doesn't affect {0}...") that existed in the vanilla file but was
+  unreachable dead code, since nothing ever needed to jump to it before now.
+* **Paralysis now only halves Speed** instead of cutting it to a quarter.
+  `src/battle/battle_lib.c` — both `battler1Speed /= 4` and
+  `battler2Speed /= 4` in the shared speed-comparison routine changed to
+  `/= 2`. Since the trainer AI's own speed comparisons run through this
+  same function (confirmed — it has no separate copy of this logic), this
+  applies automatically and correctly to every AI speed-order decision with
+  no separate AI-side change needed.
+* **Full paralysis (failing to act) now has a 12.5% chance instead of 25%.**
+  `src/battle/battle_controller_player.c`, `CHECK_STATUS_STATE_PARALYSIS` —
+  changed `BattleSystem_RandNext(battleSys) % 4 == 0` to `% 8 == 0`.
+
+**AI updated accordingly:** `Basic_CheckCannotParalyze`
+(`src/battle/trainer_ai/script.s`) gained a new Electric-type check (mirrors
+`Basic_CheckCannotBurn`'s existing Fire-type check exactly), so trainers now
+correctly recognize an Electric-type target can't be paralyzed at all and
+avoid wasting a turn on Thunder Wave/Stun Spore/Glare against one — the same
+-10 "this will just fail" penalty used for every other guaranteed-failure
+case. The qualitative scoring in `Expert_StatusParalyze` (bonus for being
+slower, penalty for wasting a turn while hurt) is unchanged, since paralysis
+is still valuable to a slower attacker under the new 50%/12.5% numbers, just
+less dramatically so — not something that needed rebalancing to remain
+correct.
+
+### Ghost-types are now immune to every form of trapping (modern mechanic)
+Mean Look/Block/Spider Web, binding moves (Wrap, Fire Spin, Whirlpool, Sand
+Tomb, Clamp), Shadow Tag, Arena Trap, and Magnet Pull can no longer prevent a
+Ghost-type from switching or fleeing. Ingrain is unaffected, since that's the
+user choosing to root itself rather than being trapped by an opponent.
+
+* `Battler_IsTrapped` (`src/battle/battle_lib.c`) — the switch-menu
+  availability gate — now returns early for a Ghost-type battler before any
+  of the ability/volatile-status checks, checking Ingrain first since that
+  still applies.
+* `Battler_IsTrappedMsg` (same file) — the Run-command/Teleport gate — split
+  its combined Ingrain+trapped check apart the same way, so Ingrain still
+  blocks escape but a Ghost-type skips everything else.
+* `BattleControllerPlayer_FleeCommand` (`src/battle/battle_controller_player.c`)
+  — a wild Ghost-type can now still flee despite Mean Look/Bind.
+* `subscript_mean_look.s` and `subscript_bind_start.s`
+  (`res/battle/scripts/subscripts/`) — the moves themselves now fail
+  outright ("It doesn't affect...") against a Ghost-type target, rather than
+  applying a volatile status that would have had no effect anyway. A binding
+  move still deals its initial hit of damage; only the ongoing trap/damage
+  is skipped.
+* `TrainerAI_ShouldSwitch`'s illegal-switch check (`src/battle/trainer_ai/trainer_ai.c`)
+  updated to match `Battler_IsTrapped`.
+* **AI updated:** `Basic_CheckMeanLook` now scores -10 against a Ghost-type
+  target (script.s), and `Expert_BindingMove` skips its "lock them in for
+  the kill" utility bonus entirely against one, since trapping a Ghost-type
+  does nothing.
+
+### Grass-types are now immune to powder moves (modern mechanic)
+Cotton Spore, Poison Powder, Sleep Powder, Spore, and Stun Spore now fail
+outright against a Grass-type target. A new move flag, `MOVE_FLAG_POWDER`
+(`generated/move_flags.txt`), was added and assigned to exactly those five
+moves' `data.json` files — `MoveTable.flags` was widened from `u8` to `u16`
+(`include/move_table.h`, plus the matching read in `tools/dataproc/src/moveproc.c`)
+since the 9th flag no longer fits in a byte.
+
+Checked in each move's actual application path (mirroring the Fire/burn and
+Electric/paralysis type-immunity pattern already established): `subscript_fall_asleep.s`
+(Sleep Powder/Spore, both entry points), `subscript_poison.s` (Poison
+Powder), `subscript_paralyze.s` (Stun Spore), and `BtlCmd_ChangeStatStage`
+in `battle_script.c` (Cotton Spore) — each checks the *current move's own
+flags*, not just its effect ID, so a non-powder move sharing the same effect
+(Yawn vs. Sleep Powder, String Shot vs. Cotton Spore) is correctly
+unaffected.
+
+**AI updated:** a new AI script command, `LoadCurrentMoveFlags`
+(`AICMD_LOADCURRENTMOVEFLAGS` in `include/data/scripts/aicmd.h`, macro in
+`asm/macros/aicmd.inc`, `AICmd_LoadCurrentMoveFlags` in `trainer_ai.c`,
+mirroring `LoadCurrentMovePriority` exactly), exposes the current move's
+`MOVE_FLAG_*` bitmask to the AI script for the first time. `Basic_CheckCannotSleep`,
+`Basic_CheckCannotPoison`, `Basic_CheckCannotParalyze`, and
+`Basic_CheckLowStatStage_Speed` (`script.s`) each gained a check: if the
+current move is flagged `MOVE_FLAG_POWDER` and the target is Grass-type,
+score -10 — the AI now avoids all five powder moves against a Grass-type
+the same way it avoids Thunder Wave against an Electric-type.
+
+### Rapid Spin now only clears hazards from the user's own side
+`BtlCmd_BlowAwayHazards` (`src/battle/battle_script.c`), shared by Rapid Spin
+and Defog, previously cleared Spikes/Toxic Spikes/Stealth Rock/Sticky
+Web/Tailwind from *both* sides of the field for either move — a deliberate
+departure from modern games noted when hazard-clearing was first added.
+Reverted for Rapid Spin specifically: it now only clears its user's own
+side, matching Gen 6+. Defog is unchanged and still clears both sides.
+Gravity-clearing (shared by both moves) is unaffected either way, since
+Gravity is a whole-field condition with no separate "side" to limit it to.
+No AI change was needed — nothing in the trainer AI has dedicated Rapid Spin
+scoring; it's evaluated like any other damaging move.
+
+### Gen 4 vs. Gen 9/Champions mechanics audit — decisions and changes
+Follow-up to a research pass identifying places where this game's underlying
+(Gen 4) mechanics differ from modern (Gen 9/Champions) ones. Each item below
+was explicitly decided rather than defaulted one way or the other:
+
+* **Steel no longer resists Ghost or Dark** (changed). `src/battle/battle_lib.c`,
+  `sTypeMatchupMultipliers` — removed the `{ TYPE_GHOST, TYPE_STEEL,
+  TYPE_MULTI_NOT_VERY_EFF }` and `{ TYPE_DARK, TYPE_STEEL,
+  TYPE_MULTI_NOT_VERY_EFF }` rows (the table only lists non-neutral
+  matchups, so removing a row makes it fall through to neutral). Matches
+  the Gen 6+ type chart. No AI change needed — the trainer AI's damage
+  prediction reads this exact same table via `BattleSystem_ApplyTypeChart`,
+  so the corrected matchup is automatically reflected in its scoring.
+* **Confusion self-hit chance is now 33% (1-in-3)** (changed), not the
+  vanilla 50% coin flip. `src/battle/battle_controller_player.c`,
+  `CHECK_STATUS_STATE_CONFUSION` — changed `BattleSystem_RandNext(battleSys)
+  & 1` to `% 3 != 0`. Matches Gen 7+. No AI change needed - nothing in the
+  AI's confusion scoring (`Expert_StatusConfuse`) models the self-hit odds
+  directly, only the target's HP.
+* **Sleep now lasts a flat 1-3 turns** (changed), not the vanilla 2-5 turns.
+  `res/battle/scripts/subscripts/subscript_fall_asleep.s` — changed
+  `Random 3, 2` to `Random 2, 1`. Matches Gen 5+. No AI change needed -
+  nothing in the AI's sleep-move scoring assumes a specific duration.
+* **Weather-setting abilities (Drought/Drizzle/Sand Stream/Snow Warning)
+  remain permanent** (deliberately not changed), unlike Gen 6+'s 5-turn
+  duration (9 with the matching rock item). Kept as the original Gen
+  3-5-style "lasts until something else changes the weather" behavior.
+* **Critical hit rate remains the Gen 4 table** (deliberately not changed):
+  1/16 base, then 1/8, 1/4, 1/3, 1/2 per stage (`sCriticalStageRates` in
+  `src/battle/battle_lib.c`), rather than Gen 6+'s 1/24, 1/8, 1/2,
+  guaranteed, guaranteed.
+
+**Verified, no change needed:** a sleeping Pokemon's remaining turn count is
+already correctly preserved across switching out and back in. The per-turn
+sleep-counter decrement (`CHECK_STATUS_STATE_SLEEP` in
+`battle_controller_player.c`) runs inside the same status-check routine that
+unconditionally calls `BattleMon_CopyToParty` before returning, which syncs
+the just-decremented status back to the persistent party Pokemon data
+(`MON_DATA_STATUS`) every turn — not just on switch-out. Switching back in
+later re-reads that same persisted value (`BattleSystem_InitBattleMon`), so
+the remaining sleep turns are never lost or re-rolled.
+
+**Fixed:** the "Inflict status" PC debug menu's Sleep option
+(`ScrCmd_InflictPartyMonStatus` in `src/scrcmd_party.c`) always set 3 turns
+remaining (`MON_CONDITION_SLEEP_0 | MON_CONDITION_SLEEP_1`); changed to
+always set exactly 1 turn remaining (`MON_CONDITION_SLEEP_0` alone), per
+request.
+
 ### Creation-trio signature abilities
 Dialga, Palkia and Giratina lose Pressure/Levitate and get a new ability each.
 Three abilities were added to `generated/abilities.txt` (124-126) with entries in

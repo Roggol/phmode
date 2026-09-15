@@ -384,6 +384,77 @@ switch-in relative to a merely double-effective one. This has no bearing on
 predicting AI *intent*, just on making sure the numbers it computes
 internally are correct.
 
+### Trainers now know Electric-types can't be paralyzed (new, alongside a mechanics change)
+
+Paralysis was overhauled to match modern games: it now only halves Speed
+(rather than cutting it to a quarter), full paralysis (failing to act
+outright) now happens 12.5% of the time instead of 25%, and — the part that
+actually changes AI decisions — **Electric-type Pokémon are now completely
+immune to paralysis**, no matter what would have caused it (Thunder Wave,
+Stun Spore, Glare, or a damaging move's paralysis chance).
+
+Trainers now check for this the same way they already check for Fire-type
+immunity to burns: if the target is Electric-type in either type slot,
+paralysis-inducing moves get the same heavy **-10** "this will just fail"
+treatment as any other guaranteed-failure case. Previously the AI had no
+idea this immunity existed and would use Thunder Wave against an
+Electric-type Pokémon exactly as if it would work.
+
+The AI's general feelings about paralysis (favoring it strongly when the
+user is slower than its target, since halving Speed can flip who moves
+first) didn't need to change — that's still just as true under the new
+50%/12.5% numbers, just a little less dramatic than before.
+
+### Trainers now know Ghost-types can't be trapped at all (new, alongside a mechanics change)
+
+Ghost-type Pokémon are now immune to every form of trapping — Mean
+Look/Block/Spider Web, binding moves (Wrap, Fire Spin, Whirlpool, Sand Tomb,
+Clamp), Shadow Tag, Arena Trap, and Magnet Pull all fail to keep one from
+switching or fleeing (Ingrain is the one exception, since that's the user's
+own choice to root itself).
+
+Trainers now factor this in two places: Mean Look/Block/Spider Web get the
+same heavy **-10** "this will just fail" treatment against a Ghost-type
+target as any other guaranteed-failure case, and a binding move's small
+"lock them in for the kill" utility bonus (normally applied when the target
+is already worn down by Toxic/Curse/Perish Song/Attract) is skipped
+entirely against a Ghost-type, since trapping them does nothing — the move
+still deals its usual damage, it just won't hold them in place afterward.
+
+### Trainers now know Grass-types can't be affected by powder moves (new, alongside a mechanics change)
+
+Cotton Spore, Poison Powder, Sleep Powder, Spore, and Stun Spore are now all
+completely blocked by a Grass-type target — this is the same kind of
+type-based status immunity as Electric-types and paralysis, just covering
+five specific moves instead of one whole status condition.
+
+Trainers now check each of these the same way: if the move is one of the
+five powder moves and the target is Grass-type, it gets the same heavy
+**-10** "this will just fail" treatment used everywhere else in this
+category. This required giving the AI a genuinely new capability — reading
+a move's flags at all — since nothing previously exposed that to the
+scoring script.
+
+**Practical upshot:** don't expect a trainer to use any of these five moves
+against your Grass-type Pokémon anymore; they know it won't do anything.
+
+### Trainers automatically know Steel no longer resists Ghost or Dark (mechanics change, no AI code touched)
+
+The type chart itself changed (Steel no longer resists Ghost or Dark moves,
+matching modern games) rather than anything in the AI. Worth noting here
+anyway: the trainer AI's damage prediction reads the exact same type chart
+the rest of the game uses, so this update is automatically reflected in
+every trainer's move scoring with zero AI-specific work needed — a Ghost or
+Dark move against a Steel-type is now correctly valued as neutral instead
+of resisted.
+
+Two related mechanics were investigated and looked at closely, but
+deliberately left alone: confusion's self-hit chance and sleep's duration
+were both changed to modern values, and weather-setting abilities'
+permanence and the Gen 4 critical-hit-rate table were deliberately kept as
+they were — none of the four affect any AI decision-making either way, so
+there's nothing to report here for any of them.
+
 ### Sucker Punch now reads a real clue about whether you'll attack again (new)
 
 Sucker Punch only works if the target uses a damaging move that same turn —
@@ -505,4 +576,7 @@ will reach for an item at all:
 | Switch-in selection prefers a Defog/Rapid Spin user 2-in-3 of the time when own side has hazards up | New | Any AI battler |
 | Post-KO switch-in type-matchup scoring no longer overflows on a quad-effective matchup | Bug fix | Any AI battler |
 | Sucker Punch gets a +2 bonus when the target's last move dealt damage | New | Any AI battler |
+| Trainers recognize Electric-types are immune to paralysis (mechanics overhaul: half Speed instead of quarter, 12.5% full-paralysis instead of 25%) | New | Any AI battler |
+| Trainers recognize Ghost-types can't be trapped by Mean Look/Block/Spider Web or binding moves | New | Any AI battler |
+| Trainers recognize Grass-types are immune to all 5 powder moves | New | Any AI battler |
 | Item use no longer wipes out every item after the one chosen | Bug fix | Enemy trainers only (partners never use items) |

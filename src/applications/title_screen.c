@@ -647,9 +647,7 @@ static void TitleScreen_Render(TitleScreen *titleScreen, TitleScreenGraphics *gf
     titleScreen->giratinaHoverAngle += 2;
     titleScreen->giratinaHoverAngle %= 360;
 
-    // BUG: This should pass the value in directly, since the function takes degrees as input, not an index.
-    // But in practice this just slightly reduces the range of the hover so it isn't very noticeable.
-    fx32 offset = CalcSineDegrees_Wraparound((titleScreen->giratinaHoverAngle * 0xFFFF) / 360);
+    fx32 offset = CalcSineDegrees_Wraparound(titleScreen->giratinaHoverAngle);
     offset *= 0.3;
     gfx->giratinaPos.y -= offset;
 

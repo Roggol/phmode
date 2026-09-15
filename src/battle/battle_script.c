@@ -2908,7 +2908,15 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
             // Pokemon itself.
             if (battleCtx->attacker != battleCtx->sideEffectMon
                 || battleCtx->sideEffectType == SIDE_EFFECT_TYPE_STICKY_WEB) {
-                if (battleCtx->sideConditions[BattleSystem_GetBattlerSide(battleSys, battleCtx->sideEffectMon)].mistTurns) {
+                // phmode: Grass-types are immune to powder moves entirely (modern mechanic) -
+                // Cotton Spore is flagged MOVE_FLAG_POWDER.
+                if ((CURRENT_MOVE_DATA.flags & MOVE_FLAG_POWDER) && MON_HAS_TYPE(battleCtx->sideEffectMon, TYPE_GRASS)) {
+                    battleCtx->msgBuffer.id = BattleStrings_Text_ItDoesntAffectPokemon_Ally; // "It doesn't affect {0}..."
+                    battleCtx->msgBuffer.tags = TAG_NICKNAME;
+                    battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon);
+
+                    result = 1;
+                } else if (battleCtx->sideConditions[BattleSystem_GetBattlerSide(battleSys, battleCtx->sideEffectMon)].mistTurns) {
                     battleCtx->msgBuffer.id = BattleStrings_Text_PokemonIsProtectedByMist_Ally; // "{0} is protected by Mist!"
                     battleCtx->msgBuffer.tags = TAG_NICKNAME;
                     battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon);
@@ -6124,7 +6132,18 @@ static BOOL BtlCmd_RapidSpin(BattleSystem *battleSys, BattleContext *battleCtx)
  */
 static BOOL BtlCmd_BlowAwayHazards(BattleSystem *battleSys, BattleContext *battleCtx)
 {
-    for (int side = 0; side < NUM_BATTLE_SIDES; side++) {
+    // phmode: Rapid Spin only clears hazards/Tailwind from its user's own side (modern
+    // mechanic); Defog still clears both. Gravity below is unaffected by this, since it's a
+    // whole-field condition with no separate "side" to limit it to.
+    int startSide = 0;
+    int endSide = NUM_BATTLE_SIDES;
+
+    if (battleCtx->moveCur == MOVE_RAPID_SPIN) {
+        startSide = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker);
+        endSide = startSide + 1;
+    }
+
+    for (int side = startSide; side < endSide; side++) {
         if (battleCtx->sideConditions[side].spikesLayers) {
             battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_SPIKES;
             battleCtx->sideConditions[side].spikesLayers = 0;

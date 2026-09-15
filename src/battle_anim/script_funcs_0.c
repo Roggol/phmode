@@ -839,6 +839,9 @@ static void BattleAnimTask_Strength(SysTask *task, void *param)
             s16 offset = BattleAnimUtil_GetGroundAnchoredScaleOffset(ctx->baseY, ctx->spriteHeight, ctx->scale.data[XY_PARAM_CUR_Y]);
             PokemonSprite_SetAttribute(ctx->sprite, MON_SPRITE_Y_CENTER, ctx->baseY + offset);
         } else {
+            Point2D pos;
+            BattleAnimUtil_GetBattlerDefaultPos(ctx->battleAnimSys, BattleAnimSystem_GetAttacker(ctx->battleAnimSys), &pos);
+            PokemonSprite_SetAttribute(ctx->sprite, MON_SPRITE_X_CENTER, pos.x);
             ctx->state++;
         }
         break;

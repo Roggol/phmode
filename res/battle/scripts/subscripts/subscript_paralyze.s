@@ -22,6 +22,19 @@ _033:
 
 _041:
     CompareMonDataToValue OPCODE_FLAG_SET, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_STATUS, MON_CONDITION_PARALYSIS, _139
+    // phmode: Electric-types are immune to paralysis (modern mechanic, not present in vanilla
+    // Platinum). Reuses the "It doesn't affect..." block below, which vanilla left unreachable
+    // dead code since it never had any type-immunity check to jump into it.
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_1, TYPE_ELECTRIC, _145
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_2, TYPE_ELECTRIC, _145
+    // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Stun Spore
+    // is flagged MOVE_FLAG_POWDER.
+    GetCurrentMoveData MOVEATTRIBUTE_FLAGS
+    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_CALC_TEMP, MOVE_FLAG_POWDER, _042
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_1, TYPE_GRASS, _145
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_2, TYPE_GRASS, _145
+
+_042:
     CompareMonDataToValue OPCODE_NEQ, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_STATUS, MON_CONDITION_NONE, _123
     CompareVarToValue OPCODE_EQU, BTLVAR_SIDE_EFFECT_TYPE, SIDE_EFFECT_TYPE_ABILITY, _076
     CompareVarToValue OPCODE_FLAG_SET, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_MISSED|MOVE_STATUS_SEMI_INVULNERABLE, _123
@@ -69,7 +82,10 @@ _139:
     // {0} is already paralyzed!
     PrintMessage BattleStrings_Text_PokemonIsAlreadyParalyzed_Ally, TAG_NICKNAME, BTLSCR_SIDE_EFFECT_MON
     GoTo _211
+
+_145:
     CompareVarToValue OPCODE_EQU, BTLVAR_SIDE_EFFECT_TYPE, SIDE_EFFECT_TYPE_INDIRECT, _218
+    CompareVarToValue OPCODE_EQU, BTLVAR_SIDE_EFFECT_TYPE, SIDE_EFFECT_TYPE_ABILITY, _218
     WaitButtonABTime 30
     // It doesn’t affect {0}...
     PrintMessage BattleStrings_Text_ItDoesntAffectPokemon_Ally, TAG_NICKNAME, BTLSCR_SIDE_EFFECT_MON

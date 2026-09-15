@@ -12,6 +12,14 @@ _000:
 
 _031:
     CompareMonDataToValue OPCODE_FLAG_SET, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_STATUS, MON_CONDITION_SLEEP, _274
+    // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Sleep
+    // Powder and Spore are both flagged MOVE_FLAG_POWDER.
+    GetCurrentMoveData MOVEATTRIBUTE_FLAGS
+    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_CALC_TEMP, MOVE_FLAG_POWDER, _032
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_1, TYPE_GRASS, _350
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_2, TYPE_GRASS, _350
+
+_032:
     CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_FIELD_CONDITIONS, FIELD_CONDITION_ELECTRIC_TERRAIN, _033
     CheckGrounded BTLSCR_SIDE_EFFECT_MON, _033
     GoTo _340
@@ -46,6 +54,13 @@ _094:
 
 _102:
     CompareMonDataToValue OPCODE_FLAG_SET, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_STATUS, MON_CONDITION_SLEEP, _274
+    // phmode: Grass-types are immune to powder moves entirely (modern mechanic).
+    GetCurrentMoveData MOVEATTRIBUTE_FLAGS
+    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_CALC_TEMP, MOVE_FLAG_POWDER, _103
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_1, TYPE_GRASS, _350
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_2, TYPE_GRASS, _350
+
+_103:
     CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_FIELD_CONDITIONS, FIELD_CONDITION_ELECTRIC_TERRAIN, _104
     CheckGrounded BTLSCR_SIDE_EFFECT_MON, _104
     GoTo _340
@@ -65,8 +80,9 @@ _118:
 
 _147:
     PlayBattleAnimation BTLSCR_SIDE_EFFECT_MON, BATTLE_ANIMATION_ASLEEP
-    Wait 
-    Random 3, 2
+    Wait
+    // phmode: modern sleep duration is a flat 1-3 turns, not the vanilla 2-5 turns.
+    Random 2, 1
     UpdateMonDataFromVar OPCODE_FLAG_ON, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_STATUS, BTLVAR_CALC_TEMP
     CompareVarToValue OPCODE_EQU, BTLVAR_SIDE_EFFECT_TYPE, SIDE_EFFECT_TYPE_ABILITY, _170
     // {0} fell asleep!
@@ -166,4 +182,11 @@ _340:
     WaitButtonABTime 30
     // {0} can't sleep because of the electricity!
     PrintMessage BattleStrings_Text_CannotSleep, TAG_NICKNAME, BTLSCR_SIDE_EFFECT_MON
+    GoTo _330
+
+_350:
+    CompareVarToValue OPCODE_EQU, BTLVAR_SIDE_EFFECT_TYPE, SIDE_EFFECT_TYPE_INDIRECT, _337
+    WaitButtonABTime 30
+    // It doesn’t affect {0}...
+    PrintMessage BattleStrings_Text_ItDoesntAffectPokemon_Ally, TAG_NICKNAME, BTLSCR_SIDE_EFFECT_MON
     GoTo _330

@@ -178,6 +178,7 @@ static void AICmd_IfBattlerFainted(BattleSystem *battleSys, BattleContext *battl
 static void AICmd_IfBattlerNotFainted(BattleSystem *battleSys, BattleContext *battleCtx);
 static void AICmd_LoadAbility(BattleSystem *battleSys, BattleContext *battleCtx);
 static void AICmd_LoadCurrentMovePriority(BattleSystem *battleSys, BattleContext *battleCtx);
+static void AICmd_LoadCurrentMoveFlags(BattleSystem *battleSys, BattleContext *battleCtx);
 
 static u8 TrainerAI_MainSingles(BattleSystem *battleSys, BattleContext *battleCtx);
 static u8 TrainerAI_MainDoubles(BattleSystem *battleSys, BattleContext *battleCtx);
@@ -2709,6 +2710,14 @@ static void AICmd_LoadCurrentMovePriority(BattleSystem *battleSys, BattleContext
     AI_CONTEXT.calcTemp = MOVE_DATA(AI_CONTEXT.move).priority;
 }
 
+// phmode: exposes the current move's flags bitmask (MOVE_FLAG_*) for the Grass-type powder
+// immunity check in script.s - nothing previously loaded this into the AI's scoring.
+static void AICmd_LoadCurrentMoveFlags(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    AIScript_Iter(battleCtx, 1);
+    AI_CONTEXT.calcTemp = MOVE_DATA(AI_CONTEXT.move).flags;
+}
+
 /**
  * @brief Push an address for the AI script onto the cursor stack.
  *
@@ -4006,12 +4015,16 @@ static BOOL TrainerAI_ShouldSwitch(BattleSystem *battleSys, BattleContext *battl
     // This definition is naive: the AI does not consider itself immune to Magnet Pull from an ally,
     // Shadow Tag if it also has Shadow Tag, Arena Trap if it is a Flying-type, or always able to switch
     // if it is holding a Shed Shell.
-    if ((battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_TRAPPED)
-        || (battleCtx->battleMons[battler].moveEffectsMask & MOVE_EFFECT_INGRAIN)
-        || BattleSystem_CountAbility(battleSys, battleCtx, COUNT_ALL_BATTLERS_THEIR_SIDE, battler, ABILITY_SHADOW_TAG)
-        || BattleSystem_CountAbility(battleSys, battleCtx, COUNT_ALL_BATTLERS_THEIR_SIDE, battler, ABILITY_ARENA_TRAP)
-        || (BattleSystem_CountAbility(battleSys, battleCtx, COUNT_ALL_BATTLERS_EXCEPT_ME, battler, ABILITY_MAGNET_PULL)
-            && MON_HAS_TYPE(battler, TYPE_STEEL))) {
+    //
+    // phmode: Ghost-types are immune to every trapping effect below except Ingrain (a modern
+    // mechanic), so they skip straight past all of it - matching Battler_IsTrapped.
+    if ((battleCtx->battleMons[battler].moveEffectsMask & MOVE_EFFECT_INGRAIN)
+        || (MON_HAS_TYPE(battler, TYPE_GHOST) == FALSE
+            && ((battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_TRAPPED)
+                || BattleSystem_CountAbility(battleSys, battleCtx, COUNT_ALL_BATTLERS_THEIR_SIDE, battler, ABILITY_SHADOW_TAG)
+                || BattleSystem_CountAbility(battleSys, battleCtx, COUNT_ALL_BATTLERS_THEIR_SIDE, battler, ABILITY_ARENA_TRAP)
+                || (BattleSystem_CountAbility(battleSys, battleCtx, COUNT_ALL_BATTLERS_EXCEPT_ME, battler, ABILITY_MAGNET_PULL)
+                    && MON_HAS_TYPE(battler, TYPE_STEEL))))) {
         return FALSE;
     }
 

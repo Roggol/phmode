@@ -197,6 +197,45 @@ typedef enum SpeedComparison {
  */
 int AI_ScoreStatusParalyzeMove(SpeedComparison speed, int attackerHPPercent, int randomRoll);
 
+/*
+ * Mirrors the new Electric-type check at the top of Basic_CheckCannotParalyze (script.s):
+ * modern Electric-types are immune to paralysis entirely, regardless of what move or effect
+ * would have caused it (Thunder Wave, Stun Spore, Glare, a damaging move's paralysis chance,
+ * ...). This is a status immunity tied to the target's own typing, not a type-chart
+ * interaction, so it needs its own explicit check rather than falling out of the normal
+ * move-effectiveness lookup. Returns -10 if the defender is Electric-type (either slot), 0
+ * otherwise. The other pre-existing paralysis-immunity checks (Limber, Magic Guard, an
+ * already-statused target, Safeguard, Motor Drive/Volt Absorb specifically against Thunder
+ * Wave) are unchanged by this and not modeled here.
+ */
+int AI_ElectricTypeParalysisImmunityPenalty(int defenderType1IsElectric, int defenderType2IsElectric);
+
+/*
+ * Mirrors the new Grass-type powder-move immunity check added to Basic_CheckCannotSleep,
+ * Basic_CheckCannotPoison, Basic_CheckCannotParalyze, and Basic_CheckLowStatStage_Speed
+ * (script.s): Grass-types are immune to any move flagged MOVE_FLAG_POWDER (Sleep Powder,
+ * Spore, Poison Powder, Stun Spore, Cotton Spore) entirely, regardless of what status or
+ * stat-drop it would otherwise inflict. Each of those four dispatch points gates this behind
+ * a check of the CURRENT move's own flags (via the new LoadCurrentMoveFlags AI command), not
+ * just its effect ID, so a non-powder move that happens to share the same effect (Growl's
+ * ATK_DOWN vs. an unrelated guaranteed-power move, Yawn vs. Sleep Powder, String Shot vs.
+ * Cotton Spore) is correctly left unaffected. Returns -10 if both are true, 0 otherwise.
+ */
+int AI_PowderMoveImmunityPenalty(int moveIsPowder, int targetIsGrassType);
+
+/*
+ * Mirrors the new Ghost-type trapping immunity added to Basic_CheckMeanLook (script.s):
+ * Ghost-types can't be trapped by Mean Look/Block/Spider Web at all (modern mechanic, along
+ * with binding moves, Arena Trap, Shadow Tag, and Magnet Pull - Ghost-types were already
+ * made immune to being trapped battle-engine-side, in Battler_IsTrapped/Battler_IsTrappedMsg
+ * in battle_lib.c and subscript_mean_look.s/subscript_bind_start.s). Returns -10 if the
+ * target is Ghost-type, 0 otherwise. Expert_BindingMove's separate "lock them in for the
+ * kill" utility bonus is skipped entirely against a Ghost-type target (rather than
+ * penalized) - not modeled here as its own function, since "don't apply a bonus" doesn't
+ * need a return-value contract the way a score delta does.
+ */
+int AI_GhostTrappingImmunityPenalty(int targetIsGhostType);
+
 /* How effective a move is against its target, for Sucker Punch's purposes. */
 typedef enum MoveEffectiveness {
     EFFECTIVENESS_NORMAL_OR_SUPER,

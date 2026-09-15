@@ -129,3 +129,62 @@ TEST(sucker_punch_scores_zero_with_no_signal_and_a_losing_roll)
 
     ASSERT_EQ(score, 0);
 }
+
+/*
+ * Basic_CheckCannotParalyze (script.s): the new Electric-type immunity to paralysis (modern
+ * mechanic, added alongside the Gen 9-style paralysis overhaul).
+ */
+
+TEST(electric_type_defender_is_immune_to_paralysis)
+{
+    ASSERT_EQ(AI_ElectricTypeParalysisImmunityPenalty(1, 0), -10);
+}
+
+TEST(dual_type_defender_with_electric_in_either_slot_is_immune_to_paralysis)
+{
+    ASSERT_EQ(AI_ElectricTypeParalysisImmunityPenalty(0, 1), -10);
+}
+
+TEST(non_electric_defender_is_unaffected)
+{
+    ASSERT_EQ(AI_ElectricTypeParalysisImmunityPenalty(0, 0), 0);
+}
+
+/*
+ * The shared Grass-type powder-move immunity check (script.s: Basic_CheckCannotSleep,
+ * Basic_CheckCannotPoison, Basic_CheckCannotParalyze, Basic_CheckLowStatStage_Speed).
+ */
+
+TEST(powder_move_against_grass_type_is_penalized)
+{
+    ASSERT_EQ(AI_PowderMoveImmunityPenalty(1, 1), -10);
+}
+
+TEST(powder_move_against_non_grass_type_is_unaffected)
+{
+    ASSERT_EQ(AI_PowderMoveImmunityPenalty(1, 0), 0);
+}
+
+TEST(non_powder_move_against_grass_type_is_unaffected)
+{
+    /* e.g. Growl (ATK_DOWN) or Yawn (SLEEP_NEXT_TURN) against a Grass-type - same effect
+     * family as a powder move, but not itself flagged as one. */
+    ASSERT_EQ(AI_PowderMoveImmunityPenalty(0, 1), 0);
+}
+
+TEST(non_powder_move_against_non_grass_type_is_unaffected)
+{
+    ASSERT_EQ(AI_PowderMoveImmunityPenalty(0, 0), 0);
+}
+
+/* Ghost-type trapping immunity (script.s: Basic_CheckMeanLook). */
+
+TEST(mean_look_against_ghost_type_is_penalized)
+{
+    ASSERT_EQ(AI_GhostTrappingImmunityPenalty(1), -10);
+}
+
+TEST(mean_look_against_non_ghost_type_is_unaffected)
+{
+    ASSERT_EQ(AI_GhostTrappingImmunityPenalty(0), 0);
+}

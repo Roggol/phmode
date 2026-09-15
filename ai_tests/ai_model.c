@@ -206,6 +206,33 @@ int AI_PrefersHazardRemovalSwitchIn(int ownSideHasHazard, int benchHasHazardRemo
     return ownSideHasHazard && benchHasHazardRemovalMove && randomRollMod3 < 2;
 }
 
+int AI_ElectricTypeParalysisImmunityPenalty(int defenderType1IsElectric, int defenderType2IsElectric)
+{
+    if (defenderType1IsElectric || defenderType2IsElectric) {
+        return -10;
+    }
+
+    return 0;
+}
+
+int AI_PowderMoveImmunityPenalty(int moveIsPowder, int targetIsGrassType)
+{
+    if (moveIsPowder && targetIsGrassType) {
+        return -10;
+    }
+
+    return 0;
+}
+
+int AI_GhostTrappingImmunityPenalty(int targetIsGhostType)
+{
+    if (targetIsGhostType) {
+        return -10;
+    }
+
+    return 0;
+}
+
 int AI_ScoreSuckerPunch(MoveEffectiveness effectiveness, int targetLastMoveDealtDamage, int randomRoll)
 {
     int score;

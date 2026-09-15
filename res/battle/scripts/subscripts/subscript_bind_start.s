@@ -3,6 +3,10 @@
 
 _000:
     CheckSubstitute BTLSCR_SIDE_EFFECT_MON, _043
+    // phmode: Ghost-types are immune to binding moves entirely (modern mechanic) - the move
+    // still deals its initial hit of damage, but never traps or racks up end-of-turn damage.
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_DEFENDER, BATTLEMON_TYPE_1, TYPE_GHOST, _043
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_DEFENDER, BATTLEMON_TYPE_2, TYPE_GHOST, _043
     CompareMonDataToValue OPCODE_FLAG_SET, BTLSCR_DEFENDER, BATTLEMON_VOLATILE_STATUS, VOLATILE_CONDITION_BIND, _043
     PrintBufferedMessage 
     Wait 
