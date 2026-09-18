@@ -559,10 +559,9 @@ Basic_CheckCannotSleep:
     IfLoadedEqualTo ABILITY_VITAL_SPIRIT, ScoreMinus10
 
     // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Sleep
-    // Powder and Spore are both flagged MOVE_FLAG_POWDER (Yawn, which also routes here,
-    // isn't).
-    LoadCurrentMoveFlags
-    IfLoadedMask MOVE_FLAG_POWDER, Basic_CheckCannotSleep_PowderMove
+    // Powder and Spore are the only ones that route here (Yawn also does, but isn't one).
+    IfMoveEqualTo MOVE_SLEEP_POWDER, Basic_CheckCannotSleep_PowderMove
+    IfMoveEqualTo MOVE_SPORE, Basic_CheckCannotSleep_PowderMove
     GoTo Basic_CheckCannotSleep_TerrainCheck
 
 Basic_CheckCannotSleep_PowderMove:
@@ -736,9 +735,8 @@ Basic_CheckLowStatStage_Speed:
     IfLoadedEqualTo AI_HAVE, ScoreMinus10
 
     // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Cotton
-    // Spore is flagged MOVE_FLAG_POWDER (String Shot, which also routes here, isn't).
-    LoadCurrentMoveFlags
-    IfLoadedMask MOVE_FLAG_POWDER, Basic_CheckLowStatStage_Speed_PowderMove
+    // Spore is the only one that routes here (String Shot also does, but isn't one).
+    IfMoveEqualTo MOVE_COTTON_SPORE, Basic_CheckLowStatStage_Speed_PowderMove
     GoTo Basic_CheckClearBodyEffect
 
 Basic_CheckLowStatStage_Speed_PowderMove:
@@ -830,9 +828,8 @@ Basic_CheckCannotPoison:
     IfLoadedEqualTo TYPE_POISON, ScoreMinus10
 
     // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Poison
-    // Powder is flagged MOVE_FLAG_POWDER.
-    LoadCurrentMoveFlags
-    IfLoadedMask MOVE_FLAG_POWDER, Basic_CheckCannotPoison_PowderMove
+    // Powder is the only one that causes poison.
+    IfMoveEqualTo MOVE_POISON_POWDER, Basic_CheckCannotPoison_PowderMove
     GoTo Basic_CheckCannotPoison_Ability
 
 Basic_CheckCannotPoison_PowderMove:
@@ -935,9 +932,8 @@ Basic_CheckCannotParalyze:
     IfLoadedEqualTo TYPE_ELECTRIC, ScoreMinus10
 
     // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Stun Spore
-    // is flagged MOVE_FLAG_POWDER.
-    LoadCurrentMoveFlags
-    IfLoadedMask MOVE_FLAG_POWDER, Basic_CheckCannotParalyze_PowderMove
+    // is the only one that causes paralysis.
+    IfMoveEqualTo MOVE_STUN_SPORE, Basic_CheckCannotParalyze_PowderMove
     GoTo Basic_CheckCannotParalyze_Ability
 
 Basic_CheckCannotParalyze_PowderMove:

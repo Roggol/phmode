@@ -28,9 +28,8 @@ _041:
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_1, TYPE_ELECTRIC, _145
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_2, TYPE_ELECTRIC, _145
     // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Stun Spore
-    // is flagged MOVE_FLAG_POWDER.
-    GetCurrentMoveData MOVEATTRIBUTE_FLAGS
-    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_CALC_TEMP, MOVE_FLAG_POWDER, _042
+    // is the only one that causes paralysis.
+    CompareVarToValue OPCODE_NEQ, BTLVAR_CURRENT_MOVE, MOVE_STUN_SPORE, _042
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_1, TYPE_GRASS, _145
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_2, TYPE_GRASS, _145
 

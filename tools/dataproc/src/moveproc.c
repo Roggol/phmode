@@ -129,7 +129,7 @@ static void proc_move(datafile_t *df) {
     datanode_t flags   = dp_get(df, ".flags");
     size_t     n_flags = dp_arrlen(flags);
     for (size_t i = 0; i < n_flags; i++) {
-        u16 flag    = dp_u16(dp_lookup(dp_arrelem(flags, i), "enum MoveFlag"));
+        u8 flag     = dp_u8(dp_lookup(dp_arrelem(flags, i), "enum MoveFlag"));
         data.flags |= flag;
     }
 

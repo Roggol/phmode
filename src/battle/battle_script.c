@@ -2909,8 +2909,8 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
             if (battleCtx->attacker != battleCtx->sideEffectMon
                 || battleCtx->sideEffectType == SIDE_EFFECT_TYPE_STICKY_WEB) {
                 // phmode: Grass-types are immune to powder moves entirely (modern mechanic) -
-                // Cotton Spore is flagged MOVE_FLAG_POWDER.
-                if ((CURRENT_MOVE_DATA.flags & MOVE_FLAG_POWDER) && MON_HAS_TYPE(battleCtx->sideEffectMon, TYPE_GRASS)) {
+                // Cotton Spore is the only stat-lowering one.
+                if (Move_IsPowderMove(battleCtx->moveCur) && MON_HAS_TYPE(battleCtx->sideEffectMon, TYPE_GRASS)) {
                     battleCtx->msgBuffer.id = BattleStrings_Text_ItDoesntAffectPokemon_Ally; // "It doesn't affect {0}..."
                     battleCtx->msgBuffer.tags = TAG_NICKNAME;
                     battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon);

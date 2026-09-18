@@ -1,53 +1,53 @@
 {
-    "land_rate": 90,
+    "land_rate": 30,
     "land_encounters": [
         {
-            "level": 50,
-            "species": "SPECIES_DIALGA"
+            "level": 2,
+            "species": "SPECIES_STARLY"
         },
         {
-            "level": 50,
-            "species": "SPECIES_PALKIA"
+            "level": 2,
+            "species": "SPECIES_BIDOOF"
         },
         {
-            "level": 50,
-            "species": "SPECIES_GIRATINA"
+            "level": 3,
+            "species": "SPECIES_STARLY"
         },
         {
-            "level": 50,
-            "species": "SPECIES_DIALGA"
+            "level": 3,
+            "species": "SPECIES_KRICKETOT"
         },
         {
-            "level": 50,
-            "species": "SPECIES_PALKIA"
+            "level": 3,
+            "species": "SPECIES_STARLY"
         },
         {
-            "level": 50,
-            "species": "SPECIES_GIRATINA"
+            "level": 3,
+            "species": "SPECIES_BIDOOF"
         },
         {
-            "level": 50,
-            "species": "SPECIES_DIALGA"
+            "level": 3,
+            "species": "SPECIES_STARLY"
         },
         {
-            "level": 50,
-            "species": "SPECIES_PALKIA"
+            "level": 3,
+            "species": "SPECIES_BIDOOF"
         },
         {
-            "level": 50,
-            "species": "SPECIES_GIRATINA"
+            "level": 2,
+            "species": "SPECIES_STARLY"
         },
         {
-            "level": 50,
-            "species": "SPECIES_DIALGA"
+            "level": 2,
+            "species": "SPECIES_BIDOOF"
         },
         {
-            "level": 50,
-            "species": "SPECIES_PALKIA"
+            "level": 2,
+            "species": "SPECIES_STARLY"
         },
         {
-            "level": 50,
-            "species": "SPECIES_GIRATINA"
+            "level": 2,
+            "species": "SPECIES_BIDOOF"
         }
     ],
     "swarms": [
@@ -55,12 +55,12 @@
         "SPECIES_DODUO"
     ],
     "day": [
-        "SPECIES_DIALGA",
-        "SPECIES_PALKIA"
+        "SPECIES_STARLY",
+        "SPECIES_BIDOOF"
     ],
     "night": [
-        "SPECIES_PALKIA",
-        "SPECIES_GIRATINA"
+        "SPECIES_KRICKETOT",
+        "SPECIES_BIDOOF"
     ],
     "radar": [
         "SPECIES_NIDORAN_M",

@@ -10,6 +10,17 @@ nitrorom from upstream (#1276)"). Everything below is on top of that.
 
 ---
 
+## Intro
+
+### Rowan's opening lines
+`res/text/rowan_intro.json` — two lines in the very first cutscene (before
+you even name your character), read by `src/applications/rowan_intro/
+rowan_intro_app.c`:
+* `RowanIntro_Text_HelloThere`: "Welcome to the world of Pokémon!" →
+  "Welcome to Platinum: Hard Mode."
+* `RowanIntro_Text_MyNameRowan`: "However, everyone just calls me the
+  Pokémon Professor." → "I hear you're up for a challenge."
+
 ## Quality-of-life
 
 ### Text speed
@@ -817,31 +828,46 @@ user choosing to root itself rather than being trapped by an opponent.
 
 ### Grass-types are now immune to powder moves (modern mechanic)
 Cotton Spore, Poison Powder, Sleep Powder, Spore, and Stun Spore now fail
-outright against a Grass-type target. A new move flag, `MOVE_FLAG_POWDER`
-(`generated/move_flags.txt`), was added and assigned to exactly those five
-moves' `data.json` files — `MoveTable.flags` was widened from `u8` to `u16`
-(`include/move_table.h`, plus the matching read in `tools/dataproc/src/moveproc.c`)
-since the 9th flag no longer fits in a byte.
+outright against a Grass-type target.
 
 Checked in each move's actual application path (mirroring the Fire/burn and
 Electric/paralysis type-immunity pattern already established): `subscript_fall_asleep.s`
 (Sleep Powder/Spore, both entry points), `subscript_poison.s` (Poison
 Powder), `subscript_paralyze.s` (Stun Spore), and `BtlCmd_ChangeStatStage`
 in `battle_script.c` (Cotton Spore) — each checks the *current move's own
-flags*, not just its effect ID, so a non-powder move sharing the same effect
-(Yawn vs. Sleep Powder, String Shot vs. Cotton Spore) is correctly
-unaffected.
+identity* against the five powder moves by ID (`Move_IsPowderMove` in
+`battle_lib.c`/`battle_lib.h`, and direct `CompareVarToValue ..., BTLVAR_CURRENT_MOVE,
+MOVE_X, ...`/`IfMoveEqualTo MOVE_X, ...` comparisons in the subscripts and
+AI script respectively), not just its effect ID, so a non-powder move
+sharing the same effect (Yawn vs. Sleep Powder, String Shot vs. Cotton
+Spore) is correctly unaffected.
 
-**AI updated:** a new AI script command, `LoadCurrentMoveFlags`
-(`AICMD_LOADCURRENTMOVEFLAGS` in `include/data/scripts/aicmd.h`, macro in
-`asm/macros/aicmd.inc`, `AICmd_LoadCurrentMoveFlags` in `trainer_ai.c`,
-mirroring `LoadCurrentMovePriority` exactly), exposes the current move's
-`MOVE_FLAG_*` bitmask to the AI script for the first time. `Basic_CheckCannotSleep`,
-`Basic_CheckCannotPoison`, `Basic_CheckCannotParalyze`, and
-`Basic_CheckLowStatStage_Speed` (`script.s`) each gained a check: if the
-current move is flagged `MOVE_FLAG_POWDER` and the target is Grass-type,
-score -10 — the AI now avoids all five powder moves against a Grass-type
-the same way it avoids Thunder Wave against an Electric-type.
+**AI updated:** `Basic_CheckCannotSleep`, `Basic_CheckCannotPoison`,
+`Basic_CheckCannotParalyze`, and `Basic_CheckLowStatStage_Speed` (`script.s`)
+each gained a check: if the current move is one of the five powder moves
+(`IfMoveEqualTo`) and the target is Grass-type, score -10 — the AI now
+avoids all five powder moves against a Grass-type the same way it avoids
+Thunder Wave against an Electric-type.
+
+**Bug fix (game-breaking):** the first implementation added a 9th
+`MOVE_FLAG_*` bit and widened `MoveTable.flags` from `u8` to `u16` to fit
+it (`include/move_table.h`), reading the wider value in
+`tools/dataproc/src/moveproc.c`. `MoveTable` is packed byte-for-byte by that
+host-side tool (`nitroarc_ppack(&archives[0].packer, &data, sizeof(data), NULL)`
+in `moveproc.c`) and read back as a raw struct at runtime by the ARM9 game —
+so widening a field changes the struct's packed size/layout, and the host
+compiler (building `dataproc`) and the target compiler (CodeWarrior,
+building the ARM9 binary) don't necessarily agree on the resulting padding.
+That mismatch corrupted every move's data at and past the widened field,
+which made the trainer AI hang instantly and irrecoverably (an infinite
+loop scanning corrupted data) on literally the first wild or trainer battle
+of the game, with any move — an extensive multi-emulator debugging session
+was needed just to isolate it via `git bisect`, since the corruption gave
+no useful error, only a silent freeze. Fixed by reverting `MoveTable.flags`
+to `u8` and checking the five powder moves by move ID instead of a data
+flag, which needs no `MoveTable` changes at all. The `LoadCurrentMoveFlags`
+AI command, `MOVE_FLAG_POWDER`, and the widened struct field were removed
+entirely rather than left as unused dead code.
 
 ### Rapid Spin now only clears hazards from the user's own side
 `BtlCmd_BlowAwayHazards` (`src/battle/battle_script.c`), shared by Rapid Spin
@@ -1871,9 +1897,7 @@ Base Rotom stays Electric / Ghost.
 A hard cap on Pokémon level, stored in `VAR_HARD_LEVEL_CAP`.
 
 * Seeded to `DEFAULT_HARD_LEVEL_CAP` (14) by `scripts_init_new_game.s`. A stored
-  0 (pre-feature save) is treated as 14. Scripts only ever raise it — the
-  starter-selection scene on Route 201 and the Twinleaf Town guitarist/rival
-  both also set it to 14 (matching the starting tier, not raising it further).
+  0 (pre-feature save) is treated as 14. Scripts only ever raise it from there.
 * A full 9-tier ladder, one `SetVar VAR_HARD_LEVEL_CAP, <level>` added right
   after each gym leader's `GiveBadge`/`IncrementTrainerScore2
   TRAINER_SCORE_EVENT_BADGE_EARNED` lines in their gym script: 14 (start) → 23
@@ -1905,8 +1929,39 @@ A hard cap on Pokémon level, stored in `VAR_HARD_LEVEL_CAP`.
   `Pokemon_LevelUpMoveUpTo` as an actual lower bound (`include/pokemon.h`)
   — the move-slot check remains as a secondary guard, but no longer does the
   range-bounding on its own.
-* Twinleaf Town guitarist (`scripts_twinleaf_town.s`,
-  `res/text/twinleaf_town.json`) now gives a one-time Rare Candy.
+* When the rival catches up to you on Route 201 to propose going to check
+  out the lake (`Route201_CoordEvent_RivalStartFollowing` →
+  `Route201_SetRivalPartner` in `scripts_route_201.s`, right after he starts
+  following as your partner), he now also hands over **999 Rare Candies**
+  ("Oh, I found these on the floor. Maybe you'll find a use for them." —
+  new `Route201_Text_FoundTheseOnFloor` in `res/text/route_201.json`), the
+  max stack size (`BAG_MAX_QUANTITY_ITEM` in `src/bag.c`). Guarded by the
+  usual `GoToIfCannotFitItem` bag-space check, falling through to
+  `Route201_ContinueAfterRareCandy` if the bag can't fit them so the story
+  isn't blocked.
+
+### Leftover testing scaffolding removed
+While building the level cap feature, a few testing conveniences were left
+enabled in the tree and never should have shipped on `main`:
+* Route 201's wild encounters (`res/field/encounters/encounters_route_201.json`)
+  had been swapped to a 90% chance of a level 50 Dialga/Palkia/Giratina,
+  presumably to make it easy to test abilities against them on the very first
+  route. Reverted to the original level 2-3 Starly/Bidoof/Kricketot at a 30%
+  rate.
+* The Twinleaf Town guitarist (`TwinleafTown_Guitarist` in
+  `scripts_twinleaf_town.s`) handed over 99 Master Balls and a Rare Candy the
+  first time you talked to him — reverted back to his original dialogue with
+  no item hand-off, and the now-unused
+  `TwinleafTown_Text_GuitaristRareCandyGift` entry removed from
+  `res/text/twinleaf_town.json`. The flag it repurposed
+  (`FLAG_RECEIVED_TWINLEAF_TOWN_GUITARIST_RARE_CANDY`) is renamed back to
+  `FLAG_UNUSED_0x0114` in `generated/vars_flags.txt`.
+* Three redundant `SetVar VAR_HARD_LEVEL_CAP, 14`/`60` lines (in
+  `Route201_CoordEvent_ChooseStarterScene`, `TwinleafTown_Guitarist`, and
+  `TwinleafTown_RivalWentTearingOffOuch`) were left over from testing the cap
+  at different values before it settled on the real 9-tier ladder above —
+  removed as dead weight, since `scripts_init_new_game.s` already seeds the
+  cap to `DEFAULT_HARD_LEVEL_CAP` (14) once at save creation.
 
 ### Every pre-Elite-Four trainer relevelled to match the cap ladder
 All 434 in-scope trainer files under `res/trainers/data/*.json` (every

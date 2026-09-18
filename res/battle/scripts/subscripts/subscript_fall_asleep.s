@@ -13,9 +13,11 @@ _000:
 _031:
     CompareMonDataToValue OPCODE_FLAG_SET, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_STATUS, MON_CONDITION_SLEEP, _274
     // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Sleep
-    // Powder and Spore are both flagged MOVE_FLAG_POWDER.
-    GetCurrentMoveData MOVEATTRIBUTE_FLAGS
-    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_CALC_TEMP, MOVE_FLAG_POWDER, _032
+    // Powder and Spore are the two that route here.
+    CompareVarToValue OPCODE_EQU, BTLVAR_CURRENT_MOVE, MOVE_SLEEP_POWDER, _031_PowderMove
+    CompareVarToValue OPCODE_NEQ, BTLVAR_CURRENT_MOVE, MOVE_SPORE, _032
+
+_031_PowderMove:
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_1, TYPE_GRASS, _350
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_2, TYPE_GRASS, _350
 
@@ -54,9 +56,12 @@ _094:
 
 _102:
     CompareMonDataToValue OPCODE_FLAG_SET, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_STATUS, MON_CONDITION_SLEEP, _274
-    // phmode: Grass-types are immune to powder moves entirely (modern mechanic).
-    GetCurrentMoveData MOVEATTRIBUTE_FLAGS
-    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_CALC_TEMP, MOVE_FLAG_POWDER, _103
+    // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Sleep
+    // Powder and Spore are the two that route here.
+    CompareVarToValue OPCODE_EQU, BTLVAR_CURRENT_MOVE, MOVE_SLEEP_POWDER, _102_PowderMove
+    CompareVarToValue OPCODE_NEQ, BTLVAR_CURRENT_MOVE, MOVE_SPORE, _103
+
+_102_PowderMove:
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_1, TYPE_GRASS, _350
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_2, TYPE_GRASS, _350
 

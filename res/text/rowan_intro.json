@@ -6,15 +6,14 @@
       "en_US": [
         "Hello there!\n",
         "It’s so very nice to meet you!\r",
-        "Welcome to the world of Pokémon!\r"
+        "Welcome to Platinum: Hard Mode.\r"
       ]
     },
     {
       "id": "RowanIntro_Text_MyNameRowan",
       "en_US": [
         "My name is Rowan.\r",
-        "However, everyone just calls me\n",
-        "the Pokémon Professor.\r",
+        "I hear you’re up for a challenge.\r",
         "Before I go any further, is this\n",
         "your first adventure?\r",
         "If you need advice, I’m certainly\n",

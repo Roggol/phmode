@@ -17,6 +17,16 @@ turned on yourself.
 
 ---
 
+## The Very First Scene
+
+Right at the start, before you've even named your character, Professor
+Rowan's greeting sets the tone: instead of "Welcome to the world of
+Pokémon!" he says **"Welcome to Platinum: Hard Mode."** And instead of
+introducing himself as "the Pokémon Professor," he tells you **"I hear
+you're up for a challenge."**
+
+---
+
 ## Everyday Quality-of-Life Improvements
 
 These don't change how the game plays strategically — they just make it
@@ -1064,6 +1074,11 @@ level cap in one go (rather than one level at a time), and it correctly
 offers every move that Pokémon would have learned along the way, so you
 won't miss out on level-up moves just because you skipped several levels
 at once.
+
+Right on Route 201, when your rival catches up to start following you
+toward the lake, he now also hands you **999 Rare Candies** — "Oh, I
+found these on the floor. Maybe you'll find a use for them." — plenty to
+keep your team leveled up early on.
 
 Every time you earn a badge and the cap rises, a message tells you right
 away: *"The level cap has been raised to 23!"* (or whatever the new

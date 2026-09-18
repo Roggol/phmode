@@ -36,9 +36,8 @@ _065:
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_1, TYPE_STEEL, _266
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_2, TYPE_STEEL, _266
     // phmode: Grass-types are immune to powder moves entirely (modern mechanic) - Poison
-    // Powder is flagged MOVE_FLAG_POWDER.
-    GetCurrentMoveData MOVEATTRIBUTE_FLAGS
-    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_CALC_TEMP, MOVE_FLAG_POWDER, _066
+    // Powder is the only one that causes poison.
+    CompareVarToValue OPCODE_NEQ, BTLVAR_CURRENT_MOVE, MOVE_POISON_POWDER, _066
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_1, TYPE_GRASS, _266
     CompareMonDataToValue OPCODE_EQU, BTLSCR_SIDE_EFFECT_MON, BATTLEMON_TYPE_2, TYPE_GRASS, _266
 

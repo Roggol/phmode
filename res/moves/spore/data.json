@@ -20,8 +20,7 @@
     "flags": [
         "MOVE_FLAG_CAN_PROTECT",
         "MOVE_FLAG_CAN_MAGIC_COAT",
-        "MOVE_FLAG_CAN_MIRROR_MOVE",
-        "MOVE_FLAG_POWDER"
+        "MOVE_FLAG_CAN_MIRROR_MOVE"
     ],
     "contest": {
         "effect": "CONTEST_EFFECT_LOWERS_VOLTAGE",

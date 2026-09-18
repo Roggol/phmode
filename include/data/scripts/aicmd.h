@@ -115,7 +115,6 @@ ScriptCommand(AICMD_IFBATTLERFAINTED,                AICmd_IfBattlerFainted)
 ScriptCommand(AICMD_IFBATTLERNOTFAINTED,             AICmd_IfBattlerNotFainted)
 ScriptCommand(AICMD_LOADABILITY,                     AICmd_LoadAbility)
 ScriptCommand(AICMD_LOADCURRENTMOVEPRIORITY,         AICmd_LoadCurrentMovePriority)
-ScriptCommand(AICMD_LOADCURRENTMOVEFLAGS,            AICmd_LoadCurrentMoveFlags)
 
 // clang-format on
 

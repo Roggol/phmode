@@ -36,30 +36,6 @@ TwinleafTown_Guitarist:
     PlaySE SE_CONFIRM_sseq_3
     LockAll
     FacePlayer
-    GoToIfSet FLAG_RECEIVED_TWINLEAF_TOWN_GUITARIST_RARE_CANDY, TwinleafTown_GuitaristDialogue
-    BufferPlayerName 0
-    Message TwinleafTown_Text_GuitaristRareCandyGift
-    SetVar VAR_0x8004, ITEM_MASTER_BALL
-    SetVar VAR_0x8005, 99
-    SetVar VAR_HARD_LEVEL_CAP, 14
-    GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, TwinleafTown_GuitaristBagIsFull
-    SetFlag FLAG_RECEIVED_TWINLEAF_TOWN_GUITARIST_RARE_CANDY
-    Common_GiveItemQuantity
-    SetVar VAR_0x8004, ITEM_RARE_CANDY
-    SetVar VAR_0x8005, 1
-    GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, TwinleafTown_GuitaristBagIsFull
-    Common_GiveItemQuantity
-    CloseMessage
-    ReleaseAll
-    End
-
-TwinleafTown_GuitaristBagIsFull:
-    Common_MessageBagIsFull
-    CloseMessage
-    ReleaseAll
-    End
-
-TwinleafTown_GuitaristDialogue:
     GoToIfSet FLAG_HAS_POKEDEX, TwinleafTown_EveryoneGoesOnAdventures
     GoToIfGe VAR_VISITED_LAKE_VERITY_WITH_RIVAL, 1, TwinleafTown_RivalWentTearingOffOuch
     GoToIfSet FLAG_RIVAL_LEFT_HOME, TwinleafTown_RivalWentTearingOff
@@ -81,7 +57,6 @@ TwinleafTown_EveryoneGoesOnAdventures:
 TwinleafTown_RivalWentTearingOffOuch:
     BufferRivalName 0
     Message TwinleafTown_Text_RivalWentTearingOffOuch
-    SetVar VAR_HARD_LEVEL_CAP, 14
     WaitButton
     CloseMessage
     ReleaseAll

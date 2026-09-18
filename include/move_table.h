@@ -19,8 +19,7 @@ typedef struct MoveTable {
     u8 effectChance;
     u16 range;
     s8 priority;
-    // phmode: widened from u8 to u16 to fit MOVE_FLAG_POWDER, the 9th move flag.
-    u16 flags;
+    u8 flags;
     MoveContestData contest;
 } MoveTable;
 

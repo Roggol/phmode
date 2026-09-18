@@ -213,13 +213,14 @@ int AI_ElectricTypeParalysisImmunityPenalty(int defenderType1IsElectric, int def
 /*
  * Mirrors the new Grass-type powder-move immunity check added to Basic_CheckCannotSleep,
  * Basic_CheckCannotPoison, Basic_CheckCannotParalyze, and Basic_CheckLowStatStage_Speed
- * (script.s): Grass-types are immune to any move flagged MOVE_FLAG_POWDER (Sleep Powder,
- * Spore, Poison Powder, Stun Spore, Cotton Spore) entirely, regardless of what status or
- * stat-drop it would otherwise inflict. Each of those four dispatch points gates this behind
- * a check of the CURRENT move's own flags (via the new LoadCurrentMoveFlags AI command), not
- * just its effect ID, so a non-powder move that happens to share the same effect (Growl's
- * ATK_DOWN vs. an unrelated guaranteed-power move, Yawn vs. Sleep Powder, String Shot vs.
- * Cotton Spore) is correctly left unaffected. Returns -10 if both are true, 0 otherwise.
+ * (script.s): Grass-types are immune to the five powder moves (Sleep Powder, Spore, Poison
+ * Powder, Stun Spore, Cotton Spore) entirely, regardless of what status or stat-drop they'd
+ * otherwise inflict. Each of those four dispatch points gates this behind an explicit
+ * IfMoveEqualTo check against those five move IDs (not a MoveTable flag bit - see
+ * Move_IsPowderMove in battle_lib.c for why), so a non-powder move that happens to share the
+ * same effect (Growl's ATK_DOWN vs. an unrelated guaranteed-power move, Yawn vs. Sleep Powder,
+ * String Shot vs. Cotton Spore) is correctly left unaffected. Returns -10 if both are true, 0
+ * otherwise.
  */
 int AI_PowderMoveImmunityPenalty(int moveIsPowder, int targetIsGrassType);
 

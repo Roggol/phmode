@@ -38,7 +38,6 @@ Route201_SetCounterpartGraphicsLucas:
 Route201_CoordEvent_ChooseStarterScene:
     LockAll
     ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalNoticePlayer
-    SetVar VAR_HARD_LEVEL_CAP, 14
     WaitMovement
     Message Route201_Text_TooSlow
     CloseMessage
@@ -1236,6 +1235,16 @@ Route201_SetRivalPartner:
     Message Route201_Text_NothingToFear
     WaitButton
     CloseMessage
+    SetVar VAR_0x8004, ITEM_RARE_CANDY
+    SetVar VAR_0x8005, 999
+    GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, Route201_ContinueAfterRareCandy
+    Common_GiveItemQuantity
+    BufferRivalName 0
+    Message Route201_Text_FoundTheseOnFloor
+    WaitButton
+    CloseMessage
+
+Route201_ContinueAfterRareCandy:
     SetVar VAR_FOLLOWER_RIVAL_STATE, 3
     SetStepFlag
     SetHasPartner

@@ -602,6 +602,7 @@ BOOL Move_IsInvoker(u16 move);
  * FALSE otherwise
  */
 BOOL Move_IsGhostCurse(BattleContext *battleCtx, u16 move, int battler);
+BOOL Move_IsPowderMove(u16 move);
 
 /**
  * @brief Determine if a battler's item can be stolen.

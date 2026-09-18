@@ -458,6 +458,14 @@
       ]
     },
     {
+      "id": "Route201_Text_FoundTheseOnFloor",
+      "en_US": [
+        "{STRVAR_1 3, 0, 0}: Oh, I found these on\n",
+        "the ground. Maybe you’ll find a use for\f",
+        "them.\r"
+      ]
+    },
+    {
       "id": "Route201_Text_TheLakesNotThatWay",
       "en_US": [
         "{STRVAR_1 3, 0, 0}: Heheh, {STRVAR_1 3, 1, 0}.\n",

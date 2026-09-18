@@ -3069,6 +3069,19 @@ BOOL Move_IsGhostCurse(BattleContext *battleCtx, u16 move, int battler)
     return move == MOVE_CURSE && MON_HAS_TYPE(battler, TYPE_GHOST);
 }
 
+// phmode: the five "powder" moves, immune to Grass-types under the modern mechanic.
+// Checked by move ID rather than a MoveTable flag bit, since MoveTable is packed byte-for-byte
+// by a host-side tool and read back raw at runtime - widening a field in it once caused every
+// move's data past that point to be misread (the phmode game-freezes-in-any-battle bug).
+BOOL Move_IsPowderMove(u16 move)
+{
+    return move == MOVE_COTTON_SPORE
+        || move == MOVE_POISON_POWDER
+        || move == MOVE_SLEEP_POWDER
+        || move == MOVE_SPORE
+        || move == MOVE_STUN_SPORE;
+}
+
 BOOL BattleSystem_CanStealItem(BattleSystem *battleSys, BattleContext *battleCtx, int battler)
 {
     BOOL result = FALSE;

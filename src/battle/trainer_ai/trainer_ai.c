@@ -178,7 +178,6 @@ static void AICmd_IfBattlerFainted(BattleSystem *battleSys, BattleContext *battl
 static void AICmd_IfBattlerNotFainted(BattleSystem *battleSys, BattleContext *battleCtx);
 static void AICmd_LoadAbility(BattleSystem *battleSys, BattleContext *battleCtx);
 static void AICmd_LoadCurrentMovePriority(BattleSystem *battleSys, BattleContext *battleCtx);
-static void AICmd_LoadCurrentMoveFlags(BattleSystem *battleSys, BattleContext *battleCtx);
 
 static u8 TrainerAI_MainSingles(BattleSystem *battleSys, BattleContext *battleCtx);
 static u8 TrainerAI_MainDoubles(BattleSystem *battleSys, BattleContext *battleCtx);
@@ -2710,14 +2709,6 @@ static void AICmd_LoadCurrentMovePriority(BattleSystem *battleSys, BattleContext
     AI_CONTEXT.calcTemp = MOVE_DATA(AI_CONTEXT.move).priority;
 }
 
-// phmode: exposes the current move's flags bitmask (MOVE_FLAG_*) for the Grass-type powder
-// immunity check in script.s - nothing previously loaded this into the AI's scoring.
-static void AICmd_LoadCurrentMoveFlags(BattleSystem *battleSys, BattleContext *battleCtx)
-{
-    AIScript_Iter(battleCtx, 1);
-    AI_CONTEXT.calcTemp = MOVE_DATA(AI_CONTEXT.move).flags;
-}
-
 /**
  * @brief Push an address for the AI script onto the cursor stack.
  *
@@ -4117,6 +4108,7 @@ int TrainerAI_PickCommand(BattleSystem *battleSys, int battler)
     int end;
     Pokemon *mon;
     BattleContext *battleCtx = battleSys->battleCtx;
+
     battleType = BattleSystem_GetBattleType(battleSys);
 
     if ((battleType & BATTLE_TYPE_TRAINER) || BattleSystem_GetBattlerSide(battleSys, battler) == BATTLE_SIDE_PLAYER) {

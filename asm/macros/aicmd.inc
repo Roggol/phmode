@@ -636,12 +636,6 @@
     .long AICMD_LOADCURRENTMOVEPRIORITY
     .endm
 
-    // phmode: exposes the current move's MOVE_FLAG_* bitmask to the AI script, for the
-    // Grass-type powder-move immunity check.
-    .macro LoadCurrentMoveFlags
-    .long AICMD_LOADCURRENTMOVEFLAGS
-    .endm
-
     .equ TABLE_END, 0xFFFFFFFF
 
     .macro TableEntry entry:req
