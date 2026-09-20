@@ -20,7 +20,7 @@
                 "MOVE_POISON_FANG",
                 "MOVE_CONFUSE_RAY"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -34,7 +34,7 @@
                 "MOVE_SHADOW_BALL",
                 "MOVE_CONFUSE_RAY"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -48,7 +48,7 @@
                 "MOVE_X_SCISSOR",
                 "MOVE_FAINT_ATTACK"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         }
     ],

@@ -18,7 +18,7 @@
                 "MOVE_STRING_SHOT",
                 "MOVE_POISON_STING"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -29,7 +29,7 @@
             "moves": [
                 "MOVE_BIDE"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

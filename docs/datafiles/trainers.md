@@ -29,8 +29,15 @@ Each element of the `party` array represents a Pokémon owned by the trainer.
 | `level`      | `u16`                   | The level of the Pokémon.                                         |
 | `item`       | `enum Item` or `null`   | The held item, or `null` for none.                                |
 | `moves`      | `enum Move[]` or `null` | Known moves (up to 4), or `null` for default level-up moves.      |
-| `iv_scale`   | `u16`                   | IV scaling factor (0–255).                                        |
+| `nature`     | `enum Nature` or `null` | The Pokémon's nature, or `null` to leave it unspecified (random). |
 | `ball_seal`  | `u16`                   | Ball seal / capsule decoration index.                             |
+
+Every trainer Pokémon always has perfect IVs (31 in every stat) — there is no
+per-Pokémon IV field. `nature` is optional, following the same `null`-means-
+"no override" convention as `item`: when `null`, the Pokémon's nature is left
+to whatever the existing personality-value RNG produces (as it always was,
+before this field existed). When set, the game re-rolls the personality value
+until it lands on that exact nature.
 
 The presence of the `item` and `moves` fields determines the exact structure of
 the output data, which affects the trainer's party in-game. If any Pokémon in
@@ -51,7 +58,7 @@ To illustrate, this party is valid:
                 "MOVE_QUICK_ATTACK",
                 "MOVE_GROWL"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -63,7 +70,7 @@ To illustrate, this party is valid:
                 "MOVE_SCRATCH",
                 "MOVE_LEER"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         }
     ]
@@ -85,7 +92,7 @@ its held-item, while Starly does not:
                 "MOVE_QUICK_ATTACK",
                 "MOVE_GROWL"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -97,7 +104,7 @@ its held-item, while Starly does not:
                 "MOVE_SCRATCH",
                 "MOVE_LEER"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         }
     ],
@@ -117,7 +124,7 @@ declares that it has a custom move-set:
             "level": 7,
             "item": null,
             "moves": null,
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -129,7 +136,7 @@ declares that it has a custom move-set:
                 "MOVE_SCRATCH",
                 "MOVE_LEER"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         }
     ],
@@ -186,7 +193,7 @@ The tool produces the following outputs:
                 "MOVE_SUCKER_PUNCH",
                 "MOVE_CURSE"
             ],
-            "iv_scale": 60,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -200,7 +207,7 @@ The tool produces the following outputs:
                 "MOVE_CONFUSE_RAY",
                 "MOVE_SPITE"
             ],
-            "iv_scale": 60,
+            "nature": null,
             "ball_seal": 0
         }
     ],

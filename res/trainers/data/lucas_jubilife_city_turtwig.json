@@ -20,7 +20,7 @@
                 "MOVE_BUBBLE",
                 "MOVE_POUND"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         }
     ],

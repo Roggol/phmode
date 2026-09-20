@@ -20,7 +20,7 @@
                 "MOVE_ENDEAVOR",
                 "MOVE_QUICK_ATTACK"
             ],
-            "iv_scale": 50,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -32,7 +32,7 @@
                 "MOVE_DOUBLE_HIT",
                 "MOVE_PSYCHIC"
             ],
-            "iv_scale": 50,
+            "nature": null,
             "ball_seal": 0
         }
     ],

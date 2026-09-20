@@ -20,7 +20,7 @@
                 "MOVE_SWAGGER",
                 "MOVE_PAYBACK"
             ],
-            "iv_scale": 50,
+            "nature": null,
             "ball_seal": 12
         }
     ],

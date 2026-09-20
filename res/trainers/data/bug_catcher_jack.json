@@ -17,7 +17,7 @@
                 "MOVE_STRING_SHOT",
                 "MOVE_POISON_STING"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -31,7 +31,7 @@
                 "MOVE_POISON_STING",
                 "MOVE_HARDEN"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -45,7 +45,7 @@
                 "MOVE_ABSORB",
                 "MOVE_GUST"
             ],
-            "iv_scale": 20,
+            "nature": null,
             "ball_seal": 0
         }
     ],

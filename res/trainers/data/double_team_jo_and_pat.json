@@ -18,7 +18,7 @@
                 "MOVE_CAPTIVATE",
                 "MOVE_SILVER_WIND"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -32,7 +32,7 @@
                 "MOVE_QUICK_ATTACK",
                 "MOVE_IRON_TAIL"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

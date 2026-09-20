@@ -20,7 +20,7 @@
                 "MOVE_QUICK_ATTACK",
                 "MOVE_FAKE_OUT"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -34,7 +34,7 @@
                 "MOVE_THUNDER_PUNCH",
                 "MOVE_HI_JUMP_KICK"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -48,7 +48,7 @@
                 "MOVE_MACH_PUNCH",
                 "MOVE_SEED_BOMB"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -62,7 +62,7 @@
                 "MOVE_EARTHQUAKE",
                 "MOVE_STONE_EDGE"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -76,7 +76,7 @@
                 "MOVE_EXTREME_SPEED",
                 "MOVE_BONE_RUSH"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         }
     ],

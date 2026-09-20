@@ -23,7 +23,7 @@
                 "MOVE_ROCK_TOMB",
                 "MOVE_STEALTH_ROCK"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -37,7 +37,7 @@
                 "MOVE_DRAGON_BREATH",
                 "MOVE_SANDSTORM"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -51,7 +51,7 @@
                 "MOVE_SUPERSONIC",
                 "MOVE_THUNDER_WAVE"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -65,7 +65,7 @@
                 "MOVE_IRON_DEFENSE",
                 "MOVE_REST"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -79,7 +79,7 @@
                 "MOVE_EARTHQUAKE",
                 "MOVE_AVALANCHE"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         }
     ],

@@ -1105,6 +1105,21 @@ original game's leveling curve.
 
 ---
 
+## Trainer Pokémon Now Have Perfect IVs
+
+Every Pokémon on every trainer you fight — gym trainers, rivals, random
+NPCs on the road, all of it — now has perfect IVs (31 in every stat),
+instead of the original game's mix of middling values. This is meant to
+keep trainer fights fair: no more losing a close battle because the
+opponent's Pokémon happened to roll better stats than yours.
+
+Behind the scenes, this also opened the door for trainers to be given a
+specific nature for their Pokémon (most still don't specify one, in which
+case it's left random as before) — not something you'll notice directly
+yet, but the tooling now supports curating it going forward.
+
+---
+
 ## Items
 
 ### The Underground is closed

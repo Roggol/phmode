@@ -20,7 +20,7 @@
                 "MOVE_GIGA_DRAIN",
                 "MOVE_AERIAL_ACE"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -34,7 +34,7 @@
                 "MOVE_LEECH_SEED",
                 "MOVE_MAGICAL_LEAF"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -48,7 +48,7 @@
                 "MOVE_STUN_SPORE",
                 "MOVE_MAGICAL_LEAF"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

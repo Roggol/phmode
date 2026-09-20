@@ -23,7 +23,7 @@
                 "MOVE_U_TURN",
                 "MOVE_DOUBLE_TEAM"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -37,7 +37,7 @@
                 "MOVE_NIGHT_SLASH",
                 "MOVE_QUICK_ATTACK"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -51,7 +51,7 @@
                 "MOVE_HEAL_ORDER",
                 "MOVE_POWER_GEM"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -65,7 +65,7 @@
                 "MOVE_NIGHT_SLASH",
                 "MOVE_STONE_EDGE"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -79,7 +79,7 @@
                 "MOVE_ICE_FANG",
                 "MOVE_AERIAL_ACE"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         }
     ],

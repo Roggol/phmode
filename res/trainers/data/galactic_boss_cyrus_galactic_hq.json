@@ -23,7 +23,7 @@
                 "MOVE_QUICK_ATTACK",
                 "MOVE_SCREECH"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -37,7 +37,7 @@
                 "MOVE_BITE",
                 "MOVE_SUPERSONIC"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -51,7 +51,7 @@
                 "MOVE_ASTONISH",
                 "MOVE_FAINT_ATTACK"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         }
     ],

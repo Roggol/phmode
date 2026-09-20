@@ -19,7 +19,7 @@
                 "MOVE_SEED_BOMB",
                 "MOVE_SKY_UPPERCUT"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -33,7 +33,7 @@
                 "MOVE_HI_JUMP_KICK",
                 "MOVE_ICE_PUNCH"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         }
     ],

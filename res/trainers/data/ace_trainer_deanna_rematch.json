@@ -20,7 +20,7 @@
                 "MOVE_SIGNAL_BEAM",
                 "MOVE_FIRE_PUNCH"
             ],
-            "iv_scale": 50,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -34,7 +34,7 @@
                 "MOVE_EARTHQUAKE",
                 "MOVE_SILVER_WIND"
             ],
-            "iv_scale": 50,
+            "nature": null,
             "ball_seal": 19
         }
     ],

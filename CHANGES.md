@@ -2020,6 +2020,49 @@ value rather than an increase, so it doesn't get a message.
 
 ---
 
+## Trainer data
+
+### Every trainer Pokémon now has perfect IVs, and can have a fixed nature
+Every Pokémon on every non-Frontier trainer (gym trainers, rivals, random NPCs
+— anything built by `TrainerData_BuildParty` in `src/trainer_data.c`) now
+always has 31 IVs in every stat, matching a hardcore-nuzlocke expectation
+that trainer battles are a fair fight on IVs. Previously, each party member's
+`iv_scale` (0–255, JSON) was scaled down to a single flat IV (0–31) applied to
+all six stats — most trainers had middling IVs, not perfect ones.
+
+* `include/struct_defs/trainer_data.h` — the now-unused `ivScale` field (and
+  `MAX_IV_SCALE`) was replaced in place with `nature` in all four
+  `TrainerMon*` structs — same slot, same `u16` width, so the packed struct's
+  size and layout are completely unchanged (both were already the first
+  `u16` field in an all-`u16` struct, so there's no padding to get wrong).
+* `res/trainers/data/*.json` — every party member's `"iv_scale"` key was
+  replaced with `"nature"`. `null` (used everywhere here) means "no specific
+  nature requested," the same convention already used by `item`.
+* `tools/dataproc/src/trainerproc.c` — parses `"nature"` as `enum Nature`
+  when it's a string, or the sentinel `NATURE_COUNT` (one past the last real
+  nature, so it can never collide with a real value) when it's `null`,
+  mirroring the existing `item`/`moves` optional-field pattern exactly.
+* `src/trainer_data.c` — new shared `TrainerData_MakePersonality` helper
+  (previously this logic was duplicated identically across all four
+  `TRDATATYPE_*` cases) builds the personality value exactly as before
+  (preserving the existing trainer-class-gender bias baked into its low
+  byte), then, if a specific nature was requested, keeps re-rolling the
+  upper bits — via the same reject-sampling loop already used for Battle
+  Frontier trainers (`frontier_opponents.c`) and fixed-nature static
+  encounters (`sub_02074044` in `pokemon.c`) — until `Pokemon_GetNatureOf`
+  of the result matches. A request for `NATURE_COUNT` or higher is treated
+  as "leave it random" rather than looping forever trying to match a nature
+  `Pokemon_GetNatureOf` can never produce. `Pokemon_InitWith`'s IV argument
+  is now always the literal `MAX_IVS_SINGLE_STAT` (31) instead of a
+  per-mon-computed value.
+* `docs/datafiles/trainers.md` updated to match.
+* Battle Frontier trainers (`res/trainers/frontier/`) are unaffected — they
+  already have their own separate, rank-tiered IV system and their own
+  `nature` field (`FrontierPokemonBase` in `frontier_opponents.c`), unrelated
+  to this one.
+
+---
+
 ## Items
 
 ### Underground disabled entirely

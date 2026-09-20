@@ -23,7 +23,7 @@
                 "MOVE_ZEN_HEADBUTT",
                 "MOVE_SANDSTORM"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -37,7 +37,7 @@
                 "MOVE_FIRE_FANG",
                 "MOVE_THUNDER_FANG"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -51,7 +51,7 @@
                 "MOVE_CRUNCH",
                 "MOVE_YAWN"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -65,7 +65,7 @@
                 "MOVE_THUNDER_PUNCH",
                 "MOVE_SANDSTORM"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -79,7 +79,7 @@
                 "MOVE_MEGAHORN",
                 "MOVE_AVALANCHE"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         }
     ],

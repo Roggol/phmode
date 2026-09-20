@@ -18,7 +18,7 @@
             "moves": [
                 "MOVE_QUICK_ATTACK"
             ],
-            "iv_scale": 10,
+            "nature": null,
             "ball_seal": 0
         }
     ],

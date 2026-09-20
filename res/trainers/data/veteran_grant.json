@@ -20,7 +20,7 @@
                 "MOVE_COUNTER",
                 "MOVE_SCREECH"
             ],
-            "iv_scale": 100,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -34,7 +34,7 @@
                 "MOVE_QUICK_ATTACK",
                 "MOVE_GROWL"
             ],
-            "iv_scale": 100,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -48,7 +48,7 @@
                 "MOVE_ROCK_POLISH",
                 "MOVE_DEFENSE_CURL"
             ],
-            "iv_scale": 100,
+            "nature": null,
             "ball_seal": 0
         }
     ],

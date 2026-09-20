@@ -16,7 +16,7 @@
                 "MOVE_TACKLE",
                 "MOVE_DEFENSE_CURL"
             ],
-            "iv_scale": 10,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -29,7 +29,7 @@
                 "MOVE_TACKLE",
                 "MOVE_HARDEN"
             ],
-            "iv_scale": 10,
+            "nature": null,
             "ball_seal": 0
         }
     ],

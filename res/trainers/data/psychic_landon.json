@@ -19,7 +19,7 @@
                 "MOVE_SUCKER_PUNCH",
                 "MOVE_CONFUSE_RAY"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -33,7 +33,7 @@
                 "MOVE_RECOVER",
                 "MOVE_FOCUS_BLAST"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

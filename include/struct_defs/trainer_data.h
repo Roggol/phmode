@@ -12,7 +12,6 @@
 #define TRAINER_MON_FORM_SHIFT 10
 
 #define MAX_TRAINER_ITEMS 4
-#define MAX_IV_SCALE      255
 
 enum TrainerDataType {
     TRDATATYPE_BASE = 0,
@@ -31,15 +30,21 @@ typedef struct TrainerHeader {
     u32 battleType;
 } TrainerHeader;
 
+// phmode: trainer Pokemon always have perfect (31) IVs in every stat now, so the old
+// ivScale field (which picked a single flat IV 0-31 for every stat, scaled from a
+// 0-255 JSON value) was replaced in-place with a nature override instead - same slot,
+// same u16 width, so the packed struct layout/size is unchanged. NATURE_COUNT (one past
+// the last real nature) means "no specific nature requested", matching how `item`/`moves`
+// use `null` for "no override" elsewhere in this same format.
 typedef struct TrainerMonBase {
-    u16 ivScale;
+    u16 nature;
     u16 level;
     u16 species;
     u16 cbSeal;
 } TrainerMonBase;
 
 typedef struct TrainerMonWithMoves {
-    u16 ivScale;
+    u16 nature;
     u16 level;
     u16 species;
     u16 moves[LEARNED_MOVES_MAX];
@@ -47,7 +52,7 @@ typedef struct TrainerMonWithMoves {
 } TrainerMonWithMoves;
 
 typedef struct TrainerMonWithItem {
-    u16 ivScale;
+    u16 nature;
     u16 level;
     u16 species;
     u16 item;
@@ -55,7 +60,7 @@ typedef struct TrainerMonWithItem {
 } TrainerMonWithItem;
 
 typedef struct TrainerMonWithMovesAndItem {
-    u16 ivScale;
+    u16 nature;
     u16 level;
     u16 species;
     u16 item;

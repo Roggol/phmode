@@ -20,7 +20,7 @@
                 "MOVE_TRI_ATTACK",
                 "MOVE_MIRROR_SHOT"
             ],
-            "iv_scale": 10,
+            "nature": null,
             "ball_seal": 0
         }
     ],

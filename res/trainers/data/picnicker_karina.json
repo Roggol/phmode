@@ -18,7 +18,7 @@
                 "MOVE_BUBBLE",
                 "MOVE_PECK"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

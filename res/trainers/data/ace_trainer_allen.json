@@ -20,7 +20,7 @@
                 "MOVE_CURSE",
                 "MOVE_CONFUSE_RAY"
             ],
-            "iv_scale": 60,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -34,7 +34,7 @@
                 "MOVE_HYPNOSIS",
                 "MOVE_CONFUSE_RAY"
             ],
-            "iv_scale": 60,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -48,7 +48,7 @@
                 "MOVE_CURSE",
                 "MOVE_MEAN_LOOK"
             ],
-            "iv_scale": 60,
+            "nature": null,
             "ball_seal": 0
         }
     ],

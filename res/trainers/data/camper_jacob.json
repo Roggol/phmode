@@ -18,7 +18,7 @@
                 "MOVE_EMBER",
                 "MOVE_TACKLE"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

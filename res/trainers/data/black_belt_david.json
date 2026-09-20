@@ -19,7 +19,7 @@
                 "MOVE_SANDSTORM",
                 "MOVE_SCREECH"
             ],
-            "iv_scale": 40,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -33,7 +33,7 @@
                 "MOVE_SANDSTORM",
                 "MOVE_SCREECH"
             ],
-            "iv_scale": 40,
+            "nature": null,
             "ball_seal": 0
         }
     ],

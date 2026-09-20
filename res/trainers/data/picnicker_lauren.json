@@ -19,7 +19,7 @@
                 "MOVE_QUICK_ATTACK",
                 "MOVE_CHARM"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

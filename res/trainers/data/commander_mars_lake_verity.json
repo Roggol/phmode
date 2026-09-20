@@ -20,7 +20,7 @@
                 "MOVE_TOXIC",
                 "MOVE_SUPERSONIC"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -34,7 +34,7 @@
                 "MOVE_IRON_DEFENSE",
                 "MOVE_CONFUSE_RAY"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -48,7 +48,7 @@
                 "MOVE_HYPNOSIS",
                 "MOVE_FAKE_OUT"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         }
     ],

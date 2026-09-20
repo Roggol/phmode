@@ -16,7 +16,7 @@
                 "MOVE_LOW_KICK",
                 "MOVE_LEER"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

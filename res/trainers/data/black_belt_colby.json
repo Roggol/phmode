@@ -18,7 +18,7 @@
                 "MOVE_LEER",
                 "MOVE_FORESIGHT"
             ],
-            "iv_scale": 40,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -30,7 +30,7 @@
                 "MOVE_LOW_KICK",
                 "MOVE_FORESIGHT"
             ],
-            "iv_scale": 40,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -43,7 +43,7 @@
                 "MOVE_LEER",
                 "MOVE_FORESIGHT"
             ],
-            "iv_scale": 40,
+            "nature": null,
             "ball_seal": 0
         }
     ],

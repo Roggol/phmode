@@ -21,7 +21,7 @@
                 "MOVE_WATER_GUN",
                 "MOVE_AMNESIA"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

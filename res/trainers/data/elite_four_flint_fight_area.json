@@ -23,7 +23,7 @@
                 "MOVE_DARK_PULSE",
                 "MOVE_SUNNY_DAY"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -37,7 +37,7 @@
                 "MOVE_QUICK_ATTACK",
                 "MOVE_WILL_O_WISP"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -51,7 +51,7 @@
                 "MOVE_SOLAR_BEAM",
                 "MOVE_HYPER_BEAM"
             ],
-            "iv_scale": 250,
+            "nature": null,
             "ball_seal": 13
         }
     ],

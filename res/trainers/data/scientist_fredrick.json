@@ -21,7 +21,7 @@
                 "MOVE_HYPNOSIS",
                 "MOVE_FUTURE_SIGHT"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -35,7 +35,7 @@
                 "MOVE_THUNDER_WAVE",
                 "MOVE_RECOVER"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

@@ -20,7 +20,7 @@
                 "MOVE_ANCIENT_POWER",
                 "MOVE_TOXIC"
             ],
-            "iv_scale": 100,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -33,7 +33,7 @@
                 "MOVE_STOMP",
                 "MOVE_TAKE_DOWN"
             ],
-            "iv_scale": 100,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -47,7 +47,7 @@
                 "MOVE_PURSUIT",
                 "MOVE_QUICK_ATTACK"
             ],
-            "iv_scale": 100,
+            "nature": null,
             "ball_seal": 0
         }
     ],

@@ -23,7 +23,7 @@
                 "MOVE_SWORDS_DANCE",
                 "MOVE_QUICK_ATTACK"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -37,7 +37,7 @@
                 "MOVE_AERIAL_ACE",
                 "MOVE_SHADOW_CLAW"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -51,7 +51,7 @@
                 "MOVE_HAMMER_ARM",
                 "MOVE_BULLET_PUNCH"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -65,7 +65,7 @@
                 "MOVE_FIRE_FANG",
                 "MOVE_THUNDER_FANG"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -79,7 +79,7 @@
                 "MOVE_BONE_RUSH",
                 "MOVE_BLAZE_KICK"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         }
     ],

@@ -19,7 +19,7 @@
                 "MOVE_SOFTBOILED",
                 "MOVE_REFRESH"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         }
     ],

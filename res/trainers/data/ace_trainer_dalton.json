@@ -20,7 +20,7 @@
                 "MOVE_QUICK_ATTACK",
                 "MOVE_THUNDER_WAVE"
             ],
-            "iv_scale": 50,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -34,7 +34,7 @@
                 "MOVE_SMOG",
                 "MOVE_WILL_O_WISP"
             ],
-            "iv_scale": 50,
+            "nature": null,
             "ball_seal": 0
         }
     ],

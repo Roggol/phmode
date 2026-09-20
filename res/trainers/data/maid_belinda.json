@@ -18,7 +18,7 @@
                 "MOVE_METEOR_MASH",
                 "MOVE_ENDURE"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

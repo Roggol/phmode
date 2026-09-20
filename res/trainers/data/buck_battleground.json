@@ -23,7 +23,7 @@
                 "MOVE_PROTECT",
                 "MOVE_SANDSTORM"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -37,7 +37,7 @@
                 "MOVE_CONFUSE_RAY",
                 "MOVE_DOUBLE_TEAM"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -51,7 +51,7 @@
                 "MOVE_ERUPTION",
                 "MOVE_PROTECT"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -65,7 +65,7 @@
                 "MOVE_THUNDER_PUNCH",
                 "MOVE_SHADOW_BALL"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -79,7 +79,7 @@
                 "MOVE_ANCIENT_POWER",
                 "MOVE_CALM_MIND"
             ],
-            "iv_scale": 200,
+            "nature": null,
             "ball_seal": 0
         }
     ],

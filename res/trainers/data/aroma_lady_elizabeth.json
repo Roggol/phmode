@@ -17,7 +17,7 @@
                 "MOVE_GROWTH",
                 "MOVE_MEGA_DRAIN"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

@@ -18,7 +18,7 @@
                 "MOVE_BIDE",
                 "MOVE_MEDITATE"
             ],
-            "iv_scale": 20,
+            "nature": null,
             "ball_seal": 0
         }
     ],

@@ -13,6 +13,7 @@
 #include "constants/battle.h"
 #include "constants/moves.h"
 #include "constants/pokemon.h"
+#include "generated/natures.h"
 #include "generated/trainers.h"
 #include "generated/trainer_classes.h"
 #include "generated/vars_flags.h"
@@ -23,6 +24,7 @@ static enum_template_t enums[] = {
     include_enum("generated/ai_flags.h",              "enum AIFlag"),
     include_enum("generated/items.h",                 "enum Item"),
     include_enum("generated/moves.h",                 "enum Move"),
+    include_enum("generated/natures.h",               "enum Nature"),
     include_enum("generated/species.h",               "enum Species"),
     include_enum("generated/trainer_classes.h",       "enum TrainerClass"),
     include_enum("generated/trainer_message_types.h", "enum TrainerMessageType"),
@@ -191,8 +193,17 @@ Container proc_trainer(datafile_t *df, enum TrainerID trainer) {
         // We always store the maximum possible data, then trim it when packing
         u16 species = dp_u16(dp_lookup(dp_objmemb(party_member, "species"), "enum Species"));
         u16 form    = dp_u8(dp_objmemb(party_member, "form"));
+
+        // phmode: "nature" is optional, like "item" - a missing/null value means no
+        // specific nature is requested, encoded as NATURE_COUNT (one past the last real
+        // nature) since that can never collide with an actual enum Nature value.
+        datanode_t nature_member = dp_objmemb(party_member, "nature");
+        u16        nature        = nature_member.type == DATAPROC_T_STRING
+                   ? dp_u16(dp_lookup(nature_member, "enum Nature"))
+                   : NATURE_COUNT;
+
         trparty.party[i] = (TrainerMonWithMovesAndItem){
-            .ivScale = dp_u16(dp_objmemb(party_member, "iv_scale")),
+            .nature  = nature,
             .level   = dp_u16(dp_objmemb(party_member, "level")),
             .species = (u16)(species | (form << TRAINER_MON_FORM_SHIFT)),
             .cbSeal  = dp_u16(dp_objmemb(party_member, "ball_seal")),

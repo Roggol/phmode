@@ -18,7 +18,7 @@
                 "MOVE_GROWL",
                 "MOVE_FAKE_OUT"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -32,7 +32,7 @@
                 "MOVE_BITE",
                 "MOVE_SUPERSONIC"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -45,7 +45,7 @@
                 "MOVE_NIGHT_SHADE",
                 "MOVE_WING_ATTACK"
             ],
-            "iv_scale": 30,
+            "nature": null,
             "ball_seal": 0
         }
     ],

@@ -20,7 +20,7 @@
                 "MOVE_DOUBLE_TEAM",
                 "MOVE_GROWL"
             ],
-            "iv_scale": 100,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -34,7 +34,7 @@
                 "MOVE_EARTHQUAKE",
                 "MOVE_BRICK_BREAK"
             ],
-            "iv_scale": 100,
+            "nature": null,
             "ball_seal": 0
         }
     ],

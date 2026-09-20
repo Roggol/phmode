@@ -20,7 +20,7 @@
                 "MOVE_FAINT_ATTACK",
                 "MOVE_QUICK_ATTACK"
             ],
-            "iv_scale": 50,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -33,7 +33,7 @@
                 "MOVE_CRUNCH",
                 "MOVE_HAIL"
             ],
-            "iv_scale": 50,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -47,7 +47,7 @@
                 "MOVE_INGRAIN",
                 "MOVE_GRASS_WHISTLE"
             ],
-            "iv_scale": 50,
+            "nature": null,
             "ball_seal": 0
         }
     ],

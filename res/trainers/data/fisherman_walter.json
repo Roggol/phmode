@@ -16,7 +16,7 @@
                 "MOVE_WATER_PULSE",
                 "MOVE_MAGNITUDE"
             ],
-            "iv_scale": 10,
+            "nature": null,
             "ball_seal": 0
         }
     ],

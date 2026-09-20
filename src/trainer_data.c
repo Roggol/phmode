@@ -2,6 +2,7 @@
 
 #include "constants/battle.h"
 #include "constants/pokemon.h"
+#include "generated/natures.h"
 #include "generated/trainer_message_types.h"
 
 #include "struct_defs/trainer.h"
@@ -21,6 +22,7 @@
 #include "string_gf.h"
 
 static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID heapID);
+static u32 TrainerData_MakePersonality(u32 seed, u8 trainerType, u32 genderMod, u16 nature);
 
 void Trainer_Encounter(FieldBattleDTO *dto, const SaveData *saveData, enum HeapID heapID)
 {
@@ -173,13 +175,43 @@ u8 TrainerClass_Gender(int trclass)
  * @param battler       Which battler's party is to be loaded.
  * @param heapID        Heap on which to perform any allocations.
  */
+// phmode: trainer Pokemon always have perfect (31) IVs now, so the personality value no
+// longer needs to encode an IV scale at all - it only needs to (a) reproduce the existing
+// trainer-class-gender bias in its low byte, matching vanilla, and (b) land on a specific
+// nature when one is requested via the trainer data. Nature is derived from personality %
+// NATURE_COUNT (see Pokemon_GetNatureOf), so forcing one means re-rolling the upper bits
+// until it lands there - the same reject-sampling approach already used for Battle
+// Frontier trainers (frontier_opponents.c) and fixed-nature static encounters
+// (sub_02074044 in this file). A nature of NATURE_COUNT or higher (the sentinel used for
+// "no nature requested" - see struct_defs/trainer_data.h) is left alone rather than
+// looping forever trying to match something Pokemon_GetNatureOf can never produce.
+static u32 TrainerData_MakePersonality(u32 seed, u8 trainerType, u32 genderMod, u16 nature)
+{
+    int j;
+    u32 rnd = seed;
+
+    LCRNG_SetSeed(rnd);
+    for (j = 0; j < trainerType; j++) {
+        rnd = LCRNG_Next();
+    }
+
+    rnd = (rnd << 8) + genderMod;
+
+    if (nature < NATURE_COUNT) {
+        while (Pokemon_GetNatureOf(rnd) != nature) {
+            rnd = (LCRNG_Next() << 8) + genderMod;
+        }
+    }
+
+    return rnd;
+}
+
 static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID heapID)
 {
     // must make declarations C89-style to match
     void *buf;
     int i, j;
     u32 genderMod, rnd, oldSeed;
-    u8 ivs;
     Pokemon *mon;
 
     oldSeed = LCRNG_GetSeed();
@@ -203,17 +235,9 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
             u16 species = trmon[i].species & 0x3FF;
             u8 form = (trmon[i].species & 0xFC00) >> TRAINER_MON_FORM_SHIFT;
 
-            rnd = trmon[i].ivScale + trmon[i].level + species + dto->trainerIDs[battler];
-            LCRNG_SetSeed(rnd);
+            rnd = TrainerData_MakePersonality(trmon[i].level + species + dto->trainerIDs[battler], dto->trainer[battler].header.trainerType, genderMod, trmon[i].nature);
 
-            for (j = 0; j < dto->trainer[battler].header.trainerType; j++) {
-                rnd = LCRNG_Next();
-            }
-
-            rnd = (rnd << 8) + genderMod;
-            ivs = trmon[i].ivScale * MAX_IVS_SINGLE_STAT / MAX_IV_SCALE;
-
-            Pokemon_InitWith(mon, species, trmon[i].level, ivs, TRUE, rnd, OTID_NOT_SHINY, 0);
+            Pokemon_InitWith(mon, species, trmon[i].level, MAX_IVS_SINGLE_STAT, TRUE, rnd, OTID_NOT_SHINY, 0);
             Pokemon_SetBallSeal(trmon[i].cbSeal, mon, heapID);
             Pokemon_SetValue(mon, MON_DATA_FORM, &form);
             Pokemon_CalcStats(mon);
@@ -229,17 +253,9 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
             u16 species = trmon[i].species & 0x3FF;
             u8 form = (trmon[i].species & 0xFC00) >> TRAINER_MON_FORM_SHIFT;
 
-            rnd = trmon[i].ivScale + trmon[i].level + species + dto->trainerIDs[battler];
-            LCRNG_SetSeed(rnd);
+            rnd = TrainerData_MakePersonality(trmon[i].level + species + dto->trainerIDs[battler], dto->trainer[battler].header.trainerType, genderMod, trmon[i].nature);
 
-            for (j = 0; j < dto->trainer[battler].header.trainerType; j++) {
-                rnd = LCRNG_Next();
-            }
-
-            rnd = (rnd << 8) + genderMod;
-            ivs = trmon[i].ivScale * MAX_IVS_SINGLE_STAT / MAX_IV_SCALE;
-
-            Pokemon_InitWith(mon, species, trmon[i].level, ivs, TRUE, rnd, OTID_NOT_SHINY, 0);
+            Pokemon_InitWith(mon, species, trmon[i].level, MAX_IVS_SINGLE_STAT, TRUE, rnd, OTID_NOT_SHINY, 0);
 
             for (j = 0; j < 4; j++) {
                 Pokemon_SetMoveSlot(mon, trmon[i].moves[j], j);
@@ -260,17 +276,9 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
             u16 species = trmon[i].species & 0x3FF;
             u8 form = (trmon[i].species & 0xFC00) >> TRAINER_MON_FORM_SHIFT;
 
-            rnd = trmon[i].ivScale + trmon[i].level + species + dto->trainerIDs[battler];
-            LCRNG_SetSeed(rnd);
+            rnd = TrainerData_MakePersonality(trmon[i].level + species + dto->trainerIDs[battler], dto->trainer[battler].header.trainerType, genderMod, trmon[i].nature);
 
-            for (j = 0; j < dto->trainer[battler].header.trainerType; j++) {
-                rnd = LCRNG_Next();
-            }
-
-            rnd = (rnd << 8) + genderMod;
-            ivs = trmon[i].ivScale * MAX_IVS_SINGLE_STAT / MAX_IV_SCALE;
-
-            Pokemon_InitWith(mon, species, trmon[i].level, ivs, TRUE, rnd, OTID_NOT_SHINY, 0);
+            Pokemon_InitWith(mon, species, trmon[i].level, MAX_IVS_SINGLE_STAT, TRUE, rnd, OTID_NOT_SHINY, 0);
             Pokemon_SetValue(mon, MON_DATA_HELD_ITEM, &trmon[i].item);
             Pokemon_SetBallSeal(trmon[i].cbSeal, mon, heapID);
             Pokemon_SetValue(mon, MON_DATA_FORM, &form);
@@ -287,17 +295,9 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
             u16 species = trmon[i].species & 0x3FF;
             u8 form = (trmon[i].species & 0xFC00) >> TRAINER_MON_FORM_SHIFT;
 
-            rnd = trmon[i].ivScale + trmon[i].level + species + dto->trainerIDs[battler];
-            LCRNG_SetSeed(rnd);
+            rnd = TrainerData_MakePersonality(trmon[i].level + species + dto->trainerIDs[battler], dto->trainer[battler].header.trainerType, genderMod, trmon[i].nature);
 
-            for (j = 0; j < dto->trainer[battler].header.trainerType; j++) {
-                rnd = LCRNG_Next();
-            }
-
-            rnd = (rnd << 8) + genderMod;
-            ivs = trmon[i].ivScale * MAX_IVS_SINGLE_STAT / MAX_IV_SCALE;
-
-            Pokemon_InitWith(mon, species, trmon[i].level, ivs, TRUE, rnd, OTID_NOT_SHINY, 0);
+            Pokemon_InitWith(mon, species, trmon[i].level, MAX_IVS_SINGLE_STAT, TRUE, rnd, OTID_NOT_SHINY, 0);
             Pokemon_SetValue(mon, MON_DATA_HELD_ITEM, &trmon[i].item);
 
             for (j = 0; j < 4; j++) {

@@ -19,7 +19,7 @@
                 "MOVE_ENERGY_BALL",
                 "MOVE_CHARGE_BEAM"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -33,7 +33,7 @@
                 "MOVE_CONFUSE_RAY",
                 "MOVE_TOXIC"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -47,7 +47,7 @@
                 "MOVE_FRUSTRATION",
                 "MOVE_SLUDGE_BOMB"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

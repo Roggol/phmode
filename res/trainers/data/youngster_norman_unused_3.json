@@ -18,7 +18,7 @@
                 "MOVE_GROWL",
                 "MOVE_PECK"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -32,7 +32,7 @@
                 "MOVE_MAGICAL_LEAF",
                 "MOVE_HELPING_HAND"
             ],
-            "iv_scale": 0,
+            "nature": null,
             "ball_seal": 0
         }
     ],

@@ -16,7 +16,7 @@
                 "MOVE_TACKLE",
                 "MOVE_LEECH_SEED"
             ],
-            "iv_scale": 20,
+            "nature": null,
             "ball_seal": 0
         },
         {
@@ -29,7 +29,7 @@
                 "MOVE_POISON_STING",
                 "MOVE_STUN_SPORE"
             ],
-            "iv_scale": 20,
+            "nature": null,
             "ball_seal": 0
         }
     ],
