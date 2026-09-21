@@ -1105,6 +1105,19 @@ original game's leveling curve.
 
 ---
 
+## Every Trainer Battles Smarter Now
+
+Every trainer in the game now fights with the AI's full "expert" logic
+turned on — before, only about a third of trainers had this enabled, so a
+lot of fights (including some you'd expect to be tough) were using a
+noticeably dumber opponent AI. Now every trainer evaluates attacks
+properly and plays with expert-level move scoring: predicting kills,
+recognizing Substitute and Distortion Terrain, timing moves like Sucker
+Punch, and so on. Expect trainer battles across the board to play a
+meaningfully sharper game than before.
+
+---
+
 ## Trainer Pokémon Now Have Perfect IVs
 
 Every Pokémon on every trainer you fight — gym trainers, rivals, random

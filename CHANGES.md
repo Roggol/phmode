@@ -2026,6 +2026,22 @@ value rather than an increase, so it doesn't get a message.
 
 ## Trainer data
 
+### Every trainer now uses the Evaluate Attack and Expert AI flags by default
+`res/trainers/data/*.json` — every trainer's `ai_flags` now includes
+`AI_FLAG_EVAL_ATTACK` and `AI_FLAG_EXPERT` alongside whatever it already had
+(`AI_FLAG_BASIC`, plus any of `AI_FLAG_PRIORITIZE_EXTREMES`,
+`AI_FLAG_SETUP_FIRST_TURN`, `AI_FLAG_RISKY` it already used), in the same
+`BASIC, EVAL_ATTACK, EXPERT, ...` order the 232 trainers that already had
+both were already using. 695 of the 928 trainer files were missing one or
+both and got them added; 232 already had both and were untouched;
+`none.json` (`TRAINER_NONE`, no party) was left alone. This makes every
+trainer battle use full attack-effectiveness evaluation and expert-level
+move scoring (Substitute/Distortion Terrain awareness, Sucker Punch
+prediction, kill-confirmation logic, etc.) instead of only the ~1/3 of
+trainers that previously had `AI_FLAG_EXPERT` and/or `AI_FLAG_EVAL_ATTACK`
+explicitly set, matching the general "every fight should be a real fight"
+intent of this hack.
+
 ### Every trainer Pokémon now has perfect IVs, and can have a fixed nature
 Every Pokémon on every non-Frontier trainer (gym trainers, rivals, random NPCs
 — anything built by `TrainerData_BuildParty` in `src/trainer_data.c`) now
