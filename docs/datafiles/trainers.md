@@ -40,9 +40,37 @@ before this field existed). When set, the game re-rolls the personality value
 until it lands on that exact nature.
 
 The presence of the `item` and `moves` fields determines the exact structure of
-the output data, which affects the trainer's party in-game. If any Pokémon in
-the party specifies that it can have a held item or a custom move-set, then all
-other Pokémon in the party must *also* specify as much.
+the output data, which affects the trainer's party in-game. This is decided
+by looking at the *first* Pokémon in the party only (`trainerproc.c` peeks at
+`party[0]` and never looks at any other member to make this decision) - every
+other member is then read according to whatever `party[0]` decided:
+
+* If `party[0]` has a real `item` (a string, not `null`), every other member
+  is required to have one too - a `null` on any later member is a build
+  error.
+* If `party[0]` has `"item": null`, the tool never reads the `item` field
+  from *any* other member at all - even if a later Pokémon specifies a real
+  item, it is silently ignored with no error or warning, and that Pokémon
+  ends up holding nothing.
+
+**This means a `null`-item lead can't be paired with real items on later
+party members - but an itemless Pokémon anywhere in the party, lead
+included, still can.** Use the literal string `"ITEM_NONE"` instead of
+`null` for that Pokémon: it's a real value of `enum Item` (numeric value 0,
+"no item"), so it satisfies the "party[0] has a string" check exactly like
+any other item name would, opting the whole party into per-member item data
+without actually holding anything. For example, a lead with no item and a
+second Pokémon holding a Leftovers is `"item": "ITEM_NONE"` on the lead and
+`"item": "ITEM_LEFTOVERS"` on the second - *not* `null` on the lead. The
+functional effect is identical to `null` (the Pokémon holds nothing); this
+only affects whether the *rest* of the party's `item` fields get read at
+all. The same trick works for `moves`... except there is no move that means
+"no moves," so a Pokémon that should just learn its default level-up moves
+while a party-mate has a custom move-set has no equivalent escape hatch -
+give it a real move-set too.
+
+The same first-member rule, independently, applies to `moves` based on
+whether `party[0]` has an array or `null`.
 
 To illustrate, this party is valid:
 
@@ -77,8 +105,45 @@ To illustrate, this party is valid:
 }
 ```
 
-However, this party is *not* valid, as Chimchar specifies that it has data for
-its held-item, while Starly does not:
+However, this party is *not* valid - it's a build error, since Starly (the
+*first* party member) specifies a held item, so every other member is
+required to as well, and Chimchar does not:
+
+```json
+{
+    "party": [
+        {
+            "species": "SPECIES_STARLY",
+            "form": 0,
+            "level": 7,
+            "item": "ITEM_ORAN_BERRY",
+            "moves": [
+                "MOVE_QUICK_ATTACK",
+                "MOVE_GROWL"
+            ],
+            "nature": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_CHIMCHAR",
+            "form": 0,
+            "level": 9,
+            "item": null,
+            "moves": [
+                "MOVE_SCRATCH",
+                "MOVE_LEER"
+            ],
+            "nature": null,
+            "ball_seal": 0
+        }
+    ],
+}
+```
+
+The reverse ordering does *not* raise an error, which is easy to get wrong
+when editing a party by hand. Here, Starly (first) has `"item": null`, so the
+tool never even looks at Chimchar's `item` field - the build succeeds, but
+Chimchar's Oran Berry is silently dropped and it ends up holding nothing:
 
 ```json
 {
@@ -111,9 +176,9 @@ its held-item, while Starly does not:
 }
 ```
 
-Similarly, this party would also be invalid, as Starly declares that it should
-derive its move-set from the moves that it learns by level-up, while Chimchar
-declares that it has a custom move-set:
+The same first-member-decides rule applies to `moves` independently of
+`item`. This party is invalid, since Starly (first) declares a custom
+move-set, so Chimchar is required to as well, but specifies `null` instead:
 
 ```json
 {
@@ -123,7 +188,10 @@ declares that it has a custom move-set:
             "form": 0,
             "level": 7,
             "item": null,
-            "moves": null,
+            "moves": [
+                "MOVE_QUICK_ATTACK",
+                "MOVE_GROWL"
+            ],
             "nature": null,
             "ball_seal": 0
         },
@@ -132,10 +200,7 @@ declares that it has a custom move-set:
             "form": 0,
             "level": 9,
             "item": null,
-            "moves": [
-                "MOVE_SCRATCH",
-                "MOVE_LEER"
-            ],
+            "moves": null,
             "nature": null,
             "ball_seal": 0
         }

@@ -1990,6 +1990,10 @@ vanilla decomp's levels:
 * **Everyone else** → `(map tier's cap) − 4`.
 * A trainer whose maps span more than one tier uses the lowest (earliest)
   tier/cap among them.
+* Route 204 South's trainers (`lass_samantha`, `lass_sarah`,
+  `youngster_tyler`) are tiered as Tier 1 (cap 14) rather than Tier 2 like
+  the rest of Route 204/Floaroma Meadow/Valley Windworks, since that stretch
+  is reachable before Roark. Now Lv. 10 (was Lv. 19).
 * The 5 `*_battleground.json` roaming trainers (Cheryl, Riley, Marley, Buck,
   Mira) were left untouched — `battleground` is physically connected to and
   functionally part of the postgame Survival Area
@@ -2061,9 +2065,38 @@ all six stats — most trainers had middling IVs, not perfect ones.
   `nature` field (`FrontierPokemonBase` in `frontier_opponents.c`), unrelated
   to this one.
 
----
+### Docs fix: the `item`/`moves` "all-or-nothing" rule is decided by `party[0]` only, and is asymmetric
+`docs/datafiles/trainers.md` previously claimed that if *any* Pokémon in a
+trainer's party specifies an `item` or a custom `moves` list, every other
+Pokémon must too. That's not what `trainerproc.c` actually does, and one of
+the doc's own "invalid" examples was wrong as a result (it builds
+successfully). Verified against the real tool by deliberately breaking builds
+both ways:
 
-## Items
+* The check is made *only* against `party[0]` (`trainerproc.c`'s
+  `party_has_items`/`party_has_moves`), never any other member.
+* If `party[0]` has a real `item`, every other member is required to as well
+  — `null` anywhere else is a build error (confirmed).
+* If `party[0]` has `"item": null`, the tool never even reads `item` from any
+  other member — a real item there is silently dropped with no error
+  (confirmed; this is the direction the old doc got backwards). Scanned all
+  928 `res/trainers/data/*.json` files for this pattern; none currently hit
+  it.
+* The same rule applies to `moves`, independently.
+
+**New capability, no code changes needed:** this means a party couldn't
+previously have an itemless lead alongside teammates holding real items,
+since `"item": null` on the lead blocks the tool from reading anyone else's
+`item` field. Fixed by documenting the existing `"ITEM_NONE"` value (already
+a normal member of `enum Item`, value 0) as the way to opt a specific
+Pokémon out of holding an item *without* opting the whole party out of item
+data — `"item": "ITEM_NONE"` satisfies the same "`party[0]` has a string"
+check as any real item name, so later party members' real items are read
+normally. Confirmed by deliberately building a party with `"item":
+"ITEM_NONE"` on the lead and a real item on the second Pokémon. There's no
+equivalent for `moves` (no "use my default level-up moves" move exists), so
+a Pokémon that needs its natural moveset can't be mixed with a custom-moveset
+party-mate that way.
 
 ### Underground disabled entirely
 The Underground can no longer be entered at all. `CanUseExplorerKit`

@@ -3,14 +3,15 @@
     "class": "TRAINER_CLASS_YOUNGSTER",
     "items": [],
     "ai_flags": [
-        "AI_FLAG_BASIC"
+        "AI_FLAG_BASIC",
+        "AI_FLAG_EXPERT"
     ],
     "double_battle": false,
     "party": [
         {
             "species": "SPECIES_MAGIKARP",
             "form": 0,
-            "level": 19,
+            "level": 10,
             "item": null,
             "moves": null,
             "nature": null,

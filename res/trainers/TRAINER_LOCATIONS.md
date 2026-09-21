@@ -54,6 +54,11 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `youngster_michael.json` — Lv. 10
 - `youngster_sebastian.json` — Lv. 10
 
+### Route 204 South
+- `lass_samantha.json` — Lv. 10
+- `lass_sarah.json` — Lv. 10
+- `youngster_tyler.json` — Lv. 10
+
 ### Trainers School
 - `school_kid_christine.json` — Lv. 10
 - `school_kid_harrison.json` — Lv. 10
@@ -85,11 +90,6 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `aroma_lady_taylor.json` — Lv. 19
 - `bug_catcher_brandon.json` — Lv. 19
 - `twins_liv_and_liz.json` — Lv. 19
-
-### Route 204 South
-- `lass_samantha.json` — Lv. 19
-- `lass_sarah.json` — Lv. 19
-- `youngster_tyler.json` — Lv. 19
 
 ### Route 205 North
 - `fisherman_andrew.json` — Lv. 19
