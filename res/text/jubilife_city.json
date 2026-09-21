@@ -146,65 +146,21 @@
         "My name... Ah, no, I shall inform you\n",
         "only of my code name.\r",
         "My code name, it is Looker.\n",
-        "It is what they all call me.\r",
-        "Incidentally, is the saying, “Don’t be\n",
-        "a thief!” familiar to you?"
+        "It is what they all call me.\r"
       ]
     },
     {
-      "id": "JubilifeCity_Text_TakingFromOthersIsWrong",
+      "id": "JubilifeCity_Text_LookerPostBattleIntroduction",
       "en_US": [
-        "Looker: Yes, that is correct.\n",
-        "Taking what belongs to others is wrong.\r"
-      ]
-    },
-    {
-      "id": "JubilifeCity_Text_YouClaimToNotKnowIt",
-      "en_US": [
-        "Looker: No? You claim to not know it?\n",
-        "How could that be?\r",
-        "Perhaps your mama has said it, but you\n",
-        "have forgotten it, like usual?\r",
-        "Now listen, my friends. It is wrong to\n",
-        "take what belongs to others.\r"
-      ]
-    },
-    {
-      "id": "JubilifeCity_Text_PerhapsYouCanUseThis",
-      "en_US": [
-        "Unfortunately, there are apparently\n",
-        "those who do not heed those words.\r",
-        "In Sinnoh, in fact, there are criminals\n",
-        "stealing the Pokémon of others.\r",
-        "I have, therefore, been on the lookout\n",
-        "for characters arousing my suspicion.\r",
-        "Incidentally, you are Trainers, yes?\n",
-        "Perhaps you can make use of this?\r"
-      ]
-    },
-    {
-      "id": "JubilifeCity_Text_DeviceForRecordingAMatch",
-      "en_US": [
-        "That Vs. Recorder, it is a nifty device\n",
-        "for recording a match.\r",
-        "I obtained it because it is quite popular\n",
-        "these days.\r",
-        "But myself, I do not do Pokémon\n",
-        "battling very often.\r",
-        "It will be in better hands with you.\r"
-      ]
-    },
-    {
-      "id": "JubilifeCity_Text_InformMeOfAnyHappenings",
-      "en_US": [
-        "Looker: Also, I have a request.\r",
-        "If you were to see me again, I ask that\n",
-        "you not talk to me, for I am on duty.\r",
-        "...Actually, yes, yes, you may speak to\n",
-        "me. You must.\r",
-        "Not because I am lonely, no, no!\n",
-        "You must inform me of bad guys!\f",
-        "You must inform me of any happenings!\r"
+        "Looker: It seems like you’re a strong\n",
+        "trainer.\r",
+        "You could be a valuable ally to\n",
+        "the international police (that’s me).\r",
+        "If you see anything suspicious,\n",
+        "call for codename Looker,\r",
+        "and I’ll come running.\r",
+        "Gotta go, there are bad guys to\n",
+        "catch!\r"
       ]
     },
     {

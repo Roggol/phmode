@@ -10189,7 +10189,12 @@ static void BattleScript_GetExpTask(SysTask *task, void *inData)
             msg.params[0] = expBattler | (slot << 8);
             msg.params[1] = totalExp;
             data->tmpData[GET_EXP_MSG_INDEX] = BattleMessage_Print(data->battleSys, msgLoader, &msg, BattleSystem_GetTextSpeed(data->battleSys));
-            data->tmpData[GET_EXP_MSG_DELAY] = 30 / 4;
+            // phmode: this was a flat 7-frame pause (30/4) after the "gained N Exp. Points!"
+            // message finished printing, before the EXP gauge even starts filling - pure
+            // dead time on every single battle win, not tied to any animation. Cut to 1
+            // (the minimum non-zero value SEQ_GET_EXP_WAIT_MESSAGE_DELAY's decrement-to-0
+            // check can safely use - 0 would immediately underflow instead of triggering).
+            data->tmpData[GET_EXP_MSG_DELAY] = 1;
             data->seqNum++;
         } else {
             data->seqNum = SEQ_GET_EXP_CHECK_DONE;
@@ -10838,7 +10843,8 @@ static void BattleScript_CatchMonTask(SysTask *task, void *inData)
                 ov12_022368C8(data->ballRotation, 1);
 
                 data->seqNum = SEQ_CATCH_MON_CALC_SHAKES;
-                data->tmpData[CATCH_MON_DELAY] = 23;
+                // phmode: pure dead-time pause before the ball starts shaking, cut from 23.
+                data->tmpData[CATCH_MON_DELAY] = 8;
             }
         }
         break;
@@ -10871,14 +10877,16 @@ static void BattleScript_CatchMonTask(SysTask *task, void *inData)
         if (data->tmpData[CATCH_MON_REMAINING_SHAKES] == 0) {
             if (data->tmpData[CATCH_MON_TOTAL_SHAKES] == BALL_3_SHAKES_SUCCESS) {
                 data->seqNum = SEQ_CATCH_MON_WAIT_SHAKES_FINISH;
-                data->tmpData[CATCH_MON_DELAY] = 12;
+                // phmode: pure dead-time pause after the 3rd shake, before "Gotcha!" - cut from 12.
+                data->tmpData[CATCH_MON_DELAY] = 4;
             } else {
                 data->seqNum = SEQ_CATCH_MON_POKEMON_BREAK_FREE;
             }
         } else {
             ov12_022368C8(data->ballRotation, 4);
             data->seqNum = SEQ_CATCH_MON_DECREMENT_REMAINING_SHAKES;
-            data->tmpData[CATCH_MON_DELAY] = 12;
+            // phmode: extra pause layered on top of the real shake animation - cut from 12.
+            data->tmpData[CATCH_MON_DELAY] = 6;
         }
         break;
     case SEQ_CATCH_MON_DECREMENT_REMAINING_SHAKES:
@@ -10904,7 +10912,8 @@ static void BattleScript_CatchMonTask(SysTask *task, void *inData)
             msg.tags = TAG_NICKNAME | 0x80;
             msg.params[0] = battler;
             data->tmpData[CATCH_MON_MSG_INDEX] = BattleMessage_Print(data->battleSys, msgLoader, &msg, BattleSystem_GetTextSpeed(data->battleSys));
-            data->tmpData[CATCH_MON_DELAY] = 30;
+            // phmode: post-"Gotcha!" pause (also waits on the ball animation itself) - cut from 30.
+            data->tmpData[CATCH_MON_DELAY] = 10;
             data->seqNum = SEQ_CATCH_MON_WAIT_PRINT_POKEMON_WAS_CAUGHT;
 
             Sound_PlayBGM(VICTORY_WILD_POKEMON_sseq);
@@ -10942,7 +10951,8 @@ static void BattleScript_CatchMonTask(SysTask *task, void *inData)
                     msg.tags = TAG_NICKNAME | 0x80;
                     msg.params[0] = battler;
                     data->tmpData[CATCH_MON_MSG_INDEX] = BattleMessage_Print(data->battleSys, msgLoader, &msg, BattleSystem_GetTextSpeed(data->battleSys));
-                    data->tmpData[CATCH_MON_DELAY] = 30;
+                    // phmode: pure post-message pause before the Pokedex-entry fade starts - cut from 30.
+                    data->tmpData[CATCH_MON_DELAY] = 2;
                     data->seqNum = SEQ_CATCH_MON_FADE_FOR_POKEDEX;
 
                     BattleSystem_TryIncrementTrainerScoreCaughtSpecies(data->battleSys);

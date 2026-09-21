@@ -241,30 +241,22 @@ JubilifeCity_LookerNoticePlayerAndCounterpart:
 JubilifeCity_IsSayingFamiliarToYou:
     Message JubilifeCity_Text_IKnowBetter
     Message JubilifeCity_Text_IsSayingFamiliarToYou
-    ShowYesNoMenu VAR_RESULT
-    GoToIfEq VAR_RESULT, MENU_YES, JubilifeCity_TakingFromOthersIsWrong
-    GoToIfEq VAR_RESULT, MENU_NO, JubilifeCity_YouClaimToNotKnowIt
+    CloseMessage
+    StartTrainerBattle TRAINER_LOOKER_JUBILIFE_CITY
+    CheckWonBattle VAR_RESULT
+    GoToIfEq VAR_RESULT, FALSE, JubilifeCity_LookerBattleBlackout
+    Return
+
+JubilifeCity_LookerBattleBlackout:
+    BlackOutFromBattle
+    ReleaseAll
     End
 
-JubilifeCity_TakingFromOthersIsWrong:
-    Message JubilifeCity_Text_TakingFromOthersIsWrong
-    Return
-
-JubilifeCity_YouClaimToNotKnowIt:
-    Message JubilifeCity_Text_YouClaimToNotKnowIt
-    Return
-
 JubilifeCity_LookerGiveVSRecorderAndLeave:
-    Message JubilifeCity_Text_PerhapsYouCanUseThis
-    SetVar VAR_0x8004, ITEM_VS_RECORDER
-    SetVar VAR_0x8005, 1
-    Common_GiveItemQuantity
-    Message JubilifeCity_Text_DeviceForRecordingAMatch
+    Message JubilifeCity_Text_LookerPostBattleIntroduction
     CloseMessage
     ApplyMovement LOCALID_LOOKER, JubilifeCity_Movement_LookerWalkWestEastSouth
     WaitMovement
-    Message JubilifeCity_Text_InformMeOfAnyHappenings
-    CloseMessage
     ApplyMovement LOCALID_COUNTERPART, JubilifeCity_Movement_CounterpartWatchLookerLeave
     ApplyMovement LOCALID_PLAYER, JubilifeCity_Movement_PlayerWatchLookerLeave
     ApplyMovement LOCALID_LOOKER, JubilifeCity_Movement_LookerLeaveFistArrival

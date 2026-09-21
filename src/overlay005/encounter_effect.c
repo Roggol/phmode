@@ -219,20 +219,28 @@ static void EncounterEffect_FlashTask(SysTask *task, void *param)
 {
     ScreenFlash *screenFlash = param;
 
+    // phmode: shortened the fade durations below (8->5, 3->2 frames) to speed up the
+    // screen-flash portion of the battle-start transition. This is shared by every single
+    // encounter type in the game (wild, trainer, gym leader, Elite Four, Champion,
+    // legendary, everything routes through EncounterEffect_Flash), so this one change
+    // speeds up the start of every battle without touching each encounter type's own
+    // effect function individually. Purely a frame-count change to an existing linear
+    // fade (via BrightnessFadeTask_Init -> LinearInterpolationTaskS32_Init) - same fade
+    // shape, just quicker.
     switch (screenFlash->state) {
     case SCREENFLASH_STATE_INIT_OTHER_SCREEN_FADE:
         if (screenFlash->screen == SCREEN_TOP) {
-            BrightnessFadeTask_Init(&screenFlash->otherScreenFadeTask, 0, screenFlash->otherScreenFlashColor, 2, 8);
+            BrightnessFadeTask_Init(&screenFlash->otherScreenFadeTask, 0, screenFlash->otherScreenFlashColor, 2, 5);
         } else {
             if (screenFlash->screen == SCREEN_BOTTOM) {
-                BrightnessFadeTask_Init(&screenFlash->otherScreenFadeTask, 0, screenFlash->otherScreenFlashColor, 1, 8);
+                BrightnessFadeTask_Init(&screenFlash->otherScreenFadeTask, 0, screenFlash->otherScreenFlashColor, 1, 5);
             }
         }
 
         screenFlash->state++;
         break;
     case SCREENFLASH_STATE_TARGET_INIT_SCREEN_FADE:
-        BrightnessFadeTask_Init(&screenFlash->screenFadeTask, 0, screenFlash->screenFlashColor, screenFlash->screen, 3);
+        BrightnessFadeTask_Init(&screenFlash->screenFadeTask, 0, screenFlash->screenFlashColor, screenFlash->screen, 2);
         screenFlash->state++;
         break;
     case SCREENFLASH_STATE_WAIT_FOR_TARGET_SCREEN_FADE:
@@ -241,7 +249,7 @@ static void EncounterEffect_FlashTask(SysTask *task, void *param)
         }
         break;
     case SCREENFLASH_STATE_RESET_TARGET_SCREEN_FADE:
-        BrightnessFadeTask_Init(&screenFlash->screenFadeTask, screenFlash->screenFlashColor, 0, screenFlash->screen, 3);
+        BrightnessFadeTask_Init(&screenFlash->screenFadeTask, screenFlash->screenFlashColor, 0, screenFlash->screen, 2);
         screenFlash->state++;
         break;
     case SCREENFLASH_STATE_WAIT_FOR_TARGET_SCREEN_FADE_RESET:

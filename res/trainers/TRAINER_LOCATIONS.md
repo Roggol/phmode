@@ -18,6 +18,8 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `dawn_jubilife_city_turtwig.json` — Lv. 10
 - `galactic_grunt_jubilife_city_1.json` — Lv. 11 (Galactic grunt)
 - `galactic_grunt_jubilife_city_2.json` — Lv. 11 (Galactic grunt)
+- `looker_jubilife_city.json` — Lv. 10 (scripted one-off, right after his
+  "cover is blown" reveal)
 - `lucas_jubilife_city_chimchar.json` — Lv. 10
 - `lucas_jubilife_city_piplup.json` — Lv. 10
 - `lucas_jubilife_city_turtwig.json` — Lv. 10

@@ -42,8 +42,10 @@
 #include "res/trainers/classes/field_encounteffect.naix"
 
 // EncounterEffect_Grass_HigherLevel
+// phmode: interpolation frame counts below cut from 6/12 to 4/8 (a wild encounter's
+// screen-slice zoom-in effect) to speed up the very start of every wild battle.
 #define GRASS_HIGHER_LEVEL_PIXELS_PER_SLICE     2
-#define GRASS_HIGHER_LEVEL_INTERPOLATION_FRAMES 6
+#define GRASS_HIGHER_LEVEL_INTERPOLATION_FRAMES 4
 #define GRASS_HIGHER_LEVEL_SLICE_START_X_1      0
 #define GRASS_HIGHER_LEVEL_SLICE_END_X_1        (FX32_ONE * -3)
 #define GRASS_HIGHER_LEVEL_SLICE_START_SPEED_1  (FX32_ONE * -12)
@@ -57,7 +59,7 @@
 
 // EncounterEffect_Grass_LowerLevel
 #define GRASS_LOWER_LEVEL_PIXELS_PER_SLICE     5
-#define GRASS_LOWER_LEVEL_INTERPOLATION_FRAMES 6
+#define GRASS_LOWER_LEVEL_INTERPOLATION_FRAMES 4
 #define GRASS_LOWER_LEVEL_SLICE_START_X_1      0
 #define GRASS_LOWER_LEVEL_SLICE_END_X_1        (FX32_ONE * -2)
 #define GRASS_LOWER_LEVEL_SLICE_START_SPEED_1  (FX32_ONE * -12)
@@ -70,12 +72,12 @@
 #define GRASS_LOWER_LEVEL_CAMERA_SPEED_2       (FX32_ONE * -100)
 
 // EncounterEffect_Cave_LowerLevel
-#define CAVE_LOWER_LEVEL_INTERPOLATION_FRAMES 12
+#define CAVE_LOWER_LEVEL_INTERPOLATION_FRAMES 8
 #define CAVE_LOWER_LEVEL_CAMERA_OFFSET        (FX32_ONE * -400)
 #define CAVE_LOWER_LEVEL_CAMERA_SPEED         (FX32_ONE * -2)
 
 // EncounterEffect_Cave_HigherLevel
-#define CAVE_HIGHER_LEVEL_INTERPOLATION_FRAMES 12
+#define CAVE_HIGHER_LEVEL_INTERPOLATION_FRAMES 8
 #define CAVE_HIGHER_LEVEL_CAMERA_OFFSET        (FX32_ONE * -800)
 #define CAVE_HIGHER_LEVEL_CAMERA_SPEED         (FX32_ONE * -5)
 
@@ -709,7 +711,11 @@ void EncounterEffect_Trainer_Grass_LowerLevel(SysTask *task, void *param)
         break;
 
     case 3:
-        QuadraticInterpolationTaskFX32_Init(&trainerEffect->pokeballScale, FX32_CONST(0.01f), FX32_CONST(1.0f), 2, 10);
+        // phmode: interpolation frame counts throughout this function (and its sibling
+        // Trainer_* encounter effects below) are cut by roughly a third to speed up the
+        // start of every regular trainer battle - same pokeball spin-up/zoom-in shape,
+        // just quicker. This is one of the most-repeated animations in the game.
+        QuadraticInterpolationTaskFX32_Init(&trainerEffect->pokeballScale, FX32_CONST(0.01f), FX32_CONST(1.0f), 2, 6);
 
         v5 = VecFx32_FromXYZ(
             trainerEffect->pokeballScale.currentValue,
@@ -725,7 +731,7 @@ void EncounterEffect_Trainer_Grass_LowerLevel(SysTask *task, void *param)
                 trainerEffect->pokeballSprites[i], &v5);
         }
 
-        LinearInterpolationTaskS32_Init(&trainerEffect->pokeballRotation, 0, 0xffff * 1, 10);
+        LinearInterpolationTaskS32_Init(&trainerEffect->pokeballRotation, 0, 0xffff * 1, 6);
         encEffect->state++;
         break;
 
@@ -756,17 +762,17 @@ void EncounterEffect_Trainer_Grass_LowerLevel(SysTask *task, void *param)
 
     case 5:
 
-        EncounterEffect_ScreenSlice(encEffect, trainerEffect->screenSliceEfx, 96, 6, 0, 255 * FX32_ONE, FX32_ONE * 10);
+        EncounterEffect_ScreenSlice(encEffect, trainerEffect->screenSliceEfx, 96, 4, 0, 255 * FX32_ONE, FX32_ONE * 10);
 
         Sprite_SetAnim(
             trainerEffect->pokeballSprites[0], 1);
         Sprite_SetAnim(
             trainerEffect->pokeballSprites[1], 2);
 
-        QuadraticInterpolationTaskFX32_Init(&trainerEffect->unk_2C, 0, 255 * FX32_ONE, FX32_ONE * 10, 6);
+        QuadraticInterpolationTaskFX32_Init(&trainerEffect->unk_2C, 0, 255 * FX32_ONE, FX32_ONE * 10, 4);
 
         v3 = Camera_GetDistance(trainerEffect->camera);
-        QuadraticInterpolationTaskFX32_Init(&trainerEffect->unk_228, v3, v3 + (-FX32_CONST(500)), -FX32_CONST(10), 6);
+        QuadraticInterpolationTaskFX32_Init(&trainerEffect->unk_228, v3, v3 + (-FX32_CONST(500)), -FX32_CONST(10), 4);
 
         Sprite_SetAffineZRotation(
             trainerEffect->pokeballSprites[0], 0xffff & 0);
@@ -875,7 +881,8 @@ void EncounterEffect_Trainer_Grass_HigherLevel(SysTask *param0, void *param1)
         break;
 
     case 3:
-        LinearInterpolationTaskFX32_Init(&v1->unk_00, -192 * FX32_ONE, 192 * FX32_ONE, 8);
+        // phmode: same interpolation-frame-count speedup as Trainer_Grass_LowerLevel above.
+        LinearInterpolationTaskFX32_Init(&v1->unk_00, -192 * FX32_ONE, 192 * FX32_ONE, 5);
         Sprite_SetDrawFlag(
             v1->unk_200[0], 1);
         Sprite_SetDrawFlag(
@@ -891,7 +898,7 @@ void EncounterEffect_Trainer_Grass_HigherLevel(SysTask *param0, void *param1)
                 v1->unk_200[1], &v6);
         }
 
-        LinearInterpolationTaskS32_Init(&v1->unk_14, 0, 0xffff * 2, 8);
+        LinearInterpolationTaskS32_Init(&v1->unk_14, 0, 0xffff * 2, 5);
 
         encEffect->state++;
         break;
@@ -923,10 +930,10 @@ void EncounterEffect_Trainer_Grass_HigherLevel(SysTask *param0, void *param1)
 
     case 5:
 
-        EncounterEffect_ScreenSplit(encEffect, v1->unk_28, 8, FX32_ONE * 1, FX32_ONE * 1);
+        EncounterEffect_ScreenSplit(encEffect, v1->unk_28, 5, FX32_ONE * 1, FX32_ONE * 1);
 
         v3 = Camera_GetDistance(v1->camera);
-        QuadraticInterpolationTaskFX32_Init(&v1->unk_20C, v3, v3 + (-FX32_CONST(500)), -FX32_CONST(10), 8);
+        QuadraticInterpolationTaskFX32_Init(&v1->unk_20C, v3, v3 + (-FX32_CONST(500)), -FX32_CONST(10), 5);
 
         encEffect->state++;
         break;
@@ -1027,7 +1034,8 @@ void EncounterEffect_Trainer_Water_LowerLevel(SysTask *param0, void *param1)
         break;
 
     case 3:
-        LinearInterpolationTaskS32_Init(&v1->unk_18, 0, 16, 8);
+        // phmode: same interpolation-frame-count speedup as the other Trainer_* effects.
+        LinearInterpolationTaskS32_Init(&v1->unk_18, 0, 16, 5);
         G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3, v1->unk_18.currentValue, 16 - v1->unk_18.currentValue);
 
         for (v5 = 0; v5 < 2; v5++) {
@@ -1039,7 +1047,7 @@ void EncounterEffect_Trainer_Water_LowerLevel(SysTask *param0, void *param1)
             Sprite_SetExplicitOAMMode(v1->unk_224[v5], GX_OAM_MODE_XLU);
         }
 
-        LinearInterpolationTaskS32_Init(&v1->unk_2C, 0, 0xffff, 8);
+        LinearInterpolationTaskS32_Init(&v1->unk_2C, 0, 0xffff, 5);
 
         v0->state++;
         break;
@@ -1073,7 +1081,7 @@ void EncounterEffect_Trainer_Water_LowerLevel(SysTask *param0, void *param1)
 
     case 5:
 
-        QuadraticInterpolationTaskFX32_Init(&v1->unk_00, FX32_CONST(1.0f), FX32_CONST(0.01f), FX32_CONST(0.1f), 8);
+        QuadraticInterpolationTaskFX32_Init(&v1->unk_00, FX32_CONST(1.0f), FX32_CONST(0.01f), FX32_CONST(0.1f), 5);
 
         {
             VecFx32 v7 = VecFx32_FromXYZ(v1->unk_00.currentValue, v1->unk_00.currentValue, v1->unk_00.currentValue);
@@ -1085,9 +1093,11 @@ void EncounterEffect_Trainer_Water_LowerLevel(SysTask *param0, void *param1)
         }
 
         v4 = Camera_GetDistance(v1->camera);
-        QuadraticInterpolationTaskFX32_Init(&v1->unk_230, v4, v4 + (-FX32_CONST(500)), -FX32_CONST(10), 8);
+        QuadraticInterpolationTaskFX32_Init(&v1->unk_230, v4, v4 + (-FX32_CONST(500)), -FX32_CONST(10), 5);
 
-        StartScreenFade(FADE_MAIN_ONLY, FADE_TYPE_UNK_24, FADE_TYPE_BRIGHTNESS_OUT, COLOR_BLACK, 8, 1, HEAP_ID_FIELD1);
+        // phmode: fade-out step count cut 8->5, matching the 6-step fade duration
+        // FieldTransition_FadeOut/FadeIn already use elsewhere.
+        StartScreenFade(FADE_MAIN_ONLY, FADE_TYPE_UNK_24, FADE_TYPE_BRIGHTNESS_OUT, COLOR_BLACK, 5, 1, HEAP_ID_FIELD1);
         v0->state++;
         break;
 
@@ -1219,12 +1229,14 @@ void EncounterEffect_Trainer_Water_HigherLevel(SysTask *param0, void *param1)
             break;
         }
 
+        // phmode: same interpolation-frame-count speedup as the other Trainer_* effects
+        // (16->10, 6->4 below, applied to all 3 of this effect's staggered ball-drops).
         v5 = Camera_GetDistance(v1->camera);
-        QuadraticInterpolationTaskFX32_Init(&v1->unk_288, v5, v5 + (-FX32_CONST(500)), -FX32_CONST(10), 16);
+        QuadraticInterpolationTaskFX32_Init(&v1->unk_288, v5, v5 + (-FX32_CONST(500)), -FX32_CONST(10), 10);
 
-        LinearInterpolationTaskS32_Init(&v1->unk_21C[0], 0, 0xffff * 1, 6);
+        LinearInterpolationTaskS32_Init(&v1->unk_21C[0], 0, 0xffff * 1, 4);
 
-        LinearInterpolationTaskS32_Init(&v1->unk_1E0[0], 231, -32, 6);
+        LinearInterpolationTaskS32_Init(&v1->unk_1E0[0], 231, -32, 4);
 
         ov5_021DE6C4(v1->unk_258[0], 43, 43, 312, 0, 6, v1->unk_270, 86, 64, 15);
 
@@ -1244,9 +1256,9 @@ void EncounterEffect_Trainer_Water_HigherLevel(SysTask *param0, void *param1)
             break;
         }
 
-        LinearInterpolationTaskS32_Init(&v1->unk_1E0[1], 231, -32, 6);
+        LinearInterpolationTaskS32_Init(&v1->unk_1E0[1], 231, -32, 4);
 
-        LinearInterpolationTaskS32_Init(&v1->unk_21C[1], 0, 0xffff * -1, 6);
+        LinearInterpolationTaskS32_Init(&v1->unk_21C[1], 0, 0xffff * -1, 4);
 
         ov5_021DE6C4(v1->unk_258[1], 215, 215, 312, 0, 6, v1->unk_270, 86, 64, 15);
         v4 = VecFx32_FromXYZ(
@@ -1265,9 +1277,9 @@ void EncounterEffect_Trainer_Water_HigherLevel(SysTask *param0, void *param1)
             break;
         }
 
-        LinearInterpolationTaskS32_Init(&v1->unk_1E0[2], 231, -32, 6);
+        LinearInterpolationTaskS32_Init(&v1->unk_1E0[2], 231, -32, 4);
 
-        LinearInterpolationTaskS32_Init(&v1->unk_21C[2], 0, 0xffff * 1, 6);
+        LinearInterpolationTaskS32_Init(&v1->unk_21C[2], 0, 0xffff * 1, 4);
 
         ov5_021DE6C4(v1->unk_258[2], 129, 129, 312, 0, 6, v1->unk_270, 86, 64, 15);
         v4 = VecFx32_FromXYZ(
@@ -1396,18 +1408,19 @@ void EncounterEffect_Trainer_Cave_LowerLevel(SysTask *param0, void *param1)
         break;
 
     case 3:
-        QuadraticInterpolationTaskFX32_Init(&v1->unk_00, 0, 256 * FX32_ONE, 2 * FX32_ONE, 12);
+        // phmode: same interpolation-frame-count speedup as the other Trainer_* effects.
+        QuadraticInterpolationTaskFX32_Init(&v1->unk_00, 0, 256 * FX32_ONE, 2 * FX32_ONE, 8);
         Sprite_SetDrawFlag(
             v1->unk_230, 1);
 
-        QuadraticInterpolationTaskFX32_Init(&v1->unk_18, FX32_CONST(0.10f), FX32_CONST(2.0f), FX32_CONST(0.0f), 12);
+        QuadraticInterpolationTaskFX32_Init(&v1->unk_18, FX32_CONST(0.10f), FX32_CONST(2.0f), FX32_CONST(0.0f), 8);
 
-        QuadraticInterpolationTaskFX32_Init(&v1->unk_30, FX32_CONST(0.10f), FX32_CONST(2.0f), FX32_CONST(0.0f), 12);
+        QuadraticInterpolationTaskFX32_Init(&v1->unk_30, FX32_CONST(0.10f), FX32_CONST(2.0f), FX32_CONST(0.0f), 8);
 
         v4 = VecFx32_FromXYZ(v1->unk_18.currentValue, v1->unk_30.currentValue, 0);
         Sprite_SetAffineScaleEx(v1->unk_230, &v4, 2);
 
-        LinearInterpolationTaskS32_Init(&v1->unk_48, 0, 0xffff * 1, 12);
+        LinearInterpolationTaskS32_Init(&v1->unk_48, 0, 0xffff * 1, 8);
         v0->state++;
         break;
 
@@ -1440,9 +1453,9 @@ void EncounterEffect_Trainer_Cave_LowerLevel(SysTask *param0, void *param1)
         HBlankSystem_Stop(v0->fieldSystem->unk_04->hBlankSystem);
 
         v3 = Camera_GetDistance(v1->camera);
-        QuadraticInterpolationTaskFX32_Init(&v1->unk_238, v3, v3 + (-FX32_CONST(1000)), FX32_CONST(10), 8);
+        QuadraticInterpolationTaskFX32_Init(&v1->unk_238, v3, v3 + (-FX32_CONST(1000)), FX32_CONST(10), 5);
 
-        StartScreenFade(FADE_MAIN_ONLY, FADE_TYPE_TOP_HALF_CIRCLE_OUT, FADE_TYPE_BRIGHTNESS_OUT, COLOR_BLACK, 8, 1, HEAP_ID_FIELD1);
+        StartScreenFade(FADE_MAIN_ONLY, FADE_TYPE_TOP_HALF_CIRCLE_OUT, FADE_TYPE_BRIGHTNESS_OUT, COLOR_BLACK, 5, 1, HEAP_ID_FIELD1);
         v0->state++;
         break;
 
@@ -1620,8 +1633,13 @@ void EncounterEffect_Trainer_Cave_HigherLevel(SysTask *param0, void *param1)
     case 7:
         ov5_021DE948(v1->unk_268, 1, 1, v1->unk_264, 15);
 
+        // phmode: this camera zoom-out was 64 frames (over a second at 60fps) - by far
+        // the longest step of any encounter-effect variant in this file (its closest
+        // sibling, Trainer_Cave_LowerLevel's equivalent zoom, is 5-10 frames). Cut to 24
+        // to keep some of its more dramatic pacing for a "higher level" cave trainer
+        // without it being a genuinely long wait on every single one of these fights.
         v5 = Camera_GetDistance(v1->camera);
-        QuadraticInterpolationTaskFX32_Init(&v1->unk_270, v5, v5 + (-FX32_CONST(1000)), FX32_CONST(10), 64);
+        QuadraticInterpolationTaskFX32_Init(&v1->unk_270, v5, v5 + (-FX32_CONST(1000)), FX32_CONST(10), 24);
 
         v0->state++;
         break;

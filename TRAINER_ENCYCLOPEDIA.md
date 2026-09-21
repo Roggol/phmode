@@ -56,6 +56,15 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Default level-up moves
 
+**Looker** (Policeman) — *scripted one-off, right after his "cover is blown" reveal*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Hoothoot** — Lv. 10
+      - Ability: Insomnia
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
 **Lucas** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Battle Items: Potion

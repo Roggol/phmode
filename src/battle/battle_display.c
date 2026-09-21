@@ -5218,7 +5218,10 @@ static void Task_WaitForAlertMessagePrint(SysTask *task, void *data)
         }
         break;
     case 1:
-        if (++alertMsgData->delay == 40) {
+        // phmode: fixed, non-skippable pause after an alert message (e.g. "That move can't
+        // be used", "Items can't be used here.") finishes printing, before auto-acknowledging
+        // it - cut from 40 frames (~0.67s) to 20 (~0.33s). Happens on every invalid selection.
+        if (++alertMsgData->delay == 20) {
             BattleController_EmitAlertMessageAck(alertMsgData->battleSys, alertMsgData->battler);
             BattleController_EmitClearCommand(alertMsgData->battleSys, alertMsgData->battler, alertMsgData->command);
             Heap_Free(data);

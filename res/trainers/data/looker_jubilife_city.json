@@ -1,0 +1,39 @@
+{
+    "name": "Looker",
+    "class": "TRAINER_CLASS_POLICEMAN",
+    "items": [],
+    "ai_flags": [
+        "AI_FLAG_BASIC",
+        "AI_FLAG_EVAL_ATTACK",
+        "AI_FLAG_EXPERT"
+    ],
+    "double_battle": false,
+    "party": [
+        {
+            "species": "SPECIES_HOOTHOOT",
+            "form": 0,
+            "level": 10,
+            "item": null,
+            "moves": null,
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        }
+    ],
+    "messages": [
+        {
+            "type": "TRMSG_PRE_BATTLE",
+            "en_US": [
+                "Looker: Now then, allow me to see\n",
+                "your strength as a Trainer!\r"
+            ]
+        },
+        {
+            "type": "TRMSG_DEFEAT",
+            "en_US": [
+                "Looker: ...Impressive! Just as I\n",
+                "suspected, you are the real thing.\r"
+            ]
+        }
+    ]
+}

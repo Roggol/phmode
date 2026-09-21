@@ -581,11 +581,15 @@ static int ApproachingTrainerTask_WaitRevealTrainer(ApproachingTrainerData *data
     return 0;
 }
 
+// phmode: this is a pure pause before the trainer starts walking, with no animation
+// still playing during it (the "spotted you" exclamation bubble above has already
+// finished by the time this state runs) - cut from 30 ticks to speed up the pacing of
+// every trainer encounter, without cutting it to 0 and making the approach feel instant.
 static int ApproachingTrainerTask_DelayCheckNextToPlayer(ApproachingTrainerData *data)
 {
     data->delay++;
 
-    if (data->delay >= 30) {
+    if (data->delay >= 10) {
         data->delay = 0;
         data->state = STATE_CHECK_NEXT_TO_PLAYER;
     }
@@ -604,12 +608,17 @@ static int ApproachingTrainerTask_CheckNextToPlayer(ApproachingTrainerData *data
     return 1;
 }
 
+// phmode: trainers now close the distance to the player at a brisker "fast walk" speed
+// instead of a normal walk - this is a pure pacing change (the same walking sprite/pose,
+// just quicker steps), not a switch to a running animation, so it looks natural on every
+// trainer sprite. Deliberately WALK_FAST rather than the quicker WALK_FASTER (the bike/
+// follower-catch-up speed) - that read as too fast for a trainer walking up to you.
 static int ApproachingTrainerTask_StepTowardsPlayer(ApproachingTrainerData *data)
 {
     int movementAction;
 
     if (LocalMapObj_IsAnimationSet(data->mapObj) == TRUE) {
-        movementAction = MovementAction_TurnActionTowardsDir(data->direction, MOVEMENT_ACTION_WALK_NORMAL_NORTH);
+        movementAction = MovementAction_TurnActionTowardsDir(data->direction, MOVEMENT_ACTION_WALK_FAST_NORTH);
         LocalMapObj_SetAnimationCode(data->mapObj, movementAction);
         data->state = STATE_WAIT_STEP_TOWARDS_PLAYER;
     }
@@ -629,11 +638,14 @@ static int ApproachingTrainerTask_WaitStepTowardsPlayer(ApproachingTrainerData *
     return 1;
 }
 
+// phmode: pure pause once the trainer arrives next to the player, before they turn to
+// face each other - cut from 8 ticks to speed up pacing (same reasoning as the delay
+// above).
 static int ApproachingTrainerTask_DelayNextToPlayer(ApproachingTrainerData *data)
 {
     data->delay++;
 
-    if (data->delay < 8) {
+    if (data->delay < 3) {
         return 0;
     }
 

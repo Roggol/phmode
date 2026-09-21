@@ -56,7 +56,9 @@ _064:
     Wait 
     FreePartyGaugeGraphics 
     PokemonSendOut BTLSCR_SWITCHED_MON
-    WaitTime 72
+    // phmode: cut from 72 (same ~25% trim as the other send-out waits) to speed up every
+    // fainted-mon replacement - see subscript_start_encounter.s for the fuller rationale.
+    WaitTime 54
     HealthBoxSlideIn BTLSCR_SWITCHED_MON
     Wait 
     Call BATTLE_SUBSCRIPT_HAZARDS_CHECK

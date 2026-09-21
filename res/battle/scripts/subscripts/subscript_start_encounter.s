@@ -1,5 +1,11 @@
 #include "macros/btlcmd.inc"
 
+// phmode: every WaitTime value in this file (which runs at the start of every single
+// battle - wild, trainer, Safari, Pal Park) was cut by roughly a quarter (122->92,
+// 96->72, 112->84) to speed up the opening of every fight. These pair with
+// PlayEncounterAnimation/PokemonSlideIn's own sprite pop-in/ball-throw animations, which
+// aren't directly queryable from script code, so this is a moderate trim rather than an
+// aggressive one, to stay safely clear of cutting off the underlying animation early.
 
 _000:
     CompareVarToValue OPCODE_FLAG_SET, BTLVAR_BATTLE_TYPE, BATTLE_TYPE_TRAINER, _118
@@ -8,7 +14,7 @@ _000:
     SetPokemonEncounter BTLSCR_ENEMY
     SetTrainerEncounter BTLSCR_PLAYER
     PlayEncounterAnimation 
-    WaitTime 122
+    WaitTime 92
     HealthBoxSlideInDelay BTLSCR_ENEMY
     Wait 
     CompareVarToValue OPCODE_FLAG_SET, BTLVAR_BATTLE_SYS_STATUS, BATTLE_STATUS_DISTORTION, _073
@@ -60,7 +66,7 @@ _100:
     Wait 
     ThrowPokeball BTLSCR_PLAYER, BTLSCR_THROW_POKE_BALL
     PokemonSlideIn BTLSCR_PLAYER
-    WaitTime 96
+    WaitTime 72
     HealthBoxSlideInDelay BTLSCR_PLAYER
     Wait 
     OAMToSprite BTLSCR_ENEMY
@@ -71,7 +77,7 @@ _118:
     CompareVarToValue OPCODE_FLAG_SET, BTLVAR_BATTLE_SYS_STATUS, BATTLE_STATUS_RECORDED, _169
     PlayEncounterAnimation 
     SetTrainerEncounter BTLSCR_ALL_BATTLERS
-    WaitTime 96
+    WaitTime 72
     LoadPartyGaugeGraphics 
     ShowBattleStartPartyGauge BTLSCR_ENEMY
     ShowBattleStartPartyGauge BTLSCR_PLAYER
@@ -82,14 +88,14 @@ _118:
     HideBattleStartPartyGauge BTLSCR_ENEMY
     ThrowPokeball BTLSCR_ENEMY, BTLSCR_THROW_POKE_BALL
     PokemonSlideIn BTLSCR_ENEMY
-    WaitTime 112
+    WaitTime 84
     HealthBoxSlideInDelay BTLSCR_ENEMY
     Wait 
     PrintFirstSendOutMessage BTLSCR_PLAYER
     HideBattleStartPartyGauge BTLSCR_PLAYER
     ThrowPokeball BTLSCR_PLAYER, BTLSCR_THROW_POKE_BALL
     PokemonSlideIn BTLSCR_PLAYER
-    WaitTime 96
+    WaitTime 72
     HealthBoxSlideInDelay BTLSCR_PLAYER
     Wait 
     FreePartyGaugeGraphics 
@@ -98,7 +104,7 @@ _118:
 _169:
     PlayEncounterAnimation 
     SetTrainerEncounter BTLSCR_ALL_BATTLERS
-    WaitTime 96
+    WaitTime 72
     LoadPartyGaugeGraphics 
     ShowBattleStartPartyGauge BTLSCR_ENEMY
     ShowBattleStartPartyGauge BTLSCR_PLAYER
@@ -109,14 +115,14 @@ _169:
     HideBattleStartPartyGauge BTLSCR_PLAYER
     ThrowPokeball BTLSCR_PLAYER, BTLSCR_THROW_POKE_BALL
     PokemonSlideIn BTLSCR_PLAYER
-    WaitTime 96
+    WaitTime 72
     HealthBoxSlideInDelay BTLSCR_PLAYER
     Wait 
     PrintFirstSendOutMessage BTLSCR_ENEMY
     HideBattleStartPartyGauge BTLSCR_ENEMY
     ThrowPokeball BTLSCR_ENEMY, BTLSCR_THROW_POKE_BALL
     PokemonSlideIn BTLSCR_ENEMY
-    WaitTime 112
+    WaitTime 84
     HealthBoxSlideInDelay BTLSCR_ENEMY
     Wait 
     FreePartyGaugeGraphics 
@@ -126,7 +132,7 @@ _215:
     SetPokemonEncounter BTLSCR_ENEMY
     SetTrainerEncounter BTLSCR_PLAYER
     PlayEncounterAnimation 
-    WaitTime 122
+    WaitTime 92
     HealthBoxSlideInDelay BTLSCR_ENEMY
     Wait 
     // A wild {0} appeared!
@@ -141,7 +147,7 @@ _237:
     SetPokemonEncounter BTLSCR_ENEMY
     SetTrainerEncounter BTLSCR_PLAYER
     PlayEncounterAnimation 
-    WaitTime 122
+    WaitTime 92
     HealthBoxSlideInDelay BTLSCR_ENEMY
     Wait 
     // Wow! {0}’s {1} is drawing close!

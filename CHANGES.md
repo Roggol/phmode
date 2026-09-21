@@ -71,6 +71,102 @@ every running step.
 The follower still trails one tile behind by design; it just no longer drifts
 further back the longer you hold the run button.
 
+### General pacing pass: trainer approach, battle-start transitions, and several artificial delays
+
+A broad pass aimed at the animations/delays the player sees most often -
+every trainer encounter, every battle's opening, and every battle win -
+rather than one-off cutscenes.
+
+**Trainer approach speed.** `src/trainer_encounter.c`:
+* `ApproachingTrainerTask_StepTowardsPlayer` now walks the trainer toward the
+  player using `MOVEMENT_ACTION_WALK_FAST_NORTH` instead of
+  `..._WALK_NORMAL_NORTH` - a brisker walk, same pose, no switch to a running
+  animation. `MOVEMENT_ACTION_WALK_FASTER_NORTH` (the tier used for the
+  player's own bike speed and for followers keeping up with a running player,
+  see "Following NPCs keep up when you run" above) was tried first but read
+  as too fast for a trainer walking up to you, so this uses the slower of the
+  two "fast walk" tiers instead.
+* `ApproachingTrainerTask_DelayCheckNextToPlayer` (a pure pause before the
+  trainer starts walking - the "spotted you" exclamation bubble has already
+  finished playing by this point) cut from 30 ticks to 10.
+* `ApproachingTrainerTask_DelayNextToPlayer` (a pure pause once the trainer
+  arrives next to the player, before they turn to face each other) cut from
+  8 ticks to 3.
+
+**Battle-start transition, field side.** `src/overlay005/encounter_effect.c`'s
+`EncounterEffect_FlashTask` - the screen-flash fade shared by every single
+encounter type in the game (wild, trainer, gym leader, Elite Four, Champion,
+legendary, everything routes through `EncounterEffect_Flash`) - had its fade
+durations cut (8→5 and 3→2 frames), speeding up the very start of every
+encounter with one change instead of touching each encounter type
+individually.
+
+On top of that, `src/overlay005/encounter_effect_core.c`'s interpolation
+frame counts (pokeball scale/spin, screen-slice zoom, camera pull-in) were
+cut by roughly a third across the wild Grass/Cave encounter effects
+(`GRASS_HIGHER_LEVEL_INTERPOLATION_FRAMES` etc., 6→4 and 12→8) and all six
+regular trainer encounter effects (`EncounterEffect_Trainer_{Grass,Water,Cave}_
+{LowerLevel,HigherLevel}`), each a same-shape-but-faster version of its
+existing pokeball-spin/zoom-in animation. One clear outlier was also fixed
+regardless of the general pass: `EncounterEffect_Trainer_Cave_HigherLevel`'s
+final camera zoom (`unk_270`) was 64 frames - over a second, and 6-10x longer
+than the equivalent step in every sibling effect - cut to 24. Wild Water and
+the various one-off effects (gym leaders, Elite Four, Champion, legendary,
+Galactic grunts/bosses, Battle Frontier, double battles) were deliberately
+left alone: they're rare enough, and different/more bespoke enough in
+structure, that the risk of a subtle visual glitch outweighed the benefit for
+this pass.
+
+**Battle-start transition, in-battle side.**
+`res/battle/scripts/subscripts/subscript_start_encounter.s` (runs at the
+start of every wild, trainer, Safari, and Pal Park encounter) had every
+`WaitTime` cut by roughly a quarter (122→92, 96→72, 112→84). These pair with
+the sprite pop-in/ball-throw animations from `PlayEncounterAnimation`/
+`PokemonSlideIn`, which aren't queryable from script code the way most other
+waits in this codebase are, so this is a moderate trim rather than an
+aggressive one, to stay clear of visibly cutting the animation off early. The
+same reasoning and cut applies to the two other high-frequency send-out
+waits: `subscript_switch_pokemon.s` and `subscript_replace_fainted.s`
+(72→54 each, for every voluntary switch and every fainted-mon replacement).
+
+**Artificial (non-animation) delays removed or shortened:**
+* `src/battle/battle_script.c`, `GET_EXP_MSG_DELAY` - a flat 7-frame pause
+  after "gained N Exp. Points!" finishes printing, before the EXP gauge even
+  starts filling, on every single battle win - cut to 1 (the minimum
+  non-zero value its decrement-to-zero check can safely use).
+* `src/battle/battle_script.c`, `CATCH_MON_DELAY` - several catch-sequence
+  pauses cut, some pure dead time and some layered on top of the ball
+  animation itself: the pre-shake pause (23→8), the pause after the 3rd
+  successful shake before "Gotcha!" (12→4), the pause between shakes
+  layered on the shake animation (12→6), the pause after "Gotcha!" before
+  the catch is finalized (30→10, also layered on the ball animation), and
+  the pause after "added to the Pokédex" before the palette fade (30→2,
+  pure dead time).
+* `src/battle/battle_display.c`, `Task_WaitForAlertMessagePrint` - a fixed,
+  non-skippable 40-frame pause after an alert message (e.g. "That move
+  can't be used", "Items can't be used here.") finishes printing, before
+  auto-acknowledging it - cut to 20. Happens on every invalid
+  move/item/target selection.
+
+**Faster HP and EXP gauges.** `src/battle/healthbox.c`:
+* `HEALTHBOX_HP_GAUGE_DRAIN_RATE` (already raised once from 1 to 4 - see
+  its own comment) raised again to 8. This is arguably the single
+  most-repeated animation in the game, since it plays on every damaging hit
+  in every turn of every battle.
+* The EXP gauge fill (`HealthBox_DrawGauge`) computed exactly enough EXP
+  consumed per frame to move the gauge 1 pixel per frame, taking as many
+  frames as pixels it needs to travel (up to 96) regardless of how much EXP
+  was actually gained. That per-frame rate is now doubled, so it moves ~2
+  pixels per frame instead, halving how long every post-battle EXP fill
+  takes.
+
+Left uninvestigated for a future pass: the generic `waittime`/
+`waitbuttonabtime` script opcodes are used throughout the individual
+move-effect scripts under `res/battle/scripts/`, each with its own
+hardcoded frame count baked into that specific move's script - a full
+inventory of those call sites (as opposed to the shared subscripts covered
+above) was out of scope here.
+
 ### Battle style locked to "Set"
 * `src/game_options.c` — `Options_Init` defaults `battleStyle` to
   `OPTIONS_BATTLE_STYLE_SET` on a new game.
@@ -2699,6 +2795,47 @@ free slot.
 ---
 
 ## Map data
+
+### Jubilife City — Looker now battles you right after his reveal, and gives up the Vs. Recorder speech
+Previously, after "unmasking" Looker (the shady man following Dawn/Lucas
+around) and hearing his full introduction (through the "Don't be a thief!"
+Q&A, his lecture about Sinnoh's Pokémon thieves, and giving the player a
+Vs. Recorder), he'd simply walk off. He now challenges the player to a
+one-on-one Pokémon battle immediately after introducing himself, before any
+of that.
+
+* `res/text/jubilife_city.json` — `JubilifeCity_Text_IsSayingFamiliarToYou`
+  is truncated to end right after "My code name, it is Looker. It is what
+  they all call me." (dropping the "Don't be a thief!" question that used to
+  follow it). The `TakingFromOthersIsWrong`/`YouClaimToNotKnowIt` Yes/No
+  responses, the Sinnoh-thieves lecture (`PerhapsYouCanUseThis`), the
+  Vs. Recorder flavor text (`DeviceForRecordingAMatch`), and the "inform me
+  of any happenings" speech (`InformMeOfAnyHappenings`) are all removed,
+  replaced by one new message (`LookerPostBattleIntroduction`) said after the
+  battle: "It seems like you're a strong trainer. You could be a valuable
+  ally to the international police (that's me). If you see anything
+  suspicious, call for codename Looker, and I'll come running. Gotta go,
+  there are bad guys to catch!"
+* `res/field/scripts/scripts_jubilife_city.s` — `JubilifeCity_IsSayingFamiliarToYou`
+  now closes the message and starts a trainer battle right away
+  (`StartTrainerBattle TRAINER_LOOKER_JUBILIFE_CITY`) instead of branching on
+  a Yes/No menu; losing blacks out and ends the scene the same way the
+  Celestic Town Cave Galactic grunt fight does (`CheckWonBattle`/
+  `BlackOutFromBattle`). `JubilifeCity_LookerGiveVSRecorderAndLeave` no longer
+  gives the player a Vs. Recorder (`Common_GiveItemQuantity` call removed
+  along with it) - it now only prints the one new post-battle message before
+  Looker's existing walk-away/leave staging.
+* `generated/trainers.txt` — added `TRAINER_LOOKER_JUBILIFE_CITY` by
+  repurposing the unused `TRAINER_DUMMY_006` slot in place (same approach as
+  `TRAINER_GRAVELER_GYM_PUZZLE` for Roark's gym puzzle), rather than growing
+  the trainer roster/defeated-flag range - `res/trainers/data/dummy_006.json`
+  (an orphaned, never-placed vanilla debug trainer, "Mickey" the Camper) is
+  replaced by `res/trainers/data/looker_jubilife_city.json`: a single level
+  10 Hoothoot, `TRAINER_CLASS_POLICEMAN` (there's no dedicated Looker trainer
+  class/battle sprite in this game, so this is the closest thematic stand-in
+  without needing new battle-sprite assets).
+* `res/trainers/TRAINER_LOCATIONS.md` and `TRAINER_ENCYCLOPEDIA.md` updated
+  to include this new trainer under Tier 1 - Jubilife City.
 
 ### Route 221 House — "Expert M" gives all 3 items at once, one time only
 This NPC used to run a daily random-level guessing minigame (`GetDailyRandomLevel`

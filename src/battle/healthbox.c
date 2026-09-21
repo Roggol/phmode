@@ -64,7 +64,9 @@
 // phmode: HP points drained from the gauge per frame once a Pokémon's max HP exceeds the
 // gauge's pixel width (see UpdateGauge) - vanilla drains 1 HP/frame, which is a slow, multi-
 // second crawl for anything with more than ~100 HP. Raised for a snappier drain animation.
-#define HEALTHBOX_HP_GAUGE_DRAIN_RATE 4
+// This is one of the single most-repeated animations in the game (every damaging hit, every
+// turn, every battle), so it was raised again (4->8) to keep pushing on overall pace.
+#define HEALTHBOX_HP_GAUGE_DRAIN_RATE 8
 
 #define VRAM_TRANSFER_DST(vram, transferTable, index_0, index_1, imgProxy) ( \
     (void *)((u32)vram + transferTable[index_0][index_1].pos + imgProxy->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DMAIN]))
@@ -1414,7 +1416,11 @@ static s32 HealthBox_DrawGauge(HealthBox *healthbox, enum HealthBoxGaugeType gau
             fillOffset = 1;
         }
 
-        fillOffset = abs(healthbox->expReward / fillOffset);
+        // phmode: this normally computes exactly enough EXP-per-frame to move the gauge by
+        // 1 pixel per frame, taking as many frames as pixels the bar needs to travel (up to
+        // 96) regardless of how much EXP was actually gained. Doubled so it moves ~2 pixels
+        // per frame instead, halving how long every single post-battle EXP fill takes.
+        fillOffset = abs(healthbox->expReward / fillOffset) * 2;
         result = UpdateGauge(healthbox->maxExp, healthbox->curExp, healthbox->expReward, &healthbox->expTemp, HEALTHBOX_EXP_CELL_COUNT, fillOffset);
     }
 

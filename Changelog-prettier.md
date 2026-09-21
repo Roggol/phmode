@@ -52,8 +52,20 @@ less tedious to play.
   list to choose from instead of only ever using one fixed item.
 - **The wild/opposing Pokémon's HP bar now shows exact numbers**, not just
   the bar — the same way your own Pokémon's HP is displayed.
-- **HP bars drain about 4x faster** when a Pokémon gets hit, so you're not
+- **HP bars drain about 8x faster** when a Pokémon gets hit, so you're not
   stuck watching a slow crawl on a big hit against a high-HP Pokémon.
+- **The EXP bar fills about twice as fast** after a battle win.
+- **Trainers walk toward you noticeably faster** once they've spotted you,
+  and the little pause before and after they approach is shorter too.
+- **Every battle starts faster.** The screen-flash/pokéball-spin transition
+  right as a battle begins is quicker across the board (wild encounters and
+  regular trainer battles alike), and the "Go! &lt;Pokémon&gt;!" send-out
+  sequence at the start of every fight — plus every mid-battle switch-in and
+  fainted-Pokémon replacement — has a shorter pause before you can act.
+- **A few small but frequent battle pauses are shorter**, too: the pause
+  after "gained N Exp. Points!" before the EXP bar starts filling, the
+  pause after an invalid selection message like "That move can't be used,"
+  and several of the pauses during the process of catching a Pokémon.
 - **You can rename a Pokémon right from the party menu or a PC box.**
   Selecting a Pokémon (that isn't an egg) from your party (START → Pokémon) or
   from inside a PC Storage Box now offers a **RENAME** option, which opens the
@@ -1385,6 +1397,17 @@ moved into your active party.
 ---
 
 ## World and Location Changes
+
+### Looker challenges you to a battle in Jubilife City
+Right after "unmasking" the shady man following you and Dawn/Lucas around
+and hearing him introduce himself as Looker, of the International Police,
+he now challenges you to a one-on-one Pokémon battle on the spot (a single
+level 10 Hoothoot) before saying anything else. His whole speech afterward
+— the "Don't be a thief!" back-and-forth, his lecture about Pokémon thieves
+in Sinnoh, and the Vs. Recorder he used to hand you — is gone, replaced with
+a shorter goodbye: he compliments your strength, tells you to call for him
+by codename if you ever see anything suspicious, and hurries off. **The
+Vs. Recorder is no longer given out here.**
 
 ### The house on Route 221 gives its rewards all at once
 The NPC in the house on Route 221 used to run a daily minigame where you'd
