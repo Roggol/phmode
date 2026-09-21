@@ -20,6 +20,7 @@
                 "MOVE_TOXIC"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -33,6 +34,7 @@
                 "MOVE_FAKE_OUT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

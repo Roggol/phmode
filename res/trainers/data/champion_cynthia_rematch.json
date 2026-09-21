@@ -26,6 +26,7 @@
                 "MOVE_OMINOUS_WIND"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -40,6 +41,7 @@
                 "MOVE_EXTRASENSORY"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -54,6 +56,7 @@
                 "MOVE_PSYCHIC"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -68,6 +71,7 @@
                 "MOVE_EARTHQUAKE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -82,6 +86,7 @@
                 "MOVE_AQUA_RING"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -96,6 +101,7 @@
                 "MOVE_GIGA_IMPACT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

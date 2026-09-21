@@ -22,22 +22,34 @@ defined in `include/struct_defs/trainer_data.h`.
 
 Each element of the `party` array represents a Pokémon owned by the trainer.
 
-| Field        | Type                    | Description                                                       |
-| ------------ | ----------------------- | ----------------------------------------------------------------- |
-| `species`    | `enum Species`          | The species of the Pokémon.                                       |
-| `form`       | `u8`                    | Form index, packed into the high bits of the species field.       |
-| `level`      | `u16`                   | The level of the Pokémon.                                         |
-| `item`       | `enum Item` or `null`   | The held item, or `null` for none.                                |
-| `moves`      | `enum Move[]` or `null` | Known moves (up to 4), or `null` for default level-up moves.      |
-| `nature`     | `enum Nature` or `null` | The Pokémon's nature, or `null` to leave it unspecified (random). |
-| `ball_seal`  | `u16`                   | Ball seal / capsule decoration index.                             |
+| Field        | Type                    | Description                                                          |
+| ------------ | ----------------------- | ---------------------------------------------------------------------|
+| `species`    | `enum Species`          | The species of the Pokémon.                                          |
+| `form`       | `u8`                    | Form index, packed into the high bits of the species field.         |
+| `level`      | `u16`                   | The level of the Pokémon.                                            |
+| `item`       | `enum Item` or `null`   | The held item, or `null` for none.                                   |
+| `moves`      | `enum Move[]` or `null` | Known moves (up to 4), or `null` for default level-up moves.         |
+| `nature`     | `enum Nature` or `null` | The Pokémon's nature, or `null` to default to a neutral placeholder. |
+| `ability`    | `enum Ability` or `null`| Which ability slot to force, or `null` to use the first slot.       |
+| `ball_seal`  | `u16`                   | Ball seal / capsule decoration index.                                |
 
 Every trainer Pokémon always has perfect IVs (31 in every stat) — there is no
-per-Pokémon IV field. `nature` is optional, following the same `null`-means-
-"no override" convention as `item`: when `null`, the Pokémon's nature is left
-to whatever the existing personality-value RNG produces (as it always was,
-before this field existed). When set, the game re-rolls the personality value
-until it lands on that exact nature.
+per-Pokémon IV field. `nature` and `ability` are both optional, following the
+same `null`-means-"no override" convention as `item`:
+
+* `nature`: when `null`, the Pokémon currently defaults to `NATURE_HARDY` (a
+  neutral nature with no stat effect) rather than being left to whatever the
+  personality-value RNG happens to produce. This is a deliberate placeholder,
+  not a permanent "Hardy is canon" choice - trainers are meant to get a
+  hand-picked nature eventually, and `NATURE_HARDY` is just what an
+  as-yet-uncurated one shows as in the meantime. When set to a real nature,
+  the game re-rolls the personality value until it lands on that exact one.
+* `ability`: when `null`, the Pokémon uses its species' first ability slot
+  (`SPECIES_DATA_ABILITY_1`). When set, it must be one of that species' two
+  real abilities (checked against `res/pokemon/<species>/data.json` at build
+  time - specifying an ability the species can't actually have is a build
+  error) and is applied directly, bypassing the personality-parity-bit
+  mechanic vanilla normally uses to pick between ability slots.
 
 The presence of the `item` and `moves` fields determines the exact structure of
 the output data, which affects the trainer's party in-game. This is decided
@@ -87,6 +99,7 @@ To illustrate, this party is valid:
                 "MOVE_GROWL"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -99,6 +112,7 @@ To illustrate, this party is valid:
                 "MOVE_LEER"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ]
@@ -122,6 +136,7 @@ required to as well, and Chimchar does not:
                 "MOVE_GROWL"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -134,6 +149,7 @@ required to as well, and Chimchar does not:
                 "MOVE_LEER"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],
@@ -158,6 +174,7 @@ Chimchar's Oran Berry is silently dropped and it ends up holding nothing:
                 "MOVE_GROWL"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -170,6 +187,7 @@ Chimchar's Oran Berry is silently dropped and it ends up holding nothing:
                 "MOVE_LEER"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],
@@ -193,6 +211,7 @@ move-set, so Chimchar is required to as well, but specifies `null` instead:
                 "MOVE_GROWL"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -202,6 +221,7 @@ move-set, so Chimchar is required to as well, but specifies `null` instead:
             "item": null,
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],
@@ -259,6 +279,7 @@ The tool produces the following outputs:
                 "MOVE_CURSE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -273,6 +294,7 @@ The tool produces the following outputs:
                 "MOVE_SPITE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

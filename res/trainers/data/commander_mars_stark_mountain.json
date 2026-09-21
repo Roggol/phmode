@@ -22,6 +22,7 @@
                 "MOVE_CONFUSE_RAY"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -36,6 +37,7 @@
                 "MOVE_CONFUSE_RAY"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -50,6 +52,7 @@
                 "MOVE_HYPNOSIS"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

@@ -16,6 +16,7 @@
             "item": null,
             "moves": null,
             "nature": "NATURE_ADAMANT",
+            "ability": null,
             "ball_seal": 0
         }
     ],

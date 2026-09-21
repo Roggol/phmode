@@ -19,6 +19,7 @@
                 "MOVE_DEFENSE_CURL"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

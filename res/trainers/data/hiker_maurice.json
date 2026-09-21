@@ -17,6 +17,7 @@
             "item": null,
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -26,6 +27,7 @@
             "item": null,
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

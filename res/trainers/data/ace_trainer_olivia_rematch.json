@@ -21,6 +21,7 @@
                 "MOVE_CALM_MIND"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_POISON_JAB"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -49,6 +51,7 @@
                 "MOVE_SHADOW_BALL"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

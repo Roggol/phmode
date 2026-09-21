@@ -21,6 +21,7 @@
                 "MOVE_WATER_PULSE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_SHADOW_BALL"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

@@ -24,6 +24,7 @@
                 "MOVE_DOUBLE_TEAM"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -38,6 +39,7 @@
                 "MOVE_QUICK_ATTACK"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -52,6 +54,7 @@
                 "MOVE_POWER_GEM"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -66,6 +69,7 @@
                 "MOVE_STONE_EDGE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -80,6 +84,7 @@
                 "MOVE_AERIAL_ACE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

@@ -21,6 +21,7 @@
                 "MOVE_TOXIC"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_DOUBLE_TEAM"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -49,6 +51,7 @@
                 "MOVE_DEFENSE_CURL"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

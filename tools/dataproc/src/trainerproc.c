@@ -13,6 +13,7 @@
 #include "constants/battle.h"
 #include "constants/moves.h"
 #include "constants/pokemon.h"
+#include "generated/abilities.h"
 #include "generated/natures.h"
 #include "generated/trainers.h"
 #include "generated/trainer_classes.h"
@@ -21,6 +22,7 @@
 #include "struct_defs/trainer_data.h"
 
 static enum_template_t enums[] = {
+    include_enum("generated/abilities.h",             "enum Ability"),
     include_enum("generated/ai_flags.h",              "enum AIFlag"),
     include_enum("generated/items.h",                 "enum Item"),
     include_enum("generated/moves.h",                 "enum Move"),
@@ -61,6 +63,7 @@ static textbank_template_t textbanks[] = {
 static char *program_name  = NULL;
 static char *filename     = NULL;
 static char *base_dir      = NULL;
+static char *pokemon_dir   = NULL;
 static char *depfile_path = "trainer_data.d";
 static char *output_dir    = ".";
 
@@ -75,6 +78,7 @@ typedef struct Container {
 } Container;
 
 static void parse_args(int *pargc, char ***pargv);
+static u16  resolve_ability(datanode_t ability_member, const char *species_name);
 
 static Container proc_trainer(datafile_t *df, enum TrainerID trainer);
 static void emit_name(datafile_t *df, enum TrainerID trainer, const TrainerHeader *trainer_header, const char *stem);
@@ -194,16 +198,27 @@ Container proc_trainer(datafile_t *df, enum TrainerID trainer) {
         u16 species = dp_u16(dp_lookup(dp_objmemb(party_member, "species"), "enum Species"));
         u16 form    = dp_u8(dp_objmemb(party_member, "form"));
 
-        // phmode: "nature" is optional, like "item" - a missing/null value means no
-        // specific nature is requested, encoded as NATURE_COUNT (one past the last real
-        // nature) since that can never collide with an actual enum Nature value.
+        // phmode: "nature" is optional, like "item" - a missing/null value currently
+        // defaults to a specific neutral nature (NATURE_HARDY) rather than leaving the
+        // Pokemon's nature unconstrained. Every trainer Pokemon is meant to eventually
+        // get a deliberately-chosen nature; NATURE_HARDY is just a placeholder default
+        // for whichever ones haven't been curated yet, so a party member with no
+        // "nature" set is not left with a random one in the meantime.
         datanode_t nature_member = dp_objmemb(party_member, "nature");
         u16        nature        = nature_member.type == DATAPROC_T_STRING
                    ? dp_u16(dp_lookup(nature_member, "enum Nature"))
-                   : NATURE_COUNT;
+                   : NATURE_HARDY;
+
+        // phmode: "ability" is optional - a missing/null value means "no override",
+        // which resolves to the species' first ability slot at runtime (see
+        // TrainerData_BuildParty). An explicit value must be one of that species' real
+        // abilities, validated here against res/pokemon/<species>/data.json.
+        datanode_t ability_member = dp_objmemb(party_member, "ability");
+        u16        ability        = resolve_ability(ability_member, dp_string(dp_objmemb(party_member, "species")));
 
         trparty.party[i] = (TrainerMonWithMovesAndItem){
             .nature  = nature,
+            .ability = ability,
             .level   = dp_u16(dp_objmemb(party_member, "level")),
             .species = (u16)(species | (form << TRAINER_MON_FORM_SHIFT)),
             .cbSeal  = dp_u16(dp_objmemb(party_member, "ball_seal")),
@@ -229,6 +244,45 @@ Container proc_trainer(datafile_t *df, enum TrainerID trainer) {
 
 early_exit:
     return (Container){ .header = header, .party = trparty };
+}
+
+// phmode: resolves an optional per-party-member "ability" override. Returns ABILITY_NONE
+// (meaning "no override") when the field is null/absent, otherwise cross-references
+// res/pokemon/<species>/data.json's "abilities" list to make sure the requested ability
+// is actually one this species can have, raising a build error otherwise.
+static u16 resolve_ability(datanode_t ability_member, const char *species_name) {
+    if (ability_member.type != DATAPROC_T_STRING) return ABILITY_NONE;
+
+    const char *requested     = dp_string(ability_member);
+    char       *species_lower = strlower(species_name + lengthof("SPECIES_"));
+    char       *species_path  = pathjoin(pokemon_dir, species_lower, "data.json");
+
+    u16        ability    = ABILITY_NONE;
+    datafile_t species_df = { 0 };
+
+    if (dp_load(&species_df, species_path) == 0) {
+        declare_dep(species_path);
+
+        datanode_t abilities      = dp_get(&species_df, ".abilities");
+        size_t     abilities_size = dp_arrlen(abilities);
+
+        bool found = false;
+        for (size_t i = 0; i < abilities_size && !found; i++) {
+            found = strcmp(dp_string(dp_arrelem(abilities, i)), requested) == 0;
+        }
+
+        if (found) ability = dp_u16(dp_lookup(ability_member, "enum Ability"));
+        else dp_error(&ability_member, "'%s' is not one of %s's real abilities", requested, species_name);
+    } else {
+        dp_error(&ability_member, "could not load species data for '%s' to validate its ability", species_name);
+    }
+
+    dp_report(&species_df);
+    dp_free(&species_df);
+    free(species_path);
+    free(species_lower);
+
+    return ability;
 }
 
 static void emit_name(datafile_t *df, enum TrainerID trainer, const TrainerHeader *trainer_header, const char *stem) {
@@ -496,9 +550,11 @@ static void parse_args(int *pargc, char ***pargv) {
     *pargv += optind;
     if (*pargc < 1) usage("missing required argument ENUMFILE");
     if (*pargc < 2) usage("missing required argument BASEDIR");
+    if (*pargc < 3) usage("missing required argument POKEMONDIR");
 
-    filename = (*pargv)[0];
-    base_dir = (*pargv)[1];
+    filename   = (*pargv)[0];
+    base_dir   = (*pargv)[1];
+    pokemon_dir = (*pargv)[2];
 }
 
 static void usage(const char *fmt, ...) {
@@ -516,13 +572,17 @@ static void usage(const char *fmt, ...) {
     }
 
 #define fputf(fmt, ...) fprintf(f, fmt, __VA_ARGS__)
-    fputf("usage: %s [-M DEPFILE] [-o OUTDIR] BASEDIR\n", program_name);
+    fputf("usage: %s [-M DEPFILE] [-o OUTDIR] BASEDIR POKEMONDIR\n", program_name);
     fputs("\n", f);
     fputs("options:\n", f);
     fputs("  -o OUTDIR    Write output files to OUTDIR. Does not affect DEPFILE.\n", f);
     fputs("               Defaults to the current working directory.\n", f);
     fputs("  -M DEPFILE   Specify the full path to an output dependency file.\n", f);
     fputs("               Defaults to 'trainer_data.d'.\n", f);
+    fputs("\n", f);
+    fputs("POKEMONDIR is the base directory of per-species Pokemon data (res/pokemon),\n", f);
+    fputs("used to validate any explicit per-party-member 'ability' override against\n", f);
+    fputs("that species' real ability list.\n", f);
 #undef fputf
 
     exit(f == stdout ? EXIT_SUCCESS : EXIT_FAILURE);

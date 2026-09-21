@@ -21,6 +21,7 @@
                 "MOVE_WATER_PULSE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_SWORDS_DANCE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -49,6 +51,7 @@
                 "MOVE_EXPLOSION"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

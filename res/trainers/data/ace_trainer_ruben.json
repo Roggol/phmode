@@ -21,6 +21,7 @@
                 "MOVE_RAZOR_LEAF"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_ICE_FANG"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

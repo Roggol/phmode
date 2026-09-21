@@ -20,6 +20,7 @@
                 "MOVE_QUICK_ATTACK"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -32,6 +33,7 @@
                 "MOVE_BITE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

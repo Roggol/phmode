@@ -21,6 +21,7 @@
                 "MOVE_IRON_TAIL"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -34,6 +35,7 @@
                 "MOVE_MIRROR_SHOT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

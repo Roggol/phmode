@@ -19,6 +19,7 @@
                 "MOVE_ROCK_TOMB"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

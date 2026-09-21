@@ -33,11 +33,18 @@ typedef struct TrainerHeader {
 // phmode: trainer Pokemon always have perfect (31) IVs in every stat now, so the old
 // ivScale field (which picked a single flat IV 0-31 for every stat, scaled from a
 // 0-255 JSON value) was replaced in-place with a nature override instead - same slot,
-// same u16 width, so the packed struct layout/size is unchanged. NATURE_COUNT (one past
-// the last real nature) means "no specific nature requested", matching how `item`/`moves`
-// use `null` for "no override" elsewhere in this same format.
+// same u16 width, so the packed struct layout/size is unchanged. A JSON `"nature": null`
+// currently resolves to a specific neutral nature (`NATURE_HARDY`) rather than a real
+// "no override" sentinel - see the comment on `trainerproc.c`'s parsing of this field.
+//
+// `ability` is a new always-present field (like `nature`) added after it in the same
+// uniform-u16 struct - it forces which of the species' two ability slots the Pokemon
+// uses. `ABILITY_NONE` (0) means "no override", which resolves to the species' first
+// ability slot by default; any other value has already been validated by `trainerproc.c`
+// against that species' real ability list.
 typedef struct TrainerMonBase {
     u16 nature;
+    u16 ability;
     u16 level;
     u16 species;
     u16 cbSeal;
@@ -45,6 +52,7 @@ typedef struct TrainerMonBase {
 
 typedef struct TrainerMonWithMoves {
     u16 nature;
+    u16 ability;
     u16 level;
     u16 species;
     u16 moves[LEARNED_MOVES_MAX];
@@ -53,6 +61,7 @@ typedef struct TrainerMonWithMoves {
 
 typedef struct TrainerMonWithItem {
     u16 nature;
+    u16 ability;
     u16 level;
     u16 species;
     u16 item;
@@ -61,6 +70,7 @@ typedef struct TrainerMonWithItem {
 
 typedef struct TrainerMonWithMovesAndItem {
     u16 nature;
+    u16 ability;
     u16 level;
     u16 species;
     u16 item;

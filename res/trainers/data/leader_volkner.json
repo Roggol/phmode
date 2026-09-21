@@ -24,6 +24,7 @@
                 "MOVE_QUICK_ATTACK"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -38,6 +39,7 @@
                 "MOVE_QUICK_ATTACK"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -52,6 +54,7 @@
                 "MOVE_FIRE_FANG"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -66,6 +69,7 @@
                 "MOVE_GIGA_IMPACT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 14
         }
     ],

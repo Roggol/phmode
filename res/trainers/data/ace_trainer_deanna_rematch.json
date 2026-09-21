@@ -21,6 +21,7 @@
                 "MOVE_FIRE_PUNCH"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_SILVER_WIND"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 19
         }
     ],

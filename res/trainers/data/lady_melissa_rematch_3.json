@@ -23,6 +23,7 @@
                 "MOVE_AERIAL_ACE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -37,6 +38,7 @@
                 "MOVE_MAGICAL_LEAF"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -51,6 +53,7 @@
                 "MOVE_MAGICAL_LEAF"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

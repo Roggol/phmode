@@ -18,6 +18,7 @@
             "item": "ITEM_RARE_CANDY",
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 26
         }
     ],

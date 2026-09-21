@@ -21,6 +21,7 @@
                 "MOVE_U_TURN"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_GRASS_WHISTLE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -49,6 +51,7 @@
                 "MOVE_AERIAL_ACE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -63,6 +66,7 @@
                 "MOVE_WILL_O_WISP"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -77,6 +81,7 @@
                 "MOVE_REST"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -91,6 +96,7 @@
                 "MOVE_SHADOW_CLAW"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 24
         }
     ],

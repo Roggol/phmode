@@ -21,6 +21,7 @@
                 "MOVE_GLARE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_FAKE_OUT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -49,6 +51,7 @@
                 "MOVE_QUICK_ATTACK"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

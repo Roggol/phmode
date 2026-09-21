@@ -21,6 +21,7 @@
                 "MOVE_STEEL_WING"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_AIR_SLASH"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -49,6 +51,7 @@
                 "MOVE_AIR_SLASH"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

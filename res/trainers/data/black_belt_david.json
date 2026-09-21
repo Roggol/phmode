@@ -22,6 +22,7 @@
                 "MOVE_SCREECH"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -36,6 +37,7 @@
                 "MOVE_SCREECH"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

@@ -25,6 +25,7 @@
                 "MOVE_LIGHT_SCREEN"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -39,6 +40,7 @@
                 "MOVE_SIGNAL_BEAM"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -53,6 +55,7 @@
                 "MOVE_CALM_MIND"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -67,6 +70,7 @@
                 "MOVE_RECOVER"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -81,6 +85,7 @@
                 "MOVE_STONE_EDGE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

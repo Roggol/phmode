@@ -19,6 +19,7 @@
                 "MOVE_MEGA_DRAIN"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

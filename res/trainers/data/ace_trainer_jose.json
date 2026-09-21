@@ -21,6 +21,7 @@
                 "MOVE_SCREECH"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_SAND_TOMB"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -49,6 +51,7 @@
                 "MOVE_GIGA_IMPACT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

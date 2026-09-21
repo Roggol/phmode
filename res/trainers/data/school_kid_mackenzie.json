@@ -23,6 +23,7 @@
                 "MOVE_MINIMIZE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -36,6 +37,7 @@
                 "MOVE_STOCKPILE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

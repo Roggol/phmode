@@ -21,6 +21,7 @@
                 "MOVE_GRAVITY"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_SYNTHESIS"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

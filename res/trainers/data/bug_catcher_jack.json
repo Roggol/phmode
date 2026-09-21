@@ -20,6 +20,7 @@
                 "MOVE_POISON_STING"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -34,6 +35,7 @@
                 "MOVE_HARDEN"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -48,6 +50,7 @@
                 "MOVE_GUST"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

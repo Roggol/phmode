@@ -23,6 +23,7 @@ trainer_data = custom_target('trainer_data',
         '-o', meson.current_build_dir(),
         meson.global_build_root() / 'generated' / 'trainers.h',
         meson.current_source_dir() / 'data',
+        meson.current_source_dir() / '..' / 'pokemon',
     ],
 
     depfile: 'trainer_data.d',

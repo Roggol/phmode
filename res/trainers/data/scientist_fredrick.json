@@ -23,6 +23,7 @@
                 "MOVE_FUTURE_SIGHT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -37,6 +38,7 @@
                 "MOVE_RECOVER"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

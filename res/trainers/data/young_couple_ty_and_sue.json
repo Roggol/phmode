@@ -21,6 +21,7 @@
                 "MOVE_DEFENSE_CURL"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_SONIC_BOOM"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

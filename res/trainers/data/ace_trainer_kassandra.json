@@ -21,6 +21,7 @@
                 "MOVE_BOUNCE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_DRAGON_BREATH"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -49,6 +51,7 @@
                 "MOVE_FIRE_PUNCH"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

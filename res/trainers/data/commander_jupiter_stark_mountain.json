@@ -22,6 +22,7 @@
                 "MOVE_REFLECT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -36,6 +37,7 @@
                 "MOVE_MEAN_LOOK"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -50,6 +52,7 @@
                 "MOVE_SMOKE_SCREEN"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

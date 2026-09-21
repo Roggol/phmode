@@ -24,6 +24,7 @@
                 "MOVE_QUICK_ATTACK"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -38,6 +39,7 @@
                 "MOVE_SHADOW_CLAW"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -52,6 +54,7 @@
                 "MOVE_BULLET_PUNCH"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -66,6 +69,7 @@
                 "MOVE_THUNDER_FANG"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -80,6 +84,7 @@
                 "MOVE_BLAZE_KICK"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

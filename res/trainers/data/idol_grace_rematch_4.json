@@ -16,6 +16,7 @@
             "item": null,
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 2
         },
         {
@@ -25,6 +26,7 @@
             "item": null,
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 2
         },
         {
@@ -34,6 +36,7 @@
             "item": null,
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 2
         },
         {
@@ -43,6 +46,7 @@
             "item": null,
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 2
         },
         {
@@ -52,6 +56,7 @@
             "item": null,
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 2
         },
         {
@@ -61,6 +66,7 @@
             "item": null,
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 2
         }
     ],

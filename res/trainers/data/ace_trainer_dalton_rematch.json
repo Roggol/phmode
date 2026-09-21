@@ -21,6 +21,7 @@
                 "MOVE_THUNDER_WAVE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_WILL_O_WISP"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

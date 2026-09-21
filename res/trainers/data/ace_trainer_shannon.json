@@ -20,6 +20,7 @@
                 "MOVE_LEECH_SEED"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -33,6 +34,7 @@
                 "MOVE_AQUA_RING"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -46,6 +48,7 @@
                 "MOVE_CHARM"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

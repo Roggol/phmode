@@ -20,6 +20,7 @@
                 "MOVE_FORESIGHT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -32,6 +33,7 @@
                 "MOVE_FORCE_PALM"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -44,6 +46,7 @@
                 "MOVE_FORESIGHT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

@@ -16,6 +16,7 @@
             "item": "ITEM_SITRUS_BERRY",
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -25,6 +26,7 @@
             "item": "ITEM_SITRUS_BERRY",
             "moves": null,
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

@@ -2,6 +2,7 @@
 
 #include "constants/battle.h"
 #include "constants/pokemon.h"
+#include "generated/abilities.h"
 #include "generated/natures.h"
 #include "generated/trainer_message_types.h"
 
@@ -23,6 +24,7 @@
 
 static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID heapID);
 static u32 TrainerData_MakePersonality(u32 seed, u8 trainerType, u32 genderMod, u16 nature);
+static u32 TrainerData_ResolveAbility(u16 species, u16 ability);
 
 void Trainer_Encounter(FieldBattleDTO *dto, const SaveData *saveData, enum HeapID heapID)
 {
@@ -185,6 +187,14 @@ u8 TrainerClass_Gender(int trclass)
 // (sub_02074044 in this file). A nature of NATURE_COUNT or higher (the sentinel used for
 // "no nature requested" - see struct_defs/trainer_data.h) is left alone rather than
 // looping forever trying to match something Pokemon_GetNatureOf can never produce.
+// (In practice, trainerproc.c currently always emits a real nature - NATURE_HARDY by
+// default - so every trainer Pokemon lands on a deliberate nature rather than a random
+// one; the NATURE_COUNT path above still exists in case that ever changes.)
+//
+// Ability is handled separately from personality entirely (see TrainerData_ResolveAbility)
+// - it's just an explicit override applied directly to MON_DATA_ABILITY after the mon is
+// built, rather than something baked into the personality value like vanilla's parity-bit
+// derivation.
 static u32 TrainerData_MakePersonality(u32 seed, u8 trainerType, u32 genderMod, u16 nature)
 {
     int j;
@@ -204,6 +214,16 @@ static u32 TrainerData_MakePersonality(u32 seed, u8 trainerType, u32 genderMod, 
     }
 
     return rnd;
+}
+
+// phmode: resolves a trainer Pokemon's ability slot. ABILITY_NONE (the "no override"
+// sentinel from trainerproc.c) defaults to the species' first ability slot; any other
+// value has already been validated at build time against that species' real abilities,
+// so it's used directly instead of being derived from personality parity like vanilla.
+static u32 TrainerData_ResolveAbility(u16 species, u16 ability)
+{
+    if (ability != ABILITY_NONE) return ability;
+    return SpeciesData_GetSpeciesValue(species, SPECIES_DATA_ABILITY_1);
 }
 
 static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID heapID)
@@ -234,10 +254,13 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
         for (i = 0; i < dto->trainer[battler].header.partySize; i++) {
             u16 species = trmon[i].species & 0x3FF;
             u8 form = (trmon[i].species & 0xFC00) >> TRAINER_MON_FORM_SHIFT;
+            u32 monAbility;
 
             rnd = TrainerData_MakePersonality(trmon[i].level + species + dto->trainerIDs[battler], dto->trainer[battler].header.trainerType, genderMod, trmon[i].nature);
 
             Pokemon_InitWith(mon, species, trmon[i].level, MAX_IVS_SINGLE_STAT, TRUE, rnd, OTID_NOT_SHINY, 0);
+            monAbility = TrainerData_ResolveAbility(species, trmon[i].ability);
+            Pokemon_SetValue(mon, MON_DATA_ABILITY, &monAbility);
             Pokemon_SetBallSeal(trmon[i].cbSeal, mon, heapID);
             Pokemon_SetValue(mon, MON_DATA_FORM, &form);
             Pokemon_CalcStats(mon);
@@ -252,10 +275,13 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
         for (i = 0; i < dto->trainer[battler].header.partySize; i++) {
             u16 species = trmon[i].species & 0x3FF;
             u8 form = (trmon[i].species & 0xFC00) >> TRAINER_MON_FORM_SHIFT;
+            u32 monAbility;
 
             rnd = TrainerData_MakePersonality(trmon[i].level + species + dto->trainerIDs[battler], dto->trainer[battler].header.trainerType, genderMod, trmon[i].nature);
 
             Pokemon_InitWith(mon, species, trmon[i].level, MAX_IVS_SINGLE_STAT, TRUE, rnd, OTID_NOT_SHINY, 0);
+            monAbility = TrainerData_ResolveAbility(species, trmon[i].ability);
+            Pokemon_SetValue(mon, MON_DATA_ABILITY, &monAbility);
 
             for (j = 0; j < 4; j++) {
                 Pokemon_SetMoveSlot(mon, trmon[i].moves[j], j);
@@ -275,10 +301,13 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
         for (i = 0; i < dto->trainer[battler].header.partySize; i++) {
             u16 species = trmon[i].species & 0x3FF;
             u8 form = (trmon[i].species & 0xFC00) >> TRAINER_MON_FORM_SHIFT;
+            u32 monAbility;
 
             rnd = TrainerData_MakePersonality(trmon[i].level + species + dto->trainerIDs[battler], dto->trainer[battler].header.trainerType, genderMod, trmon[i].nature);
 
             Pokemon_InitWith(mon, species, trmon[i].level, MAX_IVS_SINGLE_STAT, TRUE, rnd, OTID_NOT_SHINY, 0);
+            monAbility = TrainerData_ResolveAbility(species, trmon[i].ability);
+            Pokemon_SetValue(mon, MON_DATA_ABILITY, &monAbility);
             Pokemon_SetValue(mon, MON_DATA_HELD_ITEM, &trmon[i].item);
             Pokemon_SetBallSeal(trmon[i].cbSeal, mon, heapID);
             Pokemon_SetValue(mon, MON_DATA_FORM, &form);
@@ -294,10 +323,13 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
         for (i = 0; i < dto->trainer[battler].header.partySize; i++) {
             u16 species = trmon[i].species & 0x3FF;
             u8 form = (trmon[i].species & 0xFC00) >> TRAINER_MON_FORM_SHIFT;
+            u32 monAbility;
 
             rnd = TrainerData_MakePersonality(trmon[i].level + species + dto->trainerIDs[battler], dto->trainer[battler].header.trainerType, genderMod, trmon[i].nature);
 
             Pokemon_InitWith(mon, species, trmon[i].level, MAX_IVS_SINGLE_STAT, TRUE, rnd, OTID_NOT_SHINY, 0);
+            monAbility = TrainerData_ResolveAbility(species, trmon[i].ability);
+            Pokemon_SetValue(mon, MON_DATA_ABILITY, &monAbility);
             Pokemon_SetValue(mon, MON_DATA_HELD_ITEM, &trmon[i].item);
 
             for (j = 0; j < 4; j++) {

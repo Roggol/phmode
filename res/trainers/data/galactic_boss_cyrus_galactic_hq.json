@@ -24,6 +24,7 @@
                 "MOVE_SCREECH"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -38,6 +39,7 @@
                 "MOVE_SUPERSONIC"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -52,6 +54,7 @@
                 "MOVE_FAINT_ATTACK"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

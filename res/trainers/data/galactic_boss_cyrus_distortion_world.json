@@ -24,6 +24,7 @@
                 "MOVE_THUNDER_FANG"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -38,6 +39,7 @@
                 "MOVE_PSYCHIC"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -52,6 +54,7 @@
                 "MOVE_CONFUSE_RAY"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -66,6 +69,7 @@
                 "MOVE_EARTHQUAKE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -80,6 +84,7 @@
                 "MOVE_X_SCISSOR"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

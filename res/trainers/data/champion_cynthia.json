@@ -26,6 +26,7 @@
                 "MOVE_SHADOW_BALL"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -40,6 +41,7 @@
                 "MOVE_EXTRASENSORY"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -54,6 +56,7 @@
                 "MOVE_SHOCK_WAVE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -68,6 +71,7 @@
                 "MOVE_STONE_EDGE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -82,6 +86,7 @@
                 "MOVE_DRAGON_PULSE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -96,6 +101,7 @@
                 "MOVE_GIGA_IMPACT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

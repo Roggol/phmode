@@ -19,6 +19,7 @@
                 "MOVE_PECK"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

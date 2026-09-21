@@ -21,6 +21,7 @@
                 "MOVE_TAKE_DOWN"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -35,6 +36,7 @@
                 "MOVE_INGRAIN"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],

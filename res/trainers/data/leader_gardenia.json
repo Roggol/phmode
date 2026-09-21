@@ -24,6 +24,7 @@
                 "MOVE_REFLECT"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -38,6 +39,7 @@
                 "MOVE_SAFEGUARD"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         },
         {
@@ -52,6 +54,7 @@
                 "MOVE_STUN_SPORE"
             ],
             "nature": null,
+            "ability": null,
             "ball_seal": 0
         }
     ],
