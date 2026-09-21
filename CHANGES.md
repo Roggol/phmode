@@ -1043,6 +1043,30 @@ Modeled in `ai_tests/` as `AI_PossibleImmunityPenalty` (see
 `ai_tests/scenarios/ability_interactions.c`), alongside the existing
 `AI_IsImmuneToMove` model of the confirmed/guessed check this complements.
 
+### Trainer AI bug fix: Charge was never evaluated at all, letting it get used with no regard for whether it was actually useful
+Reported: a level 10 Shinx (Lass Sarah) used Charge against a purely physical
+attacker despite not even knowing an Electric move to combo its power boost
+with. Root cause: `BATTLE_EFFECT_SP_DEF_UP_DOUBLE_ELECTRIC_POWER` (Charge's
+effect - Sp. Def +1 and double the user's next Electric move's power) was
+missing from both AI dispatch tables in `src/battle/trainer_ai/script.s`
+(`Basic_ScoreMoveEffect_Dispatch` and `Expert_Main`), unlike every other
+stat-boosting effect (`SP_DEF_UP`, `SP_DEF_UP_2`, etc.), each of which routes
+to a handler that at least checks whether the stat is already maxed. Missing
+from the dispatch entirely, Charge fell through with no evaluation
+whatsoever - not even that baseline check - and kept whatever default score
+non-damaging moves get regardless of context.
+
+Fixed by routing `BATTLE_EFFECT_SP_DEF_UP_DOUBLE_ELECTRIC_POWER` to the exact
+same handlers plain `SP_DEF_UP` already uses: `Basic_CheckHighStatStage_SpDefense`
+(discourages it once Sp. Def is already maxed) and, for `AI_FLAG_EXPERT`
+trainers, `Expert_StatusSpDefenseUp` (which also discourages it based on the
+target's last-used move class - e.g. a good chance of -2 if the target's last
+move was Physical, exactly the reported scenario). This mirrors how
+`BATTLE_EFFECT_DEF_UP_DOUBLE_ROLLOUT_POWER` (Defense Curl's effect) already
+reuses the plain `DEF_UP` handler rather than a bespoke one, so this brings
+Charge in line with the existing convention for "boost a defensive stat and
+power up a specific follow-up move" effects instead of adding new logic.
+
 ---
 
 ## Abilities

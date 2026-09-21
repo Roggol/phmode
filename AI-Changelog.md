@@ -478,6 +478,40 @@ been throwing out attacks, expect it to lean into using Sucker Punch more
 readily. Break that pattern with a status move or a switch, and it goes back
 to a coin-flip-ish choice for the trainer.
 
+### Charge is now actually evaluated at all (bug fix)
+
+Reported directly: a level 10 Shinx used Charge against a purely physical
+attacker, even though it didn't know a single Electric-type move to combo
+Charge's power boost with. Charge (raises the user's Sp. Def by 1 stage and
+doubles the power of the user's next Electric move) turned out to be missing
+entirely from the AI's move-scoring logic — unlike every other stat-boosting
+move (Iron Defense, Amnesia, Calm Mind, and so on), which at least get
+checked against how high that stat is already boosted before being used
+again. Charge had no such check and no scoring of any kind; it was just
+picked on the same footing as everything else, with zero regard for whether
+boosting Sp. Def made any sense in that particular fight.
+
+**Now fixed:** Charge is scored exactly the way a plain Sp. Def boost already
+is. For most trainers, that means the same "don't bother, Sp. Def is already
+about as high as it usefully goes" check every stat-up move gets. For
+`Expert`-tier trainers specifically (nearly every trainer battle in this
+hack — see the main changelog), it's scored more precisely: a Sp. Def boost
+gets discouraged with a decent chance of a **-2** penalty specifically when
+the target's last move was Physical — which is exactly the situation from
+the report — and it's also discouraged somewhat when the user is already
+at a high stat stage, at low HP, or when the target's last move was a
+Status move rather than an attack. It's favored a little when the user is at
+full HP.
+
+**Practical upshot:** a trainer with an Electric-type that knows Charge will
+now actually hold back on it against a physical attacker, the same way it
+already holds back on Iron Defense or Amnesia in a bad matchup for them —
+Charge just wasn't getting that same courtesy before this fix. This doesn't
+teach the AI anything new about the "double the next Electric move" half of
+Charge specifically — that part still isn't separately valued, matching how
+Defense Curl's own "double the next Rollout" clause is handled the same
+simple way today.
+
 ---
 
 ## Using Items (Enemy Trainers Only)
@@ -576,6 +610,7 @@ will reach for an item at all:
 | Switch-in selection prefers a Defog/Rapid Spin user 2-in-3 of the time when own side has hazards up | New | Any AI battler |
 | Post-KO switch-in type-matchup scoring no longer overflows on a quad-effective matchup | Bug fix | Any AI battler |
 | Sucker Punch gets a +2 bonus when the target's last move dealt damage | New | Any AI battler |
+| Charge is now scored the same as a plain Sp. Def boost (was never scored at all before) | Bug fix | Any AI battler |
 | Trainers recognize Electric-types are immune to paralysis (mechanics overhaul: half Speed instead of quarter, 12.5% full-paralysis instead of 25%) | New | Any AI battler |
 | Trainers recognize Ghost-types can't be trapped by Mean Look/Block/Spider Web or binding moves | New | Any AI battler |
 | Trainers recognize Grass-types are immune to all 5 powder moves | New | Any AI battler |

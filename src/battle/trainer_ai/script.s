@@ -399,6 +399,11 @@ Basic_ScoreMoveEffect_Dispatch:
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SPEED_UP, Basic_CheckHighStatStage_Speed
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SP_ATK_UP, Basic_CheckHighStatStage_SpAttack
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SP_DEF_UP, Basic_CheckHighStatStage_SpDefense
+    // phmode fix: Charge (SP_DEF_UP_DOUBLE_ELECTRIC_POWER) wasn't in this dispatch at all, so
+    // it never got the same "don't bother, Sp. Def is already maxed" check every other stat-up
+    // effect gets - same handler as plain SP_DEF_UP, matching how DEF_UP_DOUBLE_ROLLOUT_POWER
+    // (Defense Curl) already reuses the plain DEF_UP handler below instead of a bespoke one.
+    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SP_DEF_UP_DOUBLE_ELECTRIC_POWER, Basic_CheckHighStatStage_SpDefense
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_ACC_UP, Basic_CheckHighStatStage_Accuracy
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_EVA_UP, Basic_CheckHighStatStage_Evasion
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_ATK_DOWN, Basic_CheckLowStatStage_Attack
@@ -1982,6 +1987,12 @@ Expert_Main:
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SPEED_UP, Expert_StatusSpeedUp
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SP_ATK_UP, Expert_StatusSpAttackUp
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SP_DEF_UP, Expert_StatusSpDefenseUp
+    // phmode fix: Charge (SP_DEF_UP_DOUBLE_ELECTRIC_POWER) wasn't in this dispatch either, so
+    // Expert trainers never applied Expert_StatusSpDefenseUp's "is the target actually a
+    // physical/special attacker worth walling" logic to it - it fell through unscored, which is
+    // why Charge would get used against, e.g., a purely physical attacker without any of the
+    // usual discouragement plain Sp. Def-boosting moves get in that situation.
+    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SP_DEF_UP_DOUBLE_ELECTRIC_POWER, Expert_StatusSpDefenseUp
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_ACC_UP, Expert_StatusAccuracyUp
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_EVA_UP, Expert_StatusEvasionUp
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_BYPASS_ACCURACY, Expert_BypassAccuracyMove
