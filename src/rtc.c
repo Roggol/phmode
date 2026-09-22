@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "inlines.h"
+#include "vars_flags.h"
 
 typedef struct {
     BOOL valid;
@@ -87,8 +88,35 @@ void GetCurrentDate(RTCDate *date)
     *date = sRTCState.date;
 }
 
+// phmode: representative "seconds since midnight" for each forced time of day, used only
+// to drive systems that read GetSecondsSinceMidnight() directly instead of going through
+// TimeOfDayForHour() (namely AreaLightManager's map lighting template selection - see
+// area_light.c). Picked from the middle of each period's real hour range below.
+static const int sForcedTimeOfDaySeconds[] = {
+    [FORCED_TIMEOFDAY_MORNING] = 6 * 60 * 60,
+    [FORCED_TIMEOFDAY_DAY]     = 13 * 60 * 60,
+    [FORCED_TIMEOFDAY_NIGHT]   = 22 * 60 * 60,
+};
+
+enum ForcedTimeOfDay RTC_GetForcedTimeOfDay(void)
+{
+    VarsFlags *varsFlags = SaveData_GetVarsFlags(SaveData_Ptr());
+    return (enum ForcedTimeOfDay) * VarsFlags_GetVarAddress(varsFlags, VAR_FORCED_TIME_OF_DAY);
+}
+
+void RTC_SetForcedTimeOfDay(enum ForcedTimeOfDay forced)
+{
+    VarsFlags *varsFlags = SaveData_GetVarsFlags(SaveData_Ptr());
+    *VarsFlags_GetVarAddress(varsFlags, VAR_FORCED_TIME_OF_DAY) = (u16)forced;
+}
+
 int GetSecondsSinceMidnight(void)
 {
+    enum ForcedTimeOfDay forced = RTC_GetForcedTimeOfDay();
+    if (forced != FORCED_TIMEOFDAY_OFF) {
+        return sForcedTimeOfDaySeconds[forced];
+    }
+
     RTCTime *time = &sRTCState.time;
 
     return time->hour * 60 * 60 + time->minute * 60 + time->second;
@@ -178,6 +206,15 @@ enum TimeOfDay TimeOfDayForHour(int hour)
         TIMEOFDAY_NIGHT,
         TIMEOFDAY_NIGHT,
     };
+
+    // phmode: an active Poketch Manipulator override replaces the real hour entirely, and
+    // stays fixed until the player picks a different option or unsets it (i.e. this does
+    // not merely bias the lookup below - the real hour is ignored altogether).
+    switch (RTC_GetForcedTimeOfDay()) {
+    case FORCED_TIMEOFDAY_MORNING: return TIMEOFDAY_MORNING;
+    case FORCED_TIMEOFDAY_DAY: return TIMEOFDAY_DAY;
+    case FORCED_TIMEOFDAY_NIGHT: return TIMEOFDAY_NIGHT;
+    }
 
     GF_ASSERT(0 <= hour && hour < 24);
     return lookup[hour];

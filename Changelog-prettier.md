@@ -1365,6 +1365,17 @@ a single press, and its description always shows whether it's currently
 on or off. Your rival gives you this early on, right after you receive
 your first Poké Balls.
 
+### VortexManipulator
+A new key item that lets you set the time of day yourself — Morning, Day,
+or Night — completely independent of your DS's actual clock. Use it from
+the Bag (or as a registered item) to pick one of the three, and the game
+stays locked to that time of day, with no more visits from the sun or
+moon, until you either pick a different one or choose the 4th option,
+**Unset**, to go back to following the real clock. The Pokétch
+Co-President hands it to you right after giving you the Pokétch itself,
+with a knowing line about "some guy with white shoes and a brown
+trenchcoat" who gave it to him.
+
 ### PP Up is no longer handed out for free
 Since stat-boosting moves now have very low PP overall, PP Up isn't as
 valuable as it used to be — the two spots in the game that used to give
@@ -1399,15 +1410,16 @@ moved into your active party.
 ## World and Location Changes
 
 ### Looker challenges you to a battle in Jubilife City
-Right after "unmasking" the shady man following you and Dawn/Lucas around
-and hearing him introduce himself as Looker, of the International Police,
-he now challenges you to a one-on-one Pokémon battle on the spot (a single
-level 10 Hoothoot) before saying anything else. His whole speech afterward
-— the "Don't be a thief!" back-and-forth, his lecture about Pokémon thieves
-in Sinnoh, and the Vs. Recorder he used to hand you — is gone, replaced with
-a shorter goodbye: he compliments your strength, tells you to call for him
-by codename if you ever see anything suspicious, and hurries off. **The
-Vs. Recorder is no longer given out here.**
+Right after "unmasking" the shady man following you and Dawn/Lucas around,
+he introduces himself as a globe-trotting elite of the International
+Police — but withholds his actual codename, daring you to beat him in a
+one-on-one Pokémon battle (a single level 10 Hoothoot) to earn it. His
+whole speech that used to follow — the "Don't be a thief!" back-and-forth,
+his lecture about Pokémon thieves in Sinnoh, and the Vs. Recorder he used
+to hand you — is gone, replaced with a shorter goodbye after the fight: he
+compliments your strength, reveals his codename is Looker, tells you to
+call for him by it if you ever see anything suspicious, and hurries off.
+**The Vs. Recorder is no longer given out here.**
 
 ### The house on Route 221 gives its rewards all at once
 The NPC in the house on Route 221 used to run a daily minigame where you'd

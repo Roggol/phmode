@@ -27,4 +27,16 @@ enum TimeOfDay GetTimeOfDay(void);
 enum TimeOfDay TimeOfDayForHour(int hour);
 s64 TimeElapsed(s64 since, s64 until);
 
+// phmode: player-facing time-of-day override, set via the Poketch Manipulator key item
+// (see item_use_functions.c). FORCED_TIMEOFDAY_OFF means "follow the real clock as usual".
+enum ForcedTimeOfDay {
+    FORCED_TIMEOFDAY_OFF = 0,
+    FORCED_TIMEOFDAY_MORNING,
+    FORCED_TIMEOFDAY_DAY,
+    FORCED_TIMEOFDAY_NIGHT,
+};
+
+enum ForcedTimeOfDay RTC_GetForcedTimeOfDay(void);
+void RTC_SetForcedTimeOfDay(enum ForcedTimeOfDay forced);
+
 #endif // POKEPLATINUM_RTC_H

@@ -145,8 +145,8 @@
         "International Police.\r",
         "My name... Ah, no, I shall inform you\n",
         "only of my code name.\r",
-        "My code name, it is Looker.\n",
-        "It is what they all call me.\r"
+        "I will tell it to you if you can beat\n",
+        "me in a Pokémon battle!\r"
       ]
     },
     {
@@ -378,6 +378,16 @@
         "to make it even more versatile!\r",
         "Touch the Pokétch screen and find the\n",
         "apps that are right for you!\r"
+      ]
+    },
+    {
+      "id": "JubilifeCity_Text_PoketchManipulatorGift",
+      "en_US": [
+        "Here’s something that will allow\n",
+        "you to set the time of day.\r",
+        "Some guy with white shoes and a\n",
+        "brown trenchcoat gave it to me.\r",
+        "I don’t know how it works.\r"
       ]
     },
     {

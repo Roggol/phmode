@@ -543,6 +543,41 @@
       "en_US": "CANCEL"
     },
     {
+      "id": "Bag_Text_TimeOfDayMenuMorning",
+      "en_US": "Morning"
+    },
+    {
+      "id": "Bag_Text_TimeOfDayMenuDay",
+      "en_US": "Day"
+    },
+    {
+      "id": "Bag_Text_TimeOfDayMenuNight",
+      "en_US": "Night"
+    },
+    {
+      "id": "Bag_Text_TimeOfDayMenuUnset",
+      "en_US": "Unset"
+    },
+    {
+      "id": "Bag_Text_TimeOfDaySetMorning",
+      "en_US": "The time of day is now set to Morning."
+    },
+    {
+      "id": "Bag_Text_TimeOfDaySetDay",
+      "en_US": "The time of day is now set to Day."
+    },
+    {
+      "id": "Bag_Text_TimeOfDaySetNight",
+      "en_US": "The time of day is now set to Night."
+    },
+    {
+      "id": "Bag_Text_TimeOfDaySetUnset",
+      "en_US": [
+        "The time of day will now follow\n",
+        "the clock again."
+      ]
+    },
+    {
       "id": "Bag_Text_CannotUseUndergroundMaintenance",
       "en_US": [
         "Sorry, the underground is undergoing\n",

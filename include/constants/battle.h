@@ -62,7 +62,21 @@
 
 #define BATTLE_IO_QUEUE_SIZE    16
 #define BATTLE_IO_BUFFER_SIZE   256
-#define BATTLE_SCRIPT_SIZE_MAX  400
+// phmode bug fix: this used to be 400, but subscript_fall_asleep (Hypnosis/Sleep Powder/
+// Spore's target-side "does this Pokemon fall asleep" logic) compiles to 429 words (1716
+// bytes) once phmode's Grass-immune-to-powder-moves checks are included - 29 words past
+// the old limit. battleCtx->battleScript[] is loaded straight from its NARC member with a
+// GF_ASSERT bounds check that is compiled out in normal (non-PM_KEEP_ASSERTS) builds, so
+// that overflow silently wrote 29 words of the tail of the compiled script past the end of
+// the array and into whatever memory follows it - which, in BattleContext, is
+// battleMons[MAX_BATTLERS], starting with battleMons[0]. That scrambled battler 0's status/
+// statusVolatile/curHP with leftover opcode bytes reinterpreted as game data, which is what
+// caused the "Hypnosis fails, then every residual status effect fires at once" bug: Toxic,
+// Nightmare, Curse, Bind, Bad Dreams, Uproar, and Thrash all read as simultaneously active
+// because statusVolatile got clobbered to a near-all-1s value. Raised to 500 for headroom,
+// since other subscripts (e.g. subscript_badly_poison at 1428 bytes) are already close to
+// the old ceiling and will keep growing as more phmode-specific branches get added to them.
+#define BATTLE_SCRIPT_SIZE_MAX  500
 #define BATTLE_SCRIPT_STACK_MAX 4
 
 #define MAX_OPPONENTS     2

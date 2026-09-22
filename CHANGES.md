@@ -437,6 +437,65 @@ the "(south)"/"(north)" banner where vanilla stayed silent.
 
 ## Battle changes
 
+### Bug fix (game-breaking, vanilla decomp bug): Hypnosis (and Sleep Powder/Spore) failing could scramble a Pokémon's status and HP, triggering every residual effect at once
+Reported: an opponent's Hoothoot used Hypnosis, it "failed", and immediately
+afterward the player's own (fully healthy, non-asleep) Pokémon took a chunk of
+damage and *every* residual status effect started firing every turn - Toxic,
+Nightmare, Curse, Bind, Bad Dreams, Uproar, Thrash, etc. all "active"
+simultaneously on a low-level Pokémon that couldn't possibly have all of
+them - with no way to select a move, until it fainted.
+
+Root cause, found via live `EmulatorLog` tracing in no$gba: `subscript_fall_asleep`
+(`res/battle/scripts/subscripts/subscript_fall_asleep.s`) is the shared
+target-side "does this Pokemon actually fall asleep" script used by Hypnosis,
+Sleep Powder, and Spore. With phmode's Grass-immune-to-powder-moves checks
+(added in two places in that script), it compiles to 1716 bytes (429 words) -
+29 words past `BATTLE_SCRIPT_SIZE_MAX` (400 words/1600 bytes at the time).
+`BattleSystem_LoadScript`/`BattleSystem_CallScript` (`src/battle/battle_lib.c`)
+read a compiled subscript from its NARC member straight into
+`battleCtx->battleScript[BATTLE_SCRIPT_SIZE_MAX]` with `NARC_ReadWholeMemberByIndexPair`
+and only a `GF_ASSERT` guarding the length - and `GF_ASSERT` compiles to a
+no-op unless built with `PM_KEEP_ASSERTS`, which normal builds are not. In
+`BattleContext` (`include/battle/battle_context.h`), `battleMons[MAX_BATTLERS]`
+sits immediately after `battleScript[]`, so the 29-word overflow silently
+wrote the tail of the compiled script's bytecode into `battleMons[0]`,
+clobbering its `status`, `statusVolatile`, and `curHP` fields with
+reinterpreted opcode bytes. That's what made every residual condition read as
+active at once (`statusVolatile` ended up a near-all-1s value) and why HP had
+already dropped before any of those conditions had a chance to fire "for
+real" - the corruption itself did the damage. The "Hypnosis fails" trigger
+wasn't circumstantial after all; it's the one path that actually loads this
+specific oversized script.
+
+* `include/constants/battle.h` - `BATTLE_SCRIPT_SIZE_MAX` raised from 400 to
+  500 words, giving headroom (subscript_badly_poison is already the next
+  closest at 1428/1600 bytes and will keep growing as more phmode-specific
+  branches get added to residual-effect scripts).
+* `src/battle/battle_lib.c`, `BattleSystem_CallScript` - its bounds check now
+  uses the `BATTLE_SCRIPT_SIZE_MAX` macro instead of a separate hardcoded
+  `400 * 4`, so the two can't drift out of sync again.
+
+While investigating this, a second, real but independent latent bug was found
+and fixed in the same area: `BattleControllerPlayer_CheckMonConditions` (and
+its siblings `CheckFieldConditions`/`CheckSideConditions`) in
+`src/battle/battle_controller_player.c` is a resumable state machine with two
+counters that must move together - which *condition type* is being checked
+(`monConditionCheckState`) and which *battler* is currently being checked
+(`monConditionCheckTemp`). Only the type-state half was ever reset in
+`BattleContext_Init` (`src/battle/battle_lib.c`); the battler-index half was
+only ever reset by the check function's own natural completion. Since
+`BattleContext_Init` also runs from `BattleControllerPlayer_MoveEnd` - reachable
+mid-battler during a residual-effects sweep, because applying residual damage
+shares the same damage-and-faint-check plumbing as a real move hit - hitting
+that path could reset the condition-type state back to the start while
+leaving the battler index wherever it was, restarting the condition list for
+that battler indefinitely. This did not turn out to be the cause of the
+reported symptom (it requires interrupting a sweep already in progress, not a
+fresh one), but it's a genuine bug in its own right and the fix is kept:
+`BattleContext_Init` now also resets `fieldConditionCheckTemp`/
+`monConditionCheckTemp`/`sideConditionCheckTemp` alongside their respective
+`*CheckState` fields.
+
 ### No items on your own Pokémon in battle
 `src/battle/battle_controller_player.c` — in the item-select command state, any
 bag item whose category is not `ITEM_BATTLE_CATEGORY_POKE_BALLS` is rejected with
@@ -2596,6 +2655,102 @@ current state — `(on)` or `(off)`.
   (`VAR_ROUTE_202_STATE >= 1`) but don't have the item, checked on every heal in
   `CommonScript_NurseTryGiveFirstVisitGift` (inlined, ahead of the PPHM check).
 
+### Poketch Manipulator
+A new Key Item (`ITEM_POKETCH_MANIPULATOR`) that lets the player set the
+current time-of-day period (Morning/Day/Night) independently of the DS's
+real clock, with a 4th "Unset" option to go back to following the clock.
+While a period is forced, it stays fixed — it does not drift into the next
+period as real time passes — until the player picks a different option or
+Unsets it.
+
+* `generated/vars_flags.txt` — new `VAR_FORCED_TIME_OF_DAY` (0 = off/follow
+  the clock, 1/2/3 = Morning/Day/Night), added by renaming the unused
+  `VAR_UNUSED_0x40EA` slot in place, the same way `TRAINER_GRAVELER_GYM_PUZZLE`
+  and `ITEM_REPEL_TOGGLE` reused an unused trainer/item slot rather than
+  appending a new one. **This one actually matters for save compatibility,
+  not just tidiness**: `NUM_VARS` is computed as `VARS_END - VARS_START`
+  (no fixed-capacity ceiling to worry about, unlike the trainer-defeated-flags
+  range), so simply appending a new line before `VARS_END` - which is what
+  this fix originally did, and which built and ran fine on a fresh save -
+  grows `sizeof(VarsFlags)` by 2 bytes. `gSaveTable` (`src/savedata/save_table.c`)
+  packs every save block sequentially using each block's *current* size with
+  no on-disk length/version record, so that 2-byte growth silently shifted
+  the load offset of every save block after `SAVE_TABLE_ENTRY_VARS_FLAGS` -
+  Poketch, field player state, **Pokédex**, Day Care, Pal Pad, PC boxes, and
+  more - for any save file written before this change. This is exactly what
+  caused an existing save to suddenly read as having "completed" the local
+  Pokédex and trigger the vanilla Poké Radar tutorial scene on Route 202 out
+  of nowhere - the Pokédex block was being read from the wrong offset.
+  Renaming an existing unused slot instead keeps `sizeof(VarsFlags)`
+  (and therefore every later block's offset) byte-for-byte identical to
+  before this feature existed, which is why reusing a dummy/unused slot is
+  the load-bearing convention for growing `trainers.txt`/`items.txt`/
+  `vars_flags.txt` in this project, not just a style preference.
+* `src/rtc.c` / `include/rtc.h` — the actual override. `TimeOfDayForHour(int hour)`
+  is the single choke point every "what time is it" query in the game already
+  goes through (`GetTimeOfDay`, `IsNight`, `FieldSystem_GetTimeOfDay`, and the
+  battle-setup DTO's `timeOfDay` field all call it, directly or indirectly) -
+  when `VAR_FORCED_TIME_OF_DAY` is non-zero, it returns the forced period
+  immediately and ignores the real `hour` argument entirely, rather than
+  merely biasing the normal lookup table. `GetSecondsSinceMidnight()` is
+  similarly overridden to a representative "seconds since midnight" for the
+  forced period (6am/1pm/10pm), since `AreaLightManager_UpdateActiveTemplate`
+  (the map's ambient/directional lighting - `src/overlay005/area_light.c`)
+  reads that function directly instead of going through `TimeOfDayForHour`,
+  and would otherwise still light the map for the real time of day even with
+  an override active. The override is read directly from the global
+  `SaveData_Ptr()` rather than threaded through every caller as a new
+  parameter (which would have meant touching over a dozen unrelated call
+  sites across battle setup, evolutions, wild encounters, NPC schedules,
+  and more) - this mirrors how `Pokemon_GetLevelCap`-style code elsewhere
+  already reaches `SaveData_Ptr()` directly from deep gameplay code with no
+  `FieldSystem` in scope.
+* `include/constants/items.h` (`ITEM_USE_FUNC_POKETCH_MANIPULATOR`),
+  `res/items/data/poketch_manipulator.json` (key item, `canRegister`, reuses
+  the Vs. Recorder's icon rather than adding new art - fitting, since the
+  Vs. Recorder is no longer given out anywhere either, see the Jubilife City
+  Looker entry under Map data).
+* `src/item_use_functions.c` — `UsePoketchManipulatorFromMenu`/`InField` open
+  a new `TimeOfDayMenu_Task` (modeled closely on the existing
+  `RegisteredItemsMenu_Task`): a small 4-choice window (Morning/Day/Night/
+  Unset, B to cancel without changing anything) that calls
+  `RTC_SetForcedTimeOfDay` on a choice and then prints a confirmation message
+  via the same `PrintRegisteredKeyItemUseMessage` task PPHM/Repel Toggle use.
+* `res/text/bag.json` — the 4 menu-choice strings and 4 confirmation
+  messages (`Bag_Text_TimeOfDayMenu*`/`Bag_Text_TimeOfDaySet*`).
+* `res/field/scripts/scripts_jubilife_city.s` + `res/text/jubilife_city.json` —
+  the Pokétch Co-President hands it over right after the Pokétch itself,
+  saying "Here's something that will allow you to set the time of day. Some
+  guy with white shoes and a brown trenchcoat gave it to me. I don't know
+  how it works." (`JubilifeCity_Text_PoketchManipulatorGift` - a nod to
+  Looker, who was just added as a battle earlier in this same scene).
+
+**Bug fix (crash on use):** `UsePoketchManipulatorFromMenu`'s `TimeOfDayMenu_New`
+originally allocated its task struct from `HEAP_ID_FIELD1`, but that constructor
+runs synchronously at Use-press time, before the `StartMenu` `NEW_TASK` state has
+confirmed the field map is running and faded in - and `FIELD1` is the current
+map's own working heap, which gets reset as part of that transition. The
+allocation was getting invalidated out from under `menu->taskData` by the time
+`TimeOfDayMenu_Task` actually ran, corrupting memory and blacking out the
+screen the moment the item was used from the Bag. Every other `*FromMenu`
+handler in `src/item_use_functions.c` (`UsePphmFromMenu`, `UseRepelToggleFromMenu`)
+already allocated from `HEAP_ID_FIELD2` for this exact reason - `TimeOfDayMenu_New`
+now does too.
+
+**Bug fix (blank name in Bag):** the item's display name, "Poketch
+Manipulator", is 19 characters - one over the Bag's fixed 18-character
+per-item name buffer (`InitItemNameBuffers` in `src/applications/bag/main.c`,
+used for every item in every pocket; the longest vanilla item name is 12
+characters, e.g. "Premier Ball"). The string writer silently leaves the
+buffer empty rather than truncate when the source doesn't fit, so the name
+rendered blank in the Key Items pocket instead of the game just cutting it
+off. Renamed the item to **VortexManipulator** (17 characters, safely under
+the limit - the buffer needs one spare byte for the string terminator, so 17
+is the true ceiling, not 18) in `res/items/data/poketch_manipulator.json`.
+The internal identifiers (`ITEM_POKETCH_MANIPULATOR`,
+`ITEM_USE_FUNC_POKETCH_MANIPULATOR`, the `poketch_manipulator.json` filename
+itself) are unchanged - only the player-visible name and plural form moved.
+
 ### Revive → Rare Candy, Max Revive → Heart Scale
 * `res/field/scripts/scripts_visible_items.s` — every field item ball that
   contained a Revive now gives a **Rare Candy**; every Max Revive ball gives a
@@ -2805,9 +2960,13 @@ one-on-one Pokémon battle immediately after introducing himself, before any
 of that.
 
 * `res/text/jubilife_city.json` — `JubilifeCity_Text_IsSayingFamiliarToYou`
-  is truncated to end right after "My code name, it is Looker. It is what
-  they all call me." (dropping the "Don't be a thief!" question that used to
-  follow it). The `TakingFromOthersIsWrong`/`YouClaimToNotKnowIt` Yes/No
+  is truncated right after "My name... Ah, no, I shall inform you only of
+  my code name." and the actual reveal ("My code name, it is Looker. It is
+  what they all call me.") is replaced with a challenge instead: "I will
+  tell it to you if you can beat me in a Pokémon battle!" - his codename
+  is only actually spoken once, in the post-battle message below, dropping
+  the "Don't be a thief!" question that used to follow it. The
+  `TakingFromOthersIsWrong`/`YouClaimToNotKnowIt` Yes/No
   responses, the Sinnoh-thieves lecture (`PerhapsYouCanUseThis`), the
   Vs. Recorder flavor text (`DeviceForRecordingAMatch`), and the "inform me
   of any happenings" speech (`InformMeOfAnyHappenings`) are all removed,

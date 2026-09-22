@@ -1431,6 +1431,11 @@ JubilifeCity_GivePoketch:
     WaitFanfare
     Message JubilifeCity_Text_AddAppsToPoketch
     CloseMessage
+    Message JubilifeCity_Text_PoketchManipulatorGift
+    SetVar VAR_0x8004, ITEM_POKETCH_MANIPULATOR
+    SetVar VAR_0x8005, 1
+    Common_GiveItemQuantity
+    CloseMessage
     GetPlayerDir VAR_RESULT
     GoToIfEq VAR_RESULT, DIR_NORTH, JubilifeCity_PoketchCoPresidentLeaveNorthWestEast
     GoToIfEq VAR_RESULT, DIR_SOUTH, JubilifeCity_PoketchCoPresidentLeaveSouth

@@ -206,7 +206,7 @@ void BattleSystem_LoadScript(BattleContext *battleCtx, enum NarcID narcID, int f
 
 void BattleSystem_CallScript(BattleContext *battleCtx, enum NarcID narcID, int file)
 {
-    GF_ASSERT(NARC_GetMemberSizeByIndexPair(narcID, file) < 400 * 4);
+    GF_ASSERT(NARC_GetMemberSizeByIndexPair(narcID, file) < BATTLE_SCRIPT_SIZE_MAX * sizeof(u32));
     GF_ASSERT(battleCtx->scriptStackPointer < 4);
 
     battleCtx->scriptStackNarc[battleCtx->scriptStackPointer] = battleCtx->scriptNarc;
@@ -2008,9 +2008,27 @@ void BattleContext_Init(BattleContext *battleCtx)
     battleCtx->afterMoveMessageType = 0;
     battleCtx->multiHitCheckFlags = 0;
     battleCtx->multiHitAccuracyCheck = 0;
+    // phmode bug fix: these three "which condition type am I checking" states are each
+    // paired with their own "which battler am I checking" index (fieldConditionCheckTemp/
+    // monConditionCheckTemp/sideConditionCheckTemp), but only the state half was ever reset
+    // here - the temp half was only ever reset by each check function's own natural
+    // completion (see BattleControllerPlayer_CheckMonConditions's MON_COND_CHECK_END case).
+    // BattleContext_Init also runs from BattleControllerPlayer_MoveEnd, which is reachable
+    // while a residual-effects sweep (e.g. poison/burn/curse damage, which shares the same
+    // damage-and-faint-check plumbing as a real move hit) is still mid-battler. That left
+    // state reset to 0 while temp stayed wherever it was, restarting the whole condition
+    // list (Ingrain -> ... -> Curse -> ...) for the same still-in-progress battler on every
+    // such interruption - since none of those conditions clear themselves after firing once,
+    // this could loop indefinitely, replaying every active residual effect every pass with
+    // no way to reach turn end, until the afflicted Pokemon fainted. Reported as: an
+    // opponent's failed Hypnosis (any move ending a turn would do) followed immediately by
+    // every active status effect firing repeatedly with no way to act, until the Pokemon died.
     battleCtx->fieldConditionCheckState = 0;
+    battleCtx->fieldConditionCheckTemp = 0;
     battleCtx->monConditionCheckState = 0;
+    battleCtx->monConditionCheckTemp = 0;
     battleCtx->sideConditionCheckState = 0;
+    battleCtx->sideConditionCheckTemp = 0;
     battleCtx->turnStartCheckState = 0;
     battleCtx->afterMoveHitCheckState = 0;
     battleCtx->afterMoveMessageState = 0;

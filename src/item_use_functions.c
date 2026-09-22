@@ -56,6 +56,7 @@
 #include "pokeradar.h"
 #include "registered_items.h"
 #include "render_window.h"
+#include "rtc.h"
 #include "save_player.h"
 #include "screen_fade.h"
 #include "script_manager.h"
@@ -128,6 +129,11 @@ static UnkStruct_02068EFC *Pphm_HealPartyAndPrepareMessage(FieldSystem *fieldSys
 static void UseRepelToggleFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static BOOL UseRepelToggleInField(ItemFieldUseContext *usageContext);
 static UnkStruct_02068EFC *RepelToggle_TogglePrepareMessage(FieldSystem *fieldSystem);
+static void UsePoketchManipulatorFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
+static BOOL UsePoketchManipulatorInField(ItemFieldUseContext *usageContext);
+static void *TimeOfDayMenu_New(FieldSystem *fieldSystem);
+static BOOL TimeOfDayMenu_Task(FieldTask *task);
+static void TimeOfDayMenu_ApplyChoice(FieldSystem *fieldSystem, u32 choice);
 static void *sub_02068BEC(void *some_param);
 static void *sub_02068B9C(void *some_param);
 static void *sub_02068708(void *some_param);
@@ -181,6 +187,7 @@ static const ItemUseFuncDat sItemUseFuncs[] = {
     [ITEM_USE_FUNC_GRACIDEA]     = { UseGracideaFromMenu,    UseGracideaInField,    NULL              },
     [ITEM_USE_FUNC_PPHM]         = { UsePphmFromMenu,        UsePphmInField,        NULL              },
     [ITEM_USE_FUNC_REPEL_TOGGLE] = { UseRepelToggleFromMenu, UseRepelToggleInField, NULL              },
+    [ITEM_USE_FUNC_POKETCH_MANIPULATOR] = { UsePoketchManipulatorFromMenu, UsePoketchManipulatorInField, NULL },
 };
 // clang-format on
 
@@ -1087,6 +1094,164 @@ static void UseRepelToggleFromMenu(ItemMenuUseContext *usageContext, const ItemU
 static BOOL UseRepelToggleInField(ItemFieldUseContext *usageContext)
 {
     FieldSystem_CreateTask(usageContext->fieldSystem, PrintRegisteredKeyItemUseMessage, RepelToggle_TogglePrepareMessage(usageContext->fieldSystem));
+    return FALSE;
+}
+
+// phmode: the Poketch Manipulator key item. Shows a 4-choice menu (Morning/Day/Night/
+// Unset) and forces RTC_GetTimeOfDay()/GetSecondsSinceMidnight() to that period (see
+// rtc.c) until changed again or unset, independent of the real clock. Uses the same
+// standard-window VRAM tile/palette slot as RegisteredItemsMenu further down in this file
+// (REG_MENU_WINDOW_TILE/PAL) - safe to duplicate the values under our own name since only
+// one of these field-overlay menus is ever shown at a time.
+#define TIME_OF_DAY_MENU_WINDOW_TILE (1024 - 9 - (18 + 12))
+#define TIME_OF_DAY_MENU_WINDOW_PAL  11
+
+typedef struct TimeOfDayMenu {
+    FieldSystem *fieldSystem;
+    Window window;
+    Menu *menu;
+    StringList *choices;
+    String *entryStrings[4];
+    u8 state;
+} TimeOfDayMenu;
+
+static void *TimeOfDayMenu_New(FieldSystem *fieldSystem)
+{
+    // phmode bug fix: this used to allocate from HEAP_ID_FIELD1, but this constructor
+    // runs synchronously at Use-press time (see UsePoketchManipulatorFromMenu), before the
+    // StartMenu NEW_TASK state has confirmed the field map is running and faded in. FIELD1
+    // is the current map's own working heap and gets reset as part of that transition, so
+    // the allocation was getting invalidated out from under menu->taskData by the time
+    // TimeOfDayMenu_Task actually ran, corrupting memory and blacking out the screen. Every
+    // other *FromMenu handler in this file (e.g. UsePphmFromMenu, UseRepelToggleFromMenu)
+    // allocates its pre-transition taskData from HEAP_ID_FIELD2 for exactly this reason.
+    TimeOfDayMenu *menu = Heap_Alloc(HEAP_ID_FIELD2, sizeof(TimeOfDayMenu));
+
+    memset(menu, 0, sizeof(TimeOfDayMenu));
+    menu->fieldSystem = fieldSystem;
+
+    return menu;
+}
+
+static void TimeOfDayMenu_ApplyChoice(FieldSystem *fieldSystem, u32 choice)
+{
+    static const enum ForcedTimeOfDay sForcedValues[4] = {
+        FORCED_TIMEOFDAY_MORNING,
+        FORCED_TIMEOFDAY_DAY,
+        FORCED_TIMEOFDAY_NIGHT,
+        FORCED_TIMEOFDAY_OFF,
+    };
+    static const u16 sConfirmTextIDs[4] = {
+        Bag_Text_TimeOfDaySetMorning,
+        Bag_Text_TimeOfDaySetDay,
+        Bag_Text_TimeOfDaySetNight,
+        Bag_Text_TimeOfDaySetUnset,
+    };
+    UnkStruct_02068EFC *taskData;
+    MessageLoader *msgLoader;
+
+    RTC_SetForcedTimeOfDay(sForcedValues[choice]);
+
+    taskData = Heap_Alloc(HEAP_ID_FIELD2, sizeof(UnkStruct_02068EFC));
+    taskData->unk_16 = 0;
+    taskData->unk_10 = String_Init(64, HEAP_ID_FIELD2);
+
+    msgLoader = MessageLoader_Init(MSG_LOADER_LOAD_ON_DEMAND, NARC_INDEX_MSGDATA__PL_MSG, TEXT_BANK_BAG, HEAP_ID_FIELD2);
+    MessageLoader_GetString(msgLoader, sConfirmTextIDs[choice], taskData->unk_10);
+    MessageLoader_Free(msgLoader);
+
+    FieldSystem_CreateTask(fieldSystem, PrintRegisteredKeyItemUseMessage, taskData);
+}
+
+static BOOL TimeOfDayMenu_Task(FieldTask *task)
+{
+    static const u16 sMenuTextIDs[4] = {
+        Bag_Text_TimeOfDayMenuMorning,
+        Bag_Text_TimeOfDayMenuDay,
+        Bag_Text_TimeOfDayMenuNight,
+        Bag_Text_TimeOfDayMenuUnset,
+    };
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(task);
+    TimeOfDayMenu *menu = FieldTask_GetEnv(task);
+    MessageLoader *msgLoader;
+    MenuTemplate template;
+    s32 result;
+    u32 i;
+
+    switch (menu->state) {
+    case 0:
+        MapObjectMan_PauseAllMovement(fieldSystem->mapObjMan);
+
+        Window_Add(fieldSystem->bgConfig, &menu->window, 3, 18, 23 - 4 * 2, 13, 4 * 2, 13, 1);
+        LoadStandardWindowGraphics(fieldSystem->bgConfig, 3, TIME_OF_DAY_MENU_WINDOW_TILE, TIME_OF_DAY_MENU_WINDOW_PAL, STANDARD_WINDOW_SYSTEM, HEAP_ID_FIELD1);
+        Window_DrawStandardFrame(&menu->window, TRUE, TIME_OF_DAY_MENU_WINDOW_TILE, TIME_OF_DAY_MENU_WINDOW_PAL);
+
+        menu->choices = StringList_New(4, HEAP_ID_FIELD1);
+
+        msgLoader = MessageLoader_Init(MSG_LOADER_LOAD_ON_DEMAND, NARC_INDEX_MSGDATA__PL_MSG, TEXT_BANK_BAG, HEAP_ID_FIELD1);
+        for (i = 0; i < 4; i++) {
+            menu->entryStrings[i] = String_Init(16, HEAP_ID_FIELD1);
+            MessageLoader_GetString(msgLoader, sMenuTextIDs[i], menu->entryStrings[i]);
+            StringList_AddFromString(menu->choices, menu->entryStrings[i], i);
+        }
+        MessageLoader_Free(msgLoader);
+
+        template.choices = menu->choices;
+        template.window = &menu->window;
+        template.fontID = FONT_SYSTEM;
+        template.xSize = 1;
+        template.ySize = 4;
+        template.lineSpacing = 0;
+        template.suppressCursor = FALSE;
+        template.loopAround = TRUE;
+
+        menu->menu = Menu_NewAndCopyToVRAM(&template, 8, 0, 0, HEAP_ID_FIELD1, PAD_BUTTON_B);
+        menu->state = 1;
+        break;
+    case 1:
+        result = (s32)Menu_ProcessInput(menu->menu);
+
+        if (result == MENU_NOTHING_CHOSEN) {
+            break;
+        }
+
+        Menu_Free(menu->menu, NULL);
+        StringList_Free(menu->choices);
+        Window_EraseStandardFrame(&menu->window, FALSE);
+        Window_Remove(&menu->window);
+
+        for (i = 0; i < 4; i++) {
+            String_Free(menu->entryStrings[i]);
+        }
+
+        MapObjectMan_UnpauseAllMovement(fieldSystem->mapObjMan);
+
+        if (result != MENU_CANCEL) {
+            TimeOfDayMenu_ApplyChoice(fieldSystem, (u32)result);
+        }
+
+        Heap_Free(menu);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+static void UsePoketchManipulatorFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(usageContext->fieldTask);
+    StartMenu *menu = FieldTask_GetEnv(usageContext->fieldTask);
+
+    FieldSystem_StartFieldMap(fieldSystem);
+
+    menu->callback = TimeOfDayMenu_Task;
+    menu->taskData = TimeOfDayMenu_New(fieldSystem);
+    menu->state = START_MENU_STATE_NEW_TASK;
+}
+
+static BOOL UsePoketchManipulatorInField(ItemFieldUseContext *usageContext)
+{
+    FieldSystem_CreateTask(usageContext->fieldSystem, TimeOfDayMenu_Task, TimeOfDayMenu_New(usageContext->fieldSystem));
     return FALSE;
 }
 
