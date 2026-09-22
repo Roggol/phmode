@@ -30,7 +30,9 @@
 
 PastoriaCity_OnTransition:
     SetVar VAR_PASTORIA_CITY_CROAGUNK_SCENE_STATE, 0
-    SetFlag FLAG_HIDE_ROUTE_212_BLOCKADE
+    // phmode: Route 212 used to open unconditionally the moment Pastoria City was
+    // first entered, regardless of badges. It's now gated on defeating Maylene
+    // instead (see VeilstoneGym_Maylene) - this flag is no longer set here.
     CallIfEq VAR_PASTORIA_CITY_STATE, 5, PastoriaCity_SetRivalPositionAfterExplosion
     CallIfEq VAR_PASTORIA_CITY_STATE, 4, PastoriaCity_SetRivalPositionAfterGym
     CallIfEq VAR_PASTORIA_CITY_STATE, 4, PastoriaCity_SetCrasherWakePositionAfterGym

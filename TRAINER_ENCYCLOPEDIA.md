@@ -6,6 +6,64 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
 
 ## Tier 1 — cap 14
 
+### Route 201
+
+**Cedric** (Rival) — *exception: the very first rival battle keeps its vanilla level instead of following the rival rule*
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Piplup** — Lv. 5
+      - Ability: Torrent
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Cedric** (Rival) — *exception, see above*
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Turtwig** — Lv. 5
+      - Ability: Overgrow
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Cedric** (Rival) — *exception, see above*
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Chimchar** — Lv. 5
+      - Ability: Blaze
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Route 202
+
+**Natalie** (Lass)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Bidoof** — Lv. 10
+      - Ability: Simple
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Logan** (Youngster)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Burmy** — Lv. 10
+      - Ability: Shed Skin
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Tackle
+
+**Tristan** (Youngster)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Starly** — Lv. 10
+      - Ability: Keen Eye
+      - Nature: Adamant
+      - Held Item: None
+      - Moves: Default level-up moves
+
 ### Jubilife City
 
 **Dawn** (Rival)
@@ -95,24 +153,11 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Bubble, Pound
 
-### Oreburgh Gate 1F
+### Trainers School
 
-**Curtis** (Camper)
+**Christine** (School Kid Female)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Starly** — Lv. 10
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Shinx** — Lv. 10
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Diana** (Picnicker)
-  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: Potion
   - Party:
     - **Bidoof** — Lv. 10
       - Ability: Simple
@@ -120,109 +165,15 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Default level-up moves
 
-### Oreburgh Gate B1F
-
-**Grant** (Veteran)
+**Harrison** (School Kid Male)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Riolu** — Lv. 10
-      - Ability: Steadfast
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Force Palm, Quick Attack, Counter, Screech
-    - **Staraptor** — Lv. 10
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Aerial Ace, Take Down, Quick Attack, Growl
-    - **Graveler** — Lv. 10
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Earthquake, Rock Slide, Rock Polish, Defense Curl
-
-### Oreburgh Mine B2F
-
-**Colin** (Worker)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Geodude** — Lv. 10
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Machop** — Lv. 10
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Mason** (Worker)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Geodude** — Lv. 10
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 201
-
-**Cedric** (Rival) — *exception: the very first rival battle keeps its vanilla level instead of following the rival rule*
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Piplup** — Lv. 5
-      - Ability: Torrent
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Cedric** (Rival) — *exception, see above*
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Turtwig** — Lv. 5
-      - Ability: Overgrow
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Cedric** (Rival) — *exception, see above*
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Chimchar** — Lv. 5
-      - Ability: Blaze
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 202
-
-**Natalie** (Lass)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Bidoof** — Lv. 10
-      - Ability: Simple
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Logan** (Youngster)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Burmy** — Lv. 10
-      - Ability: Shed Skin
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Tackle
-
-**Tristan** (Youngster)
-  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: X Attack
   - Party:
     - **Starly** — Lv. 10
       - Ability: Keen Eye
-      - Nature: Adamant
+      - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Default level-up moves
+      - Moves: Quick Attack
 
 ### Route 203
 
@@ -362,11 +313,24 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Default level-up moves
 
-### Trainers School
+### Oreburgh Gate 1F
 
-**Christine** (School Kid Female)
+**Curtis** (Camper)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Potion
+  - Party:
+    - **Starly** — Lv. 10
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Shinx** — Lv. 10
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Diana** (Picnicker)
+  - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
     - **Bidoof** — Lv. 10
       - Ability: Simple
@@ -374,17 +338,326 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Default level-up moves
 
-**Harrison** (School Kid Male)
+### Oreburgh Gate B1F
+
+**Grant** (Veteran)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: X Attack
   - Party:
-    - **Starly** — Lv. 10
-      - Ability: Keen Eye
+    - **Riolu** — Lv. 10
+      - Ability: Steadfast
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Quick Attack
+      - Moves: Force Palm, Quick Attack, Counter, Screech
+    - **Staraptor** — Lv. 10
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Aerial Ace, Take Down, Quick Attack, Growl
+    - **Graveler** — Lv. 10
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Earthquake, Rock Slide, Rock Polish, Defense Curl
+
+### Oreburgh Mine B2F
+
+**Colin** (Worker)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Geodude** — Lv. 10
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Machop** — Lv. 10
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Mason** (Worker)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Geodude** — Lv. 10
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
 
 ## Tier 2 — cap 23
+
+### Route 204 North
+
+**Taylor** (Aroma Lady)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Budew** — Lv. 19
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Cherubi** — Lv. 19
+      - Ability: Chlorophyll
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Brandon** (Bug Catcher)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Wurmple** — Lv. 19
+      - Ability: Shield Dust
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Tackle, String Shot, Poison Sting
+    - **Kricketot** — Lv. 19
+      - Ability: Shed Skin
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Bide
+
+**Liv & Liz** (Twins)
+  - Double Battle
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Pachirisu** — Lv. 19
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Pachirisu** — Lv. 19
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Floaroma Meadow
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Stunky** — Lv. 20
+      - Ability: Stench
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Zubat** — Lv. 20
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Zubat** — Lv. 20
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Route 205 South
+
+**Elizabeth** (Aroma Lady)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Roselia** — Lv. 19
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Growth, Mega Drain
+
+**Kelsey** (Battle Girl)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Machop** — Lv. 19
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Jacob** (Camper)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Ponyta** — Lv. 19
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Ember, Tackle
+
+**Zackary** (Camper)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Aipom** — Lv. 19
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Daniel** (Hiker)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Geodude** — Lv. 19
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Geodude** — Lv. 19
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Geodude** — Lv. 19
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Nicholas** (Hiker)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Onix** — Lv. 19
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Karina** (Picnicker)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Piplup** — Lv. 19
+      - Ability: Torrent
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Bubble, Peck
+
+**Siena** (Picnicker)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Bidoof** — Lv. 19
+      - Ability: Simple
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Pachirisu** — Lv. 19
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Route 205 North
+
+**Andrew** (Fisherman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Magikarp** — Lv. 19
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Magikarp** — Lv. 19
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Magikarp** — Lv. 19
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Magikarp** — Lv. 19
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Magikarp** — Lv. 19
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Magikarp** — Lv. 19
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Joseph** (Fisherman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Goldeen** — Lv. 19
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Zachary** (Fisherman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Magikarp** — Lv. 19
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Goldeen** — Lv. 19
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Magikarp** — Lv. 19
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Valley Windworks Outside
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Glameow** — Lv. 20
+      - Ability: Limber
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Valley Windworks Building
+
+**Mars** (Commander Mars) — *Galactic boss*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Zubat** — Lv. 21
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Bite, Leech Life, Toxic
+    - **Purugly** — Lv. 21
+      - Ability: Defiant
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Oran Berry
+      - Moves: Faint Attack, Scratch, Fake Out
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Zubat** — Lv. 20
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Glameow** — Lv. 20
+      - Ability: Limber
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Stunky** — Lv. 20
+      - Ability: Stench
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
 
 ### Eterna Forest
 
@@ -494,47 +767,76 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Confusion, Water Gun, Scratch
 
-### Floaroma Meadow
+### Route 211 West
 
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+**Alexandra** (Bird Keeper)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Stunky** — Lv. 20
-      - Ability: Stench
+    - **Starly** — Lv. 19
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Hoothoot** — Lv. 19
+      - Ability: Insomnia
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+**Louis** (Hiker)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Geodude** — Lv. 19
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Onix** — Lv. 19
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Zach** (Ninja Boy)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Zubat** — Lv. 20
+    - **Zubat** — Lv. 19
       - Ability: Inner Focus
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-    - **Zubat** — Lv. 20
+    - **Zubat** — Lv. 19
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Zubat** — Lv. 19
       - Ability: Inner Focus
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-### Fuego Ironworks Building
+### Route 211 East
 
-**Conrad** (Worker)
+**Katherine** (Bird Keeper)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Magmar** — Lv. 19
-      - Ability: Flame Body
+    - **Noctowl** — Lv. 19
+      - Ability: Insomnia
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Dillan** (Worker)
-  - AI Flags: Basic, Evaluate Attack, Expert
+**Sean** (Black Belt)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
   - Party:
-    - **Machop** — Lv. 19
-      - Ability: Guts
+    - **Croagunk** — Lv. 19
+      - Ability: Poison Touch
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Meditite** — Lv. 19
+      - Ability: Pure Power
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
@@ -544,341 +846,365 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Default level-up moves
 
-**Holden** (Worker)
+**Nick** (Ninja Boy)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Magnemite** — Lv. 19
-      - Ability: Magnet Pull
+    - **Skorupi** — Lv. 19
+      - Ability: Battle Armor
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-    - **Magnemite** — Lv. 19
-      - Ability: Magnet Pull
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Magnemite** — Lv. 19
-      - Ability: Magnet Pull
+    - **Croagunk** — Lv. 19
+      - Ability: Poison Touch
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-### Route 204 North
-
-**Taylor** (Aroma Lady)
+**Harry** (Ruin Maniac)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Budew** — Lv. 19
-      - Ability: Natural Cure
+    - **Bronzor** — Lv. 19
+      - Ability: Levitate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-    - **Cherubi** — Lv. 19
-      - Ability: Chlorophyll
+    - **Bronzor** — Lv. 19
+      - Ability: Levitate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-
-**Brandon** (Bug Catcher)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Wurmple** — Lv. 19
-      - Ability: Shield Dust
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Tackle, String Shot, Poison Sting
-    - **Kricketot** — Lv. 19
-      - Ability: Shed Skin
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Bide
-
-**Liv & Liz** (Twins)
-  - Double Battle
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Pachirisu** — Lv. 19
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Pachirisu** — Lv. 19
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 205 North
-
-**Andrew** (Fisherman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Magikarp** — Lv. 19
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Magikarp** — Lv. 19
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Magikarp** — Lv. 19
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Magikarp** — Lv. 19
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Magikarp** — Lv. 19
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Magikarp** — Lv. 19
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Joseph** (Fisherman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Goldeen** — Lv. 19
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Zachary** (Fisherman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Magikarp** — Lv. 19
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Goldeen** — Lv. 19
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Magikarp** — Lv. 19
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 205 South
-
-**Elizabeth** (Aroma Lady)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Roselia** — Lv. 19
-      - Ability: Natural Cure
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Growth, Mega Drain
-
-**Kelsey** (Battle Girl)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Machop** — Lv. 19
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Jacob** (Camper)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Ponyta** — Lv. 19
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Ember, Tackle
-
-**Zackary** (Camper)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Aipom** — Lv. 19
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Daniel** (Hiker)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Geodude** — Lv. 19
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Geodude** — Lv. 19
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Geodude** — Lv. 19
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Nicholas** (Hiker)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Onix** — Lv. 19
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Karina** (Picnicker)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Piplup** — Lv. 19
-      - Ability: Torrent
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Bubble, Peck
-
-**Siena** (Picnicker)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Bidoof** — Lv. 19
-      - Ability: Simple
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Pachirisu** — Lv. 19
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Valley Windworks Building
-
-**Mars** (Commander Mars) — *Galactic boss*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Zubat** — Lv. 21
-      - Ability: Inner Focus
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Bite, Leech Life, Toxic
-    - **Purugly** — Lv. 21
-      - Ability: Defiant
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: Oran Berry
-      - Moves: Faint Attack, Scratch, Fake Out
-
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Zubat** — Lv. 20
-      - Ability: Inner Focus
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Glameow** — Lv. 20
-      - Ability: Limber
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Stunky** — Lv. 20
-      - Ability: Stench
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Valley Windworks Outside
-
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Glameow** — Lv. 20
-      - Ability: Limber
+    - **Bronzor** — Lv. 19
+      - Ability: Levitate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
 ## Tier 3 — cap 30
 
-### Cafe
+### Route 206
 
-**Edwin** (Collector)
+**Axel** (Cyclist Male)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Munchlax** — Lv. 26
-      - Ability: Pickup
+    - **Pikachu** — Lv. 26
+      - Ability: Static
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Fernando** (Collector)
+**James** (Cyclist Male)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Heracross** — Lv. 26
-      - Ability: Swarm
+    - **Ponyta** — Lv. 26
+      - Ability: Run Away
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Kati** (Waitress)
+**John** (Cyclist Male)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Clefairy** — Lv. 26
-      - Ability: Cute Charm
+    - **Starly** — Lv. 26
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Staravia** — Lv. 26
+      - Ability: Intimidate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-### Celestic Town
-
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+**Kayla** (Cyclist Female)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Houndour** — Lv. 27
-      - Ability: Early Bird
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Golbat** — Lv. 27
-      - Ability: Inner Focus
+    - **Pikachu** — Lv. 26
+      - Ability: Static
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-### Celestic Town Cave
-
-**Cyrus** (Galactic Boss) — *Galactic boss*
+**Megan** (Cyclist Female)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Hyper Potion
   - Party:
-    - **Sneasel** — Lv. 28
-      - Ability: Inner Focus
+    - **Staravia** — Lv. 26
+      - Ability: Intimidate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Slash, Ice Punch, Quick Attack, Screech
-    - **Golbat** — Lv. 28
-      - Ability: Inner Focus
+      - Moves: Default level-up moves
+
+**Nicole** (Cyclist Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Starly** — Lv. 26
+      - Ability: Keen Eye
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Poison Fang, Air Cutter, Bite, Supersonic
-    - **Murkrow** — Lv. 28
+      - Moves: Default level-up moves
+    - **Starly** — Lv. 26
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Starly** — Lv. 26
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Rachel** (Cyclist Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Ponyta** — Lv. 26
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Shinx** — Lv. 26
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Ryan** (Cyclist Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Shinx** — Lv. 26
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Theodore** (Hiker)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Onix** — Lv. 26
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Onix** — Lv. 26
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Wayward Cave 1F
+
+**Diego** (Camper)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Aipom** — Lv. 26
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Parker** (Camper)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Buizel** — Lv. 26
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Water Gun, Swift, Quick Attack
+    - **Shinx** — Lv. 26
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Spark, Bite
+
+**Terry** (Collector)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Gible** — Lv. 26
+      - Ability: Sand Veil
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Lorenzo** (Hiker)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Onix** — Lv. 26
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Reginald** (Hiker)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Geodude** — Lv. 26
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Geodude** — Lv. 26
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Cassidy** (Lass)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Buneary** — Lv. 26
+      - Ability: Limber
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Mira** (Trainer Mira)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Kadabra** — Lv. 26
+      - Ability: Synchronize
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Confusion, Shock Wave, Flash, Kinesis
+
+**Ana** (Picnicker)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Hoothoot** — Lv. 26
       - Ability: Insomnia
       - Nature: Hardy (default, not yet curated)
-      - Held Item: Sitrus Berry
-      - Moves: Drill Peck, Night Shade, Astonish, Faint Attack
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Tori** (Picnicker)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Psyduck** — Lv. 26
+      - Ability: Damp
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Gerald** (Ruin Maniac)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Geodude** — Lv. 26
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Bronzor** — Lv. 26
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Wayne** (Youngster)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Staravia** — Lv. 26
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Shellos** — Lv. 26
+      - Ability: Sticky Hold
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Ponyta** — Lv. 26
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Route 207
+
+**Helen** (Battle Girl)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Machop** — Lv. 26
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Meditite** — Lv. 26
+      - Ability: Pure Power
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Anthony** (Camper)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Chimchar** — Lv. 26
+      - Ability: Blaze
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Justin** (Hiker)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Geodude** — Lv. 26
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Nosepass** — Lv. 26
+      - Ability: Sturdy
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Kevin** (Hiker)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Geodude** — Lv. 26
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Geodude** — Lv. 26
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Onix** — Lv. 26
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Geodude** — Lv. 26
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Lauren** (Picnicker)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Pachirisu** — Lv. 26
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Spark, Quick Attack, Charm
+
+**Austin** (Youngster)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Buizel** — Lv. 26
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Luxio** — Lv. 26
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Gligar** — Lv. 26
+      - Ability: Hyper Cutter
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
 
 ### Mt Coronet 1F Tunnel Room
 
@@ -1035,117 +1361,37 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Default level-up moves
 
-### Route 206
+### Route 208
 
-**Axel** (Cyclist Male)
+**Hannah** (Aroma Lady)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Pikachu** — Lv. 26
-      - Ability: Static
+    - **Roselia** — Lv. 26
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Combee** — Lv. 26
+      - Ability: Honey Gather
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**James** (Cyclist Male)
+**William** (Artist)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Ponyta** — Lv. 26
-      - Ability: Run Away
+    - **Mime Jr.** — Lv. 26
+      - Ability: Soundproof
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Bonsly** — Lv. 26
+      - Ability: Sturdy
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**John** (Cyclist Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Starly** — Lv. 26
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Staravia** — Lv. 26
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Kayla** (Cyclist Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Pikachu** — Lv. 26
-      - Ability: Static
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Megan** (Cyclist Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Staravia** — Lv. 26
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Nicole** (Cyclist Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Starly** — Lv. 26
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Starly** — Lv. 26
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Starly** — Lv. 26
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Rachel** (Cyclist Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Ponyta** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Shinx** — Lv. 26
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Ryan** (Cyclist Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Shinx** — Lv. 26
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Theodore** (Hiker)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Onix** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Onix** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 207
-
-**Helen** (Battle Girl)
+**Kyle** (Black Belt)
   - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
   - Party:
     - **Machop** — Lv. 26
@@ -1153,615 +1399,49 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-    - **Meditite** — Lv. 26
-      - Ability: Pure Power
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
 
-**Anthony** (Camper)
+**Cody** (Fisherman)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Chimchar** — Lv. 26
-      - Ability: Blaze
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Justin** (Hiker)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Geodude** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Nosepass** — Lv. 26
-      - Ability: Sturdy
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Kevin** (Hiker)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Geodude** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Geodude** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Onix** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Geodude** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Lauren** (Picnicker)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Pachirisu** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Spark, Quick Attack, Charm
-
-**Austin** (Youngster)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Buizel** — Lv. 26
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Luxio** — Lv. 26
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Gligar** — Lv. 26
-      - Ability: Hyper Cutter
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 209
-
-**Albert** (Breeder Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Budew** — Lv. 26
-      - Ability: Natural Cure
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Bonsly** — Lv. 26
-      - Ability: Sturdy
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Pichu** — Lv. 26
-      - Ability: Static
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Eevee** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Jennifer** (Breeder Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Budew** — Lv. 26
-      - Ability: Natural Cure
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Mime jr.** — Lv. 26
-      - Ability: Soundproof
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Cleffa** — Lv. 26
-      - Ability: Cute Charm
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Eevee** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Shelley** (Cowgirl)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Ponyta** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Raul** (Jogger)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Staravia** — Lv. 26
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Richard** (Jogger)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Luxio** — Lv. 26
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Danielle** (Poke Kid)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Pichu** — Lv. 26
-      - Ability: Static
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Emma & Lil** (Twins)
-  - Double Battle
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Bonsly** — Lv. 26
-      - Ability: Sturdy
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Mime jr.** — Lv. 26
-      - Ability: Soundproof
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Ty & Sue** (Young Couple)
-  - Double Battle
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Buneary** — Lv. 26
-      - Ability: Limber
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Foresight, Jump Kick, Quick Attack, Defense Curl
-    - **Buizel** — Lv. 26
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Aqua Jet, Swift, Pursuit, Sonic Boom
-
-### Route 209 Gate To Hearthome City
-
-**Cedric** (Rival)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Staravia** — Lv. 28
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
-    - **Roselia** — Lv. 28
-      - Ability: Natural Cure
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Mega Drain, Poison Sting, Leech Seed, Stun Spore
-    - **Ponyta** — Lv. 28
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Ember, Tackle, Tail Whip, Growl
-    - **Prinplup** — Lv. 28
-      - Ability: Torrent
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Bubble Beam, Peck, Metal Claw, Growl
-
-**Cedric** (Rival)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Staravia** — Lv. 28
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
-    - **Buizel** — Lv. 28
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Water Gun, Quick Attack, Pursuit, Growl
-    - **Ponyta** — Lv. 28
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Ember, Tackle, Tail Whip, Growl
-    - **Grotle** — Lv. 28
-      - Ability: Overgrow
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Razor Leaf, Tackle, Absorb, Withdraw
-
-**Cedric** (Rival)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Staravia** — Lv. 28
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
-    - **Buizel** — Lv. 28
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Water Gun, Quick Attack, Pursuit, Growl
-    - **Roselia** — Lv. 28
-      - Ability: Natural Cure
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Mega Drain, Poison Sting, Leech Seed, Stun Spore
-    - **Monferno** — Lv. 28
-      - Ability: Blaze
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Flame Wheel, Mach Punch, Fury Swipes, Leer
-
-### Route 209 Lost Tower 2F
-
-**Oliver** (Youngster)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Mothim** — Lv. 26
-      - Ability: Swarm
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
     - **Barboach** — Lv. 26
       - Ability: Oblivious
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-    - **Chatot** — Lv. 26
-      - Ability: Keen Eye
+    - **Gyarados** — Lv. 26
+      - Ability: Intimidate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-### Route 209 Lost Tower 3F
-
-**Leonard** (Pokefan Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Full Heal, Super Potion
-  - Party:
-    - **Pichu** — Lv. 26
-      - Ability: Static
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: Sitrus Berry
-      - Moves: Default level-up moves
-    - **Pichu** — Lv. 26
-      - Ability: Static
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: Sitrus Berry
-      - Moves: Default level-up moves
-    - **Pikachu** — Lv. 26
-      - Ability: Static
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: Sitrus Berry
-      - Moves: Default level-up moves
-
-**Kirby** (Roughneck)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Cleffa** — Lv. 26
-      - Ability: Cute Charm
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 209 Lost Tower 4F
-
-**Beth & Bob** (Belle And Pa)
-  - Double Battle
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Ponyta** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Ponyta** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Rebekah** (Pokefan Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Full Heal, Super Potion
-  - Party:
-    - **Bonsly** — Lv. 26
-      - Ability: Sturdy
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: Sitrus Berry
-      - Moves: Default level-up moves
-
-**Mike & Nat** (Young Couple)
-  - Double Battle
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Murkrow** — Lv. 26
-      - Ability: Insomnia
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Misdreavus** — Lv. 26
-      - Ability: Levitate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 210 South
-
-**Ava & Matt** (Belle And Pa)
-  - Double Battle
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Ponyta** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Rapidash** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Amber** (Breeder Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Magby** — Lv. 26
-      - Ability: Flame Body
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Togepi** — Lv. 26
-      - Ability: Hustle
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Kahlil** (Breeder Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Elekid** — Lv. 26
-      - Ability: Static
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Happiny** — Lv. 26
-      - Ability: Natural Cure
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Wyatt** (Jogger)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Pikachu** — Lv. 26
-      - Ability: Static
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Brennan** (Ninja Boy)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Zubat** — Lv. 26
-      - Ability: Inner Focus
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Skorupi** — Lv. 26
-      - Ability: Battle Armor
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Bruce** (Ninja Boy)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Stunky** — Lv. 26
-      - Ability: Stench
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Fabian** (Ninja Boy)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Croagunk** — Lv. 26
-      - Ability: Poison Touch
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Croagunk** — Lv. 26
-      - Ability: Poison Touch
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Marco** (Rancher)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Ponyta** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Teri & Tia** (Twins)
-  - Double Battle
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Pikachu** — Lv. 26
-      - Ability: Static
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Clefairy** — Lv. 26
-      - Ability: Cute Charm
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 211 East
-
-**Katherine** (Bird Keeper)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Noctowl** — Lv. 26
-      - Ability: Insomnia
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Sean** (Black Belt)
+**Alexander** (Hiker)
   - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
   - Party:
-    - **Croagunk** — Lv. 26
-      - Ability: Poison Touch
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Meditite** — Lv. 26
-      - Ability: Pure Power
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Machoke** — Lv. 26
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Nick** (Ninja Boy)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Skorupi** — Lv. 26
-      - Ability: Battle Armor
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Croagunk** — Lv. 26
-      - Ability: Poison Touch
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Harry** (Ruin Maniac)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Bronzor** — Lv. 26
-      - Ability: Levitate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Bronzor** — Lv. 26
-      - Ability: Levitate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Bronzor** — Lv. 26
-      - Ability: Levitate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 211 West
-
-**Alexandra** (Bird Keeper)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Starly** — Lv. 26
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Hoothoot** — Lv. 26
-      - Ability: Insomnia
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Louis** (Hiker)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Geodude** — Lv. 26
+    - **Graveler** — Lv. 26
       - Ability: Rock Head
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
+    - **Probopass** — Lv. 26
+      - Ability: Sturdy
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Jonathan** (Hiker)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
     - **Onix** — Lv. 26
       - Ability: Rock Head
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Zach** (Ninja Boy)
-  - AI Flags: Basic, Evaluate Attack, Expert
+**Robert** (Hiker)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
   - Party:
-    - **Zubat** — Lv. 26
-      - Ability: Inner Focus
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Zubat** — Lv. 26
-      - Ability: Inner Focus
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Zubat** — Lv. 26
-      - Ability: Inner Focus
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Solaceon Ruins Room 3
-
-**Karl** (Ruin Maniac)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Geodude** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Geodude** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Bronzor** — Lv. 26
-      - Ability: Levitate
+    - **Nosepass** — Lv. 26
+      - Ability: Sturdy
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
@@ -1863,222 +1543,15 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: Sitrus Berry
       - Moves: Night Slash, Poison Gas, Screech, Smoke Screen
 
-### Wayward Cave 1F
-
-**Diego** (Camper)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Aipom** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Parker** (Camper)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Buizel** — Lv. 26
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Water Gun, Swift, Quick Attack
-    - **Shinx** — Lv. 26
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Spark, Bite
-
-**Terry** (Collector)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Gible** — Lv. 26
-      - Ability: Sand Veil
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Lorenzo** (Hiker)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Onix** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Reginald** (Hiker)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Geodude** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Geodude** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Cassidy** (Lass)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Buneary** — Lv. 26
-      - Ability: Limber
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Mira** (Trainer Mira)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Kadabra** — Lv. 26
-      - Ability: Synchronize
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Confusion, Shock Wave, Flash, Kinesis
-
-**Ana** (Picnicker)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Hoothoot** — Lv. 26
-      - Ability: Insomnia
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Tori** (Picnicker)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Psyduck** — Lv. 26
-      - Ability: Damp
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Gerald** (Ruin Maniac)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Geodude** — Lv. 26
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Bronzor** — Lv. 26
-      - Ability: Levitate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Wayne** (Youngster)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Staravia** — Lv. 26
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Shellos** — Lv. 26
-      - Ability: Sticky Hold
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Ponyta** — Lv. 26
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
 ## Tier 4 — cap 37
 
-### Pokemon Mansion
+### Route 209
 
-**Celeste** (Lady)
+**Albert** (Breeder Male)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Full Restore
   - Party:
-    - **Blissey** — Lv. 33
+    - **Budew** — Lv. 33
       - Ability: Natural Cure
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: Rare Candy
-      - Moves: Fling, Softboiled, Egg Bomb, Psychic
-
-**Belinda** (Maid)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Clefairy** — Lv. 33
-      - Ability: Cute Charm
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Metronome, Minimize, Meteor Mash, Endure
-
-**Clare** (Maid)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Clefairy** — Lv. 33
-      - Ability: Cute Charm
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Metronome, Bounce, Meteor Mash, Endure
-
-**Elena** (Maid)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Clefairy** — Lv. 33
-      - Ability: Cute Charm
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Metronome, Swagger, Meteor Mash, Endure
-
-**Emily** (Maid)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Clefairy** — Lv. 33
-      - Ability: Cute Charm
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Metronome, Encore, Meteor Mash, Endure
-
-**Sophie** (Maid)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Clefairy** — Lv. 33
-      - Ability: Cute Charm
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Metronome, Sing, Meteor Mash, Endure
-
-**Liam** (Rich Boy)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Full Restore
-  - Party:
-    - **Blissey** — Lv. 33
-      - Ability: Natural Cure
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: Rare Candy
-      - Moves: Default level-up moves
-
-### Route 208
-
-**Hannah** (Aroma Lady)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Roselia** — Lv. 33
-      - Ability: Natural Cure
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Combee** — Lv. 33
-      - Ability: Honey Gather
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**William** (Artist)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Mime jr.** — Lv. 33
-      - Ability: Soundproof
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
@@ -2087,256 +1560,499 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-
-**Kyle** (Black Belt)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Machop** — Lv. 33
-      - Ability: Guts
+    - **Pichu** — Lv. 33
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Eevee** — Lv. 33
+      - Ability: Run Away
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Cody** (Fisherman)
+**Jennifer** (Breeder Female)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Barboach** — Lv. 33
-      - Ability: Oblivious
+    - **Budew** — Lv. 33
+      - Ability: Natural Cure
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-    - **Gyarados** — Lv. 33
+    - **Mime Jr.** — Lv. 33
+      - Ability: Soundproof
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Cleffa** — Lv. 33
+      - Ability: Cute Charm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Eevee** — Lv. 33
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Shelley** (Cowgirl)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Ponyta** — Lv. 33
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Raul** (Jogger)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Staravia** — Lv. 33
       - Ability: Intimidate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Alexander** (Hiker)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Graveler** — Lv. 33
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Probopass** — Lv. 33
-      - Ability: Sturdy
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Jonathan** (Hiker)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Onix** — Lv. 33
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Robert** (Hiker)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Nosepass** — Lv. 33
-      - Ability: Sturdy
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 212 North
-
-**Jeremy** (Gentleman)
+**Richard** (Jogger)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Full Restore
   - Party:
+    - **Luxio** — Lv. 33
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Danielle** (Poke Kid)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Pichu** — Lv. 33
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Emma & Lil** (Twins)
+  - Double Battle
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Bonsly** — Lv. 33
+      - Ability: Sturdy
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Mime Jr.** — Lv. 33
+      - Ability: Soundproof
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Ty & Sue** (Young Couple)
+  - Double Battle
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Buneary** — Lv. 33
+      - Ability: Limber
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Foresight, Jump Kick, Quick Attack, Defense Curl
+    - **Buizel** — Lv. 33
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Aqua Jet, Swift, Pursuit, Sonic Boom
+
+### Route 209 Lost Tower 2F
+
+**Oliver** (Youngster)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Mothim** — Lv. 33
+      - Ability: Swarm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Barboach** — Lv. 33
+      - Ability: Oblivious
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
     - **Chatot** — Lv. 33
       - Ability: Keen Eye
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Melissa** (Lady)
+### Route 209 Lost Tower 3F
+
+**Leonard** (Pokefan Male)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Full Restore
+  - Battle Items: Full Heal, Super Potion
   - Party:
-    - **Cherubi** — Lv. 33
-      - Ability: Chlorophyll
+    - **Pichu** — Lv. 33
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Default level-up moves
+    - **Pichu** — Lv. 33
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Default level-up moves
+    - **Pikachu** — Lv. 33
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Default level-up moves
+
+**Kirby** (Roughneck)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Cleffa** — Lv. 33
+      - Ability: Cute Charm
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Alex** (Policeman)
+### Route 209 Lost Tower 4F
+
+**Beth & Bob** (Belle And Pa)
+  - Double Battle
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Hoothoot** — Lv. 33
+    - **Ponyta** — Lv. 33
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Ponyta** — Lv. 33
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Rebekah** (Pokefan Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: Full Heal, Super Potion
+  - Party:
+    - **Bonsly** — Lv. 33
+      - Ability: Sturdy
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Default level-up moves
+
+**Mike & Nat** (Young Couple)
+  - Double Battle
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Murkrow** — Lv. 33
       - Ability: Insomnia
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-    - **Machop** — Lv. 33
-      - Ability: Guts
+    - **Misdreavus** — Lv. 33
+      - Ability: Levitate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Bobby** (Policeman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Hoothoot** — Lv. 33
-      - Ability: Insomnia
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Machop** — Lv. 33
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
+### Route 209 Gate To Hearthome City
 
-**Caleb** (Policeman)
+**Cedric** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Hoothoot** — Lv. 33
-      - Ability: Insomnia
+    - **Staravia** — Lv. 35
+      - Ability: Intimidate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Default level-up moves
-    - **Machop** — Lv. 33
-      - Ability: Guts
+      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
+    - **Roselia** — Lv. 35
+      - Ability: Natural Cure
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Default level-up moves
-
-**Dylan** (Policeman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Hoothoot** — Lv. 33
-      - Ability: Insomnia
+      - Moves: Mega Drain, Poison Sting, Leech Seed, Stun Spore
+    - **Ponyta** — Lv. 35
+      - Ability: Run Away
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Default level-up moves
-    - **Machop** — Lv. 33
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Jason** (Rich Boy)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Full Restore
-  - Party:
-    - **Prinplup** — Lv. 33
+      - Moves: Ember, Tackle, Tail Whip, Growl
+    - **Prinplup** — Lv. 35
       - Ability: Torrent
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
+      - Moves: Bubble Beam, Peck, Metal Claw, Growl
+
+**Cedric** (Rival)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Staravia** — Lv. 35
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
+    - **Buizel** — Lv. 35
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Water Gun, Quick Attack, Pursuit, Growl
+    - **Ponyta** — Lv. 35
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Ember, Tackle, Tail Whip, Growl
+    - **Grotle** — Lv. 35
+      - Ability: Overgrow
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Razor Leaf, Tackle, Absorb, Withdraw
+
+**Cedric** (Rival)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Staravia** — Lv. 35
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
+    - **Buizel** — Lv. 35
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Water Gun, Quick Attack, Pursuit, Growl
+    - **Roselia** — Lv. 35
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Mega Drain, Poison Sting, Leech Seed, Stun Spore
+    - **Monferno** — Lv. 35
+      - Ability: Blaze
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Flame Wheel, Mach Punch, Fury Swipes, Leer
+
+### Route 210 South
+
+**Ava & Matt** (Belle And Pa)
+  - Double Battle
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Ponyta** — Lv. 33
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Rapidash** — Lv. 33
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
       - Moves: Default level-up moves
 
-**Reina** (Socialite)
+**Amber** (Breeder Female)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Full Restore
   - Party:
-    - **Roselia** — Lv. 33
+    - **Magby** — Lv. 33
+      - Ability: Flame Body
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Togepi** — Lv. 33
+      - Ability: Hustle
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Kahlil** (Breeder Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Elekid** — Lv. 33
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Happiny** — Lv. 33
       - Ability: Natural Cure
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-### Route 212 South
-
-**Dean** (Collector)
+**Wyatt** (Jogger)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Umbreon** — Lv. 33
+    - **Pikachu** — Lv. 33
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Brennan** (Ninja Boy)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Zubat** — Lv. 33
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Skorupi** — Lv. 33
+      - Ability: Battle Armor
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Bruce** (Ninja Boy)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Stunky** — Lv. 33
+      - Ability: Stench
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Fabian** (Ninja Boy)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Croagunk** — Lv. 33
+      - Ability: Poison Touch
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Croagunk** — Lv. 33
+      - Ability: Poison Touch
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Marco** (Rancher)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Ponyta** — Lv. 33
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Teri & Tia** (Twins)
+  - Double Battle
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Pikachu** — Lv. 33
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Clefairy** — Lv. 33
+      - Ability: Cute Charm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Cafe
+
+**Edwin** (Collector)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Munchlax** — Lv. 33
+      - Ability: Pickup
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Fernando** (Collector)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Heracross** — Lv. 33
+      - Ability: Swarm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Kati** (Waitress)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Clefairy** — Lv. 33
+      - Ability: Cute Charm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Solaceon Ruins Room 3
+
+**Karl** (Ruin Maniac)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Geodude** — Lv. 33
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Geodude** — Lv. 33
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Bronzor** — Lv. 33
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Route 215
+
+**Dennis** (Ace Trainer Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Gligar** — Lv. 33
+      - Ability: Hyper Cutter
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Screech, Faint Attack, Quick Attack, Poison Sting
+    - **Buizel** — Lv. 33
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Aqua Jet, Swift, Pursuit, Quick Attack
+    - **Drifblim** — Lv. 33
+      - Ability: Flare Boost
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Swallow, Gust, Stockpile, Ominous Wind
+
+**Maya** (Ace Trainer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Roselia** — Lv. 33
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Toxic Spikes, Giga Drain, Leech Seed
+    - **Ralts** — Lv. 33
       - Ability: Synchronize
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Default level-up moves
-    - **Espeon** — Lv. 33
-      - Ability: Synchronize
+      - Moves: Psychic, Magical Leaf, Calm Mind, Double Team
+    - **Lickitung** — Lv. 33
+      - Ability: Own Tempo
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Supersonic, Stomp, Rollout, Defense Curl
+
+**Derek** (Black Belt)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
+  - Party:
+    - **Croagunk** — Lv. 33
+      - Ability: Poison Touch
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Josh** (Fisherman)
-  - AI Flags: Basic, Evaluate Attack, Expert
+**Gregory** (Black Belt)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
   - Party:
-    - **Goldeen** — Lv. 33
-      - Ability: Swift Swim
+    - **Machop** — Lv. 33
+      - Ability: Guts
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-    - **Goldeen** — Lv. 33
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Juan** (Fisherman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Gyarados** — Lv. 33
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Travis** (Fisherman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Barboach** — Lv. 33
-      - Ability: Oblivious
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Barboach** — Lv. 33
-      - Ability: Oblivious
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Gyarados** — Lv. 33
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Barboach** — Lv. 33
-      - Ability: Oblivious
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Alexa** (Parasol Lady)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Goldeen** — Lv. 33
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Bibarel** — Lv. 33
-      - Ability: Simple
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Sabrina** (Parasol Lady)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Wooper** — Lv. 33
-      - Ability: Damp
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Quagsire** — Lv. 33
-      - Ability: Damp
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Danny** (Policeman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Hoothoot** — Lv. 33
-      - Ability: Insomnia
+    - **Machop** — Lv. 33
+      - Ability: Guts
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
@@ -2346,34 +2062,30 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Default level-up moves
 
-**Allison** (Ranger Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
+**Nathaniel** (Black Belt)
+  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
   - Party:
-    - **Marill** — Lv. 33
-      - Ability: Thick Fat
+    - **Croagunk** — Lv. 33
+      - Ability: Poison Touch
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-    - **Leafeon** — Lv. 33
-      - Ability: Leaf Guard
+    - **Meditite** — Lv. 33
+      - Ability: Pure Power
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-
-**Jeffrey** (Ranger Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Monferno** — Lv. 33
-      - Ability: Blaze
+    - **Machop** — Lv. 33
+      - Ability: Guts
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-**Taylor** (Ranger Male)
+**Craig** (Jogger)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Carnivine** — Lv. 33
-      - Ability: Levitate
+    - **Luxio** — Lv. 33
+      - Ability: Guts
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
@@ -2383,30 +2095,28 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Default level-up moves
 
-**Shaun** (Scientist)
+**Scott** (Jogger)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: X Attack
   - Party:
-    - **Magnemite** — Lv. 33
-      - Ability: Magnet Pull
+    - **Staravia** — Lv. 33
+      - Ability: Intimidate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Spark, Magnet Bomb
-    - **Kadabra** — Lv. 33
-      - Ability: Synchronize
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Psybeam, Disable, Kinesis, Thunder Punch
+      - Moves: Default level-up moves
 
-**Stefano** (Scientist)
+**Calvin** (Ruin Maniac)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: X Defense
   - Party:
-    - **Kadabra** — Lv. 33
-      - Ability: Synchronize
+    - **Bronzor** — Lv. 33
+      - Ability: Levitate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Psybeam, Disable, Kinesis, Ice Punch
+      - Moves: Default level-up moves
+    - **Shieldon** — Lv. 33
+      - Ability: Sturdy
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
 
 ### Veilstone City
 
@@ -2417,7 +2127,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Cute Charm
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Metronome, Gravity, Wake Up Slap, Sing
+      - Moves: Metronome, Gravity, Wake-Up Slap, Sing
     - **Kadabra** — Lv. 33
       - Ability: Synchronize
       - Nature: Hardy (default, not yet curated)
@@ -2436,7 +2146,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Cute Charm
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Metronome, Gravity, Wake Up Slap, Sing
+      - Moves: Metronome, Gravity, Wake-Up Slap, Sing
     - **Kadabra** — Lv. 33
       - Ability: Synchronize
       - Nature: Hardy (default, not yet curated)
@@ -2455,7 +2165,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Cute Charm
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Metronome, Gravity, Wake Up Slap, Sing
+      - Moves: Metronome, Gravity, Wake-Up Slap, Sing
     - **Kadabra** — Lv. 33
       - Ability: Synchronize
       - Nature: Hardy (default, not yet curated)
@@ -2502,7 +2212,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Cute Charm
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Metronome, Gravity, Wake Up Slap, Sing
+      - Moves: Metronome, Gravity, Wake-Up Slap, Sing
     - **Kadabra** — Lv. 33
       - Ability: Synchronize
       - Nature: Hardy (default, not yet curated)
@@ -2521,7 +2231,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Cute Charm
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Metronome, Gravity, Wake Up Slap, Sing
+      - Moves: Metronome, Gravity, Wake-Up Slap, Sing
     - **Kadabra** — Lv. 33
       - Ability: Synchronize
       - Nature: Hardy (default, not yet curated)
@@ -2540,7 +2250,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Cute Charm
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Metronome, Gravity, Wake Up Slap, Sing
+      - Moves: Metronome, Gravity, Wake-Up Slap, Sing
     - **Kadabra** — Lv. 33
       - Ability: Synchronize
       - Nature: Hardy (default, not yet curated)
@@ -2554,79 +2264,496 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
 
 ## Tier 5 — cap 45
 
-### Pastoria City
+### Route 212 North
 
-**Cedric** (Rival)
+**Jeremy** (Gentleman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: Full Restore
+  - Party:
+    - **Chatot** — Lv. 41
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Melissa** (Lady)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: Full Restore
+  - Party:
+    - **Cherubi** — Lv. 41
+      - Ability: Chlorophyll
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Alex** (Policeman)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Staravia** — Lv. 43
-      - Ability: Intimidate
+    - **Hoothoot** — Lv. 41
+      - Ability: Insomnia
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
-    - **Roselia** — Lv. 43
-      - Ability: Natural Cure
+      - Moves: Default level-up moves
+    - **Machop** — Lv. 41
+      - Ability: Guts
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Mega Drain, Poison Sting, Leech Seed, Magical Leaf
-    - **Ponyta** — Lv. 43
-      - Ability: Run Away
+      - Moves: Default level-up moves
+
+**Bobby** (Policeman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Hoothoot** — Lv. 41
+      - Ability: Insomnia
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Ember, Stomp, Tail Whip, Growl
-    - **Prinplup** — Lv. 43
+      - Moves: Default level-up moves
+    - **Machop** — Lv. 41
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Caleb** (Policeman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Hoothoot** — Lv. 41
+      - Ability: Insomnia
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Machop** — Lv. 41
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Dylan** (Policeman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Hoothoot** — Lv. 41
+      - Ability: Insomnia
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Machop** — Lv. 41
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Jason** (Rich Boy)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: Full Restore
+  - Party:
+    - **Prinplup** — Lv. 41
       - Ability: Torrent
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Bubble Beam, Peck, Metal Claw, Growl
+      - Moves: Default level-up moves
 
-**Cedric** (Rival)
+**Reina** (Socialite)
   - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: Full Restore
   - Party:
-    - **Staravia** — Lv. 43
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
-    - **Buizel** — Lv. 43
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Aqua Jet, Quick Attack, Pursuit, Growl
-    - **Ponyta** — Lv. 43
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Ember, Stomp, Tail Whip, Growl
-    - **Grotle** — Lv. 43
-      - Ability: Overgrow
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Razor Leaf, Bite, Mega Drain, Withdraw
-
-**Cedric** (Rival)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Staravia** — Lv. 43
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
-    - **Buizel** — Lv. 43
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Aqua Jet, Quick Attack, Pursuit, Growl
-    - **Roselia** — Lv. 43
+    - **Roselia** — Lv. 41
       - Ability: Natural Cure
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Mega Drain, Poison Sting, Leech Seed, Magical Leaf
-    - **Monferno** — Lv. 43
+      - Moves: Default level-up moves
+
+### Route 212 South
+
+**Dean** (Collector)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Umbreon** — Lv. 41
+      - Ability: Synchronize
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Espeon** — Lv. 41
+      - Ability: Synchronize
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Josh** (Fisherman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Goldeen** — Lv. 41
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Goldeen** — Lv. 41
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Juan** (Fisherman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Gyarados** — Lv. 41
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Travis** (Fisherman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Barboach** — Lv. 41
+      - Ability: Oblivious
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Barboach** — Lv. 41
+      - Ability: Oblivious
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Gyarados** — Lv. 41
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Barboach** — Lv. 41
+      - Ability: Oblivious
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Alexa** (Parasol Lady)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Goldeen** — Lv. 41
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Bibarel** — Lv. 41
+      - Ability: Simple
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Sabrina** (Parasol Lady)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Wooper** — Lv. 41
+      - Ability: Damp
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Quagsire** — Lv. 41
+      - Ability: Damp
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Danny** (Policeman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Hoothoot** — Lv. 41
+      - Ability: Insomnia
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Machop** — Lv. 41
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Allison** (Ranger Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Marill** — Lv. 41
+      - Ability: Thick Fat
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Leafeon** — Lv. 41
+      - Ability: Leaf Guard
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Jeffrey** (Ranger Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Monferno** — Lv. 41
       - Ability: Blaze
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Flame Wheel, Mach Punch, Fury Swipes, Leer
+      - Moves: Default level-up moves
+
+**Taylor** (Ranger Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Carnivine** — Lv. 41
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Luxio** — Lv. 41
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Shaun** (Scientist)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: X Attack
+  - Party:
+    - **Magnemite** — Lv. 41
+      - Ability: Magnet Pull
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Spark, Magnet Bomb
+    - **Kadabra** — Lv. 41
+      - Ability: Synchronize
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Psybeam, Disable, Kinesis, Thunder Punch
+
+**Stefano** (Scientist)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: X Defend
+  - Party:
+    - **Kadabra** — Lv. 41
+      - Ability: Synchronize
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Psybeam, Disable, Kinesis, Ice Punch
+
+### Pokemon Mansion
+
+**Celeste** (Lady)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: Full Restore
+  - Party:
+    - **Blissey** — Lv. 41
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Rare Candy
+      - Moves: Fling, Softboiled, Egg Bomb, Psychic
+
+**Belinda** (Maid)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Clefairy** — Lv. 41
+      - Ability: Cute Charm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Metronome, Minimize, Meteor Mash, Endure
+
+**Clare** (Maid)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Clefairy** — Lv. 41
+      - Ability: Cute Charm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Metronome, Bounce, Meteor Mash, Endure
+
+**Elena** (Maid)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Clefairy** — Lv. 41
+      - Ability: Cute Charm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Metronome, Swagger, Meteor Mash, Endure
+
+**Emily** (Maid)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Clefairy** — Lv. 41
+      - Ability: Cute Charm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Metronome, Encore, Meteor Mash, Endure
+
+**Sophie** (Maid)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Clefairy** — Lv. 41
+      - Ability: Cute Charm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Metronome, Sing, Meteor Mash, Endure
+
+**Liam** (Rich Boy)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: Full Restore
+  - Party:
+    - **Blissey** — Lv. 41
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Rare Candy
+      - Moves: Default level-up moves
+
+### Route 214
+
+**Devon** (Beauty)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Wormadam** — Lv. 41
+      - Ability: Anticipation
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Wormadam (Sandy Cloak)** — Lv. 41
+      - Ability: Anticipation
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Wormadam (Trash Cloak)** — Lv. 41
+      - Ability: Anticipation
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Brady** (Collector)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Skorupi** — Lv. 41
+      - Ability: Battle Armor
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Tangela** — Lv. 41
+      - Ability: Chlorophyll
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Yanma** — Lv. 41
+      - Ability: Speed Boost
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Carnivine** — Lv. 41
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Croagunk** — Lv. 41
+      - Ability: Poison Touch
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Tropius** — Lv. 41
+      - Ability: Chlorophyll
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Douglas** (Collector)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Jolteon** — Lv. 41
+      - Ability: Volt Absorb
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Vaporeon** — Lv. 41
+      - Ability: Water Absorb
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Flareon** — Lv. 41
+      - Ability: Flash Fire
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Jamal** (Collector)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Porygon** — Lv. 41
+      - Ability: Trace
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Carlos** (Pi)
+  - AI Flags: Basic, Evaluate Attack, Expert, Risky
+  - Party:
+    - **Goldeen** — Lv. 41
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Horn Drill, Flail
+
+**Abigail** (Psychic Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Chingling** — Lv. 41
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Drifloon** — Lv. 41
+      - Ability: Flare Boost
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Kirlia** — Lv. 41
+      - Ability: Synchronize
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Mitchell** (Psychic Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Duskull** — Lv. 41
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Kadabra** — Lv. 41
+      - Ability: Synchronize
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Bryan** (Ruin Maniac)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Bronzor** — Lv. 41
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Cranidos** — Lv. 41
+      - Ability: Mold Breaker
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Ronald** (Ruin Maniac)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Shieldon** — Lv. 41
+      - Ability: Sturdy
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Valor Lakefront
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Croagunk** — Lv. 42
+      - Ability: Poison Touch
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
 
 ### Restaurant
 
@@ -2693,7 +2820,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-    - **Mr. mime** — Lv. 41
+    - **Mr. Mime** — Lv. 41
       - Ability: Soundproof
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
@@ -2751,7 +2878,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
   - AI Flags: Basic, Evaluate Attack, Expert, Risky
   - Party:
     - **Rhyhorn** — Lv. 41
-      - Ability: Lightning Rod
+      - Ability: Lightningrod
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Horn Drill, Reversal
@@ -2791,7 +2918,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
 
 **Esteban** (School Kid Male)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: X Sp Def
+  - Battle Items: X Sp. Def
   - Party:
     - **Quagsire** — Lv. 41
       - Ability: Damp
@@ -2971,290 +3098,354 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Default level-up moves
 
-### Route 214
+### Pastoria City
 
-**Devon** (Beauty)
+**Cedric** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Wormadam** — Lv. 41
-      - Ability: Anticipation
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Wormadam (Sandy Cloak)** — Lv. 41
-      - Ability: Anticipation
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Wormadam (Trash Cloak)** — Lv. 41
-      - Ability: Anticipation
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Brady** (Collector)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Skorupi** — Lv. 41
-      - Ability: Battle Armor
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Tangela** — Lv. 41
-      - Ability: Chlorophyll
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Yanma** — Lv. 41
-      - Ability: Speed Boost
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Carnivine** — Lv. 41
-      - Ability: Levitate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Croagunk** — Lv. 41
-      - Ability: Poison Touch
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Tropius** — Lv. 41
-      - Ability: Chlorophyll
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Douglas** (Collector)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Jolteon** — Lv. 41
-      - Ability: Volt Absorb
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Vaporeon** — Lv. 41
-      - Ability: Water Absorb
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Flareon** — Lv. 41
-      - Ability: Flash Fire
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Jamal** (Collector)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Porygon** — Lv. 41
-      - Ability: Trace
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Carlos** (Pi)
-  - AI Flags: Basic, Evaluate Attack, Expert, Risky
-  - Party:
-    - **Goldeen** — Lv. 41
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Horn Drill, Flail
-
-**Abigail** (Psychic Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Chingling** — Lv. 41
-      - Ability: Levitate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Drifloon** — Lv. 41
-      - Ability: Flare Boost
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Kirlia** — Lv. 41
-      - Ability: Synchronize
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Mitchell** (Psychic Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Duskull** — Lv. 41
-      - Ability: Levitate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Kadabra** — Lv. 41
-      - Ability: Synchronize
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Bryan** (Ruin Maniac)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Bronzor** — Lv. 41
-      - Ability: Levitate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Cranidos** — Lv. 41
-      - Ability: Mold Breaker
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Ronald** (Ruin Maniac)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Shieldon** — Lv. 41
-      - Ability: Sturdy
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 215
-
-**Dennis** (Ace Trainer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Gligar** — Lv. 41
-      - Ability: Hyper Cutter
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Screech, Faint Attack, Quick Attack, Poison Sting
-    - **Buizel** — Lv. 41
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Aqua Jet, Swift, Pursuit, Quick Attack
-    - **Drifblim** — Lv. 41
-      - Ability: Flare Boost
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Swallow, Gust, Stockpile, Ominous Wind
-
-**Maya** (Ace Trainer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Roselia** — Lv. 41
-      - Ability: Natural Cure
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Toxic Spikes, Giga Drain, Leech Seed
-    - **Ralts** — Lv. 41
-      - Ability: Synchronize
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Psychic, Magical Leaf, Calm Mind, Double Team
-    - **Lickitung** — Lv. 41
-      - Ability: Own Tempo
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Supersonic, Stomp, Rollout, Defense Curl
-
-**Derek** (Black Belt)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Croagunk** — Lv. 41
-      - Ability: Poison Touch
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Gregory** (Black Belt)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Machop** — Lv. 41
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Machop** — Lv. 41
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Machop** — Lv. 41
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Nathaniel** (Black Belt)
-  - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
-  - Party:
-    - **Croagunk** — Lv. 41
-      - Ability: Poison Touch
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Meditite** — Lv. 41
-      - Ability: Pure Power
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Machop** — Lv. 41
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Craig** (Jogger)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Luxio** — Lv. 41
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Luxio** — Lv. 41
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Scott** (Jogger)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Staravia** — Lv. 41
+    - **Staravia** — Lv. 43
       - Ability: Intimidate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Default level-up moves
+      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
+    - **Roselia** — Lv. 43
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Mega Drain, Poison Sting, Leech Seed, Magical Leaf
+    - **Ponyta** — Lv. 43
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Ember, Stomp, Tail Whip, Growl
+    - **Prinplup** — Lv. 43
+      - Ability: Torrent
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Bubble Beam, Peck, Metal Claw, Growl
 
-**Calvin** (Ruin Maniac)
+**Cedric** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Bronzor** — Lv. 41
-      - Ability: Levitate
+    - **Staravia** — Lv. 43
+      - Ability: Intimidate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Default level-up moves
-    - **Shieldon** — Lv. 41
-      - Ability: Sturdy
+      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
+    - **Buizel** — Lv. 43
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Aqua Jet, Quick Attack, Pursuit, Growl
+    - **Ponyta** — Lv. 43
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Ember, Stomp, Tail Whip, Growl
+    - **Grotle** — Lv. 43
+      - Ability: Overgrow
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Razor Leaf, Bite, Mega Drain, Withdraw
+
+**Cedric** (Rival)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Staravia** — Lv. 43
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Wing Attack, Quick Attack, Endeavor, Double Team
+    - **Buizel** — Lv. 43
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Aqua Jet, Quick Attack, Pursuit, Growl
+    - **Roselia** — Lv. 43
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Mega Drain, Poison Sting, Leech Seed, Magical Leaf
+    - **Monferno** — Lv. 43
+      - Ability: Blaze
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Flame Wheel, Mach Punch, Fury Swipes, Leer
+
+## Tier 6 — cap 51
+
+### Fuego Ironworks Building
+
+**Conrad** (Worker)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Magmar** — Lv. 47
+      - Ability: Flame Body
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-### Valor Lakefront
+**Dillan** (Worker)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Machop** — Lv. 47
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Machoke** — Lv. 47
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Holden** (Worker)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Magnemite** — Lv. 47
+      - Ability: Magnet Pull
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Magnemite** — Lv. 47
+      - Ability: Magnet Pull
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Magnemite** — Lv. 47
+      - Ability: Magnet Pull
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Route 220
+
+**Adrian** (Swimmer Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Remoraid** — Lv. 47
+      - Ability: Hustle
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Tentacool** — Lv. 47
+      - Ability: Clear Body
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Octillery** — Lv. 47
+      - Ability: Suction Cups
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Claire** (Swimmer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Floatzel** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Erica** (Swimmer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Finneon** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Erik** (Swimmer Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Tentacruel** — Lv. 47
+      - Ability: Clear Body
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Jessica** (Swimmer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Goldeen** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Goldeen** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Goldeen** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Seaking** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Katelyn** (Swimmer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Buizel** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Aqua Jet, Sonic Boom, Quick Attack, Attract
+    - **Medicham** — Lv. 47
+      - Ability: Pure Power
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Confusion, Brick Break, Meditate, Light Screen
+    - **Seaking** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Water Pulse, Horn Attack, Aqua Ring, Captivate
+
+**Vincent** (Swimmer Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Pelipper** — Lv. 47
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Gastrodon** — Lv. 47
+      - Ability: Storm Drain
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Route 221
+
+**Jake** (Ace Trainer Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Staraptor** — Lv. 47
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Take Down, Aerial Ace, Endeavor, Quick Attack
+    - **Girafarig** — Lv. 47
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Double Hit, Psychic
+
+**Shannon** (Ace Trainer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Cherrim** — Lv. 47
+      - Ability: Flower Gift
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Petal Dance, Magical Leaf, Leech Seed
+    - **Azumarill** — Lv. 47
+      - Ability: Thick Fat
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Double-Edge, Bubble Beam, Aqua Ring
+    - **Lopunny** — Lv. 47
+      - Ability: Limber
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Jump Kick, Quick Attack, Charm
+
+**Ivan** (Collector)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Togetic** — Lv. 47
+      - Ability: Hustle
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Cory** (Fisherman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Finneon** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Finneon** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Finneon** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Dillon** (Swimmer Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Remoraid** — Lv. 47
+      - Ability: Hustle
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Floatzel** — Lv. 47
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Vanessa** (Swimmer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Golduck** — Lv. 47
+      - Ability: Damp
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Celestic Town
 
 **Grunt** (Galactic Grunt Male) — *Galactic grunt*
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Croagunk** — Lv. 42
-      - Ability: Poison Touch
+    - **Houndour** — Lv. 48
+      - Ability: Early Bird
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Golbat** — Lv. 48
+      - Ability: Inner Focus
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
 
-## Tier 6 — cap 51
+### Celestic Town Cave
+
+**Cyrus** (Galactic Boss) — *Galactic boss*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: Hyper Potion
+  - Party:
+    - **Sneasel** — Lv. 49
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Slash, Ice Punch, Quick Attack, Screech
+    - **Golbat** — Lv. 49
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Poison Fang, Air Cutter, Bite, Supersonic
+    - **Murkrow** — Lv. 49
+      - Ability: Insomnia
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Drill Peck, Night Shade, Astonish, Faint Attack
 
 ### Canalave City
 
@@ -3496,7 +3687,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Default level-up moves
     - **Rhyhorn** — Lv. 47
-      - Ability: Lightning Rod
+      - Ability: Lightningrod
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
@@ -3801,6 +3992,55 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Aqua Jet, Whirlpool, Pursuit, Quick Attack
 
+### Lake Valor Drained
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Golbat** — Lv. 59
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Croagunk** — Lv. 59
+      - Ability: Poison Touch
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Glameow** — Lv. 59
+      - Ability: Limber
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Stunky** — Lv. 59
+      - Ability: Stench
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Houndour** — Lv. 59
+      - Ability: Early Bird
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Grunt** (Galactic Grunt Female) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Glameow** — Lv. 59
+      - Ability: Limber
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Murkrow** — Lv. 59
+      - Ability: Insomnia
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
 ### Route 216
 
 **Blake** (Ace Trainer Snow Male)
@@ -3810,7 +4050,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Technician
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Double Hit, U Turn, Sand Attack, Screech
+      - Moves: Double Hit, U-turn, Sand-Attack, Screech
     - **Porygon2** — Lv. 53
       - Ability: Trace
       - Nature: Hardy (default, not yet curated)
@@ -3820,7 +4060,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
 **Garrett** (Ace Trainer Snow Male)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Mr. mime** — Lv. 53
+    - **Mr. Mime** — Lv. 53
       - Ability: Soundproof
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
@@ -3829,12 +4069,12 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Pressure
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Will O Wisp, Shadow Punch, Pursuit, Confuse Ray
+      - Moves: Will-O-Wisp, Shadow Punch, Pursuit, Confuse Ray
     - **Scyther** — Lv. 53
       - Ability: Swarm
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Slash, X Scissor, Quick Attack, Fury Cutter
+      - Moves: Slash, X-Scissor, Quick Attack, Fury Cutter
 
 **Laura** (Ace Trainer Snow Female)
   - AI Flags: Basic, Evaluate Attack, Expert
@@ -3857,7 +4097,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Run Away
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Fire Blast, Take Down, Fury Attack, Will O Wisp
+      - Moves: Fire Blast, Take Down, Fury Attack, Will-O-Wisp
     - **Sudowoodo** — Lv. 53
       - Ability: Sturdy
       - Nature: Hardy (default, not yet curated)
@@ -3938,7 +4178,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Flame Body
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Flamethrower, Faint Attack, Smog, Will O Wisp
+      - Moves: Flamethrower, Faint Attack, Smog, Will-O-Wisp
 
 **Olivia** (Ace Trainer Snow Female)
   - AI Flags: Basic, Evaluate Attack, Expert
@@ -4059,616 +4299,6 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
 
 ## Tier 8 — cap 62
 
-### Route 219
-
-**Mariel** (Tuber Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Marill** — Lv. 58
-      - Ability: Thick Fat
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Marill** — Lv. 58
-      - Ability: Thick Fat
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Trenton** (Tuber Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Shellos** — Lv. 58
-      - Ability: Sticky Hold
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Shellos** — Lv. 58
-      - Ability: Sticky Hold
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 220
-
-**Adrian** (Swimmer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Remoraid** — Lv. 58
-      - Ability: Hustle
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Tentacool** — Lv. 58
-      - Ability: Clear Body
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Octillery** — Lv. 58
-      - Ability: Suction Cups
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Claire** (Swimmer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Floatzel** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Erica** (Swimmer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Finneon** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Erik** (Swimmer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Tentacruel** — Lv. 58
-      - Ability: Clear Body
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Jessica** (Swimmer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Goldeen** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Goldeen** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Goldeen** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Seaking** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Katelyn** (Swimmer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Buizel** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Aqua Jet, Sonic Boom, Quick Attack, Attract
-    - **Medicham** — Lv. 58
-      - Ability: Pure Power
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Confusion, Brick Break, Meditate, Light Screen
-    - **Seaking** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Water Pulse, Horn Attack, Aqua Ring, Captivate
-
-**Vincent** (Swimmer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Pelipper** — Lv. 58
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Gastrodon** — Lv. 58
-      - Ability: Storm Drain
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 221
-
-**Jake** (Ace Trainer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Staraptor** — Lv. 58
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Take Down, Aerial Ace, Endeavor, Quick Attack
-    - **Girafarig** — Lv. 58
-      - Ability: Inner Focus
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Double Hit, Psychic
-
-**Shannon** (Ace Trainer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Cherrim** — Lv. 58
-      - Ability: Flower Gift
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Petal Dance, Magical Leaf, Leech Seed
-    - **Azumarill** — Lv. 58
-      - Ability: Thick Fat
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Double Edge, Bubble Beam, Aqua Ring
-    - **Lopunny** — Lv. 58
-      - Ability: Limber
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Jump Kick, Quick Attack, Charm
-
-**Ivan** (Collector)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Togetic** — Lv. 58
-      - Ability: Hustle
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Cory** (Fisherman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Finneon** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Finneon** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Finneon** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Dillon** (Swimmer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Remoraid** — Lv. 58
-      - Ability: Hustle
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Floatzel** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Vanessa** (Swimmer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Golduck** — Lv. 58
-      - Ability: Damp
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 222
-
-**Nicola** (Beauty)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Lopunny** — Lv. 58
-      - Ability: Limber
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Alec** (Fisherman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Magikarp** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Gyarados** — Lv. 58
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Brett** (Fisherman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Magikarp** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Finneon** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Feebas** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Cole** (Fisherman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Gyarados** — Lv. 58
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Remoraid** — Lv. 58
-      - Ability: Hustle
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Gyarados** — Lv. 58
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**George** (Fisherman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Magikarp** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Finneon** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Remoraid** — Lv. 58
-      - Ability: Hustle
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Gyarados** — Lv. 58
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Thomas** (Policeman)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Noctowl** — Lv. 58
-      - Ability: Insomnia
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Machoke** — Lv. 58
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Trey** (Rich Boy)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Full Restore
-  - Party:
-    - **Luxray** — Lv. 58
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Luther** (Sailor)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Wingull** — Lv. 58
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Machoke** — Lv. 58
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Gastrodon** — Lv. 58
-      - Ability: Storm Drain
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Marc** (Sailor)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Mantyke** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Conner** (Tuber Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Remoraid** — Lv. 58
-      - Ability: Hustle
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Holly** (Tuber Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Remoraid** — Lv. 58
-      - Ability: Hustle
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 222 West House
-
-**Janet** (Poke Kid)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Pikachu** — Lv. 58
-      - Ability: Static
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Pikachu** — Lv. 58
-      - Ability: Static
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Route 223
-
-**Zachariah** (Sailor)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Pelipper** — Lv. 58
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Machoke** — Lv. 58
-      - Ability: Guts
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Gastrodon** — Lv. 58
-      - Ability: Storm Drain
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Aubree** (Swimmer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Bibarel** — Lv. 58
-      - Ability: Simple
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Azumarill** — Lv. 58
-      - Ability: Thick Fat
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Cassandra** (Swimmer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Lumineon** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Pelipper** — Lv. 58
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Colton** (Swimmer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Wingull** — Lv. 58
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Octillery** — Lv. 58
-      - Ability: Suction Cups
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Pelipper** — Lv. 58
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Crystal** (Swimmer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Wingull** — Lv. 58
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Seaking** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Francisco** (Swimmer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Tentacool** — Lv. 58
-      - Ability: Clear Body
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Golduck** — Lv. 58
-      - Ability: Damp
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Gabrielle** (Swimmer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Golduck** — Lv. 58
-      - Ability: Damp
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Miranda** (Swimmer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Lumineon** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Oscar** (Swimmer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Mantyke** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Remoraid** — Lv. 58
-      - Ability: Hustle
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Mantine** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Paige** (Swimmer Female)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Marill** — Lv. 58
-      - Ability: Thick Fat
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Wingull** — Lv. 58
-      - Ability: Keen Eye
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Golduck** — Lv. 58
-      - Ability: Damp
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Ricardo** (Swimmer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Tentacruel** — Lv. 58
-      - Ability: Clear Body
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Troy** (Swimmer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Gyarados** — Lv. 58
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Wesley** (Swimmer Male)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Floatzel** — Lv. 58
-      - Ability: Swift Swim
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Tentacruel** — Lv. 58
-      - Ability: Clear Body
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Distortion World B7F
-
-**Cyrus** (Galactic Boss) — *Galactic boss*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Full Restore, Full Restore
-  - Party:
-    - **Houndoom** — Lv. 60
-      - Ability: Early Bird
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Flamethrower, Dark Pulse, Will O Wisp, Thunder Fang
-    - **Honchkrow** — Lv. 60
-      - Ability: Moxie
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Drill Peck, Night Slash, Heat Wave, Psychic
-    - **Crobat** — Lv. 60
-      - Ability: Inner Focus
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Cross Poison, Air Slash, Toxic, Confuse Ray
-    - **Gyarados** — Lv. 60
-      - Ability: Intimidate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Giga Impact, Waterfall, Ice Fang, Earthquake
-    - **Weavile** — Lv. 60
-      - Ability: Pressure
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: Sitrus Berry
-      - Moves: Night Slash, Ice Punch, Fake Out, X Scissor
-
 ### Galactic HQ 1F
 
 **Grunt** (Galactic Grunt Female) — *Galactic grunt*
@@ -4682,7 +4312,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
 
 **Fredrick** (Scientist)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: X Defense
+  - Battle Items: X Defend
   - Party:
     - **Kirlia** — Lv. 58
       - Ability: Synchronize
@@ -4878,133 +4508,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Poison Touch
       - Nature: Hardy (default, not yet curated)
       - Held Item: Sitrus Berry
-      - Moves: Poison Jab, Brick Break, X Scissor, Faint Attack
-
-### Lake Valor Drained
-
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Golbat** — Lv. 59
-      - Ability: Inner Focus
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Croagunk** — Lv. 59
-      - Ability: Poison Touch
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Glameow** — Lv. 59
-      - Ability: Limber
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Stunky** — Lv. 59
-      - Ability: Stench
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Houndour** — Lv. 59
-      - Ability: Early Bird
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Grunt** (Galactic Grunt Female) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Glameow** — Lv. 59
-      - Ability: Limber
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Murkrow** — Lv. 59
-      - Ability: Insomnia
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-### Lake Verity
-
-**Mars** (Commander Mars) — *Galactic boss*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Golbat** — Lv. 60
-      - Ability: Inner Focus
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Air Cutter, Bite, Toxic, Supersonic
-    - **Bronzor** — Lv. 60
-      - Ability: Levitate
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Gyro Ball, Extrasensory, Iron Defense, Confuse Ray
-    - **Purugly** — Lv. 60
-      - Ability: Defiant
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: Sitrus Berry
-      - Moves: Slash, Faint Attack, Hypnosis, Fake Out
-
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Croagunk** — Lv. 59
-      - Ability: Poison Touch
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Grunt** (Galactic Grunt Female) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Glameow** — Lv. 59
-      - Ability: Limber
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Fury Swipes, Faint Attack, Growl, Fake Out
-    - **Golbat** — Lv. 59
-      - Ability: Inner Focus
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Air Cutter, Wing Attack, Bite, Supersonic
-    - **Murkrow** — Lv. 59
-      - Ability: Insomnia
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Faint Attack, Night Shade, Wing Attack
-
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Stunky** — Lv. 59
-      - Ability: Stench
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Houndour** — Lv. 59
-      - Ability: Early Bird
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-
-**Grunt** (Galactic Grunt Female) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Houndour** — Lv. 59
-      - Ability: Early Bird
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
-    - **Glameow** — Lv. 59
-      - Ability: Limber
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Default level-up moves
+      - Moves: Poison Jab, Brick Break, X-Scissor, Faint Attack
 
 ### Spear Pillar
 
@@ -5101,7 +4605,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Run Away
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Fire Blast, Will O Wisp, Stomp, Take Down
+      - Moves: Fire Blast, Will-O-Wisp, Stomp, Take Down
     - **Empoleon** — Lv. 60
       - Ability: Torrent
       - Nature: Hardy (default, not yet curated)
@@ -5135,7 +4639,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Run Away
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Fire Blast, Will O Wisp, Stomp, Take Down
+      - Moves: Fire Blast, Will-O-Wisp, Stomp, Take Down
     - **Torterra** — Lv. 60
       - Ability: Overgrow
       - Nature: Hardy (default, not yet curated)
@@ -5174,7 +4678,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Blaze
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Close Combat, Punishment, Flame Wheel, Will O Wisp
+      - Moves: Close Combat, Punishment, Flame Wheel, Will-O-Wisp
 
 ### Valor Cavern
 
@@ -5197,111 +4701,503 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: Sitrus Berry
       - Moves: Poison Jab, Revenge, Mud Bomb, Faint Attack
 
+### Distortion World B7F
+
+**Cyrus** (Galactic Boss) — *Galactic boss*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: Full Restore, Full Restore
+  - Party:
+    - **Houndoom** — Lv. 60
+      - Ability: Early Bird
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Flamethrower, Dark Pulse, Will-O-Wisp, Thunder Fang
+    - **Honchkrow** — Lv. 60
+      - Ability: Moxie
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Drill Peck, Night Slash, Heat Wave, Psychic
+    - **Crobat** — Lv. 60
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Cross Poison, Air Slash, Toxic, Confuse Ray
+    - **Gyarados** — Lv. 60
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Giga Impact, Waterfall, Ice Fang, Earthquake
+    - **Weavile** — Lv. 60
+      - Ability: Pressure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Night Slash, Ice Punch, Fake Out, X-Scissor
+
+### Route 219
+
+**Mariel** (Tuber Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Marill** — Lv. 58
+      - Ability: Thick Fat
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Marill** — Lv. 58
+      - Ability: Thick Fat
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Trenton** (Tuber Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Shellos** — Lv. 58
+      - Ability: Sticky Hold
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Shellos** — Lv. 58
+      - Ability: Sticky Hold
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Route 222
+
+**Nicola** (Beauty)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Lopunny** — Lv. 58
+      - Ability: Limber
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Alec** (Fisherman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Magikarp** — Lv. 58
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Gyarados** — Lv. 58
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Brett** (Fisherman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Magikarp** — Lv. 58
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Finneon** — Lv. 58
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Feebas** — Lv. 58
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Cole** (Fisherman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Gyarados** — Lv. 58
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Remoraid** — Lv. 58
+      - Ability: Hustle
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Gyarados** — Lv. 58
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**George** (Fisherman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Magikarp** — Lv. 58
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Finneon** — Lv. 58
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Remoraid** — Lv. 58
+      - Ability: Hustle
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Gyarados** — Lv. 58
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Thomas** (Policeman)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Noctowl** — Lv. 58
+      - Ability: Insomnia
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Machoke** — Lv. 58
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Trey** (Rich Boy)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Battle Items: Full Restore
+  - Party:
+    - **Luxray** — Lv. 58
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Luther** (Sailor)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Wingull** — Lv. 58
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Machoke** — Lv. 58
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Gastrodon** — Lv. 58
+      - Ability: Storm Drain
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Marc** (Sailor)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Mantyke** — Lv. 58
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Conner** (Tuber Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Remoraid** — Lv. 58
+      - Ability: Hustle
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Holly** (Tuber Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Remoraid** — Lv. 58
+      - Ability: Hustle
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Route 222 West House
+
+**Janet** (Poke Kid)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Pikachu** — Lv. 58
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Pikachu** — Lv. 58
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+### Lake Verity
+
+**Mars** (Commander Mars) — *Galactic boss*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Golbat** — Lv. 60
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Air Cutter, Bite, Toxic, Supersonic
+    - **Bronzor** — Lv. 60
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Gyro Ball, Extrasensory, Iron Defense, Confuse Ray
+    - **Purugly** — Lv. 60
+      - Ability: Defiant
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Slash, Faint Attack, Hypnosis, Fake Out
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Croagunk** — Lv. 59
+      - Ability: Poison Touch
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Grunt** (Galactic Grunt Female) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Glameow** — Lv. 59
+      - Ability: Limber
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Fury Swipes, Faint Attack, Growl, Fake Out
+    - **Golbat** — Lv. 59
+      - Ability: Inner Focus
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Air Cutter, Wing Attack, Bite, Supersonic
+    - **Murkrow** — Lv. 59
+      - Ability: Insomnia
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Faint Attack, Night Shade, Wing Attack
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Stunky** — Lv. 59
+      - Ability: Stench
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Houndour** — Lv. 59
+      - Ability: Early Bird
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Grunt** (Galactic Grunt Female) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Houndour** — Lv. 59
+      - Ability: Early Bird
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Glameow** — Lv. 59
+      - Ability: Limber
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
 ## Tier 9 — cap 67
 
-### Pokemon League North Pokecenter 1F
+### Route 223
 
-**Cedric** (Rival)
+**Zachariah** (Sailor)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Staraptor** — Lv. 65
-      - Ability: Intimidate
+    - **Pelipper** — Lv. 63
+      - Ability: Keen Eye
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Close Combat, Aerial Ace, Steel Wing, U Turn
-    - **Roserade** — Lv. 65
-      - Ability: Natural Cure
+      - Moves: Default level-up moves
+    - **Machoke** — Lv. 63
+      - Ability: Guts
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Poison Jab, Giga Drain, Shadow Ball, Grass Whistle
-    - **Heracross** — Lv. 65
-      - Ability: Swarm
+      - Moves: Default level-up moves
+    - **Gastrodon** — Lv. 63
+      - Ability: Storm Drain
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Close Combat, Rock Slide, Night Slash, Aerial Ace
-    - **Rapidash** — Lv. 65
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Fire Blast, Sunny Day, Bounce, Will O Wisp
-    - **Snorlax** — Lv. 65
-      - Ability: Immunity
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Body Slam, Crunch, Earthquake, Rest
-    - **Empoleon** — Lv. 65
-      - Ability: Torrent
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Brine, Aerial Ace, Metal Claw, Shadow Claw
+      - Moves: Default level-up moves
 
-**Cedric** (Rival)
+**Aubree** (Swimmer Female)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Staraptor** — Lv. 65
-      - Ability: Intimidate
+    - **Bibarel** — Lv. 63
+      - Ability: Simple
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Close Combat, Aerial Ace, Steel Wing, U Turn
-    - **Floatzel** — Lv. 65
+      - Moves: Default level-up moves
+    - **Azumarill** — Lv. 63
+      - Ability: Thick Fat
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Cassandra** (Swimmer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Lumineon** — Lv. 63
       - Ability: Swift Swim
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Aqua Jet, Crunch, Ice Fang, Brick Break
-    - **Heracross** — Lv. 65
-      - Ability: Swarm
+      - Moves: Default level-up moves
+    - **Pelipper** — Lv. 63
+      - Ability: Keen Eye
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Close Combat, Rock Slide, Night Slash, Aerial Ace
-    - **Rapidash** — Lv. 65
-      - Ability: Run Away
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Fire Blast, Sunny Day, Bounce, Will O Wisp
-    - **Snorlax** — Lv. 65
-      - Ability: Immunity
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Body Slam, Crunch, Earthquake, Rest
-    - **Torterra** — Lv. 65
-      - Ability: Overgrow
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Leaf Storm, Earthquake, Crunch, Synthesis
+      - Moves: Default level-up moves
 
-**Cedric** (Rival)
+**Colton** (Swimmer Male)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Staraptor** — Lv. 65
-      - Ability: Intimidate
+    - **Wingull** — Lv. 63
+      - Ability: Keen Eye
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Close Combat, Aerial Ace, Steel Wing, U Turn
-    - **Floatzel** — Lv. 65
+      - Moves: Default level-up moves
+    - **Octillery** — Lv. 63
+      - Ability: Suction Cups
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Pelipper** — Lv. 63
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Crystal** (Swimmer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Wingull** — Lv. 63
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Seaking** — Lv. 63
       - Ability: Swift Swim
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Aqua Jet, Crunch, Ice Fang, Brick Break
-    - **Heracross** — Lv. 65
-      - Ability: Swarm
+      - Moves: Default level-up moves
+
+**Francisco** (Swimmer Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Tentacool** — Lv. 63
+      - Ability: Clear Body
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Close Combat, Rock Slide, Night Slash, Aerial Ace
-    - **Roserade** — Lv. 65
-      - Ability: Natural Cure
+      - Moves: Default level-up moves
+    - **Golduck** — Lv. 63
+      - Ability: Damp
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Poison Jab, Giga Drain, Shadow Ball, Grass Whistle
-    - **Snorlax** — Lv. 65
-      - Ability: Immunity
+      - Moves: Default level-up moves
+
+**Gabrielle** (Swimmer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Golduck** — Lv. 63
+      - Ability: Damp
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Body Slam, Crunch, Earthquake, Rest
-    - **Infernape** — Lv. 65
-      - Ability: Blaze
+      - Moves: Default level-up moves
+
+**Miranda** (Swimmer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Lumineon** — Lv. 63
+      - Ability: Swift Swim
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Flamethrower, Focus Blast, Shadow Claw, Aerial Ace
+      - Moves: Default level-up moves
+
+**Oscar** (Swimmer Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Mantyke** — Lv. 63
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Remoraid** — Lv. 63
+      - Ability: Hustle
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Mantine** — Lv. 63
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Paige** (Swimmer Female)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Marill** — Lv. 63
+      - Ability: Thick Fat
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Wingull** — Lv. 63
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Golduck** — Lv. 63
+      - Ability: Damp
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Ricardo** (Swimmer Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Tentacruel** — Lv. 63
+      - Ability: Clear Body
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Troy** (Swimmer Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Gyarados** — Lv. 63
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+
+**Wesley** (Swimmer Male)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Floatzel** — Lv. 63
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
+    - **Tentacruel** — Lv. 63
+      - Ability: Clear Body
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Default level-up moves
 
 ### Victory Road 1F
 
@@ -5312,7 +5208,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Natural Cure
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Double Edge, Sing, Softboiled, Light Screen
+      - Moves: Double-Edge, Sing, Softboiled, Light Screen
     - **Glalie** — Lv. 63
       - Ability: Refrigerate
       - Nature: Hardy (default, not yet curated)
@@ -5388,7 +5284,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
 **Edgar** (Veteran)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Porygon-z** — Lv. 63
+    - **Porygon-Z** — Lv. 63
       - Ability: Adaptability
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
@@ -5418,7 +5314,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Swarm
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Poison Jab, U Turn, Aerial Ace, Swords Dance
+      - Moves: Poison Jab, U-turn, Aerial Ace, Swords Dance
     - **Electrode** — Lv. 63
       - Ability: Soundproof
       - Nature: Hardy (default, not yet curated)
@@ -5451,7 +5347,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Flash Fire
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Will O Wisp, Flamethrower, Dark Pulse, Extrasensory
+      - Moves: Will-O-Wisp, Flamethrower, Dark Pulse, Extrasensory
     - **Magnezone** — Lv. 63
       - Ability: Magnet Pull
       - Nature: Hardy (default, not yet curated)
@@ -5554,7 +5450,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
 **Desiree** (Psychic Female)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Mr. mime** — Lv. 63
+    - **Mr. Mime** — Lv. 63
       - Ability: Soundproof
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
@@ -5591,7 +5487,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Insomnia
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Shadow Ball, Will O Wisp, Sucker Punch, Confuse Ray
+      - Moves: Shadow Ball, Will-O-Wisp, Sucker Punch, Confuse Ray
     - **Alakazam** — Lv. 63
       - Ability: Synchronize
       - Nature: Hardy (default, not yet curated)
@@ -5624,9 +5520,9 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Ability: Effect Spore
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: X Scissor, Giga Drain, Spore, Slash
+      - Moves: X-Scissor, Giga Drain, Spore, Slash
     - **Rhydon** — Lv. 63
-      - Ability: Lightning Rod
+      - Ability: Lightningrod
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Hammer Arm, Stone Edge, Earthquake, Megahorn
@@ -5706,7 +5602,7 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
     - **Rhydon** — Lv. 63
-      - Ability: Lightning Rod
+      - Ability: Lightningrod
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Stone Edge, Earthquake, Hammer Arm, Take Down
@@ -5764,12 +5660,111 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Default level-up moves
 
-## Gyms
+### Pokemon League North Pokecenter 1F
 
-Gym trainers use the level cap that was active when the player walks into that
-gym — i.e. the cap unlocked by the *previous* milestone, not the one this gym's
-own leader unlocks — minus 1. Roark's gym is the first one, so its trainers use
-the starting cap (14) minus 1, not Roark's own unlock (23).
+**Cedric** (Rival)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Staraptor** — Lv. 65
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Close Combat, Aerial Ace, Steel Wing, U-turn
+    - **Roserade** — Lv. 65
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Poison Jab, Giga Drain, Shadow Ball, Grass Whistle
+    - **Heracross** — Lv. 65
+      - Ability: Swarm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Close Combat, Rock Slide, Night Slash, Aerial Ace
+    - **Rapidash** — Lv. 65
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Fire Blast, Sunny Day, Bounce, Will-O-Wisp
+    - **Snorlax** — Lv. 65
+      - Ability: Immunity
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Body Slam, Crunch, Earthquake, Rest
+    - **Empoleon** — Lv. 65
+      - Ability: Torrent
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Brine, Aerial Ace, Metal Claw, Shadow Claw
+
+**Cedric** (Rival)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Staraptor** — Lv. 65
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Close Combat, Aerial Ace, Steel Wing, U-turn
+    - **Floatzel** — Lv. 65
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Aqua Jet, Crunch, Ice Fang, Brick Break
+    - **Heracross** — Lv. 65
+      - Ability: Swarm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Close Combat, Rock Slide, Night Slash, Aerial Ace
+    - **Rapidash** — Lv. 65
+      - Ability: Run Away
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Fire Blast, Sunny Day, Bounce, Will-O-Wisp
+    - **Snorlax** — Lv. 65
+      - Ability: Immunity
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Body Slam, Crunch, Earthquake, Rest
+    - **Torterra** — Lv. 65
+      - Ability: Overgrow
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Leaf Storm, Earthquake, Crunch, Synthesis
+
+**Cedric** (Rival)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Staraptor** — Lv. 65
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Close Combat, Aerial Ace, Steel Wing, U-turn
+    - **Floatzel** — Lv. 65
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Aqua Jet, Crunch, Ice Fang, Brick Break
+    - **Heracross** — Lv. 65
+      - Ability: Swarm
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Close Combat, Rock Slide, Night Slash, Aerial Ace
+    - **Roserade** — Lv. 65
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Poison Jab, Giga Drain, Shadow Ball, Grass Whistle
+    - **Snorlax** — Lv. 65
+      - Ability: Immunity
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Body Slam, Crunch, Earthquake, Rest
+    - **Infernape** — Lv. 65
+      - Ability: Blaze
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Flamethrower, Focus Blast, Shadow Claw, Aerial Ace
+
+## Gyms
 
 ### Oreburgh Gym (Roark) — active cap 14
 
@@ -5928,7 +5923,7 @@ the starting cap (14) minus 1, not Roark's own unlock (23).
 
 **Chance** (School Kid Male)
   - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: X Defense
+  - Battle Items: X Defend
   - Party:
     - **Gastly** — Lv. 29
       - Ability: Levitate
@@ -6108,7 +6103,7 @@ the starting cap (14) minus 1, not Roark's own unlock (23).
       - Ability: Thick Fat
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Bubble Beam, Double Edge, Rollout, Aqua Ring
+      - Moves: Bubble Beam, Double-Edge, Rollout, Aqua Ring
 
 **Jacky** (Tuber Male)
   - AI Flags: Basic, Evaluate Attack, Expert
@@ -6147,7 +6142,7 @@ the starting cap (14) minus 1, not Roark's own unlock (23).
       - Ability: Swarm
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Metal Claw, X Scissor, Slash, Pursuit
+      - Moves: Metal Claw, X-Scissor, Slash, Pursuit
 
 **David** (Black Belt)
   - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
@@ -6251,7 +6246,7 @@ the starting cap (14) minus 1, not Roark's own unlock (23).
       - Ability: Inner Focus
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Ice Fang, Crunch, Hail
+      - Moves: Ice Fang, Crunch, Snow
     - **Snover** — Lv. 56
       - Ability: Snow Warning
       - Nature: Hardy (default, not yet curated)
@@ -6274,17 +6269,17 @@ the starting cap (14) minus 1, not Roark's own unlock (23).
       - Ability: Inner Focus
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Ice Fang, Crunch, Hail, Protect
+      - Moves: Ice Fang, Crunch, Snow, Protect
     - **Snorunt** — Lv. 56
       - Ability: Inner Focus
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Ice Fang, Crunch, Hail, Protect
+      - Moves: Ice Fang, Crunch, Snow, Protect
     - **Glalie** — Lv. 56
       - Ability: Refrigerate
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
-      - Moves: Ice Fang, Crunch, Hail, Protect
+      - Moves: Ice Fang, Crunch, Snow, Protect
 
 **Sergio** (Ace Trainer Snow Male)
   - AI Flags: Basic, Evaluate Attack, Expert

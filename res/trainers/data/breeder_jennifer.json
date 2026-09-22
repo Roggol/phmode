@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_BUDEW",
             "form": 0,
-            "level": 26,
+            "level": 33,
             "item": null,
             "moves": null,
             "nature": null,
@@ -22,7 +22,7 @@
         {
             "species": "SPECIES_MIME_JR",
             "form": 0,
-            "level": 26,
+            "level": 33,
             "item": null,
             "moves": null,
             "nature": null,
@@ -32,7 +32,7 @@
         {
             "species": "SPECIES_CLEFFA",
             "form": 0,
-            "level": 26,
+            "level": 33,
             "item": null,
             "moves": null,
             "nature": null,
@@ -42,7 +42,7 @@
         {
             "species": "SPECIES_EEVEE",
             "form": 0,
-            "level": 26,
+            "level": 33,
             "item": null,
             "moves": null,
             "nature": null,

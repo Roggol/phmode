@@ -1421,6 +1421,26 @@ compliments your strength, reveals his codename is Looker, tells you to
 call for him by it if you ever see anything suspicious, and hurries off.
 **The Vs. Recorder is no longer given out here.**
 
+### Route 212 and the south exit of Veilstone City now open after beating Maylene
+Route 212 (the path between Hearthome and Pastoria) used to open the moment
+you first set foot in Pastoria City by any route, with no badge requirement
+at all. It — and Veilstone City's south exit onto Route 214, which used to
+be wide open the whole game — now both stay closed until you've beaten
+Maylene, Veilstone's Gym Leader. A police officer stands in Veilstone's
+south gate in the meantime and lets you know why.
+
+### Several trainers got moved and re-leveled to match where you'll actually meet them
+A pass through the whole game's trainer roster found a handful of spots
+where a trainer's difficulty didn't match how early or late you'd actually
+reach them. Fuego Ironworks' workers, Celestic Town's Team Galactic
+encounter, and the trainers on Routes 220 and 221 are now noticeably tougher
+(they were leveled for a much earlier point in the game); Route 208, Route
+211, and Route 215's trainers are correspondingly easier; and Route 223's
+trainers got a modest bump. Everything else on Routes 209, 210 South, 212,
+and around Solaceon/the Cafe/Pokémon Mansion shifted level slightly to match,
+as a knock-on effect of Route 212 and Pokémon Mansion moving later (see
+above) and Route 208's move freeing up room earlier in the curve.
+
 ### The house on Route 221 gives its rewards all at once
 The NPC in the house on Route 221 used to run a daily minigame where you'd
 show him a Pokémon of a specific level to earn one of three items (Black

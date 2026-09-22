@@ -2947,6 +2947,85 @@ free slot.
   matching `res/text/*.json` files.
 * Not changed: Mystery Gift has its own separate delivery path.
 
+### Trainer location doc reordered into actual route-progression order, several locations moved tiers, and a new wild-encounters doc
+`res/trainers/TRAINER_LOCATIONS.md` previously grouped every pre-Elite-Four
+trainer by level-cap tier, but sorted locations *alphabetically* within each
+tier rather than in the order the player actually reaches them. It's now
+sorted in route-progression order end to end, and is the explicit source of
+truth for that ordering going forward - `TRAINER_ENCYCLOPEDIA.md` is
+regenerated from it (see below) rather than hand-maintained in parallel.
+
+Reordering surfaced several locations whose *tier* didn't match where they
+now sit in the route order, so their trainers were releveled to the new
+tier's convention (regular trainer = cap−4, Galactic grunt = cap−3, boss/rival
+= cap−2) at the same time:
+
+* **Fuego Ironworks** (`worker_conrad/dillan/holden.json`): Tier 2 → Tier 6,
+  Lv. 19 → Lv. 47.
+* **Route 211** East + West (8 files): Tier 3 → Tier 2, Lv. 26 → Lv. 19 -
+  confirmed reachable before beating Gardenia (Cut is available at Eterna
+  City itself, before the gym; no other gate on that path).
+* **Celestic Town** + **Celestic Town Cave** (grunt + Cyrus): Tier 3 → Tier 6,
+  Lv. 27 → Lv. 48 and Lv. 28 → Lv. 49.
+* **Route 208** (7 files): Tier 4 → Tier 3, Lv. 33 → Lv. 26.
+* **Route 215** (8 files): Tier 5 → Tier 4, Lv. 41 → Lv. 33.
+* **Route 220** (7 files) and **Route 221** (6 files): Tier 8 → Tier 6,
+  Lv. 58 → Lv. 47.
+* **Route 223** (13 files): Tier 8 → Tier 9, Lv. 58 → Lv. 63.
+* **Cafe**, **Route 209** (+ its Gate/Lost Tower), **Route 210 South**, and
+  **Solaceon Ruins Room 3** (30 files total): Tier 3 → Tier 4, Lv. 26 → Lv. 33
+  (rival: Lv. 28 → Lv. 35) - these move as a direct consequence of the above,
+  not a separate call.
+* **Route 212** North + South (20 files) and **Pokemon Mansion** (7 files):
+  Tier 4 → Tier 5, Lv. 33 → Lv. 41 - both are now gated on defeating Maylene
+  (see "Map data" below for Route 212; Route 214 got the same new gate), so
+  Tier 5 is the earliest either is actually reachable.
+* Mt Coronet's interior is intentionally left as one Tier 3 block for now -
+  not resolved whether/how it should split across an earlier/later tier pair.
+  Lake Verity's and Lake Valor's late-game Team Galactic invasion trainers,
+  Route 210 North, and Valor Cavern are also unchanged (kept at their
+  existing tier; the route-order pass's "Lake verity"/"Lake valor" mentions
+  in earlier tiers are about the wild-encounters doc's early/undrained visit,
+  not these trainers). Route 218 and 219 also keep their existing (later)
+  trainer tiers even though the route-order pass lists them in Tier 1 for the
+  wild-encounters doc (fishing rods aren't level-gated by story progression
+  the way reaching the map on foot is).
+* A bug from this pass: the whole "Route 218" section (4 trainers) was
+  dropped by mistake during the rewrite and had to be added back.
+
+`TRAINER_ENCYCLOPEDIA.md` was regenerated from the reordered
+`TRAINER_LOCATIONS.md` plus the trainer data files, rather than hand-edited,
+using a one-off script (not checked into the repo) that resolves each
+trainer's class, ability (falling back to the species' first ability slot
+when unset), nature, held item, and move names from `generated/*.txt` +
+`res/text/*.json` + `res/pokemon/*/data.json` + `res/moves/*/data.json`.
+Cross-checking its output against the previous hand-built version surfaced a
+few genuine formatting bugs in the regenerator (worth noting since it'll
+presumably be regenerated again by hand next time this file goes stale):
+the in-game text bank for a trainer's class is written for terse in-battle
+intro text, not encyclopedia clarity, so `TRAINER_CLASS_RIVAL`,
+`TRAINER_CLASS_GALACTIC_GRUNT_MALE/FEMALE`, and the `DP_PLAYER_MALE/FEMALE`
+"opposite-gender rival cameo" classes all needed their display name
+hand-overridden rather than looked up directly; Burmy/Wormadam/Shellos also
+need their form baked into the display name by hand, since nothing else
+prints it. Everything else (moves, items, abilities, natures, other classes)
+matched the previous version exactly once level differences are accounted
+for - a couple of remaining cosmetic mismatches ("Mime Jr." vs "Mime jr.",
+"Wake-Up Slap" vs "Wake Up Slap") are the new version being more consistent,
+not a regression, and one ("X Defend" vs "X Defense") is the new version
+correctly picking up an unrelated item rename the old, stale doc had missed.
+
+New: `WILD_ENCOUNTERS.md` at the repo root, covering every wild-encounter
+table in `res/field/encounters/` (grass/land, Surf, Rock Smash, Old/Good/Super
+Rod, swarms, and Poké Radar chains), grouped in the same route-progression
+order as `TRAINER_LOCATIONS.md`. Unlike the trainer doc, Route 218/219 and all
+of Mt Coronet's interior are placed by when the area/water is actually
+reachable rather than by trainer tier, per the notes above. Locations with no
+wild-encounter table (towns, building interiors, Pal Park, legendary-only
+chambers, etc.) are omitted, and postgame-only areas are deferred to a
+"Tier 10 - tbd later" placeholder, matching `TRAINER_LOCATIONS.md`'s own
+scope.
+
 ---
 
 ## Map data
@@ -2995,6 +3074,33 @@ of that.
   without needing new battle-sprite assets).
 * `res/trainers/TRAINER_LOCATIONS.md` and `TRAINER_ENCYCLOPEDIA.md` updated
   to include this new trainer under Tier 1 - Jubilife City.
+
+### Route 212 and Veilstone City → Route 214 now open on defeating Maylene
+Route 212 (the Hearthome↔Pastoria connector) used to open unconditionally the
+moment the player first set foot in Pastoria City, by any path, with no badge
+check at all (`FLAG_HIDE_ROUTE_212_BLOCKADE` was set in
+`PastoriaCity_OnTransition`) - not actually gated on Fantina as it might have
+appeared from normal play order. It's now gated on Maylene's defeat instead,
+alongside a brand new gate: Veilstone City's south exit onto Route 214, which
+was previously completely unrestricted.
+
+* `res/field/scripts/scripts_pastoria_city.s` - `PastoriaCity_OnTransition` no
+  longer sets `FLAG_HIDE_ROUTE_212_BLOCKADE`.
+* `res/field/scripts/scripts_veilstone_city_gym.s` - `VeilstoneGym_Maylene`
+  now sets both `FLAG_HIDE_ROUTE_212_BLOCKADE` and the new
+  `FLAG_HIDE_VEILSTONE_CITY_ROUTE_214_BLOCKADE` right after awarding the
+  Cobble Badge, mirroring the existing Fantina/Route 209 gate pattern
+  (`HearthomeGym_FantinaMain`).
+* `generated/vars_flags.txt` - added `FLAG_HIDE_VEILSTONE_CITY_ROUTE_214_BLOCKADE`
+  by renaming the unused `FLAG_UNUSED_0x03C3` slot in place rather than
+  appending (save-compatibility convention - see `phmode-vars-flags-save-compat`).
+* `res/field/events/events_route_214_gate_to_veilstone_city.json` - added a
+  new `LOCALID_POLICEMAN` object standing on the walkable tile between the
+  two warps, hidden by the new flag once it's set.
+* `res/field/scripts/scripts_route_214_gate_to_veilstone_city.s` /
+  `res/text/route_214_gate_to_veilstone_city.json` - the Policeman's line:
+  "Sorry, this way is closed off for now. Beat the Gym Leader here in
+  Veilstone and we'll let you through."
 
 ### Route 221 House — "Expert M" gives all 3 items at once, one time only
 This NPC used to run a daily random-level guessing minigame (`GetDailyRandomLevel`

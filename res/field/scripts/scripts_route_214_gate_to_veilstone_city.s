@@ -4,6 +4,7 @@
 
     ScriptEntry Route214GateToVeilstoneCity_MiddleAgedMan
     ScriptEntry Route214GateToVeilstoneCity_OnTransition
+    ScriptEntry Route214GateToVeilstoneCity_Policeman
     ScriptEntryEnd
 
 Route214GateToVeilstoneCity_OnTransition:
@@ -40,6 +41,12 @@ Route214GateToVeilstoneCity_ThatRuinManiac:
     WaitButton
     CloseMessage
     ReleaseAll
+    End
+
+// phmode: blocks the Route 214 side of this gate until Maylene is defeated (see
+// VeilstoneGym_Maylene, which SetFlags FLAG_HIDE_VEILSTONE_CITY_ROUTE_214_BLOCKADE).
+Route214GateToVeilstoneCity_Policeman:
+    NPCMessage Route214GateToVeilstoneCity_Text_ClosedUntilMaylene
     End
 
     .balign 4, 0

@@ -43,6 +43,12 @@ VeilstoneGym_Maylene:
     CreateJournalEvent LOCATION_EVENT_BEAT_GYM_LEADER, MAP_HEADER_VEILSTONE_CITY_GYM, TRAINER_LEADER_MAYLENE
     SetFlag FLAG_HIDE_GAME_CORNER_LOOKER
     ClearFlag FLAG_HIDE_VEILSTONE_COUNTERPART
+    // phmode: Route 212 (Hearthome<->Pastoria) and the Veilstone->Route 214 gate both
+    // open on Maylene's defeat now, instead of Route 212 opening unconditionally the
+    // moment Pastoria City is first entered (see PastoriaCity_OnTransition) and Route
+    // 214 being unrestricted.
+    SetFlag FLAG_HIDE_ROUTE_212_BLOCKADE
+    SetFlag FLAG_HIDE_VEILSTONE_CITY_ROUTE_214_BLOCKADE
     SetVar VAR_VEILSTONE_WAREHOUSE_GUARDS_FIGHTABLE, TRUE
     SetVar VAR_VEILSTONE_CITY_COUNTERPART_NEEDS_HELP_STATE, 1
     Message VeilstoneGym_Text_MayleneExplainBadge

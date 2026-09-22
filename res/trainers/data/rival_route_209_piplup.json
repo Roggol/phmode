@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_STARAVIA",
             "form": 0,
-            "level": 28,
+            "level": 35,
             "item": null,
             "moves": [
                 "MOVE_WING_ATTACK",
@@ -27,7 +27,7 @@
         {
             "species": "SPECIES_BUIZEL",
             "form": 0,
-            "level": 28,
+            "level": 35,
             "item": null,
             "moves": [
                 "MOVE_WATER_GUN",
@@ -42,7 +42,7 @@
         {
             "species": "SPECIES_PONYTA",
             "form": 0,
-            "level": 28,
+            "level": 35,
             "item": null,
             "moves": [
                 "MOVE_EMBER",
@@ -57,7 +57,7 @@
         {
             "species": "SPECIES_GROTLE",
             "form": 0,
-            "level": 28,
+            "level": 35,
             "item": null,
             "moves": [
                 "MOVE_RAZOR_LEAF",

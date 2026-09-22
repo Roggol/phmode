@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_STARAVIA",
             "form": 0,
-            "level": 28,
+            "level": 35,
             "item": null,
             "moves": [
                 "MOVE_WING_ATTACK",
@@ -27,7 +27,7 @@
         {
             "species": "SPECIES_ROSELIA",
             "form": 0,
-            "level": 28,
+            "level": 35,
             "item": null,
             "moves": [
                 "MOVE_MEGA_DRAIN",
@@ -42,7 +42,7 @@
         {
             "species": "SPECIES_PONYTA",
             "form": 0,
-            "level": 28,
+            "level": 35,
             "item": null,
             "moves": [
                 "MOVE_EMBER",
@@ -57,7 +57,7 @@
         {
             "species": "SPECIES_PRINPLUP",
             "form": 0,
-            "level": 28,
+            "level": 35,
             "item": null,
             "moves": [
                 "MOVE_BUBBLE_BEAM",

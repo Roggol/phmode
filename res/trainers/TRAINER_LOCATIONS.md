@@ -1,9 +1,12 @@
 # Trainer Locations (Pre-Elite Four)
 
 Reference list of every pre-Elite-Four trainer in `res/trainers/data/` and the
-map/route they battle on, grouped by level-cap tier in rough story order. Generated
-from a one-off audit pass; if a trainer is later moved to a different map by hand,
-this file will go stale for that one entry until regenerated.
+map/route they battle on, grouped by level-cap tier **in the order the player
+will actually reach each location** (not alphabetically). This ordering is
+the source of truth for the game's route/map progression - if a location
+needs to move to a different point in the story, update this file first and
+treat any other doc (including `TRAINER_ENCYCLOPEDIA.md`) as derived from it
+until it's regenerated to match.
 
 Not covered: gym leaders, Elite Four/Champion, rematch-only variants, unused/dummy
 slots, Battle Frontier, and postgame-only encounters (Fight Area, Survival Area,
@@ -11,6 +14,17 @@ Resort Area, Stark Mountain, Turnback Cave, the postgame roaming Cheryl/Riley/
 Marley/Buck/Mira battles at `battleground`, etc.).
 
 ## Tier 1 — cap 14
+
+### Route 201
+- `rival_route_201_chimchar.json` — Lv. 5 (exception: the very first rival
+  battle keeps its vanilla level instead of following the rival rule)
+- `rival_route_201_piplup.json` — Lv. 5 (exception, see above)
+- `rival_route_201_turtwig.json` — Lv. 5 (exception, see above)
+
+### Route 202
+- `lass_natalie.json` — Lv. 10
+- `youngster_logan.json` — Lv. 10
+- `youngster_tristan.json` — Lv. 10
 
 ### Jubilife City
 - `dawn_jubilife_city_chimchar.json` — Lv. 10
@@ -24,27 +38,9 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `lucas_jubilife_city_piplup.json` — Lv. 10
 - `lucas_jubilife_city_turtwig.json` — Lv. 10
 
-### Oreburgh Gate 1F
-- `camper_curtis.json` — Lv. 10
-- `picnicker_diana.json` — Lv. 10
-
-### Oreburgh Gate B1F
-- `veteran_grant.json` — Lv. 10
-
-### Oreburgh Mine B2F
-- `worker_colin.json` — Lv. 10
-- `worker_mason.json` — Lv. 10
-
-### Route 201
-- `rival_route_201_chimchar.json` — Lv. 5 (exception: the very first rival
-  battle keeps its vanilla level instead of following the rival rule)
-- `rival_route_201_piplup.json` — Lv. 5 (exception, see above)
-- `rival_route_201_turtwig.json` — Lv. 5 (exception, see above)
-
-### Route 202
-- `lass_natalie.json` — Lv. 10
-- `youngster_logan.json` — Lv. 10
-- `youngster_tristan.json` — Lv. 10
+### Trainers School
+- `school_kid_christine.json` — Lv. 10
+- `school_kid_harrison.json` — Lv. 10
 
 ### Route 203
 - `lass_kaitlin.json` — Lv. 10
@@ -61,12 +57,51 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `lass_sarah.json` — Lv. 10
 - `youngster_tyler.json` — Lv. 10
 
-### Trainers School
-- `school_kid_christine.json` — Lv. 10
-- `school_kid_harrison.json` — Lv. 10
+### Oreburgh Gate 1F
+- `camper_curtis.json` — Lv. 10
+- `picnicker_diana.json` — Lv. 10
+
+### Oreburgh Gate B1F
+- `veteran_grant.json` — Lv. 10
+
+### Oreburgh Mine B2F
+- `worker_colin.json` — Lv. 10
+- `worker_mason.json` — Lv. 10
 
 
 ## Tier 2 — cap 23
+
+### Route 204 North
+- `aroma_lady_taylor.json` — Lv. 19
+- `bug_catcher_brandon.json` — Lv. 19
+- `twins_liv_and_liz.json` — Lv. 19
+
+### Floaroma Meadow
+- `galactic_grunt_floaroma_meadow_1.json` — Lv. 20 (Galactic grunt)
+- `galactic_grunt_floaroma_meadow_2.json` — Lv. 20 (Galactic grunt)
+
+### Route 205 South
+- `aroma_lady_elizabeth.json` — Lv. 19
+- `battle_girl_kelsey.json` — Lv. 19
+- `camper_jacob.json` — Lv. 19
+- `camper_zackary.json` — Lv. 19
+- `hiker_daniel.json` — Lv. 19
+- `hiker_nicholas.json` — Lv. 19
+- `picnicker_karina.json` — Lv. 19
+- `picnicker_siena.json` — Lv. 19
+
+### Route 205 North
+- `fisherman_andrew.json` — Lv. 19
+- `fisherman_joseph.json` — Lv. 19
+- `fisherman_zachary.json` — Lv. 19
+
+### Valley Windworks Outside
+- `galactic_grunt_valley_windworks_1.json` — Lv. 20 (Galactic grunt)
+
+### Valley Windworks Building
+- `commander_mars_valley_windworks.json` — Lv. 21 (Galactic boss)
+- `galactic_grunt_valley_windworks_2.json` — Lv. 20 (Galactic grunt)
+- `galactic_grunt_valley_windworks_3.json` — Lv. 20 (Galactic grunt)
 
 ### Eterna Forest
 - `bug_catcher_donald.json` — Lv. 19
@@ -79,56 +114,55 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `psychic_lindsey.json` — Lv. 19
 - `psychic_rachael.json` — Lv. 19
 
-### Floaroma Meadow
-- `galactic_grunt_floaroma_meadow_1.json` — Lv. 20 (Galactic grunt)
-- `galactic_grunt_floaroma_meadow_2.json` — Lv. 20 (Galactic grunt)
+### Route 211 West
+- `bird_keeper_alexandra.json` — Lv. 19
+- `hiker_louis.json` — Lv. 19
+- `ninja_boy_zach.json` — Lv. 19
 
-### Fuego Ironworks Building
-- `worker_conrad.json` — Lv. 19
-- `worker_dillan.json` — Lv. 19
-- `worker_holden.json` — Lv. 19
+### Route 211 East
+- `bird_keeper_katherine.json` — Lv. 19
+- `black_belt_sean.json` — Lv. 19
+- `ninja_boy_nick.json` — Lv. 19
+- `ruin_maniac_harry.json` — Lv. 19
 
-### Route 204 North
-- `aroma_lady_taylor.json` — Lv. 19
-- `bug_catcher_brandon.json` — Lv. 19
-- `twins_liv_and_liz.json` — Lv. 19
-
-### Route 205 North
-- `fisherman_andrew.json` — Lv. 19
-- `fisherman_joseph.json` — Lv. 19
-- `fisherman_zachary.json` — Lv. 19
-
-### Route 205 South
-- `aroma_lady_elizabeth.json` — Lv. 19
-- `battle_girl_kelsey.json` — Lv. 19
-- `camper_jacob.json` — Lv. 19
-- `camper_zackary.json` — Lv. 19
-- `hiker_daniel.json` — Lv. 19
-- `hiker_nicholas.json` — Lv. 19
-- `picnicker_karina.json` — Lv. 19
-- `picnicker_siena.json` — Lv. 19
-
-### Valley Windworks Building
-- `commander_mars_valley_windworks.json` — Lv. 21 (Galactic boss)
-- `galactic_grunt_valley_windworks_2.json` — Lv. 20 (Galactic grunt)
-- `galactic_grunt_valley_windworks_3.json` — Lv. 20 (Galactic grunt)
-
-### Valley Windworks Outside
-- `galactic_grunt_valley_windworks_1.json` — Lv. 20 (Galactic grunt)
+Reachable before beating Gardenia: Cut is available at Eterna City (from
+Cynthia) before the gym, and Route 211/Mt Coronet's lower interior have no
+other gate on that path.
 
 
 ## Tier 3 — cap 30
 
-### Cafe
-- `collector_edwin.json` — Lv. 26
-- `collector_fernando.json` — Lv. 26
-- `waitress_kati.json` — Lv. 26
+### Route 206
+- `cyclist_axel.json` — Lv. 26
+- `cyclist_james.json` — Lv. 26
+- `cyclist_john.json` — Lv. 26
+- `cyclist_kayla.json` — Lv. 26
+- `cyclist_megan.json` — Lv. 26
+- `cyclist_nicole.json` — Lv. 26
+- `cyclist_rachel.json` — Lv. 26
+- `cyclist_ryan.json` — Lv. 26
+- `hiker_theodore.json` — Lv. 26
 
-### Celestic Town
-- `galactic_grunt_celestic_town.json` — Lv. 27 (Galactic grunt)
+### Wayward Cave 1F
+- `camper_diego.json` — Lv. 26
+- `camper_parker.json` — Lv. 26
+- `collector_terry.json` — Lv. 26
+- `hiker_lorenzo.json` — Lv. 26
+- `hiker_reginald.json` — Lv. 26
+- `lass_cassidy.json` — Lv. 26
+- `mira_wayward_cave.json` — Lv. 26
+- `picnicker_ana.json` — Lv. 26
+- `picnicker_tori.json` — Lv. 26
+- `ruin_maniac_gerald.json` — Lv. 26
+- `youngster_wayne.json` — Lv. 26
 
-### Celestic Town Cave
-- `galactic_boss_cyrus_celestic_town_ruins.json` — Lv. 28 (Galactic boss)
+### Route 207
+- `battle_girl_helen.json` — Lv. 26
+- `camper_anthony.json` — Lv. 26
+- `hiker_justin.json` — Lv. 26
+- `hiker_kevin.json` — Lv. 26
+- `picnicker_lauren.json` — Lv. 26
+- `youngster_austin.json` — Lv. 26
 
 ### Mt Coronet 1F Tunnel Room
 - `galactic_grunt_mt_coronet_tunnel_room_1.json` — Lv. 27 (Galactic grunt)
@@ -150,76 +184,18 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 ### Mt Coronet 6F
 - `galactic_grunt_mt_coronet_6f.json` — Lv. 27 (Galactic grunt)
 
-### Route 206
-- `cyclist_axel.json` — Lv. 26
-- `cyclist_james.json` — Lv. 26
-- `cyclist_john.json` — Lv. 26
-- `cyclist_kayla.json` — Lv. 26
-- `cyclist_megan.json` — Lv. 26
-- `cyclist_nicole.json` — Lv. 26
-- `cyclist_rachel.json` — Lv. 26
-- `cyclist_ryan.json` — Lv. 26
-- `hiker_theodore.json` — Lv. 26
+Mt Coronet's interior is pinned as one Tier 3 block for now - it may end up
+split across an earlier/later tier pair once its exact room-by-room
+reachability is worked out; not resolved yet.
 
-### Route 207
-- `battle_girl_helen.json` — Lv. 26
-- `camper_anthony.json` — Lv. 26
-- `hiker_justin.json` — Lv. 26
-- `hiker_kevin.json` — Lv. 26
-- `picnicker_lauren.json` — Lv. 26
-- `youngster_austin.json` — Lv. 26
-
-### Route 209
-- `breeder_albert.json` — Lv. 26
-- `breeder_jennifer.json` — Lv. 26
-- `cowgirl_shelley.json` — Lv. 26
-- `jogger_raul.json` — Lv. 26
-- `jogger_richard.json` — Lv. 26
-- `poke_kid_danielle.json` — Lv. 26
-- `twins_emma_and_lil.json` — Lv. 26
-- `young_couple_ty_and_sue.json` — Lv. 26
-
-### Route 209 Gate To Hearthome City
-- `rival_route_209_chimchar.json` — Lv. 28
-- `rival_route_209_piplup.json` — Lv. 28
-- `rival_route_209_turtwig.json` — Lv. 28
-
-### Route 209 Lost Tower 2F
-- `youngster_oliver.json` — Lv. 26
-
-### Route 209 Lost Tower 3F
-- `pokefan_leonard.json` — Lv. 26
-- `roughneck_kirby.json` — Lv. 26
-
-### Route 209 Lost Tower 4F
-- `belle_and_pa_beth_and_bob.json` — Lv. 26
-- `pokefan_rebekah.json` — Lv. 26
-- `young_couple_mike_and_nat.json` — Lv. 26
-
-### Route 210 South
-- `belle_and_pa_ava_and_matt.json` — Lv. 26
-- `breeder_amber.json` — Lv. 26
-- `breeder_kahlil.json` — Lv. 26
-- `jogger_wyatt.json` — Lv. 26
-- `ninja_boy_brennan.json` — Lv. 26
-- `ninja_boy_bruce.json` — Lv. 26
-- `ninja_boy_fabian.json` — Lv. 26
-- `rancher_marco.json` — Lv. 26
-- `twins_teri_and_tia.json` — Lv. 26
-
-### Route 211 East
-- `bird_keeper_katherine.json` — Lv. 26
-- `black_belt_sean.json` — Lv. 26
-- `ninja_boy_nick.json` — Lv. 26
-- `ruin_maniac_harry.json` — Lv. 26
-
-### Route 211 West
-- `bird_keeper_alexandra.json` — Lv. 26
-- `hiker_louis.json` — Lv. 26
-- `ninja_boy_zach.json` — Lv. 26
-
-### Solaceon Ruins Room 3
-- `ruin_maniac_karl.json` — Lv. 26
+### Route 208
+- `aroma_lady_hannah.json` — Lv. 26
+- `artist_william.json` — Lv. 26
+- `black_belt_kyle.json` — Lv. 26
+- `fisherman_cody.json` — Lv. 26
+- `hiker_alexander.json` — Lv. 26
+- `hiker_jonathan.json` — Lv. 26
+- `hiker_robert.json` — Lv. 26
 
 ### Team Galactic Eterna Building 1F
 - `galactic_grunt_team_galactic_eterna_building_1f_1.json` — Lv. 27 (Galactic grunt)
@@ -236,63 +212,68 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 ### Team Galactic Eterna Building 4F
 - `commander_jupiter_team_galactic_eterna_building.json` — Lv. 28 (Galactic boss)
 
-### Wayward Cave 1F
-- `camper_diego.json` — Lv. 26
-- `camper_parker.json` — Lv. 26
-- `collector_terry.json` — Lv. 26
-- `hiker_lorenzo.json` — Lv. 26
-- `hiker_reginald.json` — Lv. 26
-- `lass_cassidy.json` — Lv. 26
-- `mira_wayward_cave.json` — Lv. 26
-- `picnicker_ana.json` — Lv. 26
-- `picnicker_tori.json` — Lv. 26
-- `ruin_maniac_gerald.json` — Lv. 26
-- `youngster_wayne.json` — Lv. 26
+Not explicitly placed by the route-order pass; kept here (matching its
+previous tier) since it's thematically tied to the Eterna area. Flagged for
+confirmation.
 
 
 ## Tier 4 — cap 37
 
-### Pokemon Mansion
-- `lady_celeste.json` — Lv. 33
-- `maid_belinda.json` — Lv. 33
-- `maid_clare.json` — Lv. 33
-- `maid_elena.json` — Lv. 33
-- `maid_emily.json` — Lv. 33
-- `maid_sophie.json` — Lv. 33
-- `rich_boy_liam.json` — Lv. 33
+### Route 209
+- `breeder_albert.json` — Lv. 33
+- `breeder_jennifer.json` — Lv. 33
+- `cowgirl_shelley.json` — Lv. 33
+- `jogger_raul.json` — Lv. 33
+- `jogger_richard.json` — Lv. 33
+- `poke_kid_danielle.json` — Lv. 33
+- `twins_emma_and_lil.json` — Lv. 33
+- `young_couple_ty_and_sue.json` — Lv. 33
 
-### Route 208
-- `aroma_lady_hannah.json` — Lv. 33
-- `artist_william.json` — Lv. 33
-- `black_belt_kyle.json` — Lv. 33
-- `fisherman_cody.json` — Lv. 33
-- `hiker_alexander.json` — Lv. 33
-- `hiker_jonathan.json` — Lv. 33
-- `hiker_robert.json` — Lv. 33
+### Route 209 Lost Tower 2F
+- `youngster_oliver.json` — Lv. 33
 
-### Route 212 North
-- `gentleman_jeremy.json` — Lv. 33
-- `lady_melissa.json` — Lv. 33
-- `policeman_alex.json` — Lv. 33
-- `policeman_bobby.json` — Lv. 33
-- `policeman_caleb.json` — Lv. 33
-- `policeman_dylan.json` — Lv. 33
-- `rich_boy_jason.json` — Lv. 33
-- `socialite_reina.json` — Lv. 33
+### Route 209 Lost Tower 3F
+- `pokefan_leonard.json` — Lv. 33
+- `roughneck_kirby.json` — Lv. 33
 
-### Route 212 South
-- `collector_dean.json` — Lv. 33
-- `fisherman_josh.json` — Lv. 33
-- `fisherman_juan.json` — Lv. 33
-- `fisherman_travis.json` — Lv. 33
-- `parasol_lady_alexa.json` — Lv. 33
-- `parasol_lady_sabrina.json` — Lv. 33
-- `policeman_danny.json` — Lv. 33
-- `ranger_allison.json` — Lv. 33
-- `ranger_jeffrey.json` — Lv. 33
-- `ranger_taylor.json` — Lv. 33
-- `scientist_shaun.json` — Lv. 33
-- `scientist_stefano.json` — Lv. 33
+### Route 209 Lost Tower 4F
+- `belle_and_pa_beth_and_bob.json` — Lv. 33
+- `pokefan_rebekah.json` — Lv. 33
+- `young_couple_mike_and_nat.json` — Lv. 33
+
+### Route 209 Gate To Hearthome City
+- `rival_route_209_chimchar.json` — Lv. 35
+- `rival_route_209_piplup.json` — Lv. 35
+- `rival_route_209_turtwig.json` — Lv. 35
+
+### Route 210 South
+- `belle_and_pa_ava_and_matt.json` — Lv. 33
+- `breeder_amber.json` — Lv. 33
+- `breeder_kahlil.json` — Lv. 33
+- `jogger_wyatt.json` — Lv. 33
+- `ninja_boy_brennan.json` — Lv. 33
+- `ninja_boy_bruce.json` — Lv. 33
+- `ninja_boy_fabian.json` — Lv. 33
+- `rancher_marco.json` — Lv. 33
+- `twins_teri_and_tia.json` — Lv. 33
+
+### Cafe
+- `collector_edwin.json` — Lv. 33
+- `collector_fernando.json` — Lv. 33
+- `waitress_kati.json` — Lv. 33
+
+### Solaceon Ruins Room 3
+- `ruin_maniac_karl.json` — Lv. 33
+
+### Route 215
+- `ace_trainer_dennis.json` — Lv. 33
+- `ace_trainer_maya.json` — Lv. 33
+- `black_belt_derek.json` — Lv. 33
+- `black_belt_gregory.json` — Lv. 33
+- `black_belt_nathaniel.json` — Lv. 33
+- `jogger_craig.json` — Lv. 33
+- `jogger_scott.json` — Lv. 33
+- `ruin_maniac_calvin.json` — Lv. 33
 
 ### Veilstone City
 - `dawn_veilstone_city_chimchar.json` — Lv. 33
@@ -304,13 +285,61 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `lucas_veilstone_city_piplup.json` — Lv. 33
 - `lucas_veilstone_city_turtwig.json` — Lv. 33
 
-
 ## Tier 5 — cap 45
 
-### Pastoria City
-- `rival_pastoria_city_chimchar.json` — Lv. 43
-- `rival_pastoria_city_piplup.json` — Lv. 43
-- `rival_pastoria_city_turtwig.json` — Lv. 43
+### Route 212 North
+- `gentleman_jeremy.json` — Lv. 41
+- `lady_melissa.json` — Lv. 41
+- `policeman_alex.json` — Lv. 41
+- `policeman_bobby.json` — Lv. 41
+- `policeman_caleb.json` — Lv. 41
+- `policeman_dylan.json` — Lv. 41
+- `rich_boy_jason.json` — Lv. 41
+- `socialite_reina.json` — Lv. 41
+
+### Route 212 South
+- `collector_dean.json` — Lv. 41
+- `fisherman_josh.json` — Lv. 41
+- `fisherman_juan.json` — Lv. 41
+- `fisherman_travis.json` — Lv. 41
+- `parasol_lady_alexa.json` — Lv. 41
+- `parasol_lady_sabrina.json` — Lv. 41
+- `policeman_danny.json` — Lv. 41
+- `ranger_allison.json` — Lv. 41
+- `ranger_jeffrey.json` — Lv. 41
+- `ranger_taylor.json` — Lv. 41
+- `scientist_shaun.json` — Lv. 41
+- `scientist_stefano.json` — Lv. 41
+
+Both now gated on defeating Maylene (see "Map data" in `CHANGES.md`), which
+puts this tier as the earliest they're reachable - the level bump from Lv. 33
+to Lv. 41 follows from that move, not a separate decision.
+
+### Pokemon Mansion
+- `lady_celeste.json` — Lv. 41
+- `maid_belinda.json` — Lv. 41
+- `maid_clare.json` — Lv. 41
+- `maid_elena.json` — Lv. 41
+- `maid_emily.json` — Lv. 41
+- `maid_sophie.json` — Lv. 41
+- `rich_boy_liam.json` — Lv. 41
+
+### Route 214
+- `beauty_devon.json` — Lv. 41
+- `collector_brady.json` — Lv. 41
+- `collector_douglas.json` — Lv. 41
+- `collector_jamal.json` — Lv. 41
+- `pi_carlos.json` — Lv. 41
+- `psychic_abigail.json` — Lv. 41
+- `psychic_mitchell.json` — Lv. 41
+- `ruin_maniac_bryan.json` — Lv. 41
+- `ruin_maniac_ronald.json` — Lv. 41
+
+Also now gated on defeating Maylene (new gate, see `CHANGES.md`) - same
+reasoning as Route 212 above.
+
+### Valor Lakefront
+- `galactic_grunt_valor_lakefront.json` — Lv. 42 (Galactic grunt)
 
 ### Restaurant
 - `aroma_lady_alison.json` — Lv. 41
@@ -343,32 +372,40 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `tuber_chelsea.json` — Lv. 41
 - `tuber_jared.json` — Lv. 41
 
-### Route 214
-- `beauty_devon.json` — Lv. 41
-- `collector_brady.json` — Lv. 41
-- `collector_douglas.json` — Lv. 41
-- `collector_jamal.json` — Lv. 41
-- `pi_carlos.json` — Lv. 41
-- `psychic_abigail.json` — Lv. 41
-- `psychic_mitchell.json` — Lv. 41
-- `ruin_maniac_bryan.json` — Lv. 41
-- `ruin_maniac_ronald.json` — Lv. 41
-
-### Route 215
-- `ace_trainer_dennis.json` — Lv. 41
-- `ace_trainer_maya.json` — Lv. 41
-- `black_belt_derek.json` — Lv. 41
-- `black_belt_gregory.json` — Lv. 41
-- `black_belt_nathaniel.json` — Lv. 41
-- `jogger_craig.json` — Lv. 41
-- `jogger_scott.json` — Lv. 41
-- `ruin_maniac_calvin.json` — Lv. 41
-
-### Valor Lakefront
-- `galactic_grunt_valor_lakefront.json` — Lv. 42 (Galactic grunt)
-
+### Pastoria City
+- `rival_pastoria_city_chimchar.json` — Lv. 43
+- `rival_pastoria_city_piplup.json` — Lv. 43
+- `rival_pastoria_city_turtwig.json` — Lv. 43
 
 ## Tier 6 — cap 51
+
+### Fuego Ironworks Building
+- `worker_conrad.json` — Lv. 47
+- `worker_dillan.json` — Lv. 47
+- `worker_holden.json` — Lv. 47
+
+### Route 220
+- `swimmer_adrian.json` — Lv. 47
+- `swimmer_claire.json` — Lv. 47
+- `swimmer_erica.json` — Lv. 47
+- `swimmer_erik.json` — Lv. 47
+- `swimmer_jessica.json` — Lv. 47
+- `swimmer_katelyn.json` — Lv. 47
+- `swimmer_vincent.json` — Lv. 47
+
+### Route 221
+- `ace_trainer_jake.json` — Lv. 47
+- `ace_trainer_shannon.json` — Lv. 47
+- `collector_ivan.json` — Lv. 47
+- `fisherman_cory.json` — Lv. 47
+- `swimmer_dillon.json` — Lv. 47
+- `swimmer_vanessa.json` — Lv. 47
+
+### Celestic Town
+- `galactic_grunt_celestic_town.json` — Lv. 48 (Galactic grunt)
+
+### Celestic Town Cave
+- `galactic_boss_cyrus_celestic_town_ruins.json` — Lv. 49 (Galactic boss)
 
 ### Canalave City
 - `rival_canalave_city_chimchar.json` — Lv. 49
@@ -404,6 +441,8 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `guitarist_tony.json` — Lv. 47
 - `sailor_skyler.json` — Lv. 47
 
+The route-order pass puts Route 218 in Tier 1 for the wild-encounters doc
+(it's fishable that early), but its trainers stay here.
 
 ## Tier 7 — cap 57
 
@@ -418,6 +457,21 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `ninja_boy_joel.json` — Lv. 53
 - `ninja_boy_nathan.json` — Lv. 53
 - `veteran_brian.json` — Lv. 53
+
+Not mentioned in the route-order pass; kept here (matching its previous
+tier) since it's gated separately from Route 210 South. Flagged for
+confirmation.
+
+### Lake Valor Drained
+- `galactic_grunt_lake_valor_1.json` — Lv. 59 (Galactic grunt)
+- `galactic_grunt_lake_valor_2.json` — Lv. 59 (Galactic grunt)
+- `galactic_grunt_lake_valor_3.json` — Lv. 59 (Galactic grunt)
+
+The route-order pass's "Lake valor" mention is treated as the earlier,
+undrained wild-encounter visit (see the wild-encounters doc) - this is the
+later Team Galactic "drained" story event, kept at its previous tier since
+nothing indicates the whole invasion sequence itself should move earlier.
+Flagged for confirmation.
 
 ### Route 216
 - `ace_trainer_blake.json` — Lv. 53
@@ -441,63 +495,7 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `skier_madison.json` — Lv. 53
 - `skier_shawn.json` — Lv. 53
 
-
 ## Tier 8 — cap 62
-
-### Route 219
-- `tuber_mariel.json` — Lv. 58
-- `tuber_trenton.json` — Lv. 58
-
-### Route 220
-- `swimmer_adrian.json` — Lv. 58
-- `swimmer_claire.json` — Lv. 58
-- `swimmer_erica.json` — Lv. 58
-- `swimmer_erik.json` — Lv. 58
-- `swimmer_jessica.json` — Lv. 58
-- `swimmer_katelyn.json` — Lv. 58
-- `swimmer_vincent.json` — Lv. 58
-
-### Route 221
-- `ace_trainer_jake.json` — Lv. 58
-- `ace_trainer_shannon.json` — Lv. 58
-- `collector_ivan.json` — Lv. 58
-- `fisherman_cory.json` — Lv. 58
-- `swimmer_dillon.json` — Lv. 58
-- `swimmer_vanessa.json` — Lv. 58
-
-### Route 222
-- `beauty_nicola.json` — Lv. 58
-- `fisherman_alec.json` — Lv. 58
-- `fisherman_brett.json` — Lv. 58
-- `fisherman_cole.json` — Lv. 58
-- `fisherman_george.json` — Lv. 58
-- `policeman_thomas.json` — Lv. 58
-- `rich_boy_trey.json` — Lv. 58
-- `sailor_luther.json` — Lv. 58
-- `sailor_marc.json` — Lv. 58
-- `tuber_conner.json` — Lv. 58
-- `tuber_holly.json` — Lv. 58
-
-### Route 222 West House
-- `poke_kid_janet.json` — Lv. 58
-
-### Route 223
-- `sailor_zachariah.json` — Lv. 58
-- `swimmer_aubree.json` — Lv. 58
-- `swimmer_cassandra.json` — Lv. 58
-- `swimmer_colton.json` — Lv. 58
-- `swimmer_crystal.json` — Lv. 58
-- `swimmer_francisco.json` — Lv. 58
-- `swimmer_gabrielle.json` — Lv. 58
-- `swimmer_miranda.json` — Lv. 58
-- `swimmer_oscar.json` — Lv. 58
-- `swimmer_paige.json` — Lv. 58
-- `swimmer_ricardo.json` — Lv. 58
-- `swimmer_troy.json` — Lv. 58
-- `swimmer_wesley.json` — Lv. 58
-
-### Distortion World B7F
-- `galactic_boss_cyrus_distortion_world.json` — Lv. 60 (Galactic boss)
 
 ### Galactic HQ 1F
 - `galactic_grunt_galactic_hq_1f.json` — Lv. 59 (Galactic grunt)
@@ -525,18 +523,6 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 ### Galactic HQ Control Room
 - `commander_saturn_galactic_hq.json` — Lv. 60 (Galactic boss)
 
-### Lake Valor Drained
-- `galactic_grunt_lake_valor_1.json` — Lv. 59 (Galactic grunt)
-- `galactic_grunt_lake_valor_2.json` — Lv. 59 (Galactic grunt)
-- `galactic_grunt_lake_valor_3.json` — Lv. 59 (Galactic grunt)
-
-### Lake Verity
-- `commander_mars_lake_verity.json` — Lv. 60 (Galactic boss)
-- `galactic_grunt_lake_verity_1.json` — Lv. 59 (Galactic grunt)
-- `galactic_grunt_lake_verity_2.json` — Lv. 59 (Galactic grunt)
-- `galactic_grunt_lake_verity_3.json` — Lv. 59 (Galactic grunt)
-- `galactic_grunt_lake_verity_4.json` — Lv. 59 (Galactic grunt)
-
 ### Spear Pillar
 - `commander_jupiter_spear_pillar.json` — Lv. 60 (Galactic boss)
 - `commander_mars_spear_pillar.json` — Lv. 60 (Galactic boss)
@@ -549,13 +535,63 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 ### Valor Cavern
 - `commander_saturn_valor_cavern.json` — Lv. 60 (Galactic boss)
 
+Not mentioned in the route-order pass; kept here (matching its previous
+tier). Flagged for confirmation.
+
+### Distortion World B7F
+- `galactic_boss_cyrus_distortion_world.json` — Lv. 60 (Galactic boss)
+
+### Route 219
+- `tuber_mariel.json` — Lv. 58
+- `tuber_trenton.json` — Lv. 58
+
+The route-order pass puts Route 219 in Tier 1 for the wild-encounters doc
+(it's fishable that early), but its trainers stay here.
+
+### Route 222
+- `beauty_nicola.json` — Lv. 58
+- `fisherman_alec.json` — Lv. 58
+- `fisherman_brett.json` — Lv. 58
+- `fisherman_cole.json` — Lv. 58
+- `fisherman_george.json` — Lv. 58
+- `policeman_thomas.json` — Lv. 58
+- `rich_boy_trey.json` — Lv. 58
+- `sailor_luther.json` — Lv. 58
+- `sailor_marc.json` — Lv. 58
+- `tuber_conner.json` — Lv. 58
+- `tuber_holly.json` — Lv. 58
+
+### Route 222 West House
+- `poke_kid_janet.json` — Lv. 58
+
+### Lake Verity
+- `commander_mars_lake_verity.json` — Lv. 60 (Galactic boss)
+- `galactic_grunt_lake_verity_1.json` — Lv. 59 (Galactic grunt)
+- `galactic_grunt_lake_verity_2.json` — Lv. 59 (Galactic grunt)
+- `galactic_grunt_lake_verity_3.json` — Lv. 59 (Galactic grunt)
+- `galactic_grunt_lake_verity_4.json` — Lv. 59 (Galactic grunt)
+
+Same reasoning as Lake Valor Drained above: the route-order pass's "Lake
+verity" mention in Tier 1 is the very first, pre-Pokemon visit (wild
+encounters only, no trainers) - this later Team Galactic invasion of the
+same map is kept at its previous tier. Flagged for confirmation.
 
 ## Tier 9 — cap 67
 
-### Pokemon League North Pokecenter 1F
-- `rival_pokemon_league_chimchar.json` — Lv. 65
-- `rival_pokemon_league_piplup.json` — Lv. 65
-- `rival_pokemon_league_turtwig.json` — Lv. 65
+### Route 223
+- `sailor_zachariah.json` — Lv. 63
+- `swimmer_aubree.json` — Lv. 63
+- `swimmer_cassandra.json` — Lv. 63
+- `swimmer_colton.json` — Lv. 63
+- `swimmer_crystal.json` — Lv. 63
+- `swimmer_francisco.json` — Lv. 63
+- `swimmer_gabrielle.json` — Lv. 63
+- `swimmer_miranda.json` — Lv. 63
+- `swimmer_oscar.json` — Lv. 63
+- `swimmer_paige.json` — Lv. 63
+- `swimmer_ricardo.json` — Lv. 63
+- `swimmer_troy.json` — Lv. 63
+- `swimmer_wesley.json` — Lv. 63
 
 ### Victory Road 1F
 - `ace_trainer_mariah.json` — Lv. 63
@@ -593,6 +629,11 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `double_team_jo_and_pat.json` — Lv. 63
 - `dragon_tamer_ondrej.json` — Lv. 63
 - `psychic_valencia.json` — Lv. 63
+
+### Pokemon League North Pokecenter 1F
+- `rival_pokemon_league_chimchar.json` — Lv. 65
+- `rival_pokemon_league_piplup.json` — Lv. 65
+- `rival_pokemon_league_turtwig.json` — Lv. 65
 
 
 ## Gyms

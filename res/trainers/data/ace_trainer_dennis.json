@@ -12,7 +12,7 @@
         {
             "species": "SPECIES_GLIGAR",
             "form": 0,
-            "level": 41,
+            "level": 33,
             "item": null,
             "moves": [
                 "MOVE_SCREECH",
@@ -27,7 +27,7 @@
         {
             "species": "SPECIES_BUIZEL",
             "form": 0,
-            "level": 41,
+            "level": 33,
             "item": null,
             "moves": [
                 "MOVE_AQUA_JET",
@@ -42,7 +42,7 @@
         {
             "species": "SPECIES_DRIFBLIM",
             "form": 0,
-            "level": 41,
+            "level": 33,
             "item": null,
             "moves": [
                 "MOVE_SWALLOW",
