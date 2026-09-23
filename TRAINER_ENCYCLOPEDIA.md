@@ -1,5 +1,9 @@
 # Trainer Encyclopedia
 
+> **Note:** this doc's prose was AI-assisted. The user will rewrite it by
+> hand before the game is released. (Keep this note if the file is
+> regenerated again.)
+
 Every trainer battle before the Elite Four, listed in the rough order you'll fight them, grouped by the level cap tier that's active at the time. Each Pokemon's ability, nature, moves, and held item are listed exactly as they'll appear in battle. A Pokemon whose trainer data doesn't force a specific ability or nature defaults to its first ability slot and to a neutral Hardy nature, respectively - most trainers haven't been individually curated yet, so `Hardy (default, not yet curated)` is very common for now and will shrink over time as more are set by hand.
 
 This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer data files under `res/trainers/data/`. If trainers are moved, re-leveled, or re-teamed by hand, this file will need to be regenerated to stay accurate.

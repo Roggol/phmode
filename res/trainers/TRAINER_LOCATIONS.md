@@ -1,5 +1,8 @@
 # Trainer Locations (Pre-Elite Four)
 
+> **Note:** this doc's prose was AI-assisted. The user will rewrite it by
+> hand before the game is released.
+
 Reference list of every pre-Elite-Four trainer in `res/trainers/data/` and the
 map/route they battle on, grouped by level-cap tier **in the order the player
 will actually reach each location** (not alphabetically). This ordering is

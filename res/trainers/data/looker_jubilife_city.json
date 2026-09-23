@@ -24,15 +24,13 @@
         {
             "type": "TRMSG_PRE_BATTLE",
             "en_US": [
-                "Looker: Now then, allow me to see\n",
-                "your strength as a Trainer!\r"
+                "Looker: I spy with my little eye..."
             ]
         },
         {
             "type": "TRMSG_DEFEAT",
             "en_US": [
-                "Looker: ...Impressive! Just as I\n",
-                "suspected, you are the real thing.\r"
+                "Looker: I spy a very strong trainer!"
             ]
         }
     ]

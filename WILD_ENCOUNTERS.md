@@ -1,5 +1,9 @@
 # Wild Encounters By Route
 
+> **Note:** this doc's prose was AI-assisted. The user will rewrite it by
+> hand before the game is released. (Keep this note if the file is
+> regenerated again.)
+
 Every wild-encounter table in the game (grass/land, Surf, Rock Smash, and the three fishing rods), grouped in the same route-progression order as `res/trainers/TRAINER_LOCATIONS.md` - **not** by when trainers there change tiers, but by when the player can actually reach the area, per that file's route-order pass. A location with no bullet points, or missing entirely, has no wild-encounter table in `res/field/encounters/` (it's a town/building interior, a legendary-only chamber, a transfer-only area like Pal Park, etc.). A location made of several sub-maps (Old Chateau's rooms, Solaceon Ruins' many rooms, Great Marsh's 6 areas, Mt Coronet's floors, etc.) gets one `####` subheading per sub-map/floor, each with its own results - floors with no data of their own are skipped.
 
 Percentages are each species' total catch rate for that method at that location (summed across every slot it occupies) - not a slot-by-slot breakdown. **Grass/Land** entries can vary by time of day: the game's own grass table is written for *Morning*, and only two of its twelve slots (worth 10% each) swap to a different species for *Day* (which covers Twilight too) or *Night* (which covers Late Night too) - see `WildEncounters_ReplaceTimedEncounters` in `src/overlay006/wild_encounters.c`. When those two slots don't actually change species across all three periods, only one unlabeled line is shown; otherwise each differing period gets its own `*Period*:` line (periods that end up identical to each other are combined, e.g. `*Morning/Night*:`). Surf, Rock Smash, and the three fishing rods have no time-of-day variation.

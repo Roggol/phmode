@@ -1,5 +1,8 @@
 # What's Different From Regular Pokémon Platinum
 
+> **Note:** this doc's prose was AI-assisted. The user will rewrite it by
+> hand before the game is released.
+
 This is a plain-language guide to everything this hack changes about the
 original game. It's written for players, not programmers, so it skips the
 "how it was built" details and just tells you what you'll actually notice

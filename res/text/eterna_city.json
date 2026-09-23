@@ -176,10 +176,13 @@
     {
       "id": "EternaCity_Text_TogepiEggSentToBox",
       "en_US": [
-        "Cynthia: Your party is full, so the Egg\n",
-        "was sent to a Box in your PC.\r",
-        "Bring it into your party and a Pokémon\n",
-        "will hatch from it while you travel.\r",
+        "Your party is full, so the Egg\n",
+        "Cynthia: Keep that Egg with you in your\n",
+        "party of Pokémon.\r",
+        "A Pokémon will hatch from it while you\n",
+        "are traveling.\r",
+        "I would be happy to know that it will\n",
+        "help fill another page of your Pokédex.\r",
         "See you again!\r"
       ]
     },

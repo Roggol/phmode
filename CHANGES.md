@@ -21,6 +21,42 @@ rowan_intro_app.c`:
 * `RowanIntro_Text_MyNameRowan`: "However, everyone just calls me the
   Pokémon Professor." → "I hear you're up for a challenge."
 
+### Rowan's intro drastically shortened
+The optional "Control Info"/"Adventure Info" tutorial menu, and the whole
+"here's a Poké Ball, touch it" demo (Rowan explaining that Pokémon exist,
+having the player touch a Poké Ball on the touchscreen, a Buneary popping out
+in a flash/jump animation, "we live alongside Pokémon as friends") are cut
+entirely from the intro cutscene - it now goes straight from "My name is
+Rowan... I hear you're up for a challenge." to "Now, why don't you tell me a
+little bit about yourself?".
+
+* `res/text/rowan_intro.json` - removed the now-unused
+  `RowanIntro_Text_ControlInfo0-3`, `_ControlInfoDsIcon`,
+  `_ControlInfoUnderstood`, `_ControlInfoUseTouchscreen`,
+  `_InfoAnythingElse`, `_AdventureInfo0-5`, `_WidelyInhabited`,
+  `_HavePokeBall`, `_PokeBallUseTouchscreen`, `_LiveAlongsidePokemon`,
+  `_ChoiceControlInfo`, `_ChoiceAdventureInfo`, `_ChoiceNoInfo` entries.
+* `src/applications/rowan_intro/rowan_intro_app.c` - `RI_STATE_DIALOGUE_ROWAN_INTRO`
+  now transitions straight to `RI_STATE_DIALOGUE_ABOUT_YOURSELF`. Removed the
+  ~50 now-unreachable state-machine cases in between
+  (`RI_STATE_MOVE_ROWAN_RIGHT_FOR_INFO` through `RI_STATE_BETWEEN_DIALOGUE_DELAY`,
+  covering the info choice menu, both info tutorials, and the whole Poké
+  Ball/Buneary demo), plus everything exclusively used by them:
+  `RowanIntro_DisplayTextBlock`, `RowanIntro_WasPokeballOpened`,
+  `RowanIntro_LoadBunearySprite`, `RowanIntro_LoadPokeballTilemap`,
+  `RowanIntro_AnimateBuneary`/`_BlendSpritePalette`,
+  `RowanIntro_SetBunearyLayerPriority`, the `sControlInfoTextWindow`/
+  `sAdventureInfoTextWindow`/`sInfoChoiceBoxWindowTemplate` window templates,
+  `sInfoChoiceInfos`, `sBunearyLoadTilemapRectRawData`, the `CC_INFO` case in
+  `RowanIntro_ChoiceBox` (the `CC_YESNO`/`CC_RIVAL_NAMES` cases it's shared
+  with are untouched), and the now-fully-unused `bunearyAnimState`/
+  `displayTextBlockState`/`bunearyAnimCarryover`/`bunearyParabolaCoeff`/
+  `bunearyAnimUpdateCounter`/`bunearyPaletteBlendUpdateCounter`/
+  `bunearyPalette`/`bunearyBlendedPalette` fields on `RowanIntro` (and their
+  alloc/free calls). None of this touched anything with a gameplay side
+  effect - the whole sequence was purely a visual/audio demo with no item
+  grant or flag set, confirmed by reading through it before deleting it.
+
 ## Quality-of-life
 
 ### Text speed
