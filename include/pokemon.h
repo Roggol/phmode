@@ -646,6 +646,31 @@ u16 Pokemon_LevelUpMove(Pokemon *mon, int *index, u16 *moveID);
 u16 Pokemon_LevelUpMoveUpTo(Pokemon *mon, u8 oldLevel, int *index, u16 *moveID);
 
 /**
+ * @brief Loads the full list of Egg Moves a species can learn.
+ *
+ * @param species
+ * @param eggMoves Out array, must have room for at least MAX_EGG_MOVES entries.
+ * @return The number of Egg Moves written to @p eggMoves.
+ */
+u16 Pokemon_LoadSpeciesEggMoves(u16 species, u16 *eggMoves);
+
+/**
+ * @brief Like Pokemon_LevelUpMoveUpTo, but resolves every Egg Move the Pokemon's
+ * species can learn instead of level-up moves. Used by Common Candy once a
+ * Pokemon has been lowered all the way down to level 1.
+ *
+ * Call repeatedly with the same monotonically-advancing @p index until it
+ * returns MOVE_NONE.
+ *
+ * @param mon
+ * @param index  Egg move list cursor; initialise to 0 and reuse across calls.
+ * @param moveID Out param: the move that was offered/learned.
+ * @return MOVE_NONE, LEARNSET_ALL_SLOTS_FILLED, or the learned move ID — same
+ * contract as Pokemon_LevelUpMoveUpTo (a move already known is skipped internally).
+ */
+u16 Pokemon_NextEggMove(Pokemon *mon, int *index, u16 *moveID);
+
+/**
  * @brief Swaps the places of two moves on a Pokemon
  *
  * @param mon

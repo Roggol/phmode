@@ -694,6 +694,7 @@ static enum PartyMenuState PartyMenuCB_UseItem_RareCandy(PartyMenuApplication *a
     application->monStats[STAT_SPECIAL_DEFENSE] = (u16)Pokemon_GetValue(mon, MON_DATA_SPEED, NULL);
 
     application->partyMenu->oldLevel = (u8)Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
+    application->partyMenu->cyclingEggMoves = FALSE;
 
     Party_ApplyItemEffectsToMember(application->partyMenu->party, application->partyMenu->usedItemID, application->currPartySlot, 0, GetCurrentMapLabel(application), HEAP_ID_PARTY_MENU);
 
@@ -729,10 +730,12 @@ static enum PartyMenuState PartyMenuCB_UseItem_RareCandy(PartyMenuApplication *a
     return PARTY_MENU_STATE_EXEC_CALLBACK;
 }
 
-// phmode: Common Candy's counterpart to PartyMenuCB_UseItem_RareCandy. Unlike Rare Candy,
-// leveling down never teaches or requires forgetting moves and can't trigger evolution, so
-// this skips straight to a single message instead of entering the multi-screen LEVELUP_STATE
-// machine (which also assumes stat increases, not decreases, when formatting its numbers).
+// phmode: Common Candy's counterpart to PartyMenuCB_UseItem_RareCandy. Leveling down
+// never teaches a level-up move or triggers evolution, so this skips the multi-screen
+// LEVELUP_STATE machine's stat-increase screens (which also assume stats only ever go
+// up, not down) - except when the Pokemon has just been lowered all the way to level 1,
+// in which case it hands off to PartyMenuCB_LevelUp in "cycle every Egg Move" mode so the
+// player can relearn everything the species could otherwise only get by breeding.
 static enum PartyMenuState PartyMenuCB_UseItem_CommonCandy(PartyMenuApplication *application)
 {
     Pokemon *mon = Party_GetPokemonBySlotIndex(application->partyMenu->party, application->currPartySlot);
@@ -763,7 +766,15 @@ static enum PartyMenuState PartyMenuCB_UseItem_CommonCandy(PartyMenuApplication 
     PartyMenu_LoadMemberWindowTiles(application, application->currPartySlot);
     PartyMenu_PrintLongMessage(application, PRINT_MESSAGE_PRELOADED, TRUE);
 
-    application->callback = PartyMenuCB_PrintThenWaitABPress;
+    if (application->partyMembers[application->currPartySlot].level == 1) {
+        application->partyMenu->cyclingEggMoves = TRUE;
+        application->partyMenu->levelUpMoveIndex = 0;
+        application->callback = PartyMenuCB_LevelUp;
+        application->callbackState = LEVELUP_STATE_START;
+    } else {
+        application->partyMenu->cyclingEggMoves = FALSE;
+        application->callback = PartyMenuCB_PrintThenWaitABPress;
+    }
 
     return PARTY_MENU_STATE_EXEC_CALLBACK;
 }
@@ -778,8 +789,15 @@ static enum PartyMenuState PartyMenuCB_LevelUp(PartyMenuApplication *application
         if (Text_IsPrinterActive(application->textPrinterID) == FALSE) {
             if (JOY_NEW(PAD_BUTTON_A | PAD_BUTTON_B)) {
                 Sound_PlayEffect(SE_CONFIRM_sseq_3);
-                PartyMenu_DrawLevelUpStatIncreases(application);
-                application->callbackState = LEVELUP_STATE_DRAW_STAT_CHANGES;
+
+                if (application->partyMenu->cyclingEggMoves) {
+                    // Common Candy at level 1: no stat-increase screens to show, and
+                    // PartyMenu_DrawLevelUpStatIncreases assumes stats only ever go up.
+                    application->callbackState = LEVELUP_STATE_CHECK_LEARNSET;
+                } else {
+                    PartyMenu_DrawLevelUpStatIncreases(application);
+                    application->callbackState = LEVELUP_STATE_DRAW_STAT_CHANGES;
+                }
             }
         }
         break;
@@ -804,7 +822,9 @@ static enum PartyMenuState PartyMenuCB_LevelUp(PartyMenuApplication *application
     case LEVELUP_STATE_CHECK_LEARNSET:
         mon = Party_GetPokemonBySlotIndex(application->partyMenu->party, application->currPartySlot);
 
-        switch (Pokemon_LevelUpMoveUpTo(mon, application->partyMenu->oldLevel, &application->partyMenu->levelUpMoveIndex, &application->partyMenu->learnedMove)) {
+        switch (application->partyMenu->cyclingEggMoves
+                ? Pokemon_NextEggMove(mon, &application->partyMenu->levelUpMoveIndex, &application->partyMenu->learnedMove)
+                : Pokemon_LevelUpMoveUpTo(mon, application->partyMenu->oldLevel, &application->partyMenu->levelUpMoveIndex, &application->partyMenu->learnedMove)) {
         case MOVE_NONE:
             application->callbackState = LEVELUP_STATE_CHECK_EVOLUTION;
             break;

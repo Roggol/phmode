@@ -1,5 +1,5 @@
 {
-    "name": "Looker",
+    "name": "??????",
     "class": "TRAINER_CLASS_POLICEMAN",
     "items": [],
     "ai_flags": [
@@ -24,13 +24,13 @@
         {
             "type": "TRMSG_PRE_BATTLE",
             "en_US": [
-                "Looker: I spy with my little eye..."
+                "??????: I spy with my little eye..."
             ]
         },
         {
             "type": "TRMSG_DEFEAT",
             "en_US": [
-                "Looker: I spy a very strong trainer!"
+                "??????: I spy a very strong trainer!"
             ]
         }
     ]

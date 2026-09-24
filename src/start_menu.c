@@ -120,6 +120,8 @@ typedef struct MenuEvolutionData {
 typedef struct MenuOverwriteMoveData {
     u16 usedItemID;
     u16 levelUpMoveIndex;
+    u8 oldLevel;
+    u8 cyclingEggMoves;
 } MenuOverwriteMoveData;
 
 typedef struct SaveMenu {
@@ -1024,6 +1026,8 @@ BOOL StartMenu_ExitPartyMenu(FieldTask *fieldTask)
 
         tmhmOverwriteData->usedItemID = partyMenu->usedItemID;
         tmhmOverwriteData->levelUpMoveIndex = 0;
+        tmhmOverwriteData->oldLevel = 0;
+        tmhmOverwriteData->cyclingEggMoves = FALSE;
         menu->additionalTaskContext = tmhmOverwriteData;
 
         menu->taskData = summary;
@@ -1051,6 +1055,8 @@ BOOL StartMenu_ExitPartyMenu(FieldTask *fieldTask)
 
         levelUpOverwriteData->usedItemID = ITEM_NONE;
         levelUpOverwriteData->levelUpMoveIndex = (u16)partyMenu->levelUpMoveIndex;
+        levelUpOverwriteData->oldLevel = partyMenu->oldLevel;
+        levelUpOverwriteData->cyclingEggMoves = partyMenu->cyclingEggMoves;
         menu->additionalTaskContext = levelUpOverwriteData;
 
         menu->taskData = summary;
@@ -1545,6 +1551,8 @@ static BOOL StartMenu_ExitSummary(FieldTask *fieldTask)
         } else {
             partyMenu->mode = PARTY_MENU_MODE_LEVEL_MOVE_DONE;
             partyMenu->levelUpMoveIndex = overwriteData->levelUpMoveIndex;
+            partyMenu->oldLevel = overwriteData->oldLevel;
+            partyMenu->cyclingEggMoves = overwriteData->cyclingEggMoves;
         }
 
         partyMenu->usedItemID = overwriteData->usedItemID;

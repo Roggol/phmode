@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "constants/charcode.h"
+#include "constants/daycare.h"
 #include "constants/flavor.h"
 #include "constants/forms.h"
 #include "constants/heap.h"
@@ -55,6 +56,7 @@
 #include "unk_02092494.h"
 
 #include "res/pokemon/regional_pokedex_size.h"
+#include "res/pokemon/species_egg_moves.h"
 #include "res/trainers/classes/trbgra.naix"
 
 #define FATEFUL_ENCOUNTER_LOCATION 3002
@@ -4059,6 +4061,73 @@ u16 Pokemon_LevelUpMoveUpTo(Pokemon *mon, u8 oldLevel, int *index, u16 *moveID)
     }
 
     Heap_Free(monLevelUpMoves);
+    return result;
+}
+
+u16 Pokemon_LoadSpeciesEggMoves(u16 species, u16 *eggMoves)
+{
+    u16 eggMoveOffset = 0;
+    u16 eggMoveCount = 0;
+    u16 i;
+
+    for (i = 0; i < NELEMS(sEggMoves) - 1; i++) {
+        if (sEggMoves[i] == (EGG_MOVES_SPECIES_OFFSET + species)) {
+            eggMoveOffset = i + 1;
+            break;
+        }
+    }
+
+    for (i = 0; i < MAX_EGG_MOVES; i++) {
+        if (sEggMoves[eggMoveOffset + i] > EGG_MOVES_SPECIES_OFFSET) {
+            break;
+        } else {
+            eggMoves[i] = sEggMoves[eggMoveOffset + i];
+            eggMoveCount++;
+        }
+    }
+
+    return eggMoveCount;
+}
+
+// phmode: Common Candy's counterpart to Pokemon_LevelUpMoveUpTo - offered once a
+// Pokemon is lowered all the way to level 1, so it can relearn every Egg Move its
+// species is able to know instead of just the moves for its (now much lower) level.
+// Same one-move-per-call/resume-via-index contract as Pokemon_LevelUpMoveUpTo.
+u16 Pokemon_NextEggMove(Pokemon *mon, int *index, u16 *moveID)
+{
+    int i;
+    u16 result = MOVE_NONE;
+    u16 species = Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL);
+    u16 eggMoves[MAX_EGG_MOVES];
+    u16 eggMoveCount = Pokemon_LoadSpeciesEggMoves(species, eggMoves);
+    u16 knownMoves[LEARNED_MOVES_MAX];
+
+    for (i = 0; i < LEARNED_MOVES_MAX; i++) {
+        knownMoves[i] = Pokemon_GetValue(mon, MON_DATA_MOVE1 + i, NULL);
+    }
+
+    while (*index < eggMoveCount) {
+        u16 entryMove = eggMoves[*index];
+        BOOL alreadyKnown = FALSE;
+
+        (*index)++;
+
+        for (i = 0; i < LEARNED_MOVES_MAX; i++) {
+            if (knownMoves[i] == entryMove) {
+                alreadyKnown = TRUE;
+                break;
+            }
+        }
+
+        if (alreadyKnown) {
+            continue;
+        }
+
+        *moveID = entryMove;
+        result = Pokemon_AddMove(mon, *moveID);
+        break;
+    }
+
     return result;
 }
 

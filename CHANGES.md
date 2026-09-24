@@ -2842,6 +2842,45 @@ itself) are unchanged - only the player-visible name and plural form moved.
   used everywhere else in that file. Pre-existing issue, not part of this
   session's feature work.
 
+### Common Candy cycles through Egg Moves at level 1
+When Common Candy lowers a Pokémon all the way down to level 1, it now offers
+every Egg Move its species can learn, one at a time, reusing the exact same
+"wants to learn move X, forget one to make room?" flow Rare Candy already uses
+for level-up moves:
+* `src/pokemon.c`/`include/pokemon.h` — new `Pokemon_LoadSpeciesEggMoves`
+  (species → its full Egg Move list, factored out of the same lookup
+  `src/overlay005/daycare.c`'s egg-building code already does over
+  `res/pokemon/species_egg_moves.h`'s `sEggMoves` table — not reused directly
+  from `daycare.c` since that file lives in `overlay5` and isn't safely
+  callable from the always-resident code the party menu and item-use logic run
+  in) and `Pokemon_NextEggMove` (same one-move-per-call/resume-via-index
+  contract as the existing `Pokemon_LevelUpMoveUpTo`, but sourced from Egg
+  Moves instead of the level-up learnset).
+* `include/applications/party_menu/defs.h` — new `cyclingEggMoves` flag on
+  `PartyMenu` (reusing what was `padding_3A`, so the struct doesn't grow).
+* `src/applications/party_menu/callbacks.c` — `PartyMenuCB_UseItem_CommonCandy`
+  now checks whether the Pokémon just reached level 1 and, if so, hands off to
+  `PartyMenuCB_LevelUp` with `cyclingEggMoves` set. Inside that shared state
+  machine, `LEVELUP_STATE_START` skips the stat-increase screens (which assume
+  stats only go up) and jumps straight to `LEVELUP_STATE_CHECK_LEARNSET`, which
+  now pulls from `Pokemon_NextEggMove` instead of `Pokemon_LevelUpMoveUpTo`
+  while cycling. The evolution check at the end of that state machine is left
+  running unconditionally since no species evolves at level 1, so it's always
+  a no-op for this path.
+* Fixed a bug where the cycle silently stopped after the very first Egg Move
+  that needed a "forget a move to make room?" prompt. Choosing which move to
+  overwrite briefly leaves the Party Menu app entirely for the move-select
+  summary screen (`src/start_menu.c`, `PARTY_MENU_EXIT_CODE_OVERWRITE_MOVE_LEVEL_UP`),
+  and resuming afterward rebuilds a **fresh, zeroed** `PartyMenu` struct,
+  restoring only the handful of fields carried across in `MenuOverwriteMoveData`
+  (previously just `usedItemID`/`levelUpMoveIndex`). `cyclingEggMoves` wasn't
+  one of them, so it silently reset to FALSE on the way back, and
+  `LEVELUP_STATE_CHECK_LEARNSET` resumed calling `Pokemon_LevelUpMoveUpTo`
+  (misreading the Egg Move list cursor as a level-up-learnset index) instead
+  of continuing with `Pokemon_NextEggMove`, which reliably ran out of moves to
+  offer almost immediately. `MenuOverwriteMoveData` now also carries
+  `cyclingEggMoves` and `oldLevel`, restored alongside `levelUpMoveIndex`.
+
 ### Jubilife City clowns give a bonus Common Candy
 Each of the three Jubilife City quiz clowns (`res/field/scripts/scripts_jubilife_city.s`,
 `JubilifeCity_Clown1CorrectAnswer`/`Clown2CorrectAnswer`/`Clown3CorrectAnswer`)

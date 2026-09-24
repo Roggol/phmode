@@ -240,7 +240,8 @@ typedef struct PartyMenu {
     u8 oldLevel; // level before a Rare Candy multi-level jump; see Pokemon_LevelUpMoveUpTo
     int levelUpMoveIndex;
     u16 evoTargetSpecies;
-    u8 padding_3A[2];
+    u8 cyclingEggMoves; // TRUE while PartyMenuCB_LevelUp is offering Egg Moves for a Common Candy at level 1
+    u8 padding_3B;
     int evoType;
 } PartyMenu;
 
