@@ -116,6 +116,10 @@
     {
       "id": "TwinleafTown_Text_RivalsHouse",
       "en_US": "{STRVAR_1 3, 0, 0}’s House"
+    },
+    {
+      "id": "TwinleafTown_Text_GuitaristMasterBallGift",
+      "en_US": "placeholder"
     }
   ]
 }

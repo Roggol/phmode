@@ -2,12 +2,12 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 3,
-            "species": "SPECIES_SHINX"
+            "level": 45,
+            "species": "SPECIES_PINSIR"
         },
         {
-            "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "level": 55,
+            "species": "SPECIES_ALTARIA"
         },
         {
             "level": 4,
@@ -42,11 +42,11 @@
             "species": "SPECIES_BIDOOF"
         },
         {
-            "level": 2,
-            "species": "SPECIES_STARLY"
+            "level": 3,
+            "species": "SPECIES_SHINX"
         },
         {
-            "level": 2,
+            "level": 3,
             "species": "SPECIES_BIDOOF"
         }
     ],
