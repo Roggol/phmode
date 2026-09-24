@@ -2799,6 +2799,56 @@ itself) are unchanged - only the player-visible name and plural form moved.
 * `include/data/pickup.h` — the Pickup ability tables give Rare Candy where they
   gave Revive and Heart Scale where they gave Max Revive.
 
+### Common Candy (new item) & Rare Candy fixes
+* New item **Common Candy** (`res/items/data/common_candy.json`, with
+  `ITEM_COMMON_CANDY` appended to `generated/items.txt` just before
+  `MAX_ITEMS`, following the same append-at-the-end pattern already used for
+  `ITEM_REPEL_TOGGLE`/`ITEM_POKETCH_MANIPULATOR`). It's the inverse of Rare
+  Candy: using it on a Pokémon **lowers its level by one** (down to a floor of
+  level 1), recalculating stats/HP the same way Rare Candy's level-up does.
+  Implemented as a new `itemUseParams.levelDown` flag: `ItemPartyParam.levelDown`
+  and `ITEM_PARAM_LEVEL_DOWN` in `include/item.h`, wired through
+  `tools/dataproc/src/itemproc.c`, `src/item.c`, and a matching check/apply pair
+  in `src/item_use_pokemon.c` (`Pokemon_CheckItemEffects`/`Pokemon_ApplyItemEffects`).
+  The party menu gained a dedicated `PartyMenuCB_UseItem_CommonCandy` callback
+  (`src/applications/party_menu/callbacks.c`, plus a new `PartyMenu_Text_LevelDown`
+  message) that mirrors Rare Candy's level/HP-bar update but skips the
+  multi-screen stat-increase animation and learnset check, since a level
+  decrease can't teach a move or trigger evolution. Its icon reuses the
+  existing Rare Candy sprite/palette as a stand-in, and its description is a
+  placeholder per the no-AI-writing policy — both to be replaced by hand later.
+* Every hidden item (`include/data/field/hidden_items.h`, 17 entries) and every
+  visible floor item ball (`res/field/scripts/scripts_visible_items.s`, 25
+  entries) that gave a Rare Candy now gives a **Common Candy** instead. The
+  Pickup-ability loot table (`include/data/pickup.h`) and the Battle Frontier
+  BP shop lists (`src/scrcmd.c`, `src/overlay007/shop_menu.c`,
+  `src/unk_020494DC.c`) still give/sell Rare Candy — only ground pickups
+  changed. (Not touched: the Route 201 rival cutscene that hands over 999 Rare
+  Candy at the start of the game — flagged for the user to decide on
+  separately, since it's a major early-game balance choice rather than an
+  ordinary item-ball pickup.)
+* Fixed a bug where using a Rare Candy (or any future `levelUp`/`levelDown`
+  item) on a Pokémon already at the level cap still consumed the item with no
+  effect. `Pokemon_CheckItemEffects` (`src/item_use_pokemon.c`) only checked
+  `level < MAX_POKEMON_LEVEL` before letting the item be used and removed from
+  the bag, while the actual effect in `Pokemon_ApplyItemEffects` additionally
+  required `Pokemon_BelowHardLevelCap()`; at the cap the check passed but the
+  apply silently did nothing, wasting the candy. The check now requires both
+  conditions, matching apply, so it correctly reports "It won't have any
+  effect!" and leaves the item in the bag.
+* Unrelated build-breaking bug found while verifying the above: two straight
+  `'` apostrophes in `res/text/fuego_ironworks_building.json` weren't in
+  `msgenc`'s charmap and failed the text-bank build; changed to the curly `’`
+  used everywhere else in that file. Pre-existing issue, not part of this
+  session's feature work.
+
+### Jubilife City clowns give a bonus Common Candy
+Each of the three Jubilife City quiz clowns (`res/field/scripts/scripts_jubilife_city.s`,
+`JubilifeCity_Clown1CorrectAnswer`/`Clown2CorrectAnswer`/`Clown3CorrectAnswer`)
+now says "And here's a bonus!" (`JubilifeCity_Text_AndHeresABonus` in
+`res/text/jubilife_city.json`) and hands over a Common Candy right after
+handing over the Pokétch Coupon.
+
 ### PP Up is no longer given out
 With stat-boosting moves capped at low PP, PP Up / PP Max are much less useful,
 and the two places that handed them out for free now give **Heart Scales**:

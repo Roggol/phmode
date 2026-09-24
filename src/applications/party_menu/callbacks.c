@@ -49,6 +49,7 @@ static enum PartyMenuState PartyMenuCB_UseItem_Basic(PartyMenuApplication *appli
 static enum PartyMenuState PartyMenuCB_UseItem_SubtractEVs(PartyMenuApplication *application);
 static enum PartyMenuState PartyMenuCB_UseItem_RestoreHP(PartyMenuApplication *application);
 static enum PartyMenuState PartyMenuCB_UseItem_RareCandy(PartyMenuApplication *application);
+static enum PartyMenuState PartyMenuCB_UseItem_CommonCandy(PartyMenuApplication *application);
 static enum PartyMenuState PartyMenuCB_TeachMove_ForgetMove(PartyMenuApplication *application);
 static enum PartyMenuState PartyMenuCB_TeachMove_PromptStopTrying(PartyMenuApplication *application);
 static enum PartyMenuState PartyMenuCB_TeachMove_StopTrying(PartyMenuApplication *application);
@@ -65,6 +66,7 @@ enum {
     ITEMEFFECT_NONE = 0,
     ITEMEFFECT_SACRED_ASH,
     ITEMEFFECT_RARE_CANDY,
+    ITEMEFFECT_COMMON_CANDY,
     ITEMEFFECT_CURE_SLEEP,
     ITEMEFFECT_CURE_POISON,
     ITEMEFFECT_CURE_BURN,
@@ -139,6 +141,11 @@ static u8 NormalizeItemEffect(u16 itemID)
     if (Item_Get(itemData, ITEM_PARAM_LEVEL_UP) != FALSE) {
         Heap_Free(itemData);
         return ITEMEFFECT_RARE_CANDY;
+    }
+
+    if (Item_Get(itemData, ITEM_PARAM_LEVEL_DOWN) != FALSE) {
+        Heap_Free(itemData);
+        return ITEMEFFECT_COMMON_CANDY;
     }
 
     s32 itemParam = Item_Get(itemData, ITEM_PARAM_HEAL_SLEEP) << STATUSSHIFT_SLEEP;
@@ -355,6 +362,10 @@ void PartyMenu_SetItemUseCallback(PartyMenuApplication *application)
 
     case ITEMEFFECT_RARE_CANDY:
         application->callback = PartyMenuCB_UseItem_RareCandy;
+        break;
+
+    case ITEMEFFECT_COMMON_CANDY:
+        application->callback = PartyMenuCB_UseItem_CommonCandy;
         break;
 
     case ITEMEFFECT_CURE_SLEEP:
@@ -714,6 +725,45 @@ static enum PartyMenuState PartyMenuCB_UseItem_RareCandy(PartyMenuApplication *a
 
     application->callback = PartyMenuCB_LevelUp;
     application->callbackState = LEVELUP_STATE_START;
+
+    return PARTY_MENU_STATE_EXEC_CALLBACK;
+}
+
+// phmode: Common Candy's counterpart to PartyMenuCB_UseItem_RareCandy. Unlike Rare Candy,
+// leveling down never teaches or requires forgetting moves and can't trigger evolution, so
+// this skips straight to a single message instead of entering the multi-screen LEVELUP_STATE
+// machine (which also assumes stat increases, not decreases, when formatting its numbers).
+static enum PartyMenuState PartyMenuCB_UseItem_CommonCandy(PartyMenuApplication *application)
+{
+    Pokemon *mon = Party_GetPokemonBySlotIndex(application->partyMenu->party, application->currPartySlot);
+
+    Party_ApplyItemEffectsToMember(application->partyMenu->party, application->partyMenu->usedItemID, application->currPartySlot, 0, GetCurrentMapLabel(application), HEAP_ID_PARTY_MENU);
+
+    application->partyMembers[application->currPartySlot].level = Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
+    application->partyMembers[application->currPartySlot].curHP = Pokemon_GetValue(mon, MON_DATA_HP, NULL);
+    application->partyMembers[application->currPartySlot].maxHP = Pokemon_GetValue(mon, MON_DATA_MAX_HP, NULL);
+
+    String *string = MessageLoader_GetNewString(application->messageLoader, PartyMenu_Text_LevelDown);
+    StringTemplate_SetNickname(application->template, 0, Pokemon_GetBoxPokemon(mon));
+    StringTemplate_SetNumber(application->template, 1, application->partyMembers[application->currPartySlot].level, 3, PADDING_MODE_NONE, CHARSET_MODE_EN);
+    StringTemplate_Format(application->template, application->tmpString, string);
+    String_Free(string);
+
+    u32 summaryCondition = PokemonSummaryScreen_StatusIconAnimIdx(mon);
+    PartyMenu_DrawMemberStatusCondition(application, application->currPartySlot, summaryCondition);
+
+    if (summaryCondition == SUMMARY_CONDITION_NONE) {
+        application->partyMembers[application->currPartySlot].statusIcon = SUMMARY_CONDITION_NONE;
+        PartyMenu_PrintMemberLevel(application, application->currPartySlot);
+    }
+
+    PartyMenu_UpdateSlotPalette(application, application->currPartySlot);
+
+    PartyMenu_DrawMemberPanelData(application, application->currPartySlot);
+    PartyMenu_LoadMemberWindowTiles(application, application->currPartySlot);
+    PartyMenu_PrintLongMessage(application, PRINT_MESSAGE_PRELOADED, TRUE);
+
+    application->callback = PartyMenuCB_PrintThenWaitABPress;
 
     return PARTY_MENU_STATE_EXEC_CALLBACK;
 }

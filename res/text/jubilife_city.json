@@ -914,6 +914,10 @@
         "The Global Terminal\n",
         "Your Gateway to the Whole World!"
       ]
+    },
+    {
+      "id": "JubilifeCity_Text_AndHeresABonus",
+      "en_US": "And here’s a bonus!\r"
     }
   ]
 }

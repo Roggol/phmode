@@ -263,6 +263,7 @@ static void proc_params(datafile_t *df, ItemData *item) {
         .revive        = dp_bool(tryparam(params, "revive")),
         .reviveAll     = dp_bool(tryparam(params, "reviveAll")),
         .levelUp       = dp_bool(tryparam(params, "levelUp")),
+        .levelDown     = dp_bool(tryparam(params, "levelDown")),
         .ppUp          = dp_bool(tryparam(params, "ppUp")),
         .ppMax         = dp_bool(tryparam(params, "ppMax")),
         .ppRestoreAll  = dp_bool(tryparam(params, "restorePPAllMoves")),

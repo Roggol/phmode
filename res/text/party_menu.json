@@ -1014,6 +1014,13 @@
     {
       "id": "PartyMenu_Text_Rename",
       "en_US": "RENAME"
+    },
+    {
+      "id": "PartyMenu_Text_LevelDown",
+      "en_US": [
+        "{STRVAR_1 1, 0, 0} was lowered to\n",
+        "Lv. {STRVAR_1 52, 1, 0}.{WAIT 4}{WAIT 2}"
+      ]
     }
   ]
 }

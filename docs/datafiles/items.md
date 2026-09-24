@@ -66,6 +66,7 @@ or in battle. All fields are optional and default to `0` or `false`.
 | `revive`            | `bool`  | Revives a fainted Pokémon.                                       |
 | `reviveAll`         | `bool`  | Revives all fainted Pokémon.                                     |
 | `levelUp`           | `bool`  | Increases the Pokémon's level by one.                            |
+| `levelDown`         | `bool`  | Decreases the Pokémon's level by one (phmode: Common Candy).     |
 | `ppUp`              | `bool`  | Increases a move's PP.                                           |
 | `ppMax`             | `bool`  | Maximizes a move's PP.                                           |
 | `restorePPAllMoves` | `bool`  | Restores PP to all moves.                                        |

@@ -189,7 +189,14 @@ u8 Pokemon_CheckItemEffects(Pokemon *mon, u16 itemId, u16 moveSlot, enum HeapID 
     }
 
     if (Item_Get(item, ITEM_PARAM_LEVEL_UP)) {
-        if (Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL) < MAX_POKEMON_LEVEL) {
+        if (Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL) < MAX_POKEMON_LEVEL && Pokemon_BelowHardLevelCap(mon)) {
+            Heap_Free(item);
+            return TRUE;
+        }
+    }
+
+    if (Item_Get(item, ITEM_PARAM_LEVEL_DOWN)) {
+        if (Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL) > 1) {
             Heap_Free(item);
             return TRUE;
         }
@@ -332,6 +339,18 @@ u8 Pokemon_ApplyItemEffects(Pokemon *mon, u16 itemId, u16 moveSlot, u16 location
                 vApplyLevelUpMaxHP = Pokemon_GetValue(mon, MON_DATA_MAX_HP, NULL);
                 RestorePokemonHP(mon, vApplyCurrentHP, vApplyLevelUpMaxHP, vApplyLevelUpMaxHP - vApplyMaxHP);
             }
+
+            effectApplied = TRUE;
+        }
+
+        effectFound = TRUE;
+    }
+
+    if (Item_Get(item, ITEM_PARAM_LEVEL_DOWN)) {
+        if (vApplyLevel > 1) {
+            u32 newExp = Pokemon_GetSpeciesBaseExpAt(Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL), vApplyLevel - 1);
+            Pokemon_SetValue(mon, MON_DATA_EXPERIENCE, &newExp);
+            Pokemon_CalcLevelAndStats(mon);
 
             effectApplied = TRUE;
         }

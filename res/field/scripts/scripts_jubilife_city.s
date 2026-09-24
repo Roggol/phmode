@@ -1510,6 +1510,10 @@ JubilifeCity_Clown1CorrectAnswer:
     SetVar VAR_0x8005, 1
     SetFlag FLAG_RECEIVED_COUPON_1
     Common_GiveItemQuantityNoLineFeed
+    Message JubilifeCity_Text_AndHeresABonus
+    SetVar VAR_0x8004, ITEM_COMMON_CANDY
+    SetVar VAR_0x8005, 1
+    Common_GiveItemQuantityNoLineFeed
     CloseMessage
     ReleaseAll
     End
@@ -1548,6 +1552,10 @@ JubilifeCity_Clown2CorrectAnswer:
     SetVar VAR_0x8004, ITEM_COUPON_2
     SetVar VAR_0x8005, 1
     SetFlag FLAG_RECEIVED_COUPON_2
+    Common_GiveItemQuantityNoLineFeed
+    Message JubilifeCity_Text_AndHeresABonus
+    SetVar VAR_0x8004, ITEM_COMMON_CANDY
+    SetVar VAR_0x8005, 1
     Common_GiveItemQuantityNoLineFeed
     CloseMessage
     ReleaseAll
@@ -1589,6 +1597,10 @@ JubilifeCity_Clown3CorrectAnswer:
     SetVar VAR_0x8004, ITEM_COUPON_3
     SetVar VAR_0x8005, 1
     SetFlag FLAG_RECEIVED_COUPON_3
+    Common_GiveItemQuantityNoLineFeed
+    Message JubilifeCity_Text_AndHeresABonus
+    SetVar VAR_0x8004, ITEM_COMMON_CANDY
+    SetVar VAR_0x8005, 1
     Common_GiveItemQuantityNoLineFeed
     CloseMessage
     ReleaseAll
