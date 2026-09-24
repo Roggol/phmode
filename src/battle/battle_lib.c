@@ -4478,6 +4478,22 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
         }
         break;
 
+    // Cotton Down: lowers the Speed of every other Pokemon on the field by one
+    // stage when this Pokemon is hit by a damaging move, contact or not.
+    case ABILITY_COTTON_DOWN:
+        if (DEFENDING_MON.curHP
+            && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
+            && (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN) == FALSE
+            && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
+            && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)) {
+            battleCtx->sideEffectType = SIDE_EFFECT_TYPE_ABILITY;
+            battleCtx->msgBattlerTemp = battleCtx->defender;
+
+            *subscript = subscript_cotton_down;
+            result = TRUE;
+        }
+        break;
+
     case ABILITY_EFFECT_SPORE:
         if (ATTACKING_MON.curHP
             && ATTACKING_MON.status == MON_CONDITION_NONE

@@ -38,6 +38,7 @@
             [ 1, "MOVE_HYPNOSIS" ],
             [ 1, "MOVE_DOUBLE_SLAP" ],
             [ 1, "MOVE_SUBMISSION" ],
+            [ 37, "MOVE_DRAIN_PUNCH" ],
             [ 43, "MOVE_DYNAMIC_PUNCH" ],
             [ 53, "MOVE_MIND_READER" ]
         ],

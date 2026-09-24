@@ -313,4 +313,6 @@ subscript_files = files(
     'subscript_moxie.s',
     'subscript_user_def_and_spdef_up_2_stages.s',
     'subscript_heal_order.s',
+    'subscript_user_atk_and_acc_up_1_stage.s',
+    'subscript_cotton_down.s',
 )

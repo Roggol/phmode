@@ -49,7 +49,8 @@
             [ 30, "MOVE_BRINE" ],
             [ 40, "MOVE_HYDRO_PUMP" ],
             [ 48, "MOVE_DRAGON_DANCE" ],
-            [ 57, "MOVE_DRAGON_PULSE" ]
+            [ 57, "MOVE_DRAGON_PULSE" ],
+            [ 63, "MOVE_DRACO_METEOR" ]
         ],
         "by_tm": [
             "TM03",

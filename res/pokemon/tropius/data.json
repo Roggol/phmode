@@ -1,10 +1,10 @@
 {
     "base_stats": {
         "hp": 99,
-        "attack": 68,
+        "attack": 90,
         "defense": 83,
         "speed": 51,
-        "special_attack": 72,
+        "special_attack": 50,
         "special_defense": 87
     },
     "types": [ "TYPE_GRASS", "TYPE_FLYING" ],
@@ -34,20 +34,20 @@
     "icon_palette": 1,
     "learnset": {
         "by_level": [
-            [ 1, "MOVE_LEER" ],
+            [ 1, "MOVE_CURSE" ],
             [ 1, "MOVE_GUST" ],
             [ 7, "MOVE_GROWTH" ],
             [ 11, "MOVE_RAZOR_LEAF" ],
             [ 17, "MOVE_STOMP" ],
-            [ 21, "MOVE_SWEET_SCENT" ],
+            [ 21, "MOVE_LEECH_SEED" ],
             [ 27, "MOVE_WHIRLWIND" ],
             [ 31, "MOVE_MAGICAL_LEAF" ],
             [ 37, "MOVE_BODY_SLAM" ],
             [ 41, "MOVE_SYNTHESIS" ],
             [ 47, "MOVE_AIR_SLASH" ],
-            [ 51, "MOVE_SOLAR_BEAM" ],
-            [ 57, "MOVE_NATURAL_GIFT" ],
-            [ 61, "MOVE_LEAF_STORM" ]
+            [ 51, "MOVE_LEAF_BLADE" ],
+            [ 57, "MOVE_DRAGON_DANCE" ],
+            [ 61, "MOVE_POWER_WHIP" ]
         ],
         "by_tm": [
             "TM05",

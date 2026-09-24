@@ -28,6 +28,12 @@ Pokémon!" he says **"Welcome to Platinum: Hard Mode."** And instead of
 introducing himself as "the Pokémon Professor," he tells you **"I hear
 you're up for a challenge."**
 
+The intro is also shorter overall — the optional "Control Info"/
+"Adventure Info" tutorial menu and the whole "here's a Poké Ball, touch
+it" demo (a Buneary popping out of a Poké Ball on the touchscreen) have
+been cut. Rowan now goes straight from introducing himself to asking you
+about yourself.
+
 ---
 
 ## Everyday Quality-of-Life Improvements
@@ -319,6 +325,9 @@ a specific species, but here's what each one actually does:
   Attack.
 - **Sharpness** — slicing and cutting moves (like Slash, Leaf Blade, and
   Air Slash) hit 50% harder.
+- **Cotton Down** — whenever this Pokémon is hit by a damaging move, every
+  other Pokémon on the field (allies included) has its Speed lowered by one
+  stage.
 - **Time Warp** (Dialga's signature ability) — while this Pokémon is on
   the field, two-turn moves like Solar Beam and Fly happen in a single
   turn instead of needing a charge-up turn, and recharge moves like Hyper
@@ -364,6 +373,9 @@ a specific species, but here's what each one actually does:
 - **Expanding Force is a new move** — a Psychic-type special attack that
   hits harder, and hits both opponents in a double battle, while Psychic
   Terrain is active.
+- **Hone Claws is a new move** — a Dark-type status move with 3 PP that
+  raises the user's Attack and Accuracy by one stage each.
+- **Pin Missile hits harder**, with its base power raised from 14 to 20.
 - **Many pure stat-boosting moves now have very low PP**, so setting up
   stats repeatedly in one battle isn't as easy as it used to be. Most of
   these moves (Bulk Up, Calm Mind, Agility, Iron Defense, Amnesia, Belly
@@ -429,12 +441,16 @@ Pokémon received the exact same change — nothing is merged.
 ### Beedrill
 - Level 19: Rage -> X-Scissor
 - Level 25: Toxic Spikes -> Cross Poison
+- SpA: 45 -> 10
+- Spe: 75 -> 110
 
 ### Sandshrew
 - Ability slot 1: Sand Veil -> Rough Skin
+- Ability slot 2: None -> Sharpness
 
 ### Sandslash
 - Ability slot 1: Sand Veil -> Rough Skin
+- Ability slot 2: None -> Sharpness
 
 ### Nidoqueen
 - Ability slot 2: Rivalry -> Sheer Force
@@ -454,6 +470,9 @@ Pokémon received the exact same change — nothing is merged.
 ### Primeape
 - Ability slot 1: Vital Spirit -> Defiant
 
+### Poliwrath
+- Level 37: Drain Punch (new)
+
 ### Parasect
 - HP: 60 -> 90
 - SpA: 60 -> 30
@@ -469,12 +488,22 @@ Pokémon received the exact same change — nothing is merged.
 
 ### Farfetch'd
 - Ability slot 1: Keen Eye -> Defiant
+- Ability slot 2: Inner Focus -> Defiant
+
+### Cloyster
+- SpA: 85 -> 45
+- SpD: 45 -> 85
 
 ### Onix
 - Atk: 45 -> 70
 - Spe: 70 -> 45
 - Its evolution into Steelix now happens by using a Metal Coat on it
   directly instead of trading while holding one (see Link Cable).
+
+### Electrode
+- Atk: 50 -> 90
+- SpA: 80 -> 40
+- Level 26: Charge Beam -> Wild Charge
 
 ### Tangela
 - Level 40: Natural Gift -> Power Whip
@@ -493,11 +522,27 @@ Pokémon received the exact same change — nothing is merged.
 - Level 43: Fire Fang -> Fire Spin
 - Level 71: Fire Blast -> Flare Blitz
 
+### Tauros
+- Ability slot 2: Anger Point -> Reckless
+- Level 35: Take Down -> Double-Edge
+
 ### Omanyte
 - Evolution level (into Omastar): 40 -> 30
+- Spe: 35 -> 10
+- SpD: 55 -> 80
+
+### Omastar
+- Spe: 55 -> 10
+- SpD: 70 -> 115
 
 ### Kabuto
 - Evolution level (into Kabutops): 40 -> 30
+- SpA: 55 -> 30
+- SpD: 45 -> 70
+
+### Kabutops
+- SpA: 65 -> 20
+- SpD: 70 -> 115
 
 ### Chikorita
 - Ability slot 2: None -> Leaf Guard
@@ -561,6 +606,11 @@ Pokémon received the exact same change — nothing is merged.
 ### Ampharos
 - Ability slot 2: None -> Electric Surge
 
+### Crobat
+- Atk: 90 -> 100
+- SpA: 70 -> 60
+- Level 51: Air Slash -> Brave Bird
+
 ### Politoed
 - Ability slot 2: Damp -> Drizzle
 
@@ -588,6 +638,9 @@ Pokémon received the exact same change — nothing is merged.
 - Spe: 85 -> 65
 - SpA: 90 -> 60
 - SpD: 65 -> 90
+
+### Kingdra
+- Level 63: Draco Meteor (new)
 
 ### Dunsparce
 - Def: 70 -> 90
@@ -705,6 +758,7 @@ Pokémon received the exact same change — nothing is merged.
 ### Mawile
 - Atk: 85 -> 105
 - Spe: 50 -> 30
+- Ability slot 1: Hyper Cutter -> Huge Power
 
 ### Plusle
 - SpA: 85 -> 105
@@ -730,8 +784,8 @@ Pokémon received the exact same change — nothing is merged.
 - SpD: 83 -> 98
 
 ### Sharpedo
-- Def: 40 -> 85
-- SpA: 95 -> 50
+- Def: 40 -> 95
+- SpA: 95 -> 40
 
 ### Wailord
 - Def: 45 -> 55
@@ -753,15 +807,46 @@ Pokémon received the exact same change — nothing is merged.
 ### Spinda
 - Ability slot 1: Own Tempo -> Contrary
 
+### Vibrava
+- Atk: 70 -> 20
+- SpA: 50 -> 100
+- Ability slot 1: Levitate -> Tinted Lens
+- Ability slot 2: Levitate -> Tinted Lens
+- Level 41: Screech -> Earth Power
+- Level 45: Bug Buzz (new)
+- Level 49: Sandstorm -> Dragon Pulse
+- Level 57: Hyper Beam -> Draco Meteor
+
 ### Flygon
-- Atk: 100 -> 120
-- SpA: 80 -> 60
+- Atk: 100 -> 40
+- SpA: 80 -> 140
+- Ability slot 1: Levitate -> Tinted Lens
+- Ability slot 2: Levitate -> Tinted Lens
+- Level 41: Screech -> Earth Power
+- Level 45: Dragon Claw -> Bug Buzz
+- Level 49: Sandstorm -> Dragon Pulse
+- Level 57: Hyper Beam -> Draco Meteor
 
 ### Cacturne
 - Ability slot 1: Sand Veil -> Shed Spines
 
+### Altaria
+- Atk: 70 -> 100
+- SpA: 70 -> 40
+- Ability slot 1: Natural Cure -> Cotton Down
+- Ability slot 2: None -> Cotton Down
+- Level 28: Take Down -> Wing Attack
+- Level 35: Dragon Breath -> Dragon Claw
+- Level 54: Dragon Pulse -> Outrage
+
 ### Zangoose
 - Ability slot 2: None -> Toxic Boost
+- Level 14: Fury Cutter -> Hone Claws
+
+### Seviper
+- Typing: Poison -> Poison / Dark
+- Atk: 100 -> 120
+- SpA: 100 -> 80
 
 ### Crawdaunt
 - Level 30: Swift -> Aqua Jet
@@ -787,6 +872,8 @@ Pokémon received the exact same change — nothing is merged.
 
 ### Milotic
 - Ability slot 2: None -> Competitive
+- Atk: 60 -> 30
+- Def: 79 -> 109
 
 ### Castform
 - Atk: 70 -> 40
@@ -833,6 +920,7 @@ Pokémon received the exact same change — nothing is merged.
 
 ### Chimchar
 - Ability slot 2: None -> Iron Fist
+- Typing: Fire -> Fire / Fighting
 
 ### Monferno
 - Ability slot 2: None -> Iron Fist
@@ -872,10 +960,10 @@ Pokémon received the exact same change — nothing is merged.
 - Ability slot 2: None -> Sheer Force
 
 ### Shieldon
-- Ability slot 2: None -> Soundproof
+- Ability slot 2: None -> Solid Rock
 
 ### Bastiodon
-- Ability slot 2: None -> Soundproof
+- Ability slot 2: None -> Solid Rock
 
 ### Wormadam (Plant Cloak)
 - Atk: 59 -> 99
@@ -909,6 +997,10 @@ Pokémon received the exact same change — nothing is merged.
 ### Pachirisu
 - Ability slot 2: Pickup -> Volt Absorb
 
+### Roserade
+- Atk: 70 -> 50
+- Spe: 90 -> 110
+
 ### Cherrim
 - HP: 70 -> 90
 - Spe: 85 -> 65
@@ -937,10 +1029,31 @@ Pokémon received the exact same change — nothing is merged.
 
 ### Glameow
 - Evolution level (into Purugly): 38 -> 17
+- Level 29: Assist -> Hone Claws
 
 ### Purugly
 - Ability slot 1: Thick Fat -> Defiant
 - Ability slot 2: Own Tempo -> Thick Fat
+- Level 29: Assist -> Hone Claws
+
+### Pinsir
+- Typing: Bug -> Bug / Fighting
+- Level 13: Harden -> Hone Claws
+- Level 42: Submission -> Megahorn
+
+### Skorupi
+- Level 30: Hone Claws (new)
+
+### Drapion
+- Level 30: Hone Claws (new)
+
+### Sneasel
+- Level 32: Hone Claws (new)
+
+### Weavile
+- Ability slot 1: Pressure -> Sharpness
+- Ability slot 2: Pressure -> Sharpness
+- Level 32: Hone Claws (new)
 
 ### Stunky
 - Evolution level (into Skuntank): 34 -> 24
@@ -949,14 +1062,37 @@ Pokémon received the exact same change — nothing is merged.
 - Atk: 65 -> 55
 - Spe: 91 -> 101
 
+### Spiritomb
+- Atk: 92 -> 30
+- Def: 108 -> 123
+- SpA: 92 -> 124
+- SpD: 108 -> 123
+
 ### Garchomp
 - Ability slot 1: Sand Veil -> Rough Skin
+- Atk: 130 -> 160
+- SpA: 80 -> 50
+
+### Lucario
+- Atk: 110 -> 60
+- Def: 70 -> 90
+- Spe: 90 -> 100
+- SpD: 70 -> 90
 
 ### Croagunk
 - Ability slot 1: Anticipation -> Poison Touch
 
 ### Toxicroak
 - Ability slot 1: Anticipation -> Poison Touch
+
+### Tropius
+- Atk: 68 -> 90
+- SpA: 72 -> 50
+- Level 1: Leer -> Curse
+- Level 21: Sweet Scent -> Leech Seed
+- Level 51: Solar Beam -> Leaf Blade
+- Level 57: Natural Gift -> Dragon Dance
+- Level 61: Leaf Storm -> Power Whip
 
 ### Carnivine
 - Atk: 100 -> 130
@@ -984,6 +1120,9 @@ Pokémon received the exact same change — nothing is merged.
 - Level 1: Encore (new)
 - Level 1: Yawn (new)
 - Level 1: Extrasensory (new)
+- HP: 85 -> 100
+- Atk: 50 -> 15
+- Def: 95 -> 115
 
 ### Yanmega
 - Level 30: Pursuit -> Ancient Power
@@ -1089,6 +1228,16 @@ level cap in one go (rather than one level at a time), and it correctly
 offers every move that Pokémon would have learned along the way, so you
 won't miss out on level-up moves just because you skipped several levels
 at once.
+
+**Common Candy** is a new item that works the other way around — it
+lowers a Pokémon's level by exactly one, down to a minimum of level 1.
+If a Common Candy brings a Pokémon all the way down to level 1, it also
+offers every Egg Move its species is able to learn, one at a time, using
+the same "wants to learn a move" prompts as leveling up — a way to
+rebuild a Pokémon's whole moveset from scratch, including moves you'd
+otherwise only get by breeding it. Every ground item and hidden item
+that used to give a Rare Candy now gives a Common Candy instead (see
+Items, below, for exactly where).
 
 Right on Route 201, when your rival catches up to start following you
 toward the lake, he now also hands you **999 Rare Candies** — "Oh, I
@@ -1210,7 +1359,7 @@ spot gives now, with what it used to give in brackets:
 - Route 215 (was Revive)
 - Route 207 (was Revive)
 
-**Rare Candy** can now be found at:
+**Common Candy** can now be found at:
 - Victory Road 1F (was Max Revive)
 - Stark Mountain Room 2 (was Max Revive)
 - Wayward Cave 1F, as a ground item (was Revive)
@@ -1222,6 +1371,11 @@ spot gives now, with what it used to give in brackets:
 - Team Galactic's Eterna Building 4F, as a ground item (was Revive)
 - Iron Island B1F Right Room, as a ground item (was Revive)
 - Route 216, as a ground item (was Revive)
+
+(This item used to be Rare Candy in an earlier build; every one of these
+spots, plus every other hidden or ground Rare Candy in the game, was later
+changed to Common Candy — see Leveling and the Level Cap, above, for what
+that item actually does.)
 
 **Heart Scale** can now be found at:
 - Route 213, as a ground item (was Max Revive)
@@ -1423,6 +1577,10 @@ to hand you — is gone, replaced with a shorter goodbye after the fight: he
 compliments your strength, reveals his codename is Looker, tells you to
 call for him by it if you ever see anything suspicious, and hurries off.
 **The Vs. Recorder is no longer given out here.**
+
+### Jubilife City's quiz clowns throw in a bonus
+The three clowns who quiz you for a Pokétch Coupon now each hand over a
+Common Candy too, right after the coupon — "And here's a bonus!"
 
 ### Route 212 and the south exit of Veilstone City now open after beating Maylene
 Route 212 (the path between Hearthome and Pastoria) used to open the moment

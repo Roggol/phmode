@@ -7,7 +7,7 @@
         "special_attack": 55,
         "special_defense": 70
     },
-    "types": [ "TYPE_BUG", "TYPE_BUG" ],
+    "types": [ "TYPE_BUG", "TYPE_FIGHTING" ],
     "catch_rate": 45,
     "base_exp_reward": 200,
     "ev_yields": {
@@ -38,14 +38,14 @@
             [ 1, "MOVE_FOCUS_ENERGY" ],
             [ 4, "MOVE_BIND" ],
             [ 8, "MOVE_SEISMIC_TOSS" ],
-            [ 13, "MOVE_HARDEN" ],
+            [ 13, "MOVE_HONE_CLAWS" ],
             [ 18, "MOVE_REVENGE" ],
             [ 21, "MOVE_BRICK_BREAK" ],
             [ 25, "MOVE_VITAL_THROW" ],
             [ 30, "MOVE_X_SCISSOR" ],
             [ 35, "MOVE_THRASH" ],
             [ 38, "MOVE_SWORDS_DANCE" ],
-            [ 42, "MOVE_SUBMISSION" ],
+            [ 42, "MOVE_MEGAHORN" ],
             [ 47, "MOVE_GUILLOTINE" ],
             [ 52, "MOVE_SUPERPOWER" ]
         ],

@@ -1,10 +1,10 @@
 {
     "base_stats": {
         "hp": 60,
-        "attack": 50,
+        "attack": 90,
         "defense": 70,
         "speed": 140,
-        "special_attack": 80,
+        "special_attack": 40,
         "special_defense": 80
     },
     "types": [ "TYPE_ELECTRIC", "TYPE_ELECTRIC" ],
@@ -44,7 +44,7 @@
             [ 15, "MOVE_ROLLOUT" ],
             [ 19, "MOVE_SCREECH" ],
             [ 22, "MOVE_LIGHT_SCREEN" ],
-            [ 26, "MOVE_CHARGE_BEAM" ],
+            [ 26, "MOVE_WILD_CHARGE" ],
             [ 29, "MOVE_SELFDESTRUCT" ],
             [ 35, "MOVE_SWIFT" ],
             [ 40, "MOVE_MAGNET_RISE" ],

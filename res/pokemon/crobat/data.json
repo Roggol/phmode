@@ -1,10 +1,10 @@
 {
     "base_stats": {
         "hp": 85,
-        "attack": 90,
+        "attack": 100,
         "defense": 80,
         "speed": 130,
-        "special_attack": 70,
+        "special_attack": 60,
         "special_defense": 80
     },
     "types": [ "TYPE_POISON", "TYPE_FLYING" ],
@@ -48,7 +48,7 @@
             [ 33, "MOVE_MEAN_LOOK" ],
             [ 39, "MOVE_POISON_FANG" ],
             [ 45, "MOVE_HAZE" ],
-            [ 51, "MOVE_AIR_SLASH" ]
+            [ 51, "MOVE_BRAVE_BIRD" ]
         ],
         "by_tm": [
             "TM06",

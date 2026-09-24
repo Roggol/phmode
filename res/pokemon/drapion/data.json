@@ -46,6 +46,7 @@
             [ 17, "MOVE_ACUPRESSURE" ],
             [ 23, "MOVE_SCARY_FACE" ],
             [ 28, "MOVE_TOXIC_SPIKES" ],
+            [ 30, "MOVE_HONE_CLAWS" ],
             [ 34, "MOVE_BUG_BITE" ],
             [ 39, "MOVE_POISON_FANG" ],
             [ 49, "MOVE_CRUNCH" ],

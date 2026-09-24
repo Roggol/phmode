@@ -27,7 +27,7 @@
     "base_friendship": 70,
     "exp_rate": "EXP_RATE_SLOW",
     "egg_groups": [ "EGG_GROUP_FIELD", "EGG_GROUP_FIELD" ],
-    "abilities": [ "ABILITY_INTIMIDATE", "ABILITY_ANGER_POINT" ],
+    "abilities": [ "ABILITY_INTIMIDATE", "ABILITY_RECKLESS" ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_BROWN",
     "flip_sprite": false,
@@ -43,7 +43,7 @@
             [ 19, "MOVE_REST" ],
             [ 24, "MOVE_PAYBACK" ],
             [ 29, "MOVE_ZEN_HEADBUTT" ],
-            [ 35, "MOVE_TAKE_DOWN" ],
+            [ 35, "MOVE_DOUBLE_EDGE" ],
             [ 41, "MOVE_SWAGGER" ],
             [ 48, "MOVE_THRASH" ],
             [ 55, "MOVE_GIGA_IMPACT" ]

@@ -3,9 +3,9 @@
         "hp": 70,
         "attack": 60,
         "defense": 125,
-        "speed": 55,
+        "speed": 10,
         "special_attack": 115,
-        "special_defense": 70
+        "special_defense": 115
     },
     "types": [ "TYPE_ROCK", "TYPE_WATER" ],
     "catch_rate": 45,

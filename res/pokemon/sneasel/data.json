@@ -43,6 +43,7 @@
             [ 21, "MOVE_FURY_SWIPES" ],
             [ 24, "MOVE_AGILITY" ],
             [ 28, "MOVE_ICY_WIND" ],
+            [ 32, "MOVE_HONE_CLAWS" ],
             [ 35, "MOVE_SLASH" ],
             [ 38, "MOVE_BEAT_UP" ],
             [ 42, "MOVE_METAL_CLAW" ],

@@ -151,5 +151,6 @@ static const int sSideEffectSubscripts[] = {
     [MOVE_SUBSCRIPT_PTR_GIVE_TARGET_OWN_STATUS]           = subscript_give_target_own_status,
     [MOVE_SUBSCRIPT_PTR_USER_DEF_AND_SPDEF_UP_2_STAGES]   = subscript_user_def_and_spdef_up_2_stages,
     [MOVE_SUBSCRIPT_PTR_HEAL_ORDER]                       = subscript_heal_order,
+    [MOVE_SUBSCRIPT_PTR_USER_ATK_AND_ACC_UP_1_STAGE]      = subscript_user_atk_and_acc_up_1_stage,
 };
 // clang-format on
