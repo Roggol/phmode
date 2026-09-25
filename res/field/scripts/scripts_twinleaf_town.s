@@ -61,7 +61,13 @@ TwinleafTown_GuitaristDefaultDialogue:
 
 TwinleafTown_EveryoneGoesOnAdventures:
     Message TwinleafTown_Text_EveryoneGoesOnAdventures
-    WaitButton
+    GoToIfSet FLAG_RECEIVED_TWINLEAF_TOWN_GUITARIST_MASTER_BALLS, TwinleafTown_GuitaristDefaultDialogue
+    SetVar VAR_0x8004, ITEM_MASTER_BALL
+    SetVar VAR_0x8005, 99
+    GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, TwinleafTown_GuitaristDefaultDialogue
+    SetFlag FLAG_RECEIVED_TWINLEAF_TOWN_GUITARIST_MASTER_BALLS
+    Message TwinleafTown_Text_GuitaristMasterBallGift
+    Common_GiveItemQuantityNoLineFeed
     CloseMessage
     ReleaseAll
     End

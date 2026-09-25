@@ -2,7 +2,7 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 45,
+            "level": 13,
             "species": "SPECIES_PINSIR"
         },
         {
