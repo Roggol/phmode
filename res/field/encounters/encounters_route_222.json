@@ -50,10 +50,6 @@
             "species": "SPECIES_MAGNETON"
         }
     ],
-    "swarms": [
-        "SPECIES_SKITTY",
-        "SPECIES_SKITTY"
-    ],
     "day": [
         "SPECIES_ELECTABUZZ",
         "SPECIES_CHATOT"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_FLOATZEL",
         "SPECIES_FLOATZEL"
-    ],
-    "radar": [
-        "SPECIES_FLAAFFY",
-        "SPECIES_FLAAFFY",
-        "SPECIES_FLAAFFY",
-        "SPECIES_FLAAFFY"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

@@ -12,7 +12,6 @@
 #include "location.h"
 #include "map_header.h"
 #include "player_avatar.h"
-#include "pokeradar.h"
 #include "rtc.h"
 #include "sound.h"
 #include "sound_playback.h"
@@ -156,10 +155,6 @@ u16 FieldBGM_GetEffective(FieldSystem *fieldSystem, enum MapHeaderID mapHeaderID
         default:
             return SEQ_NAMINORI_sseq;
         }
-    }
-
-    if (GetRadarChainActive(fieldSystem->chain) == TRUE) {
-        return SEQ_KUSAGASA_sseq;
     }
 
     u16 bgmID = FieldBGM_GetForMapHeader(fieldSystem, mapHeaderID);

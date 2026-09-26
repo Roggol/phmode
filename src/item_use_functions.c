@@ -53,7 +53,6 @@
 #include "player_avatar.h"
 #include "player_move.h"
 #include "pokedex.h"
-#include "pokeradar.h"
 #include "registered_items.h"
 #include "render_window.h"
 #include "rtc.h"
@@ -96,7 +95,6 @@ static void UseMailFromMenu(ItemMenuUseContext *usageContext, const ItemUseConte
 static void UseBerryFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UsePoffinCaseFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UsePalPadFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
-static void UsePokeRadarFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseSprayDuckFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseMulchFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseHoneyFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
@@ -119,7 +117,6 @@ static BOOL UseTownMapInField(ItemFieldUseContext *usageContext);
 static BOOL UsePoffinCaseInField(ItemFieldUseContext *usageContext);
 static BOOL UsePalPadInField(ItemFieldUseContext *usageContext);
 static BOOL UseExplorerKitInField(ItemFieldUseContext *usageContext);
-static BOOL UsePokeRadarInField(ItemFieldUseContext *usageContext);
 static BOOL UseSprayDuckInField(ItemFieldUseContext *usageContext);
 static BOOL UseAzureFluteInField(ItemFieldUseContext *usageContext);
 static BOOL UseVsRecorderInField(ItemFieldUseContext *usageContext);
@@ -143,7 +140,6 @@ static void *OpenPartyMenuForGracidea(void *fieldSystem);
 static enum ItemUseCheckResult CanUseBicycle(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseExplorerKit(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseBerry(const ItemUseContext *usageContext);
-static enum ItemUseCheckResult CanUsePokeRadar(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseSprayDuck(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseMulch(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseFishingRod(const ItemUseContext *usageContext);
@@ -172,7 +168,6 @@ static const ItemUseFuncDat sItemUseFuncs[] = {
     [ITEM_USE_FUNC_BERRY]        = { UseBerryFromMenu,       NULL,                  CanUseBerry       },
     [ITEM_USE_FUNC_POFFIN_CASE]  = { UsePoffinCaseFromMenu,  UsePoffinCaseInField,  NULL              },
     [ITEM_USE_FUNC_PAL_PAD]      = { UsePalPadFromMenu,      UsePalPadInField,      NULL              },
-    [ITEM_USE_FUNC_POKE_RADAR]   = { UsePokeRadarFromMenu,   UsePokeRadarInField,   CanUsePokeRadar   },
     [ITEM_USE_FUNC_SPRAYDUCK]    = { UseSprayDuckFromMenu,   UseSprayDuckInField,   CanUseSprayDuck   },
     [ITEM_USE_FUNC_MULCH]        = { UseMulchFromMenu,       NULL,                  CanUseMulch       },
     [ITEM_USE_FUNC_HONEY]        = { UseHoneyFromMenu,       NULL,                  NULL              },
@@ -435,8 +430,6 @@ static BOOL MountOrUnmountBicycle(FieldTask *task)
 
             PlayerAvatar_SetTransitionState(fieldSystem->playerAvatar, PLAYER_TRANSITION_CYCLING);
             PlayerAvatar_RequestChangeState(fieldSystem->playerAvatar);
-
-            RadarChain_Clear(fieldSystem->chain);
         }
 
         (*state)++;
@@ -620,47 +613,6 @@ static void *sub_02068BEC(void *some_param)
 {
     sub_0203DE78(some_param, ((FieldSystem *)some_param)->saveData);
     return NULL;
-}
-
-static void UsePokeRadarFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext)
-{
-    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(usageContext->fieldTask);
-    StartMenu *menu = FieldTask_GetEnv(usageContext->fieldTask);
-    int *v2 = Heap_AllocAtEnd(HEAP_ID_FIELD2, sizeof(int));
-
-    (*v2) = 0;
-    FieldSystem_StartFieldMap(fieldSystem);
-
-    menu->callback = RefreshRadarChain;
-    menu->taskData = v2;
-    menu->state = START_MENU_STATE_NEW_TASK;
-}
-
-static BOOL UsePokeRadarInField(ItemFieldUseContext *usageContext)
-{
-    int *v0 = Heap_AllocAtEnd(HEAP_ID_FIELD2, sizeof(int));
-
-    *v0 = 0;
-    FieldSystem_CreateTask(usageContext->fieldSystem, RefreshRadarChain, v0);
-
-    return FALSE;
-}
-
-static enum ItemUseCheckResult CanUsePokeRadar(const ItemUseContext *usageContext)
-{
-    if (usageContext->hasPartner == TRUE) {
-        return ITEM_USE_CANNOT_USE_WITH_PARTNER;
-    }
-
-    if (PlayerAvatar_GetPlayerState(usageContext->fieldSystem->playerAvatar) == 0x1) {
-        return ITEM_USE_CANNOT_USE_GENERIC;
-    }
-
-    if (!TileBehavior_IsTallGrass(usageContext->currTileBehavior)) {
-        return ITEM_USE_CANNOT_USE_GENERIC;
-    }
-
-    return ITEM_USE_CAN_USE;
 }
 
 static void UseSprayDuckFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext)

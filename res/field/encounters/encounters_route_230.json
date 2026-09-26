@@ -50,10 +50,6 @@
             "species": "SPECIES_FLOATZEL"
         }
     ],
-    "swarms": [
-        "SPECIES_CORSOLA",
-        "SPECIES_CORSOLA"
-    ],
     "day": [
         "SPECIES_BELLSPROUT",
         "SPECIES_BELLSPROUT"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_ODDISH",
         "SPECIES_ODDISH"
-    ],
-    "radar": [
-        "SPECIES_TOGEPI",
-        "SPECIES_TOGEPI",
-        "SPECIES_TOGEPI",
-        "SPECIES_TOGEPI"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

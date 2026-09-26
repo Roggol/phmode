@@ -181,6 +181,16 @@ CanalaveCity_PostRivalBattle:
     BufferRivalName 0
     Message CanalaveCity_Text_TrainAtIronIsland
     CloseMessage
+    BufferRivalName 0
+    Message CanalaveCity_Text_GiftPrismScale
+    CloseMessage
+    SetVar VAR_0x8004, ITEM_PRISM_SCALE
+    SetVar VAR_0x8005, 1
+    GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, CanalaveCity_ContinueAfterPrismScale
+    Common_GiveItemQuantityNoLineFeed
+    CloseMessage
+
+CanalaveCity_ContinueAfterPrismScale:
     ApplyMovement LOCALID_RIVAL_BRIDGE, CanalaveCity_Movement_RivalBridgeLeave
     WaitMovement
     RemoveObject LOCALID_RIVAL_BRIDGE

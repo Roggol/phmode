@@ -28,7 +28,6 @@
 #include "applications/poketch/poketch_system.h"
 #include "field/field_system.h"
 #include "field/field_system_sub2_t.h"
-#include "overlay006/swarm.h"
 #include "overlay006/tv_episode.h"
 #include "savedata/save_table.h"
 
@@ -2237,24 +2236,6 @@ static int TVSegment_LoadMessage_YourTownsBestThree(FieldSystem *fieldSystem, St
     return TVProgramSinnohNow_Text_YourTownsBestThree_WhereWillWeGo;
 }
 
-static int TVSegment_LoadMessage_SwarmNewsFlash(FieldSystem *fieldSystem, StringTemplate *template, TVEpisode *episode)
-{
-    u16 mapID, species;
-    SpecialEncounter *speEnc = SaveData_GetSpecialEncounters(fieldSystem->saveData);
-
-    Swarm_GetMapIdAndSpecies(SpecialEncounter_GetDailyMon(speEnc, DAILY_SWARM), &mapID, &species);
-    StringTemplate_SetLocationName(template, 0, MapHeader_GetMapLabelTextID(mapID));
-    TVSegment_SetTemplateOwnPokemonSpecies(template, 1, species);
-
-    return TVProgramSinnohNow_Text_SwarmNewsFlash;
-}
-
-static BOOL TVSegment_IsEligible_SwarmNewsFlash(FieldSystem *fieldSystem, TVEpisode *episode)
-{
-    SpecialEncounter *speEnc = SaveData_GetSpecialEncounters(fieldSystem->saveData);
-    return SpecialEncounter_IsSwarmEnabled(speEnc);
-}
-
 // Leftover from DP
 static BOOL MatchupChannelDummy(FieldSystem *fieldSystem, TVEpisode *episode)
 {
@@ -3001,7 +2982,7 @@ static const TVSegment sSinnohNowSegments[TV_PROGRAM_TYPE_SINNOH_NOW_NUM_SEGMENT
     { TVSegment_LoadMessage_OnTheSpotWeather, FieldSystem_AlwaysTrue },
     { TVSegment_LoadMessage_YourTownsBestThree, NULL },
     TV_PROGRAM_SEGMENT_NULL,
-    { TVSegment_LoadMessage_SwarmNewsFlash, TVSegment_IsEligible_SwarmNewsFlash },
+    TV_PROGRAM_SEGMENT_NULL, // phmode: was SwarmNewsFlash - Swarms were removed
     TV_PROGRAM_SEGMENT_NULL,
     { NULL, MatchupChannelDummy },
     TV_PROGRAM_SEGMENT_NULL,

@@ -429,7 +429,6 @@ scr_seq_files = files(
     'scripts_follower_partners.s',
     'scripts_pokemon_center_b1f_common.s',
     'scripts_record_chatot_cry.s',
-    'scripts_poke_radar.s',
     'scripts_poffin_common.s',
     'scripts_route_201.s',
     'scripts_route_202.s',

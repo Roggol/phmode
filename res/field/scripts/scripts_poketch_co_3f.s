@@ -324,7 +324,6 @@ PoketchCo3F_PCNorthWestAddMenuEntries:
     GoToIfEq VAR_RESULT, 0, PoketchCo3F_PCNorthWestShowMenu
     Call PoketchCo3F_CheckAddMenuEntryPedometer
     Call PoketchCo3F_CheckAddMenuEntryCounter
-    Call PoketchCo3F_CheckAddMenuEntryTrainerCounter
     Call PoketchCo3F_CheckAddMenuEntryLinkSearcher
     Call PoketchCo3F_CheckAddMenuEntryMoveTester
     Call PoketchCo3F_CheckAddMenuEntryDowsingMachine
@@ -333,7 +332,6 @@ PoketchCo3F_PCNorthWestShowMenu:
     ShowMenu
     GoToIfEq VAR_0x8004, 1, PoketchCo3F_DescriptionPedometer
     GoToIfEq VAR_0x8004, 2, PoketchCo3F_DescriptionCounter
-    GoToIfEq VAR_0x8004, 3, PoketchCo3F_DescriptionTrainerCounter
     GoToIfEq VAR_0x8004, 4, PoketchCo3F_DescriptionLinkSearcher
     GoToIfEq VAR_0x8004, 5, PoketchCo3F_DescriptionMoveTester
     GoToIfEq VAR_0x8004, 6, PoketchCo3F_DescriptionDowsingMachine
@@ -359,16 +357,6 @@ PoketchCo3F_CheckAddMenuEntryCounter:
 
 PoketchCo3F_DescriptionCounter:
     Message PoketchCo3F_Text_DescriptionCounter
-    GoTo PoketchCo3F_PCNorthWestAddMenuEntries
-
-PoketchCo3F_CheckAddMenuEntryTrainerCounter:
-    CheckPoketchAppRegistered POKETCH_APPID_TRAINERCOUNTER, VAR_RESULT
-    GoToIfEq VAR_RESULT, FALSE, PoketchCo3F_PCNorthWestReturn
-    AddMenuEntry MenuEntries_Text_TrainerCounter, 3
-    Return
-
-PoketchCo3F_DescriptionTrainerCounter:
-    Message PoketchCo3F_Text_DescriptionTrainerCounter
     GoTo PoketchCo3F_PCNorthWestAddMenuEntries
 
 PoketchCo3F_CheckAddMenuEntryLinkSearcher:

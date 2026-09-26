@@ -50,10 +50,6 @@
             "species": "SPECIES_GASTRODON"
         }
     ],
-    "swarms": [
-        "SPECIES_VOLTORB",
-        "SPECIES_VOLTORB"
-    ],
     "day": [
         "SPECIES_CHATOT",
         "SPECIES_CHATOT"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_GASTRODON",
         "SPECIES_FLOATZEL"
-    ],
-    "radar": [
-        "SPECIES_MR_MIME",
-        "SPECIES_MR_MIME",
-        "SPECIES_FLOATZEL",
-        "SPECIES_GASTRODON"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

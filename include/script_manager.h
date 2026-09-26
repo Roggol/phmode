@@ -61,7 +61,7 @@ enum ScriptManagerMember {
     SCRIPT_MANAGER_MONEY_WINDOW,
     SCRIPT_MANAGER_SAVE_INFO_WINDOW,
     SCRIPT_DATA_START,
-    SCRIPT_DATA_PARAMETER_0 = SCRIPT_DATA_START, // used for storing the mon's party slot when you use a field move, the item ID for hidden items, and steps for the PokeRadar
+    SCRIPT_DATA_PARAMETER_0 = SCRIPT_DATA_START, // used for storing the mon's party slot when you use a field move, and the item ID for hidden items
     SCRIPT_DATA_PARAMETER_1, //  used for storing hidden item quantities.
     SCRIPT_DATA_PARAMETER_2, // used for storing hidden item quantities and flags respectively.
     SCRIPT_DATA_PARAMETER_3, // unused
@@ -96,7 +96,6 @@ enum ScriptContextType {
 #define SCRIPT_ID_OFFSET_HIDDEN_ITEMS                  8000
 #define SCRIPT_ID_OFFSET_SAFARI_GAME                   8800
 #define SCRIPT_ID_OFFSET_RECORD_CHATOT_CRY             8900
-#define SCRIPT_ID_OFFSET_POKE_RADAR                    8970
 #define SCRIPT_ID_OFFSET_POKEMON_CENTER_2F_COMMON      9000
 #define SCRIPT_ID_OFFSET_COMMUNICATION_CLUB            9100
 #define SCRIPT_ID_OFFSET_POKEMON_CENTER_B1F_COMMON     9200

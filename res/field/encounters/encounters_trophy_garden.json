@@ -50,10 +50,6 @@
             "species": "SPECIES_PICHU"
         }
     ],
-    "swarms": [
-        "SPECIES_PICHU",
-        "SPECIES_ROSELIA"
-    ],
     "day": [
         "SPECIES_STARAVIA",
         "SPECIES_STARAVIA"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_KRICKETUNE",
         "SPECIES_KRICKETUNE"
-    ],
-    "radar": [
-        "SPECIES_ROSELIA",
-        "SPECIES_STARAVIA",
-        "SPECIES_PIKACHU",
-        "SPECIES_PICHU"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

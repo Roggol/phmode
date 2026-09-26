@@ -261,7 +261,6 @@ Static main
 	Object main.nef.p/src_dynamic_map_features.c.o
 	Object main.nef.p/src_item_use_functions.c.o
 	Object main.nef.p/src_registered_items.c.o
-	Object main.nef.p/src_pokeradar.c.o
 	Object main.nef.p/src_unk_02069BE0.c.o
 	Object main.nef.p/src_scroll_prompts.c.o
 	Object main.nef.p/src_system_flags.c.o
@@ -565,8 +564,6 @@ Overlay overlay6
 	Object main.nef.p/src_overlay006_great_marsh_tram.c.o
 	Object main.nef.p/src_overlay006_great_marsh_daily_encounters.c.o
 	Object main.nef.p/src_overlay006_ov6_02243004.c.o
-	Object main.nef.p/src_overlay006_radar_chain_records.c.o
-	Object main.nef.p/src_overlay006_swarm.c.o
 	Object main.nef.p/src_overlay006_hm_cut_in.c.o
 	Object main.nef.p/src_overlay006_roamer_after_battle.c.o
 	Object main.nef.p/src_overlay006_npc_trade.c.o
@@ -1060,13 +1057,6 @@ Overlay poketch_link_searcher
 	After poketch
 	Object main.nef.p/src_applications_poketch_link_searcher_main.c.o
 	Object main.nef.p/src_applications_poketch_link_searcher_graphics.c.o
-}
-
-Overlay poketch_trainer_counter
-{
-	After poketch
-	Object main.nef.p/src_applications_poketch_trainer_counter_main.c.o
-	Object main.nef.p/src_applications_poketch_trainer_counter_graphics.c.o
 }
 
 Overlay poketch_pokemon_history

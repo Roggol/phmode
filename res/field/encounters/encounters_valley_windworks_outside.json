@@ -50,10 +50,6 @@
             "species": "SPECIES_SHELLOS"
         }
     ],
-    "swarms": [
-        "SPECIES_ELECTRIKE",
-        "SPECIES_ELECTRIKE"
-    ],
     "day": [
         "SPECIES_BUIZEL",
         "SPECIES_SHELLOS"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_BUIZEL",
         "SPECIES_SHELLOS"
-    ],
-    "radar": [
-        "SPECIES_MAREEP",
-        "SPECIES_MAREEP",
-        "SPECIES_MAREEP",
-        "SPECIES_MAREEP"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

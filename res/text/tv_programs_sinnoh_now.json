@@ -589,27 +589,6 @@
       "garbage": 180
     },
     {
-      "id": "TVProgramSinnohNow_Text_SwarmNewsFlash",
-      "en_US": [
-        "Newscaster: We bring you this\n",
-        "news flash.\r",
-        "We’ve just received word that hordes\n",
-        "of {STRVAR_1 0, 1, 0} have been spotted in\f",
-        "the vicinity of {STRVAR_1 4, 0, 0}.\r",
-        "If you’ve ever had the desire to be\n",
-        "surrounded by {STRVAR_1 0, 1, 0}...\r",
-        "Or wished to make a team full of\n",
-        "{STRVAR_1 0, 1, 0}...\r",
-        "Or wanted to wear them on your\n",
-        "head...\r",
-        "If you’re a true viva {STRVAR_1 0, 1, 0}\n",
-        "sort of Trainer...\r",
-        "Then make your way to\n",
-        "{STRVAR_1 4, 0, 0} right now!\r",
-        "That concludes this news flash."
-      ]
-    },
-    {
       "id": "TVProgramSinnohNow_Text_Dummy2",
       "garbage": 159
     },

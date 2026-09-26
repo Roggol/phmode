@@ -441,25 +441,7 @@
     },
     {
       "id": "SandgemTownLab_Text_GiftForCompletingSinnohPokedex",
-      "en_US": [
-        "Now, {STRVAR_1 3, 0, 0}...\r",
-        "I have a gift here as your reward\n",
-        "for completing the Sinnoh Pokédex.\r"
-      ]
-    },
-    {
-      "id": "SandgemTownLab_Text_ThatsThePokemonRadar",
-      "en_US": [
-        "Rowan: That’s the Pokémon Radar,\n",
-        "or just Poké Radar for short.\r",
-        "Use it, and it will indicate grass\n",
-        "patches where Pokémon are lurking.\r",
-        "I’d prepared that to help my field\n",
-        "assistants put together the Sinnoh\f",
-        "Pokédex, but you took care of that!\r",
-        "I’m sure it will be useful for your\n",
-        "goal of filling the National Pokédex."
-      ]
+      "en_US": "placeholder"
     },
     {
       "id": "SandgemTownLab_Text_ManyMorePokemon",

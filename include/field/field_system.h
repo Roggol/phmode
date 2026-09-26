@@ -36,7 +36,6 @@
 #include "overlay_manager.h"
 #include "player_avatar.h"
 #include "pokedex_memory.h"
-#include "pokeradar.h"
 #include "savedata.h"
 #include "terrain_attributes.h"
 #include "terrain_collision_manager.h"
@@ -111,7 +110,6 @@ typedef struct FieldSystem_t {
     UnkStruct_02095E80 *unk_88;
     UnkStruct_ov5_021EB0E0 *unk_8C;
     int menuCursorPos;
-    RadarChain *chain;
     BagCursor *bagCursor;
     JournalEntry *journalEntry;
     DynamicTerrainHeightManager *dynamicTerrainHeightMan;

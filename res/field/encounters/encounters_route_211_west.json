@@ -50,10 +50,6 @@
             "species": "SPECIES_BRONZOR"
         }
     ],
-    "swarms": [
-        "SPECIES_MEDITITE",
-        "SPECIES_BIDOOF"
-    ],
     "day": [
         "SPECIES_MEDITITE",
         "SPECIES_MEDITITE"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_ZUBAT",
         "SPECIES_HOOTHOOT"
-    ],
-    "radar": [
-        "SPECIES_TYROGUE",
-        "SPECIES_TYROGUE",
-        "SPECIES_TYROGUE",
-        "SPECIES_TYROGUE"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

@@ -363,6 +363,14 @@
         "The door is tightly shut.\n",
         "It appears impossible to open."
       ]
+    },
+    {
+      "id": "CanalaveCity_Text_GiftPrismScale",
+      "en_US": [
+        "I saw this shiny thing on the\n",
+        "ground, but none of my Pokémon\f",
+        "can use it, so you have it.\r"
+      ]
     }
   ]
 }

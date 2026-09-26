@@ -469,6 +469,126 @@ For the routes, the seamless-crossing banner fires on
 (`FieldMap_ChangeZone`), so walking across a route's internal boundary now pops
 the "(south)"/"(north)" banner where vanilla stayed silent.
 
+### Poké Radar and Swarms removed entirely
+
+Both mechanics are fully removed from the game — the item, the Poketch app, the
+tutorial NPCs, the wild-encounter data fields, and the underlying code. This
+touches a lot of files; grouped by what each piece was:
+
+* **Poké Radar**:
+  * `src/pokeradar.c`/`include/pokeradar.h` (the chaining-patch minigame),
+    `src/overlay006/radar_chain_records.c`/`include/overlay006/radar_chain_records.h`
+    (chain-record bookkeeping used only by the Trainer Counter app), and the
+    whole `src/applications/poketch/trainer_counter/` app (it existed solely to
+    display radar chain stats) are deleted outright, along with their entries
+    in `src/meson.build` and the `poketch_trainer_counter` overlay block in
+    `platinum.us/main.lsf`.
+  * `FieldSystem.chain` (the `RadarChain*`) is removed from
+    `include/field/field_system.h`; every `RadarChain_Clear`/`GetRadarChainActive`
+    call site across `src/field_system.c`, `src/encounter.c`,
+    `src/field_map_change.c`, `src/field_bgm.c`, `src/scrcmd.c`,
+    `src/item_use_functions.c`, and `src/overlay005/{field_control,fieldmap}.c`
+    is removed (the surrounding logic — battle result handling, roamer
+    encounters, BGM selection, the bike/Surf commands — is otherwise
+    unchanged). `src/overlay006/wild_encounters.c` loses the most: the
+    radar-aware wrapper `TryGenerateGrassEncounter_WithRadar` and the
+    `CreateWildMon_FromRadar{Keep,No}Chain` helpers are deleted from all three
+    top-level encounter entry points, which now always take the plain,
+    already-existing non-radar path.
+  * `ITEM_USE_FUNC_POKE_RADAR` and its 3 handler functions
+    (`Use/CanUsePokeRadar*`) are removed from `item_use_functions.c`.
+    `ITEM_POKE_RADAR` itself is **not** deleted from `generated/items.txt` —
+    item IDs are stored in save data (Bag/PC/held items), so deleting the line
+    would renumber every later item and corrupt existing saves. It's renamed
+    to `ITEM_UNUSED_431` in place instead (same convention as the existing
+    `ITEM_UNUSED_11x` slots), and `res/items/data/poke_radar.json` is deleted
+    (an item with no data file just gets a blank fallback entry, same as any
+    other `ITEM_UNUSED_*` slot).
+  * `POKETCH_APPID_TRAINERCOUNTER` is likewise kept in place and renamed to
+    `POKETCH_APPID_UNUSED_TRAINERCOUNTER` in `generated/poketch_apps.txt` —
+    `Poketch.appRegistry[]` is a save-persisted array indexed positionally by
+    this enum, so deleting the slot would shift every app after it (Kitchen
+    Timer, Color Changer, Matchup Checker, Stopwatch, Alarm Clock) to the
+    wrong registered-state bit on existing saves. Its overlay-lookup table
+    entry in `src/applications/poketch/poketch_system.c` is removed instead
+    (that table is keyed by app ID, not positional, so removing one entry is
+    safe).
+  * NPC/script touchpoints: the Sandgem Town lab's National-Dex-completion
+    gift (`scripts_sandgem_town_pokemon_research_lab.s`) no longer hands over
+    a Poké Radar — the congratulations dialogue stays, the item-gift and
+    "that's the Pokémon Radar" explanation lines are removed, and the message
+    is replaced with a `"placeholder"` line since its old text specifically
+    described the removed gift. Prof. Oak's Trainer Counter gift scene in
+    `scripts_pal_park_lobby.s` has the app-grant lines removed the same way.
+    `scripts_poketch_co_1f.s` and `scripts_poketch_co_3f.s` lose their
+    Trainer-Counter-specific menu entries/descriptions and the
+    `CheckItem ITEM_POKE_RADAR` dialogue branch. The rival's repeatable
+    "how's your Poké Radar" dialogue branch
+    (`CounterpartTalk_PlayerHasPokeRadar` in `scripts_counterpart_talk.s`) is
+    cut at its one trigger point — it now always shows the (Radar-free)
+    "helping with the National Pokédex" flavor line instead — which leaves the
+    entire downstream tutorial cutscene (`CounterpartTalk_StartPokeRadarTutorial`
+    and Route 202's `Route202_Counterpart` grass-patch demo scene) permanently
+    unreachable. That dead scene code/text was left in place rather than fully
+    excised, since tracing its shared NPC movement/visibility flags across two
+    map scripts carried more risk than value for content no player can ever
+    reach again.
+* **Swarms**:
+  * `src/overlay006/swarm.c`/`include/overlay006/swarm.h` (the swarm→map/species
+    lookup table) are deleted outright, along with their `meson.build`/LSF
+    entries. `WildEncounters_ReplaceSwarmEncounters` and its 3 call sites in
+    `wild_encounters.c` are removed.
+  * `SCRCMD_ENABLESWARMS`/`SCRCMD_GETSWARMMAPANDSPECIES` and their handler
+    functions are removed from `scrcmd.c`/`include/data/scripts/scrcmd.h` —
+    unlike item/app IDs, script opcodes aren't save-persisted (scripts are
+    fully recompiled from source every build), so deleting these outright is
+    safe.
+  * The "Sinnoh Now" TV news segment for swarms
+    (`TVSegment_{LoadMessage,IsEligible}_SwarmNewsFlash` in `src/tv_segment.c`)
+    is replaced with `TV_PROGRAM_SEGMENT_NULL` in the `sSinnohNowSegments[]`
+    table — the same pattern the file already uses for retired DP-era segments
+    — rather than deleting the array slot, since a `TVEpisode`'s `segmentID`
+    is a save-persisted positional index into that array.
+  * The counterpart's twin sibling, who used to call `EnableSwarms` and then
+    hint at today's swarm species/location
+    (`scripts_sandgem_town_counterpart_house_1f.s`), still sets the real
+    progression flag (`FLAG_TALKED_TO_COUNTERPART_SISTER_WITH_NATIONAL_DEX`,
+    which gates later rival dialogue) but no longer enables swarms or gives
+    swarm-specific hints; the old "massive outbreak"/"bunch of Pokémon at
+    location" messages (which explicitly described the mechanic) are collapsed
+    into one `"placeholder"` line.
+* **Wild-encounter data**: the `radar`/`swarms` JSON keys are stripped from
+  all 185 `res/field/encounters/encounters_*.json` files that had them (a
+  one-off script did the bulk edit; the 2 files using a different schema,
+  Great Marsh Lookout and Honey Tree, were untouched since they never had
+  these keys). `tools/jsoncnv/encounter.py` no longer packs them, and
+  `WildEncounters.swarmEncounters`/`.radarEncounters` are removed from
+  `include/overlay006/wild_encounters.h` along with the now-unused
+  `MAX_SWARM_ENCOUNTERS`/`MAX_RADAR_ENCOUNTERS` constants — this struct is
+  rebuilt from scratch every build (it's ROM asset data, not a save field),
+  so shrinking it carries none of the save-compatibility risk the item/app/TV
+  changes above do. `tools/scripts/make_pokedex_enc_platinum.py` also read
+  the `radar` key (to mark species as "National-Dex-only" on the Pokédex
+  location map) and is updated to match.
+* `SpecialEncounter.swarmDaily`/`.swarmEnabled`/`.chainRecords`/`.radarCharge`
+  (`include/struct_defs/special_encounter.h`) are save-persisted fields —
+  deleting them would shift every save-table entry after `SpecialEncounter`
+  (Mystery Gift, PC boxes, email, and 8 others) to the wrong on-disk offset on
+  existing saves, the same class of bug documented under "Repel Toggle"/
+  `VAR_FORCED_TIME_OF_DAY` elsewhere in this file. They're renamed to
+  `unused_swarmDaily`/`unused_swarmEnabled`/`unused_chainRecords`/
+  `unused_radarCharge` in place instead, and every accessor that only existed
+  to read/write them (`SpecialEncounter_{Enable,IsEnabled}Swarms`,
+  `SpecialEncounter_GetRadarChainRecords`, `SpecialEncounter_GetRadarCharge`)
+  is deleted from `special_encounter.c`/`.h`.
+* `WILD_ENCOUNTERS.md` — every `- **Swarm**: …` / `- **Poke Radar**: …` bullet
+  (218 lines) is removed to match; nothing else in the doc changed.
+
+Not touched, since they're unrelated features that merely share a name: the
+**Underground Radar**/Dowsing Machine (Grand Underground treasure hunting) and
+the **Reckless**-adjacent `ABILITY_SWARM` battle ability (Bug-type power boost
+at low HP, e.g. on Yanma/Yanmega) are both still fully intact.
+
 ---
 
 ## Battle changes
@@ -1664,8 +1784,13 @@ ability; any slot not mentioned is unchanged.
 ### Tangela
 * Learnset: Power Whip moved from level 54 to 40, Natural Gift from 40 to 54.
 
+### Goldeen
+* Evolution level (into Seaking): 33 → 23.
+* Ability slot 2: Water Veil → **Lightning Rod**.
+
 ### Seaking
 * Stats: Atk 92 → 100, Spe 68 → 60. BST 450 (unchanged).
+* Ability slot 2: Water Veil → **Lightning Rod**.
 
 ### Jolteon
 * Learnset: Thunderbolt replaces Thunder Fang at level 43; Discharge replaces
@@ -1966,6 +2091,10 @@ ability; any slot not mentioned is unchanged.
 ### Armaldo
 * Ability slot 2: none → **Swift Swim** (slot 1 stays Battle Armor).
 
+### Feebas
+* Evolution: Beauty 170 → use a Prism Scale on it directly (see Items,
+  above). Wild Feebas have a 5% chance to be holding one.
+
 ### Milotic
 * Ability slot 2: none → **Competitive** (slot 1 stays Marvel Scale).
 * Stats: Atk 60 → 30, Def 79 → 109. BST 540 (unchanged).
@@ -2170,7 +2299,7 @@ One species, three cloak forms (`res/pokemon/wormadam/data.json` for Plant Cloak
 * Stats: Atk 100 → 130, Sp. Atk 90 → 60. BST 454 (unchanged).
 
 ### Finneon
-* Evolves into Lumineon at level 20 (was 31).
+* Evolves into Lumineon at level 23 (was 31).
 
 ### Lumineon
 * Learnset: Tailwind replaces Captivate at level 26.
@@ -2789,6 +2918,26 @@ the game now happens via a used item instead of an actual trade:
   untouched but no species reference them anymore, so trading no longer evolves
   anything in this romhack.
 
+### Prism Scale (new item) — Feebas no longer evolves by Beauty
+A new item, **Prism Scale** (`ITEM_PRISM_SCALE`, appended to
+`generated/items.txt`), replaces Feebas's old Beauty-based evolution into
+Milotic:
+
+* `res/items/data/prism_scale.json` — reuses the Deep Sea Scale icon/palette
+  visually (`deepseascale_NCGR`/`deepseascale_NCLR`); `fieldUseFunc` is
+  `ITEM_USE_FUNC_EVO_STONE`, the same generic species-agnostic use-function
+  the Link Cable pass above already established, so no new item-use code was
+  needed. No hold effect (unlike Deep Sea Scale, which boosts Sp. Def).
+* `res/pokemon/feebas/data.json` — evolution method changed from
+  `EVO_LEVEL_BEAUTY` (170) to `EVO_USE_ITEM` with `ITEM_PRISM_SCALE`. Contest
+  Beauty no longer has any bearing on Feebas's evolution.
+* `res/pokemon/feebas/data.json` — wild Feebas now have a 5% chance
+  (`held_items.rare`) to be holding a Prism Scale, using the same
+  common/rare roll every other species' held items already go through.
+* Your rival now gives you one directly after the Canalave City rival battle
+  (see World and Location Changes, below), so a Prism Scale is guaranteed
+  even without fishing for a wild Feebas holding one.
+
 ### PPHM — Portable Pokémon Healing Machine (`fd081bca0`)
 A new Key Item (`ITEM_PPHM`, id 468).
 
@@ -3374,6 +3523,21 @@ was previously completely unrestricted.
   "Sorry, this way is closed off for now. Beat the Gym Leader here in
   Veilstone and we'll let you through."
 
+### Canalave City rival battle — gives a Prism Scale afterward
+Right after winning the rival battle on Canalave City's bridge, and after his
+usual "train at Iron Island" line, he now also hands the player a
+**Prism Scale** (see Items, above), with a new line first explaining why:
+"I saw this shiny thing on the ground, but none of my Pokémon can use it, so
+you have it."
+
+* `res/text/canalave_city.json` - new `CanalaveCity_Text_GiftPrismScale`.
+* `res/field/scripts/scripts_canalave_city.s` - `CanalaveCity_PostRivalBattle`
+  shows the new line (closed before the item is given, per the project
+  convention of dialogue-then-item rather than item-then-dialogue), then
+  gives the Prism Scale guarded by `GoToIfCannotFitItem` (falling through to
+  the new `CanalaveCity_ContinueAfterPrismScale` label, which picks up the
+  existing post-battle staging, if the bag is full).
+
 ### Route 221 House — "Expert M" gives all 3 items at once, one time only
 This NPC used to run a daily random-level guessing minigame (`GetDailyRandomLevel`
 — show me a party Pokémon at today's number and I'll reward you), cycling
@@ -3567,6 +3731,74 @@ tables.
     (`land_rate` forced to 0, matching current/vanilla behavior) and only
     Rock Smash was turned on for this room, so nothing new spawns there from
     walking around.
+
+### Per-location custom water/rod encounter slot rates (new mechanic)
+
+Surf and the three fishing rods previously rolled their species slot from one
+of two **global, hardcoded** 5-slot rate tables shared by every map in the
+game (`GetWaterEncounterSlot`/`GetRodEncounterSlot` in
+`src/overlay006/wild_encounters.c`): Surf and Old Rod used
+[60%, 30%, 5%, 4%, 1%]; Good Rod and Super Rod used [40%, 40%, 15%, 4%, 1%].
+There was no way to give one location different odds than another. This adds
+an opt-in per-location override so a map's Surf/Old Rod/Good Rod/Super Rod
+table can specify its own 5 slot percentages instead.
+
+* `include/overlay006/wild_encounters.h` — `WaterEncounters` gains a
+  `u8 slotRates[MAX_WATER_ENCOUNTERS]` field (plus 3 bytes padding) ahead of
+  its `encounters` array. All-zero (the default) means "use this encounter
+  method's normal hardcoded odds"; this is ROM asset data, not a save-file
+  field, so there's no save-compatibility concern.
+* `tools/jsoncnv/encounter.py` — new `convert_water_slot_rates()` helper packs
+  an optional `surf_slot_rates` / `old_rod_slot_rates` / `good_rod_slot_rates`
+  / `super_rod_slot_rates` JSON key (5 integers, meant to sum to 100) ahead of
+  each table's encounters; maps without the key default to `[0, 0, 0, 0, 0]`,
+  so every existing encounter JSON keeps packing identically. Rock Smash has
+  no such key — it always rolls a flat uniform 20% per slot regardless
+  (`GetRockSmashEncounterSlot`), so it's unaffected.
+* `src/overlay006/wild_encounters.c` — new `HasCustomSlotRates()` and
+  `GetSlotFromCustomRates()` (a cumulative-threshold roll against the
+  location's `slotRates`); `GetWaterEncounterSlot()` and
+  `GetRodEncounterSlot()` now check for a custom table first and only fall
+  back to the hardcoded odds when it's all-zero. `TryGenerateWildMon()` and
+  its `TryGenerateSurfEncounter`/`TryGenerateFishingEncounter` callers thread
+  the relevant table's `slotRates` pointer through; the Grass/Land path
+  (which has no slot-rate concept) always passes `NULL`.
+
+### Wild encounter doc sync — Twinleaf Town fishing and Route 201 land table
+
+Going forward, `WILD_ENCOUNTERS.md` is hand-edited directly by the user and
+treated as the source of truth for a location's roster/levels/rates; when it
+changes, the real `res/field/encounters/*.json` data is updated to match
+(previously the doc was generated from the JSON, one-way, the other
+direction). This pass syncs the two locations the user had already hand-edited
+in the doc:
+
+* **Twinleaf Town** (`encounters_twinleaf_town.json`) — Surf and all three
+  fishing rods' species/level ranges and percentages were changed to match the
+  doc (Surf: Psyduck 30%/Golduck 20%/Mantyke 30%/Mantine 20%, Lv. 20-30 or
+  20-40; Old Rod: Magikarp/Goldeen/Finneon 30% each, Feebas 10%, Lv. 3-12;
+  Good Rod: same 4 species/weights, Lv. 10-23; Super Rod:
+  Gyarados/Seaking/Lumineon 30% each, Milotic 10%, Lv. 80). None of these
+  percentage splits are achievable with the old global slot-rate tables (no
+  subset of [60,30,5,4,1] or [40,40,15,4,1] produces two clean 30%s), so each
+  table now carries an explicit `*_slot_rates` override — the first real use
+  of the per-location custom slot rates feature above. The overall
+  encounter-triggers-at-all rates (`surf_rate`/`old_rod_rate`/
+  `good_rod_rate`/`super_rod_rate`) are unchanged; only the species
+  distribution *within* an encounter was retuned.
+* **Route 201** (`encounters_route_201.json`) — the land table's Kricketot
+  slot was replaced: the two time-of-day-swappable slots (worth 10% each,
+  20% combined — the only slots that can ever differ between Morning/Day/
+  Night, see `WildEncounters_ReplaceTimedEncounters`) now hold Pidgey by
+  Morning, Taillow by Day, and Hoothoot by Night, each at the full 20%. Two
+  of the low-rate 1% slots that used to repeat Starly/Bidoof now hold
+  Bulbasaur and Chikorita instead. Starly (40%) and Bidoof (38%) keep their
+  totals and Lv. 2-3 spread, just redistributed across fewer slots to make
+  room. Note: the doc currently lists Morning's Pidgey at 30%, which would
+  make Morning's total 110% — the two swappable slots are architecturally
+  fixed at exactly 20% combined, matching Day's Taillow and Night's Hoothoot,
+  so this was implemented as 20% (treated as a doc typo, not changed in the
+  doc itself).
 
 ### Map headers
 

@@ -25,15 +25,15 @@ typedef struct WaterEncounter {
 } WaterEncounter;
 typedef struct WaterEncounters {
     int encounterRate;
+    u8 slotRates[MAX_WATER_ENCOUNTERS]; // phmode: per-location override for the slot odds below; all-zero means "use the hardcoded default odds for this encounter method" - see GetWaterEncounterSlot/GetRodEncounterSlot
+    u8 padding_slotRates[3];
     WaterEncounter encounters[MAX_WATER_ENCOUNTERS];
 } WaterEncounters;
 
 typedef struct WildEncounters {
     GrassEncounters grassEncounters;
-    int swarmEncounters[MAX_SWARM_ENCOUNTERS];
     int dayEncounters[MAX_TIMED_ENCOUNTERS];
     int nightEncounters[MAX_TIMED_ENCOUNTERS];
-    int radarEncounters[MAX_RADAR_ENCOUNTERS];
     int encounterRatesForms[5];
     int unownTableID;
     int dualSlotRubyEncounters[MAX_DUAL_SLOT_ENCOUNTERS];

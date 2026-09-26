@@ -37,7 +37,6 @@
 #include "party.h"
 #include "pc_boxes.h"
 #include "pokemon.h"
-#include "pokeradar.h"
 #include "save_player.h"
 #include "script_manager.h"
 #include "sound.h"
@@ -390,7 +389,6 @@ static BOOL FieldTask_WildEncounter(FieldTask *task)
 
         if (CheckPlayerWonBattle(encounter->dto->resultMask) == 0) {
             FreeWildEncounter(encounter);
-            RadarChain_Clear(fieldSystem->chain);
             FieldTask_InitJump(task, FieldTask_BlackOutFromBattle, NULL);
             return FALSE;
         }
@@ -401,17 +399,6 @@ static BOOL FieldTask_WildEncounter(FieldTask *task)
 
         UpdateGameRecords(fieldSystem, encounter->dto);
         UpdateJournal(fieldSystem, encounter->dto);
-
-        if (GetRadarChainActive(fieldSystem->chain)) {
-            if (sub_02069798(fieldSystem->chain)) {
-                if (encounter->dto->resultMask != BATTLE_RESULT_WIN
-                    && encounter->dto->resultMask != BATTLE_RESULT_CAPTURED_MON) {
-                    RadarChain_Clear(fieldSystem->chain);
-                }
-            } else {
-                RadarChain_Clear(fieldSystem->chain);
-            }
-        }
 
         FieldTransition_StartMap(task);
         encounter->state++;
@@ -424,21 +411,13 @@ static BOOL FieldTask_WildEncounter(FieldTask *task)
         break;
 
     case 5:
-        if (GetRadarChainActive(fieldSystem->chain)) {
-            SetupGrassPatches(fieldSystem, encounter->dto->resultMask, fieldSystem->chain);
-            FieldSystem_CreateShakingRadarPatches(fieldSystem, fieldSystem->chain);
-        }
-
         encounter->state++;
         break;
 
     case 6:
-        if (sub_02069690(fieldSystem->chain)) {
-            MapObjectMan_UnpauseAllMovement(fieldSystem->mapObjMan);
-            FreeWildEncounter(encounter);
-            return TRUE;
-        }
-        break;
+        MapObjectMan_UnpauseAllMovement(fieldSystem->mapObjMan);
+        FreeWildEncounter(encounter);
+        return TRUE;
     }
 
     return FALSE;
@@ -532,8 +511,6 @@ void Encounter_NewVsHoneyTree(FieldTask *task, int *resultMaskPtr)
 {
     FieldBattleDTO *dto;
     FieldSystem *fieldSystem = FieldTask_GetFieldSystem(task);
-    RadarChain_Clear(fieldSystem->chain);
-
     dto = FieldBattleDTO_New(HEAP_ID_FIELD2, BATTLE_TYPE_WILD_MON);
     FieldBattleDTO_Init(dto, fieldSystem);
 
@@ -550,8 +527,6 @@ void Encounter_NewVsSpeciesAtLevel(FieldTask *task, u16 species, u8 level, int *
 {
     FieldBattleDTO *dto;
     FieldSystem *fieldSystem = FieldTask_GetFieldSystem(task);
-    RadarChain_Clear(fieldSystem->chain);
-
     dto = FieldBattleDTO_New(HEAP_ID_FIELD2, BATTLE_TYPE_WILD_MON);
     FieldBattleDTO_Init(dto, fieldSystem);
 
@@ -569,8 +544,6 @@ void Encounter_NewFatefulVsSpeciesAtLevel(FieldTask *taskMan, u16 species, u8 le
 {
     FieldBattleDTO *dto;
     FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
-    RadarChain_Clear(fieldSystem->chain);
-
     dto = FieldBattleDTO_New(HEAP_ID_FIELD2, BATTLE_TYPE_WILD_MON);
     FieldBattleDTO_Init(dto, fieldSystem);
 
@@ -739,7 +712,6 @@ void Encounter_NewVsTrainer(FieldTask *taskMan, int enemyTrainer1ID, int enemyTr
         battleType = BATTLE_TYPE_TRAINER;
     }
 
-    RadarChain_Clear(fieldSystem->chain);
     dto = FieldBattleDTO_New(HEAP_ID_FIELD2, battleType);
     FieldBattleDTO_Init(dto, fieldSystem);
 
@@ -971,8 +943,6 @@ void Encounter_NewVsGiratinaOrigin(FieldTask *task, u16 species, u8 level, int *
 {
     FieldBattleDTO *dto;
     FieldSystem *fieldSystem = FieldTask_GetFieldSystem(task);
-    RadarChain_Clear(fieldSystem->chain);
-
     dto = FieldBattleDTO_New(HEAP_ID_FIELD2, BATTLE_TYPE_WILD_MON);
     FieldBattleDTO_Init(dto, fieldSystem);
 

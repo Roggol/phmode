@@ -55,16 +55,7 @@ CounterpartTalk_CompletedLocalDex:
     GoToIfUnset FLAG_RECEIVED_HEARTHOME_CITY_NORTHWEST_HOUSE_EEVEE, CounterpartTalk_HaveYouMetBebe
     CheckNationalDexCompleted VAR_RESULT
     GoToIfEq VAR_RESULT, TRUE, CounterpartTalk_CompletedNationalDex
-    GoTo CounterpartTalk_PlayerHasPokeRadar
-    End
-
-CounterpartTalk_PlayerHasPokeRadar:
-    GoToIfUnset FLAG_STARTED_COUNTERPART_POKE_RADAR_TUTORIAL, CounterpartTalk_StartPokeRadarTutorial
-    GetRandom VAR_RESULT, 3
-    SetVar VAR_0x8008, VAR_RESULT
-    GoToIfEq VAR_0x8008, 0, CounterpartTalk_HowsYourPokeRadar
-    GoToIfEq VAR_0x8008, 1, CounterpartTalk_SometimesPatchOfGrassSparkles
-    GoToIfEq VAR_0x8008, 2, CounterpartTalk_HelpingWithNationalPokedex
+    GoTo CounterpartTalk_HelpingWithNationalPokedex
     End
 
 CounterpartTalk_PlayerBirthday:

@@ -377,9 +377,6 @@ for file in args.src_files:
 
             dungeon_special[0].add(map_num)
 
-            for species in enc_data['radar']:
-                dungeon_special_natdex[Species[species].value].add(map_num)
-
             if (file == args.coronet_file):
                 species = enc_data['elusive_rod_encounter']['species']
                 dungeon_special[Species[species].value].add(map_num)
@@ -429,9 +426,6 @@ for file in args.src_files:
                 field_night[Species[species].value].add(map_num)
 
             field_special[0].add(map_num)
-
-            for species in enc_data['radar']:
-                field_special_natdex[Species[species].value].add(map_num)
 
 if errors:
     print(errors, file=sys.stderr)

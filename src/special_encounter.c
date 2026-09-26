@@ -20,7 +20,6 @@ void SpecialEncounter_Init(SpecialEncounter *specialEncounter)
     memset(specialEncounter, 0, sizeof(SpecialEncounter));
 
     specialEncounter->marshDaily = MTRNG_Next();
-    specialEncounter->swarmDaily = MTRNG_Next();
     specialEncounter->trophyGarden.unused = 0;
     specialEncounter->trophyGarden.slot1 = TROPHY_GARDEN_SLOT_NONE;
     specialEncounter->trophyGarden.slot2 = TROPHY_GARDEN_SLOT_NONE;
@@ -38,16 +37,13 @@ void SpecialEncounter_Init(SpecialEncounter *specialEncounter)
         v1->honeyTrees[i].numShakes = 0;
     }
 
-    specialEncounter->swarmEnabled = 0;
     specialEncounter->repelSteps = 0;
-    specialEncounter->radarCharge = 0;
     specialEncounter->fluteFactor = FLUTE_FACTOR_NONE;
 }
 
 void SpecialEncounter_SetMixedRecordDailies(SpecialEncounter *speEnc, const u32 mixedRecord)
 {
     speEnc->marshDaily = mixedRecord;
-    speEnc->swarmDaily = mixedRecord;
 }
 
 u32 SpecialEncounter_GetDailyMon(SpecialEncounter *speEnc, const u8 dailyType)
@@ -55,17 +51,10 @@ u32 SpecialEncounter_GetDailyMon(SpecialEncounter *speEnc, const u8 dailyType)
     switch (dailyType) {
     case DAILY_MARSH:
         return speEnc->marshDaily;
-    case DAILY_SWARM:
-        return speEnc->swarmDaily;
     default:
         GF_ASSERT(FALSE);
         return 0;
     }
-}
-
-RadarChainRecords *SpecialEncounter_GetRadarChainRecords(SpecialEncounter *speEnc)
-{
-    return &(speEnc->chainRecords);
 }
 
 SpecialEncounter *SaveData_GetSpecialEncounters(SaveData *saveData)
@@ -118,17 +107,6 @@ void SpecialEncounter_DecrementHoneyTreeTimers(SaveData *saveData, const int dec
             }
         }
     }
-}
-
-void SpecialEncounter_EnableSwarms(SaveData *saveData)
-{
-    SpecialEncounter *speEnc = SaveData_GetSpecialEncounters(saveData);
-    speEnc->swarmEnabled = 1;
-}
-
-u8 SpecialEncounter_IsSwarmEnabled(SpecialEncounter *speEnc)
-{
-    return speEnc->swarmEnabled;
 }
 
 void SpecialEncounter_UpdateRecentRoutes(SpecialEncounter *speEnc, const int newMap)
@@ -235,11 +213,6 @@ void Roamer_SetData(Roamer *roamer, const u8 dataType, const u32 data)
         roamer->active = data;
         break;
     }
-}
-
-u8 *SpecialEncounter_GetRadarCharge(SpecialEncounter *speEnc)
-{
-    return &(speEnc->radarCharge);
 }
 
 u8 *SpecialEncounter_GetRepelSteps(SpecialEncounter *speEnc)

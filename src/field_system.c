@@ -34,7 +34,6 @@
 #include "overlay_manager.h"
 #include "player_move.h"
 #include "pokedex_memory.h"
-#include "pokeradar.h"
 #include "savedata.h"
 #include "system.h"
 #include "unk_0209C370.h"
@@ -167,9 +166,6 @@ static FieldSystem *InitFieldSystem(ApplicationManager *appMan)
 
     fieldSystem->bagCursor = BagCursor_New(HEAP_ID_FIELD2);
 
-    fieldSystem->chain = RadarChain_Init(HEAP_ID_FIELD2);
-    RadarChain_Clear(fieldSystem->chain);
-
     fieldSystem->pokedexMemory = PokedexMemory_New(HEAP_ID_FIELD2);
     fieldSystem->battleSubscreenCursorOn = sub_0209C370(HEAP_ID_FIELD2);
 
@@ -183,7 +179,6 @@ static void TeardownFieldSystem(ApplicationManager *appMan)
     MapMatrix_Free(fieldSystem->mapMatrix);
     MapHeaderData_Free(fieldSystem);
     Heap_Free(fieldSystem->bagCursor);
-    RadarChain_Free(fieldSystem->chain);
     PokedexMemory_Free(fieldSystem->pokedexMemory);
     sub_0209C388(fieldSystem->battleSubscreenCursorOn);
 

@@ -50,10 +50,6 @@
             "species": "SPECIES_GEODUDE"
         }
     ],
-    "swarms": [
-        "SPECIES_PHANPY",
-        "SPECIES_PHANPY"
-    ],
     "day": [
         "SPECIES_PONYTA",
         "SPECIES_MACHOP"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_KRICKETOT",
         "SPECIES_ZUBAT"
-    ],
-    "radar": [
-        "SPECIES_STANTLER",
-        "SPECIES_STANTLER",
-        "SPECIES_STANTLER",
-        "SPECIES_STANTLER"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

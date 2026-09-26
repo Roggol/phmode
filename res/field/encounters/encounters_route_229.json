@@ -50,10 +50,6 @@
             "species": "SPECIES_DUSTOX"
         }
     ],
-    "swarms": [
-        "SPECIES_PINSIR",
-        "SPECIES_PINSIR"
-    ],
     "day": [
         "SPECIES_PIDGEY",
         "SPECIES_PIDGEY"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_ARIADOS",
         "SPECIES_ARIADOS"
-    ],
-    "radar": [
-        "SPECIES_VENOMOTH",
-        "SPECIES_VENOMOTH",
-        "SPECIES_VENONAT",
-        "SPECIES_VENONAT"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

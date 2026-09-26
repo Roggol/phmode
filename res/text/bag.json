@@ -475,18 +475,6 @@
       "garbage": 29
     },
     {
-      "id": "Bag_Text_BatteryHasRunDry",
-      "en_US": [
-        "The battery has run dry!\n",
-        "For it to recharge, you need to walk\f",
-        "another {STRVAR_1 51, 0, 0} steps."
-      ]
-    },
-    {
-      "id": "Bag_Text_GrassyPatchRemainedQuiet",
-      "en_US": "The grassy patch remained quiet..."
-    },
-    {
       "id": "Bag_Text_PoffinCountLabel",
       "en_US": "No. of Poffins:"
     },

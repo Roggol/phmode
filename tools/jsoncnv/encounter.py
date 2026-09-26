@@ -35,6 +35,12 @@ def convert_water(encs: list) -> bytes:
         for i in range(5)
     ]))
 
+# phmode: per-location override for a water/rod table's slot odds (5 values,
+# should sum to 100) - all-zero (the default when a location doesn't specify
+# one) means "use this encounter method's normal hardcoded odds" instead.
+def convert_water_slot_rates(rates: list) -> bytes:
+    return b''.join(u8(r) for r in rates) + pad(3)
+
 
 input_path = pathlib.Path(sys.argv[1])
 output_path = pathlib.Path(sys.argv[2])
@@ -60,11 +66,8 @@ packables = bytearray([])
 packables.extend(u32(data['land_rate']))
 packables.extend(convert_land(data['land_encounters']))
 
-for enc_type, i in itertools.product(['swarms', 'day', 'night'], range(2)):
+for enc_type, i in itertools.product(['day', 'night'], range(2)):
     packables.extend(as_species(data[enc_type][i]))
-
-for i in range(4):
-    packables.extend(as_species(data['radar'][i]))
 
 for key in ['rate_form0', 'rate_form1', 'rate_form2', 'rate_form3', 'rate_form4', 'unown_table']:
     packables.extend(u32(data[key]))
@@ -72,18 +75,25 @@ for key in ['rate_form0', 'rate_form1', 'rate_form2', 'rate_form3', 'rate_form4'
 for version, i in itertools.product(['ruby', 'sapphire', 'emerald', 'firered', 'leafgreen'], range(2)):
     packables.extend(as_species(data[version][i]))
 
+NO_SLOT_RATES = [0, 0, 0, 0, 0]
+
 packables.extend(u32(data['surf_rate']))
+packables.extend(convert_water_slot_rates(data.get('surf_slot_rates', NO_SLOT_RATES)))
 packables.extend(convert_water(data['surf_encounters']))
 
 # phmode: Rock Smash encounters. This used to be a padded-out "unused" water
 # table; most maps still have neither key, so default to a rate of 0 (no
 # encounter, ever) and 5 empty slots - the same all-zero bytes pad(44) wrote.
+# Rock Smash always rolls a flat 20% per slot (see GetRockSmashEncounterSlot)
+# regardless of slotRates, so there is no 'rock_smash_slot_rates' JSON key.
 NO_ROCK_SMASH_ENCOUNTERS = [{'level_min': 0, 'level_max': 0, 'species': 'SPECIES_NONE'}] * 5
 packables.extend(u32(data.get('rock_smash_rate', 0)))
+packables.extend(convert_water_slot_rates(NO_SLOT_RATES))
 packables.extend(convert_water(data.get('rock_smash_encounters', NO_ROCK_SMASH_ENCOUNTERS)))
 
 for rod in ['old', 'good', 'super']:
     packables.extend(u32(data[f'{rod}_rod_rate']))
+    packables.extend(convert_water_slot_rates(data.get(f'{rod}_rod_slot_rates', NO_SLOT_RATES)))
     packables.extend(convert_water(data[f'{rod}_rod_encounters']))
 
 with open(output_path, 'wb') as output_file:

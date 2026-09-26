@@ -56,37 +56,7 @@
     },
     {
       "id": "SandgemTownCounterpartHouse1F_Text_MassiveOutbreakOfPokemon",
-      "en_US": [
-        "Oh, hi, {STRVAR_1 3, 0, 0}!\r",
-        "There was news on TV saying there\n",
-        "is a massive outbreak of Pokémon!\r",
-        "That’d be great for filling up your\n",
-        "Pokédex!"
-      ]
-    },
-    {
-      "id": "SandgemTownCounterpartHouse1F_Text_BunchOfPokemonAtLocationMale",
-      "en_US": [
-        "Let me see...\n",
-        "What did that news say now...?\r",
-        "{STRVAR_1 4, 1, 0}! They said there’s\n",
-        "a whole bunch of {STRVAR_1 0, 2, 0} there!\r",
-        "{STRVAR_1 3, 0, 0}, you have to hurry!\r",
-        "I want you to do better than my\n",
-        "sister Dawn!"
-      ]
-    },
-    {
-      "id": "SandgemTownCounterpartHouse1F_Text_BunchOfPokemonAtLocationFemale",
-      "en_US": [
-        "Let me see...\n",
-        "What did that news say now...?\r",
-        "{STRVAR_1 4, 1, 0}! They said there’s\n",
-        "a whole bunch of {STRVAR_1 0, 2, 0} there!\r",
-        "{STRVAR_1 3, 0, 0}, you have to hurry!\r",
-        "I want you to do better than my\n",
-        "brother Lucas!"
-      ]
+      "en_US": "placeholder"
     }
   ]
 }

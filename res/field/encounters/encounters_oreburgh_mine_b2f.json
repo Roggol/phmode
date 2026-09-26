@@ -50,10 +50,6 @@
             "species": "SPECIES_ZUBAT"
         }
     ],
-    "swarms": [
-        "SPECIES_GEODUDE",
-        "SPECIES_GEODUDE"
-    ],
     "day": [
         "SPECIES_ZUBAT",
         "SPECIES_ZUBAT"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_ZUBAT",
         "SPECIES_ZUBAT"
-    ],
-    "radar": [
-        "SPECIES_GEODUDE",
-        "SPECIES_GEODUDE",
-        "SPECIES_GEODUDE",
-        "SPECIES_GEODUDE"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

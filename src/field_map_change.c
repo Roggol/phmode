@@ -46,7 +46,6 @@
 #include "message.h"
 #include "persisted_map_features.h"
 #include "player_avatar.h"
-#include "pokeradar.h"
 #include "render_window.h"
 #include "save_player.h"
 #include "savedata.h"
@@ -675,7 +674,6 @@ static BOOL FieldTask_ChangeMapSub(FieldTask *task)
         FieldMapChange_SetNewLocation(fieldSystem, &mapChangeSub->nextLocation);
         FieldMapChange_InitTerrainCollisionManager(fieldSystem);
         FieldMapChange_UpdateGameData(fieldSystem, 0);
-        RadarChain_Clear(fieldSystem->chain);
         mapChangeSub->state++;
         break;
     case 2:

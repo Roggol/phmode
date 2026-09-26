@@ -77,7 +77,6 @@
 #include "overlay006/ov6_02243004.h"
 #include "overlay006/ov6_02248948.h"
 #include "overlay006/pc_animation.h"
-#include "overlay006/swarm.h"
 #include "overlay006/trophy_garden_daily_encounters.h"
 #include "overlay006/wallpaper_passwords.h"
 #include "overlay006/wild_encounters.h"
@@ -142,7 +141,6 @@
 #include "poffin_berry_selection_context.h"
 #include "pokedex.h"
 #include "pokemon.h"
-#include "pokeradar.h"
 #include "poketch.h"
 #include "rankings_machine.h"
 #include "render_window.h"
@@ -421,7 +419,6 @@ static BOOL ScrCmd_GetPlayerState(ScriptContext *ctx);
 static BOOL ScrCmd_SetPlayerState(ScriptContext *ctx);
 static BOOL ScrCmd_ChangePlayerState(ScriptContext *ctx);
 static BOOL ScrCmd_GetPlayerStarterSpecies(ScriptContext *ctx);
-static BOOL ScrCmd_GetSwarmMapAndSpecies(ScriptContext *ctx);
 static BOOL ScrCmd_PrintTrainerDialogue(ScriptContext *ctx);
 static BOOL ScrCmd_StartBattleClient(ScriptContext *ctx);
 static BOOL sub_02042F74(ScriptContext *ctx);
@@ -602,7 +599,6 @@ static BOOL ScrCmd_ClearSpiritombCounter(ScriptContext *ctx);
 static BOOL ScrCmd_GetRandomSeenSpecies(ScriptContext *ctx);
 static BOOL ScrCmd_SetNewsPressDeadline(ScriptContext *ctx);
 static BOOL ScrCmd_GetNewsPressDeadline(ScriptContext *ctx);
-static BOOL ScrCmd_EnableSwarms(ScriptContext *ctx);
 static BOOL ScrCmd_ActivateRoamingPokemon(ScriptContext *ctx);
 static BOOL ScrCmd_InitNPCTrade(ScriptContext *ctx);
 static BOOL ScrCmd_GetNPCTradeSpecies(ScriptContext *ctx);
@@ -3681,8 +3677,6 @@ static BOOL ScrCmd_UseSurf(ScriptContext *ctx)
 {
     int direction;
 
-    RadarChain_Clear(ctx->fieldSystem->chain);
-
     if (PlayerAvatar_DistortionStateOnFloor(ctx->fieldSystem->playerAvatar) == TRUE) {
         direction = PlayerAvatar_GetFacingDir(ctx->fieldSystem->playerAvatar);
     } else {
@@ -3817,16 +3811,6 @@ static BOOL ScrCmd_SetPlayerState(ScriptContext *ctx)
 static BOOL ScrCmd_ChangePlayerState(ScriptContext *ctx)
 {
     PlayerAvatar_RequestChangeState(ctx->fieldSystem->playerAvatar);
-    return FALSE;
-}
-
-static BOOL ScrCmd_GetSwarmMapAndSpecies(ScriptContext *ctx)
-{
-    SpecialEncounter *speEnc = SaveData_GetSpecialEncounters(ctx->fieldSystem->saveData);
-    u16 *mapDest = ScriptContext_GetVarPointer(ctx);
-    u16 *speciesDest = ScriptContext_GetVarPointer(ctx);
-
-    Swarm_GetMapIdAndSpecies(SpecialEncounter_GetDailyMon(speEnc, DAILY_SWARM), mapDest, speciesDest);
     return FALSE;
 }
 
@@ -5470,13 +5454,6 @@ static BOOL ScrCmd_GetNewsPressDeadline(ScriptContext *ctx)
 {
     u16 *destVar = ScriptContext_GetVarPointer(ctx);
     *destVar = SystemVars_GetNewsPressDeadline(SaveData_GetVarsFlags(ctx->fieldSystem->saveData));
-    return FALSE;
-}
-
-static BOOL ScrCmd_EnableSwarms(ScriptContext *ctx)
-{
-    SpecialEncounter_EnableSwarms(ctx->fieldSystem->saveData);
-
     return FALSE;
 }
 

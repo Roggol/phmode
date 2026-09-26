@@ -366,9 +366,6 @@ PalParkLobby_PokemonFromAroundTheCountry:
     CloseMessage
     ApplyMovement LOCALID_PROF_OAK, PalParkLobby_Movement_ProfOakExclamationMark
     WaitMovement
-    Message PalParkLobby_Text_Oak_GiftTrainerCounterApp
-    SetVar VAR_0x8004, POKETCH_APPID_TRAINERCOUNTER
-    Common_GivePoketchApp
     Message PalParkLobby_Text_Oak_InEternaForSomeTime
     CloseMessage
     WaitTime 15, VAR_RESULT

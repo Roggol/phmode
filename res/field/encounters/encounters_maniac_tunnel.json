@@ -50,10 +50,6 @@
             "species": "SPECIES_HIPPOPOTAS"
         }
     ],
-    "swarms": [
-        "SPECIES_GEODUDE",
-        "SPECIES_GEODUDE"
-    ],
     "day": [
         "SPECIES_GEODUDE",
         "SPECIES_GEODUDE"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_GEODUDE",
         "SPECIES_GEODUDE"
-    ],
-    "radar": [
-        "SPECIES_GEODUDE",
-        "SPECIES_HIPPOPOTAS",
-        "SPECIES_GEODUDE",
-        "SPECIES_HIPPOPOTAS"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

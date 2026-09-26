@@ -50,10 +50,6 @@
             "species": "SPECIES_RATTATA"
         }
     ],
-    "swarms": [
-        "SPECIES_MAKUHITA",
-        "SPECIES_MAKUHITA"
-    ],
     "day": [
         "SPECIES_FEAROW",
         "SPECIES_FEAROW"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_BANETTE",
         "SPECIES_BANETTE"
-    ],
-    "radar": [
-        "SPECIES_PRIMEAPE",
-        "SPECIES_PRIMEAPE",
-        "SPECIES_MANKEY",
-        "SPECIES_MANKEY"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

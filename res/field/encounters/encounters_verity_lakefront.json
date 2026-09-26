@@ -50,10 +50,6 @@
             "species": "SPECIES_GALLADE"
         }
     ],
-    "swarms": [
-        "SPECIES_DODUO",
-        "SPECIES_DODUO"
-    ],
     "day": [
         "SPECIES_DRIFBLIM",
         "SPECIES_KECLEON"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_DRIFBLIM",
         "SPECIES_KECLEON"
-    ],
-    "radar": [
-        "SPECIES_NIDORAN_M",
-        "SPECIES_NIDORAN_F",
-        "SPECIES_NIDORAN_M",
-        "SPECIES_NIDORAN_F"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

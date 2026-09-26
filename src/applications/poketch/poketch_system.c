@@ -107,7 +107,6 @@ static const struct {
     { POKETCH_APPID_COLORCHANGER, FS_OVERLAY_ID(poketch_color_changer) },
     { POKETCH_APPID_CALENDAR, FS_OVERLAY_ID(poketch_calendar) },
     { POKETCH_APPID_LINKSEARCHER, FS_OVERLAY_ID(poketch_link_searcher) },
-    { POKETCH_APPID_TRAINERCOUNTER, FS_OVERLAY_ID(poketch_trainer_counter) },
     { POKETCH_APPID_POKEMONHISTORY, FS_OVERLAY_ID(poketch_pokemon_history) }
 };
 

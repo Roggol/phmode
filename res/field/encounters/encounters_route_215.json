@@ -50,10 +50,6 @@
             "species": "SPECIES_KADABRA"
         }
     ],
-    "swarms": [
-        "SPECIES_DROWZEE",
-        "SPECIES_DROWZEE"
-    ],
     "day": [
         "SPECIES_STARAVIA",
         "SPECIES_STARAVIA"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_MARILL",
         "SPECIES_MARILL"
-    ],
-    "radar": [
-        "SPECIES_LICKITUNG",
-        "SPECIES_ABRA",
-        "SPECIES_MARILL",
-        "SPECIES_KADABRA"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

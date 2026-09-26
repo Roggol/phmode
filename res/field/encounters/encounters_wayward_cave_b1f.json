@@ -50,10 +50,6 @@
             "species": "SPECIES_ONIX"
         }
     ],
-    "swarms": [
-        "SPECIES_BRONZOR",
-        "SPECIES_GEODUDE"
-    ],
     "day": [
         "SPECIES_GIBLE",
         "SPECIES_ZUBAT"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_GIBLE",
         "SPECIES_ZUBAT"
-    ],
-    "radar": [
-        "SPECIES_BRONZOR",
-        "SPECIES_ONIX",
-        "SPECIES_GIBLE",
-        "SPECIES_ONIX"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

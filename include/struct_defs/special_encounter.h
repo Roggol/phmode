@@ -48,16 +48,16 @@ typedef struct PlayerRecentRoutes {
 
 typedef struct SpecialEncounter {
     int marshDaily; // random number, index of the mon is derived from this in ReplaceGreatMarshDailyEncounters
-    int swarmDaily; // random number, % NUM_SWARMS to get swarm ID
+    int unused_swarmDaily; // phmode: was swarmDaily, random number, % NUM_SWARMS to get swarm ID - Swarms were removed, kept in place for save layout
     TrophyGardenMons trophyGarden;
     PlayerHoneyTreeStates treeStates;
-    RadarChainRecords chainRecords;
+    RadarChainRecords unused_chainRecords; // phmode: was chainRecords - Poke Radar was removed, kept in place for save layout
     PlayerRecentRoutes recentRoutes; // Used to prevent roamers from trolling you by moving to the route you just left
     Roamer roamers[ROAMING_SLOT_MAX];
     u8 roamerRouteIndexes[ROAMING_SLOT_MAX]; // Not a map ID. Actually index into RoamingPokemonRoutes in roaming_pokemon.c
-    u8 swarmEnabled;
+    u8 unused_swarmEnabled; // phmode: was swarmEnabled - Swarms were removed, kept in place for save layout
     u8 repelSteps;
-    u8 radarCharge;
+    u8 unused_radarCharge; // phmode: was radarCharge - Poke Radar was removed, kept in place for save layout
     u8 fluteFactor;
 } SpecialEncounter;
 

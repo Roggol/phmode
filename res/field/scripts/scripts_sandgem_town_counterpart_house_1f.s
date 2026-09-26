@@ -57,36 +57,9 @@ SandgemTownCounterpartHouse1F_CloseMessageSameAsMyBigSibling:
 
 SandgemTownCounterpartHouse1F_TwinNationalDex:
     GoToIfUnset FLAG_GAME_COMPLETED, SandgemTownCounterpartHouse1F_SameAsMyBigSibling
-    GoToIfSet FLAG_TALKED_TO_COUNTERPART_SISTER_WITH_NATIONAL_DEX, SandgemTownCounterpartHouse1F_BufferSwarmMapAndSpecies
     SetFlag FLAG_TALKED_TO_COUNTERPART_SISTER_WITH_NATIONAL_DEX
-    EnableSwarms
     BufferPlayerName 0
     Message SandgemTownCounterpartHouse1F_Text_MassiveOutbreakOfPokemon
-    WaitButton
-    CloseMessage
-    ReleaseAll
-    End
-
-SandgemTownCounterpartHouse1F_BufferSwarmMapAndSpecies:
-    BufferPlayerName 0
-    GetSwarmMapAndSpecies VAR_MAP_LOCAL_0x01, VAR_MAP_LOCAL_0x00
-    BufferMapName 1, VAR_MAP_LOCAL_0x01
-    BufferSpeciesNameFromVar 2, VAR_MAP_LOCAL_0x00, 0, 1
-    GetPlayerGender VAR_RESULT
-    GoToIfEq VAR_RESULT, GENDER_MALE, SandgemTownCounterpartHouse1F_BunchOfPokemonAtLocationMale
-    GoToIfEq VAR_RESULT, GENDER_FEMALE, SandgemTownCounterpartHouse1F_BunchOfPokemonAtLocationFemale
-    End
-
-SandgemTownCounterpartHouse1F_BunchOfPokemonAtLocationMale:
-    Message SandgemTownCounterpartHouse1F_Text_BunchOfPokemonAtLocationMale
-    GoTo SandgemTownCounterpartHouse1F_CloseMessageBunchOfPokemonAtLocation
-
-SandgemTownCounterpartHouse1F_BunchOfPokemonAtLocationFemale:
-    BufferPlayerName 0
-    Message SandgemTownCounterpartHouse1F_Text_BunchOfPokemonAtLocationFemale
-    GoTo SandgemTownCounterpartHouse1F_CloseMessageBunchOfPokemonAtLocation
-
-SandgemTownCounterpartHouse1F_CloseMessageBunchOfPokemonAtLocation:
     WaitButton
     CloseMessage
     ReleaseAll

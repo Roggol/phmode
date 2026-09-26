@@ -50,22 +50,12 @@
             "species": "SPECIES_GOLBAT"
         }
     ],
-    "swarms": [
-        "SPECIES_GOLBAT",
-        "SPECIES_GOLBAT"
-    ],
     "day": [
         "SPECIES_GOLBAT",
         "SPECIES_GOLBAT"
     ],
     "night": [
         "SPECIES_GOLBAT",
-        "SPECIES_GOLBAT"
-    ],
-    "radar": [
-        "SPECIES_GOLBAT",
-        "SPECIES_SNEASEL",
-        "SPECIES_SMOOCHUM",
         "SPECIES_GOLBAT"
     ],
     "rate_form0": 0,

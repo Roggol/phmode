@@ -50,10 +50,6 @@
             "species": "SPECIES_CHANSEY"
         }
     ],
-    "swarms": [
-        "SPECIES_STARAVIA",
-        "SPECIES_GEODUDE"
-    ],
     "day": [
         "SPECIES_PONYTA",
         "SPECIES_PONYTA"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_NOCTOWL",
         "SPECIES_HOOTHOOT"
-    ],
-    "radar": [
-        "SPECIES_MILTANK",
-        "SPECIES_TAUROS",
-        "SPECIES_MILTANK",
-        "SPECIES_TAUROS"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

@@ -509,9 +509,14 @@ Pokémon received the exact same change — nothing is merged.
 - Level 40: Natural Gift -> Power Whip
 - Level 54: Power Whip -> Natural Gift
 
+### Goldeen
+- Evolution level (into Seaking): 33 -> 23
+- Ability slot 2: Water Veil -> Lightning Rod
+
 ### Seaking
 - Atk: 92 -> 100
 - Spe: 68 -> 60
+- Ability slot 2: Water Veil -> Lightning Rod
 
 ### Jolteon
 - Level 43: Thunder Fang -> Thunderbolt
@@ -870,6 +875,10 @@ Pokémon received the exact same change — nothing is merged.
 ### Armaldo
 - Ability slot 2: None -> Swift Swim
 
+### Feebas
+- Its evolution into Milotic no longer depends on Beauty - use a Prism
+  Scale on it directly instead (see Prism Scale, in Items).
+
 ### Milotic
 - Ability slot 2: None -> Competitive
 - Atk: 60 -> 30
@@ -1099,7 +1108,7 @@ Pokémon received the exact same change — nothing is merged.
 - SpA: 90 -> 60
 
 ### Finneon
-- Evolution level (into Lumineon): 31 -> 20
+- Evolution level (into Lumineon): 31 -> 23
 
 ### Lumineon
 - Level 26: Captivate -> Tailwind
@@ -1508,6 +1517,15 @@ Poliwhirl (King's Rock), Slowpoke (King's Rock), Dusclops (Reaper
 Cloth), Electabuzz (Electirizer), Magmar (Magmarizer), and Rhydon
 (Protector).
 
+### Prism Scale — Feebas no longer needs high Beauty to evolve
+A new item, the **Prism Scale** (visually identical to a Deep Sea Scale),
+replaces Feebas's old Beauty-based evolution: use it on a Feebas from the Bag
+and it evolves into Milotic right away, the same way you'd use an Evolution
+Stone. Wild Feebas have a 5% chance of already holding one, and your rival
+also gives you one for free right after your battle with him in Canalave
+City — "I saw this shiny thing on the ground, but none of my Pokémon can use
+it, so you have it."
+
 ### PPHM — a portable full heal
 A new key item, the **PPHM (Portable Pokémon Healing Machine)**, fully
 heals your whole party's HP, status, and PP on the spot, just like a
@@ -1562,6 +1580,15 @@ if your party is full at the time. You'll be told it was sent to your PC.
 An egg sitting in a box doesn't make progress toward hatching until it's
 moved into your active party.
 
+### The Poké Radar and wild Pokémon swarms are gone
+Both features have been removed entirely. You'll never find a Poké Radar
+to catch chains of the same Pokémon in a shaking patch of grass, and the
+Sinnoh Now news broadcast will never announce a "massive outbreak" of a
+species on some route. Prof. Rowan's reward for completing the regional
+Pokédex is now just his congratulations, with no item attached, and the
+Trainer Counter Pokétch app (which only ever displayed Poké Radar chain
+stats) is gone along with it.
+
 ---
 
 ## World and Location Changes
@@ -1589,6 +1616,12 @@ at all. It — and Veilstone City's south exit onto Route 214, which used to
 be wide open the whole game — now both stay closed until you've beaten
 Maylene, Veilstone's Gym Leader. A police officer stands in Veilstone's
 south gate in the meantime and lets you know why.
+
+### Canalave City rival battle gives you a Prism Scale
+Right after you beat your rival on Canalave City's bridge, once he's done
+telling you to go train at Iron Island, he also hands over a **Prism Scale**:
+"I saw this shiny thing on the ground, but none of my Pokémon can use it, so
+you have it."
 
 ### Several trainers got moved and re-leveled to match where you'll actually meet them
 A pass through the whole game's trainer roster found a handful of spots
@@ -1645,3 +1678,20 @@ way are still being finalized.
 Aaron's Elite Four battle room now starts every fight with Sticky Web
 already in effect on your side, so anything you send out that touches the
 ground gets its Speed lowered right away.
+
+### Twinleaf Town's water is more varied — and worth fishing every rod
+Surfing or fishing around Twinleaf Town now turns up a wider cast of fish and
+water Pokémon, with clean, easy-to-remember odds for each method:
+- **Surf**: Psyduck and Mantyke at 30% each, Golduck and Mantine at 20% each.
+- **Old Rod**: Magikarp, Goldeen, and Finneon at 30% each, and a 10% chance
+  at a Feebas.
+- **Good Rod**: the same four fish as Old Rod, just at higher levels.
+- **Super Rod**: Gyarados, Seaking, and Lumineon at 30% each, and a 10%
+  chance at a level 80 Milotic.
+
+### Route 201 has a few new faces in the grass
+The classic Starly/Bidoof mix on Route 201 is still the bulk of what you'll
+run into, but the small slice of the grass that used to always be Kricketot
+now changes with the time of day — Pidgey in the morning, Taillow during
+the day, and Hoothoot at night. Two of the rarest encounter slots have also
+swapped from more Starly/Bidoof to a Bulbasaur and a Chikorita.

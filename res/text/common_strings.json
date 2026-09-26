@@ -654,13 +654,6 @@
       ]
     },
     {
-      "id": "CommonStrings_Text_ObtainedPoketchTrainerCounter",
-      "en_US": [
-        "The {COLOR 2}Trainer Counter{COLOR 0} app tracks\n",
-        "the Pokémon Radar’s rankings.\r"
-      ]
-    },
-    {
       "id": "CommonStrings_Text_ObtainedPoketchKitchenTimer",
       "en_US": [
         "The {COLOR 2}Kitchen Timer{COLOR 0} app is a 99-minute\n",

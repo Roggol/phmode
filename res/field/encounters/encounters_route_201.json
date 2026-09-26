@@ -6,28 +6,20 @@
             "species": "SPECIES_STARLY"
         },
         {
+            "level": 3,
+            "species": "SPECIES_STARLY"
+        },
+        {
+            "level": 3,
+            "species": "SPECIES_PIDGEY"
+        },
+        {
+            "level": 3,
+            "species": "SPECIES_PIDGEY"
+        },
+        {
             "level": 2,
             "species": "SPECIES_BIDOOF"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_KRICKETOT"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_BIDOOF"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_STARLY"
         },
         {
             "level": 3,
@@ -35,38 +27,36 @@
         },
         {
             "level": 2,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_BIDOOF"
+        },
+        {
+            "level": 3,
+            "species": "SPECIES_BIDOOF"
         },
         {
             "level": 2,
             "species": "SPECIES_BIDOOF"
         },
         {
-            "level": 2,
-            "species": "SPECIES_STARLY"
+            "level": 3,
+            "species": "SPECIES_BIDOOF"
         },
         {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
+            "level": 3,
+            "species": "SPECIES_BULBASAUR"
+        },
+        {
+            "level": 3,
+            "species": "SPECIES_CHIKORITA"
         }
     ],
-    "swarms": [
-        "SPECIES_DODUO",
-        "SPECIES_DODUO"
-    ],
     "day": [
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_TAILLOW",
+        "SPECIES_TAILLOW"
     ],
     "night": [
-        "SPECIES_KRICKETOT",
-        "SPECIES_BIDOOF"
-    ],
-    "radar": [
-        "SPECIES_NIDORAN_M",
-        "SPECIES_NIDORAN_F",
-        "SPECIES_NIDORAN_M",
-        "SPECIES_NIDORAN_F"
+        "SPECIES_HOOTHOOT",
+        "SPECIES_HOOTHOOT"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

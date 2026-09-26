@@ -50,10 +50,6 @@
             "species": "SPECIES_RHYHORN"
         }
     ],
-    "swarms": [
-        "SPECIES_SPOINK",
-        "SPECIES_SPOINK"
-    ],
     "day": [
         "SPECIES_GRAVELER",
         "SPECIES_RHYHORN"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_HOUNDOUR",
         "SPECIES_ZUBAT"
-    ],
-    "radar": [
-        "SPECIES_POOCHYENA",
-        "SPECIES_POOCHYENA",
-        "SPECIES_POOCHYENA",
-        "SPECIES_POOCHYENA"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

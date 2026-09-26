@@ -50,21 +50,11 @@
             "species": "SPECIES_GASTLY"
         }
     ],
-    "swarms": [
-        "SPECIES_GASTLY",
-        "SPECIES_GASTLY"
-    ],
     "day": [
         "SPECIES_GASTLY",
         "SPECIES_GASTLY"
     ],
     "night": [
-        "SPECIES_GASTLY",
-        "SPECIES_GASTLY"
-    ],
-    "radar": [
-        "SPECIES_GASTLY",
-        "SPECIES_GASTLY",
         "SPECIES_GASTLY",
         "SPECIES_GASTLY"
     ],

@@ -50,7 +50,6 @@
 #include "player_avatar.h"
 #include "player_move.h"
 #include "pokemon.h"
-#include "pokeradar.h"
 #include "save_player.h"
 #include "script_manager.h"
 #include "sound_playback.h"
@@ -78,7 +77,6 @@ static BOOL Field_CheckTransition(FieldSystem *fieldSystem, const int playerX, c
 static BOOL Field_UpdateDaycare(FieldSystem *fieldSystem);
 static BOOL Field_UpdatePoison(FieldSystem *fieldSystem);
 static BOOL Field_UpdateSafari(FieldSystem *fieldSystem);
-static BOOL Field_UpdatePokeRadar(FieldSystem *fieldSystem);
 static BOOL Field_CheckSign(FieldSystem *fieldSystem);
 static BOOL Field_UpdateRepel(FieldSystem *fieldSystem);
 static BOOL Field_UpdateFriendship(FieldSystem *fieldSystem);
@@ -751,10 +749,6 @@ static BOOL Field_ProcessStep(FieldSystem *fieldSystem)
         return TRUE;
     }
 
-    if (Field_UpdatePokeRadar(fieldSystem) == TRUE) {
-        return TRUE;
-    }
-
     if (Field_UpdateRepel(fieldSystem) == TRUE) {
         return TRUE;
     }
@@ -841,12 +835,6 @@ static BOOL Field_UpdateDaycare(FieldSystem *fieldSystem)
         return TRUE;
     }
 
-    return FALSE;
-}
-
-static BOOL Field_UpdatePokeRadar(FieldSystem *fieldSystem)
-{
-    RadarChargeStep(fieldSystem);
     return FALSE;
 }
 

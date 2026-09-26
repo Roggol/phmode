@@ -48,7 +48,6 @@
     Entry(SCRIPT_ID_OFFSET_POKEMON_CENTER_B1F_COMMON,      scripts_pokemon_center_b1f_common,      TEXT_BANK_POKEMON_CENTER_B1F_COMMON) \
     Entry(SCRIPT_ID_OFFSET_COMMUNICATION_CLUB,             scripts_communication_club,             TEXT_BANK_COMMUNICATION_CLUB) \
     Entry(SCRIPT_ID_OFFSET_POKEMON_CENTER_2F_COMMON,       scripts_pokemon_center_2f_common,       TEXT_BANK_POKEMON_CENTER_2F_COMMON) \
-    Entry(SCRIPT_ID_OFFSET_POKE_RADAR,                     scripts_poke_radar,                     TEXT_BANK_BAG) \
     Entry(SCRIPT_ID_OFFSET_RECORD_CHATOT_CRY,              scripts_record_chatot_cry,              TEXT_BANK_RECORD_CHATOT_CRY) \
     Entry(SCRIPT_ID_OFFSET_SAFARI_GAME,                    scripts_safari_game,                    TEXT_BANK_SAFARI_GAME) \
     Entry(SCRIPT_ID_OFFSET_HIDDEN_ITEMS,                   scripts_hidden_items,                   TEXT_BANK_HIDDEN_ITEMS) \

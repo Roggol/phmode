@@ -50,10 +50,6 @@
             "species": "SPECIES_GASTLY"
         }
     ],
-    "swarms": [
-        "SPECIES_GASTLY",
-        "SPECIES_ZUBAT"
-    ],
     "day": [
         "SPECIES_GASTLY",
         "SPECIES_GASTLY"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_DUSKULL",
         "SPECIES_DUSKULL"
-    ],
-    "radar": [
-        "SPECIES_ZUBAT",
-        "SPECIES_GASTLY",
-        "SPECIES_GASTLY",
-        "SPECIES_GASTLY"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

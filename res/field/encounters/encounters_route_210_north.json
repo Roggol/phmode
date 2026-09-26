@@ -50,10 +50,6 @@
             "species": "SPECIES_MACHOKE"
         }
     ],
-    "swarms": [
-        "SPECIES_SWABLU",
-        "SPECIES_BIBAREL"
-    ],
     "day": [
         "SPECIES_SWABLU",
         "SPECIES_MEDITITE"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_NOCTOWL",
         "SPECIES_HOOTHOOT"
-    ],
-    "radar": [
-        "SPECIES_BAGON",
-        "SPECIES_BAGON",
-        "SPECIES_BAGON",
-        "SPECIES_BAGON"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

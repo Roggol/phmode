@@ -284,15 +284,6 @@
       ]
     },
     {
-      "id": "PoketchCo3F_Text_DescriptionTrainerCounter",
-      "en_US": [
-        "The Trainer Counter tracks the\n",
-        "performance of the Poké Radar.\r",
-        "It shows how often you have met\n",
-        "the same kind of Pokémon in a row.\r"
-      ]
-    },
-    {
       "id": "PoketchCo3F_Text_DescriptionLinkSearcher",
       "en_US": [
         "The Link Searcher searches for\n",

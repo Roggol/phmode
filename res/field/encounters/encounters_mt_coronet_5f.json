@@ -50,10 +50,6 @@
             "species": "SPECIES_CHIMECHO"
         }
     ],
-    "swarms": [
-        "SPECIES_BRONZONG",
-        "SPECIES_GRAVELER"
-    ],
     "day": [
         "SPECIES_MEDICHAM",
         "SPECIES_GRAVELER"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_GOLBAT",
         "SPECIES_CLEFAIRY"
-    ],
-    "radar": [
-        "SPECIES_MACHOKE",
-        "SPECIES_MEDICHAM",
-        "SPECIES_GOLBAT",
-        "SPECIES_CHIMECHO"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

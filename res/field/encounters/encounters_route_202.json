@@ -50,10 +50,6 @@
             "species": "SPECIES_BIDOOF"
         }
     ],
-    "swarms": [
-        "SPECIES_ZIGZAGOON",
-        "SPECIES_ZIGZAGOON"
-    ],
     "day": [
         "SPECIES_STARLY",
         "SPECIES_BIDOOF"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_KRICKETOT",
         "SPECIES_BIDOOF"
-    ],
-    "radar": [
-        "SPECIES_SENTRET",
-        "SPECIES_SENTRET",
-        "SPECIES_SENTRET",
-        "SPECIES_SENTRET"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

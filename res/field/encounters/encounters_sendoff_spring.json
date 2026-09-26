@@ -50,10 +50,6 @@
             "species": "SPECIES_CHINGLING"
         }
     ],
-    "swarms": [
-        "SPECIES_GRAVELER",
-        "SPECIES_BIBAREL"
-    ],
     "day": [
         "SPECIES_GRAVELER",
         "SPECIES_STARAVIA"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_DUSCLOPS",
         "SPECIES_GOLBAT"
-    ],
-    "radar": [
-        "SPECIES_BIBAREL",
-        "SPECIES_STARAVIA",
-        "SPECIES_DUSCLOPS",
-        "SPECIES_CHINGLING"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

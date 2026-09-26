@@ -50,10 +50,6 @@
             "species": "SPECIES_CACNEA"
         }
     ],
-    "swarms": [
-        "SPECIES_BELDUM",
-        "SPECIES_BELDUM"
-    ],
     "day": [
         "SPECIES_HIPPOWDON",
         "SPECIES_RHYDON"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_CACTURNE",
         "SPECIES_CACTURNE"
-    ],
-    "radar": [
-        "SPECIES_RHYDON",
-        "SPECIES_HIPPOWDON",
-        "SPECIES_DIGLETT",
-        "SPECIES_CACNEA"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

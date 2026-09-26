@@ -50,10 +50,6 @@
             "species": "SPECIES_SNOVER"
         }
     ],
-    "swarms": [
-        "SPECIES_DELIBIRD",
-        "SPECIES_DELIBIRD"
-    ],
     "day": [
         "SPECIES_SNEASEL",
         "SPECIES_SNOVER"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_SNORUNT",
         "SPECIES_SNORUNT"
-    ],
-    "radar": [
-        "SPECIES_PILOSWINE",
-        "SPECIES_PILOSWINE",
-        "SPECIES_PILOSWINE",
-        "SPECIES_PILOSWINE"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

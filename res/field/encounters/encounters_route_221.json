@@ -50,10 +50,6 @@
             "species": "SPECIES_ROSELIA"
         }
     ],
-    "swarms": [
-        "SPECIES_FARFETCHD",
-        "SPECIES_FARFETCHD"
-    ],
     "day": [
         "SPECIES_ROSELIA",
         "SPECIES_ROSELIA"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_FLOATZEL",
         "SPECIES_ROSELIA"
-    ],
-    "radar": [
-        "SPECIES_NIDORINO",
-        "SPECIES_NIDORINA",
-        "SPECIES_NIDORINO",
-        "SPECIES_NIDORINA"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

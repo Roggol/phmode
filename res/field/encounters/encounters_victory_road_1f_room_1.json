@@ -50,10 +50,6 @@
             "species": "SPECIES_GABITE"
         }
     ],
-    "swarms": [
-        "SPECIES_GRAVELER",
-        "SPECIES_FLOATZEL"
-    ],
     "day": [
         "SPECIES_GRAVELER",
         "SPECIES_ONIX"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_GOLBAT",
         "SPECIES_ONIX"
-    ],
-    "radar": [
-        "SPECIES_ONIX",
-        "SPECIES_FLOATZEL",
-        "SPECIES_STEELIX",
-        "SPECIES_GABITE"
     ],
     "rate_form0": 100,
     "rate_form1": 100,

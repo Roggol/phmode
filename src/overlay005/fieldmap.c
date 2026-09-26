@@ -70,7 +70,6 @@
 #include "persisted_map_features.h"
 #include "player_avatar.h"
 #include "pltt_transfer.h"
-#include "pokeradar.h"
 #include "render_oam.h"
 #include "savedata_misc.h"
 #include "screen_fade.h"
@@ -421,7 +420,6 @@ static BOOL FieldMap_ChangeZone(FieldSystem *fieldSystem)
 
     sub_0206184C(fieldSystem->mapObjMan, oldMapHeaderID, newMapHeaderID, objEventCount, objEventList);
 
-    RadarChain_Clear(fieldSystem->chain);
     FieldBGM_TryFadeOut(fieldSystem, FieldBGM_GetEffective(fieldSystem, fieldSystem->location->mapHeaderID), 1);
     sub_0203A418(fieldSystem);
 
@@ -688,7 +686,6 @@ static void ov5_021D15F4(FieldSystem *fieldSystem)
         Camera_ComputeViewMatrix();
     }
 
-    PokeRadar_ClearIfAllOutOfView(fieldSystem);
     LandDataManager_RenderLoadedMaps(fieldSystem->landDataMan, fieldSystem->areaModelAttrs);
 
     if (FieldMap_InDistortionWorld(fieldSystem) == TRUE) {

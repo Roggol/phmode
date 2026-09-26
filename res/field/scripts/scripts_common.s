@@ -619,7 +619,6 @@ CommonScript_InternalObtainPoketchApp:
     CallIfEq VAR_0x8004, POKETCH_APPID_CALENDAR, CommonScript_ObtainedPoketchCalendar
     CallIfEq VAR_0x8004, POKETCH_APPID_DOTART, CommonScript_ObtainedPoketchDotArt
     CallIfEq VAR_0x8004, POKETCH_APPID_ROULETTE, CommonScript_ObtainedPoketchRoulette
-    CallIfEq VAR_0x8004, POKETCH_APPID_TRAINERCOUNTER, CommonScript_ObtainedPoketchRadarChainCounter
     CallIfEq VAR_0x8004, POKETCH_APPID_KITCHENTIMER, CommonScript_ObtainedPoketchKitchenTimer
     CallIfEq VAR_0x8004, POKETCH_APPID_COLORCHANGER, CommonScript_ObtainedPoketchColorChanger
     CallIfEq VAR_0x8004, POKETCH_APPID_MATCHUPCHECKER, CommonScript_ObtainedPoketchMatchupChecker
@@ -701,10 +700,6 @@ CommonScript_ObtainedPoketchDotArt:
 
 CommonScript_ObtainedPoketchRoulette:
     Message CommonStrings_Text_ObtainedPoketchRoulette
-    Return
-
-CommonScript_ObtainedPoketchRadarChainCounter:
-    Message CommonStrings_Text_ObtainedPoketchTrainerCounter
     Return
 
 CommonScript_ObtainedPoketchKitchenTimer:

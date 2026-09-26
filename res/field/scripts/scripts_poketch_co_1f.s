@@ -36,8 +36,6 @@ PoketchCo1F_PoketchCoPresident:
     GoToIfEq VAR_RESULT, FALSE, PoketchCo1F_CheckBadgesForLinkSearcherApp
     CheckPoketchAppRegistered POKETCH_APPID_MOVETESTER, VAR_RESULT
     GoToIfEq VAR_RESULT, FALSE, PoketchCo1F_CheckBadgesForMoveTesterApp
-    CheckItem ITEM_POKE_RADAR, 1, VAR_RESULT
-    GoToIfEq VAR_RESULT, TRUE, PoketchCo1F_ShouldISolicitNewPoketchIdeas
     GoTo PoketchCo1F_AllSortsOfPeopleGivePoketchApps
 
 PoketchCo1F_CheckBadgesForMemoPadApp:
@@ -130,13 +128,6 @@ PoketchCo1F_NewAppWhenYouGetSevenBadges:
 
 PoketchCo1F_AllSortsOfPeopleGivePoketchApps:
     Message PoketchCo1F_Text_AllSortsOfPeopleGivePoketchApps
-    WaitButton
-    CloseMessage
-    ReleaseAll
-    End
-
-PoketchCo1F_ShouldISolicitNewPoketchIdeas:
-    Message PoketchCo1F_Text_ShouldISolicitNewPoketchIdeas
     WaitButton
     CloseMessage
     ReleaseAll

@@ -50,10 +50,6 @@
             "species": "SPECIES_BIBAREL"
         }
     ],
-    "swarms": [
-        "SPECIES_DUNSPARCE",
-        "SPECIES_DUNSPARCE"
-    ],
     "day": [
         "SPECIES_BUDEW",
         "SPECIES_RALTS"
@@ -61,12 +57,6 @@
     "night": [
         "SPECIES_ZUBAT",
         "SPECIES_RALTS"
-    ],
-    "radar": [
-        "SPECIES_SMEARGLE",
-        "SPECIES_SMEARGLE",
-        "SPECIES_SMEARGLE",
-        "SPECIES_SMEARGLE"
     ],
     "rate_form0": 100,
     "rate_form1": 100,
