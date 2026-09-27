@@ -114,7 +114,7 @@
         }
     ],
     "old_rod_rate": 25,
-    "old_rod_slot_rates": [40, 30, 20, 10, 0],
+    "old_rod_slot_rates": [40, 30, 20, 9, 1],
     "old_rod_encounters": [
         {
             "level_max": 14,
@@ -137,13 +137,13 @@
             "species": "SPECIES_CARVANHA"
         },
         {
-            "level_max": 0,
-            "level_min": 0,
-            "species": "SPECIES_NONE"
+            "level_max": 3,
+            "level_min": 3,
+            "species": "SPECIES_SQUIRTLE"
         }
     ],
     "good_rod_rate": 50,
-    "good_rod_slot_rates": [40, 30, 20, 10, 0],
+    "good_rod_slot_rates": [40, 30, 20, 9, 1],
     "good_rod_encounters": [
         {
             "level_max": 23,
@@ -166,13 +166,13 @@
             "species": "SPECIES_CARVANHA"
         },
         {
-            "level_max": 0,
-            "level_min": 0,
-            "species": "SPECIES_NONE"
+            "level_max": 20,
+            "level_min": 20,
+            "species": "SPECIES_WARTORTLE"
         }
     ],
     "super_rod_rate": 75,
-    "super_rod_slot_rates": [55, 45, 0, 0, 0],
+    "super_rod_slot_rates": [55, 44, 1, 0, 0],
     "super_rod_encounters": [
         {
             "level_max": 55,
@@ -185,9 +185,9 @@
             "species": "SPECIES_LUMINEON"
         },
         {
-            "level_max": 0,
-            "level_min": 0,
-            "species": "SPECIES_NONE"
+            "level_max": 50,
+            "level_min": 50,
+            "species": "SPECIES_BLASTOISE"
         },
         {
             "level_max": 0,

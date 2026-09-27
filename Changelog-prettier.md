@@ -1703,10 +1703,16 @@ the day, and Hoothoot at night. Two of the rarest encounter slots have also
 swapped from more Starly/Bidoof to a Bulbasaur and a Chikorita.
 
 ### The early game's wild encounters have been redesigned
-Every area up through the Oreburgh Gate/Mine and Route 219 — Verity
-Lakefront, Lake Verity, Route 202, Route 203, Route 204's southern half,
-Ravaged Path, and more — now has its own hand-picked roster of wild Pokémon
-and fishing/Surf odds, instead of the mix the base game shipped with. Rock
-Smash rocks can also now give some species better odds than others at a
-location instead of always being a flat one-in-five, matching how Surf and
-fishing already worked.
+Every area up through the Oreburgh Gate/Mine, Route 207, and Route 219 —
+Verity Lakefront, Lake Verity, Route 202, Route 203, Route 204's southern
+half, Ravaged Path, and more — now has its own hand-picked roster of wild
+Pokémon and fishing/Surf odds, instead of the mix the base game shipped
+with. Rock Smash rocks can also now give some species better odds than
+others at a location instead of always being a flat one-in-five, matching
+how Surf and fishing already worked.
+
+Fishing at a few of these spots also has a rare (1%) chance of hooking a
+Water-type starter instead of the usual fish — Mudkip at Ravaged Path,
+Totodile at the Oreburgh Gate's flooded lower floor, Piplup on Route 218,
+and Squirtle on Route 219 — evolved into its next stage on the Good Rod and
+fully evolved on the Super Rod.

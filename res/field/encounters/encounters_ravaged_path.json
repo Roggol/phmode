@@ -143,7 +143,7 @@
         }
     ],
     "old_rod_rate": 25,
-    "old_rod_slot_rates": [30, 30, 30, 10, 0],
+    "old_rod_slot_rates": [30, 30, 30, 9, 1],
     "old_rod_encounters": [
         {
             "level_max": 14,
@@ -166,13 +166,13 @@
             "species": "SPECIES_BARBOACH"
         },
         {
-            "level_max": 0,
-            "level_min": 0,
-            "species": "SPECIES_NONE"
+            "level_max": 3,
+            "level_min": 3,
+            "species": "SPECIES_MUDKIP"
         }
     ],
     "good_rod_rate": 50,
-    "good_rod_slot_rates": [55, 45, 0, 0, 0],
+    "good_rod_slot_rates": [55, 44, 1, 0, 0],
     "good_rod_encounters": [
         {
             "level_max": 25,
@@ -185,9 +185,9 @@
             "species": "SPECIES_BARBOACH"
         },
         {
-            "level_max": 0,
-            "level_min": 0,
-            "species": "SPECIES_NONE"
+            "level_max": 23,
+            "level_min": 23,
+            "species": "SPECIES_MARSHTOMP"
         },
         {
             "level_max": 0,
@@ -201,7 +201,7 @@
         }
     ],
     "super_rod_rate": 75,
-    "super_rod_slot_rates": [45, 45, 10, 0, 0],
+    "super_rod_slot_rates": [45, 45, 9, 1, 0],
     "super_rod_encounters": [
         {
             "level_max": 55,
@@ -219,9 +219,9 @@
             "species": "SPECIES_RELICANTH"
         },
         {
-            "level_max": 0,
-            "level_min": 0,
-            "species": "SPECIES_NONE"
+            "level_max": 50,
+            "level_min": 50,
+            "species": "SPECIES_SWAMPERT"
         },
         {
             "level_max": 0,

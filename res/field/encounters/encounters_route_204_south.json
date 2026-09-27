@@ -119,22 +119,22 @@
         {
             "level_max": 14,
             "level_min": 3,
-            "species": "SPECIES_GOLDEEN"
-        },
-        {
-            "level_max": 14,
-            "level_min": 3,
-            "species": "SPECIES_MAGIKARP"
-        },
-        {
-            "level_max": 14,
-            "level_min": 3,
-            "species": "SPECIES_FINNEON"
-        },
-        {
-            "level_max": 14,
-            "level_min": 3,
             "species": "SPECIES_POLIWAG"
+        },
+        {
+            "level_max": 14,
+            "level_min": 3,
+            "species": "SPECIES_STARYU"
+        },
+        {
+            "level_max": 14,
+            "level_min": 3,
+            "species": "SPECIES_WOOPER"
+        },
+        {
+            "level_max": 14,
+            "level_min": 3,
+            "species": "SPECIES_QWILFISH"
         },
         {
             "level_max": 0,
@@ -148,22 +148,22 @@
         {
             "level_max": 23,
             "level_min": 10,
-            "species": "SPECIES_GOLDEEN"
-        },
-        {
-            "level_max": 23,
-            "level_min": 10,
-            "species": "SPECIES_MAGIKARP"
-        },
-        {
-            "level_max": 23,
-            "level_min": 10,
-            "species": "SPECIES_FINNEON"
-        },
-        {
-            "level_max": 23,
-            "level_min": 10,
             "species": "SPECIES_POLIWAG"
+        },
+        {
+            "level_max": 23,
+            "level_min": 10,
+            "species": "SPECIES_STARYU"
+        },
+        {
+            "level_max": 23,
+            "level_min": 10,
+            "species": "SPECIES_WOOPER"
+        },
+        {
+            "level_max": 23,
+            "level_min": 10,
+            "species": "SPECIES_QWILFISH"
         },
         {
             "level_max": 0,
@@ -177,12 +177,12 @@
         {
             "level_max": 55,
             "level_min": 30,
-            "species": "SPECIES_GYARADOS"
+            "species": "SPECIES_POLIWHIRL"
         },
         {
             "level_max": 55,
             "level_min": 30,
-            "species": "SPECIES_SEAKING"
+            "species": "SPECIES_STARMIE"
         },
         {
             "level_max": 0,

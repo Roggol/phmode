@@ -2,61 +2,61 @@
     "land_rate": 30,
     "land_encounters": [
         {
+            "level": 6,
+            "species": "SPECIES_PONYTA"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_MAGBY"
+        },
+        {
+            "level": 6,
+            "species": "SPECIES_HOUNDOUR"
+        },
+        {
             "level": 7,
-            "species": "SPECIES_MACHOP"
-        },
-        {
-            "level": 5,
-            "species": "SPECIES_GEODUDE"
-        },
-        {
-            "level": 6,
             "species": "SPECIES_PONYTA"
         },
         {
-            "level": 5,
-            "species": "SPECIES_KRICKETOT"
-        },
-        {
-            "level": 5,
-            "species": "SPECIES_PONYTA"
+            "level": 3,
+            "species": "SPECIES_DODUO"
         },
         {
             "level": 6,
-            "species": "SPECIES_MACHOP"
+            "species": "SPECIES_DODUO"
         },
         {
             "level": 8,
-            "species": "SPECIES_MACHOP"
+            "species": "SPECIES_PONYTA"
+        },
+        {
+            "level": 9,
+            "species": "SPECIES_DODUO"
         },
         {
             "level": 6,
-            "species": "SPECIES_GEODUDE"
+            "species": "SPECIES_MAGBY"
         },
         {
             "level": 7,
-            "species": "SPECIES_PONYTA"
+            "species": "SPECIES_MAGBY"
         },
         {
-            "level": 7,
-            "species": "SPECIES_GEODUDE"
+            "level": 5,
+            "species": "SPECIES_CYNDAQUIL"
         },
         {
-            "level": 7,
-            "species": "SPECIES_PONYTA"
-        },
-        {
-            "level": 7,
-            "species": "SPECIES_GEODUDE"
+            "level": 5,
+            "species": "SPECIES_CHARMANDER"
         }
     ],
     "day": [
-        "SPECIES_PONYTA",
-        "SPECIES_MACHOP"
+        "SPECIES_GROWLITHE",
+        "SPECIES_PONYTA"
     ],
     "night": [
-        "SPECIES_KRICKETOT",
-        "SPECIES_ZUBAT"
+        "SPECIES_VULPIX",
+        "SPECIES_PONYTA"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

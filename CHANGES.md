@@ -3865,6 +3865,41 @@ Also fixed while implementing: Route 203's Ratata → **Rattata** (the actual
 species name; the doc's spelling doesn't exist in `generated/species.txt`
 and broke the build the first time through).
 
+### Wild encounter doc sync — Route 207 moves to Tier 1, rod tables gain starter bonus fish
+
+Follow-up pass after the Tier 1 sync above, prompted by further doc edits:
+
+* **Route 207** (`encounters_route_207.json`) moved from its old tier into
+  Tier 1 in `WILD_ENCOUNTERS.md` (it stays in its original tier in
+  `res/trainers/TRAINER_LOCATIONS.md` — that's a separate, trainer-only
+  tier system, unaffected by this). Its grass table was rewritten to match:
+  Ponyta 35%, Magby 28%, Doduo 25%, a Houndour/Growlithe/Vulpix time-of-day
+  swap at 10%, and Cyndaquil/Charmander at 1% each. The doc originally only
+  listed 5 of these 6 species (summing to 75%, and marked `todo`) — Doduo was
+  missing; the user supplied it (Lv. 3-9, 25%) to complete the table.
+* **Route 203**, **Route 204 South**: Old/Good Rod species swapped from
+  Goldeen/Magikarp/Finneon/(Qwilfish or Poliwag) to Poliwag/Staryu/Wooper/
+  Qwilfish (still 30/30/30/10); Super Rod swapped from Gyarados/Seaking to
+  Poliwhirl/Starmie (55/45).
+  * **Ravaged Path**, **Oreburgh Gate B1F**, **Route 218**, **Route 219**:
+  each rod table gained a 1%-weighted "starter line" bonus encounter,
+  scaled to the rod's level range — Mudkip/Marshtomp/Swampert (Ravaged
+  Path), Totodile/Croconaw/Feraligatr (Oreburgh Gate B1F), Piplup/Prinplup/
+  Empoleon (Route 218), and Squirtle/Wartortle/Blastoise (Route 219). Each
+  existing 4th-place species (Barboach or Horsea) dropped from 10%/45% to
+  9%/44% to make room for the new 1% slot, keeping every table at 100%.
+* `WILD_ENCOUNTERS.md` itself needed a few corrections to match what got
+  implemented, per explicit instruction going forward: whenever an
+  implementation has to resolve or deviate from the doc's literal text, the
+  doc gets edited too so it never goes stale. This pass fixed: Twinleaf
+  Town's and Lake Verity's Good Rod Finneon (blank % → 30%, matching the
+  other 3 species) and Feebas ("10-25" → "10%"); Verity Lakefront's grass
+  table (Paras/Yanma/Spinarak varying by time of day at 1% → Yanma fixed at
+  1% for all three periods, since only the two swappable 10%-weighted slots
+  can ever change by time of day, never a 1% one); and Route 218's Good Rod
+  Horsea (10% → 9%, since 30+30+30+10+1 overshot 100 once Prinplup was
+  added — Old Rod already used the correct 9%).
+
 ### Map headers
 
 `include/data/map_headers.h`:
