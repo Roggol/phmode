@@ -84,11 +84,12 @@ packables.extend(convert_water(data['surf_encounters']))
 # phmode: Rock Smash encounters. This used to be a padded-out "unused" water
 # table; most maps still have neither key, so default to a rate of 0 (no
 # encounter, ever) and 5 empty slots - the same all-zero bytes pad(44) wrote.
-# Rock Smash always rolls a flat 20% per slot (see GetRockSmashEncounterSlot)
-# regardless of slotRates, so there is no 'rock_smash_slot_rates' JSON key.
+# Rock Smash rolls a flat uniform 20% per slot by default, same as the water/rod
+# tables' hardcoded odds, unless 'rock_smash_slot_rates' overrides it (see
+# GetRockSmashEncounterSlot).
 NO_ROCK_SMASH_ENCOUNTERS = [{'level_min': 0, 'level_max': 0, 'species': 'SPECIES_NONE'}] * 5
 packables.extend(u32(data.get('rock_smash_rate', 0)))
-packables.extend(convert_water_slot_rates(NO_SLOT_RATES))
+packables.extend(convert_water_slot_rates(data.get('rock_smash_slot_rates', NO_SLOT_RATES)))
 packables.extend(convert_water(data.get('rock_smash_encounters', NO_ROCK_SMASH_ENCOUNTERS)))
 
 for rod in ['old', 'good', 'super']:

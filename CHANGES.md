@@ -2381,6 +2381,12 @@ Base Rotom stays Electric / Ghost.
 * Learnset: also knows **Spacial Rend**, **Roar of Time** and **Shadow Force**
   from the start (added at level 1).
 
+### Chinchou
+* Ability slot 2: Illuminate → **none**. Volt Absorb is now its only ability.
+
+### Lanturn
+* Ability slot 2: Illuminate → **none**. Volt Absorb is now its only ability.
+
 ---
 
 ## Level cap (`5c436cf12`)
@@ -3752,9 +3758,9 @@ table can specify its own 5 slot percentages instead.
   an optional `surf_slot_rates` / `old_rod_slot_rates` / `good_rod_slot_rates`
   / `super_rod_slot_rates` JSON key (5 integers, meant to sum to 100) ahead of
   each table's encounters; maps without the key default to `[0, 0, 0, 0, 0]`,
-  so every existing encounter JSON keeps packing identically. Rock Smash has
-  no such key — it always rolls a flat uniform 20% per slot regardless
-  (`GetRockSmashEncounterSlot`), so it's unaffected.
+  so every existing encounter JSON keeps packing identically. (Rock Smash
+  originally had no such key — see the follow-up entry below, where it gained
+  one too.)
 * `src/overlay006/wild_encounters.c` — new `HasCustomSlotRates()` and
   `GetSlotFromCustomRates()` (a cumulative-threshold roll against the
   location's `slotRates`); `GetWaterEncounterSlot()` and
@@ -3799,6 +3805,65 @@ in the doc:
   fixed at exactly 20% combined, matching Day's Taillow and Night's Hoothoot,
   so this was implemented as 20% (treated as a doc typo, not changed in the
   doc itself).
+
+### Per-location custom Rock Smash slot rates (extends the mechanic above)
+
+Rock Smash always rolled a flat, uniform 20% per slot
+(`GetRockSmashEncounterSlot` = `LCRNG_RandMod(5)`), with no weighting concept
+at all — unlike Surf/Old Rod/Good Rod/Super Rod, which gained per-location
+custom weights in the entry above. Once `WILD_ENCOUNTERS.md`'s Rock Smash
+tables turned out to want non-uniform splits everywhere (e.g. Ravaged Path:
+Geodude 60%/Nosepass 30%/Machop 9%/Shuckle 1%), Rock Smash got the same
+opt-in override:
+
+* `src/overlay006/wild_encounters.c` — `GetRockSmashEncounterSlot()` now takes
+  a `slotRates` pointer and checks `HasCustomSlotRates()` first, falling back
+  to the original uniform `LCRNG_RandMod(MAX_WATER_ENCOUNTERS)` roll when it's
+  all-zero, exactly mirroring `GetWaterEncounterSlot`/`GetRodEncounterSlot`.
+  `WildEncounters_TryRockSmashEncounter` passes
+  `encounterData->rockSmashEncounters.slotRates` through. No struct changes
+  were needed — `rockSmashEncounters` is already a `WaterEncounters`, which
+  already carries the `slotRates` field.
+* `tools/jsoncnv/encounter.py` — Rock Smash now reads an optional
+  `rock_smash_slot_rates` JSON key the same way the water/rod tables do,
+  instead of always packing `NO_SLOT_RATES`.
+
+### Wild encounter doc sync — Tier 1 locations
+
+Continuing the doc-sync workflow above, every Tier 1 location in
+`WILD_ENCOUNTERS.md` (Twinleaf Town and Route 201 were already synced; this
+covers the rest: Verity Lakefront, Lake Verity, Lake Verity Low Water, Route
+202, Route 203, Route 204 South, Ravaged Path, Oreburgh Gate 1F/B1F, Oreburgh
+Mine B1F/B2F, Route 218, Route 219) was rewritten from scratch to match the
+doc's species, levels, and percentages. Land-table percentages that need to
+vary by time of day are realized by placing the varying species in the two
+slots `WildEncounters_ReplaceTimedEncounters` overwrites (worth 10% each,
+20% combined) and everything else across the remaining ten fixed-weight
+slots — occasionally splitting one species across several slots to hit an
+odd total (e.g. Route 202's Pachirisu occupies one ordinary 10% slot plus one
+of the two time-slots, since it doesn't actually change across Morning/Day/
+Night). A quirk worth noting for future syncs: a Day/Night species swap only
+overrides which species occupies a slot, not that slot's level range (see
+`WildEncounters_ReplaceTimedEncounters`), so the swapped-in species always
+shows the *original* slot's level — Route 203's Zubat/Hoothoot (Night) had to
+share a level with whatever Ratata slot they replaced.
+
+A few doc issues were caught and resolved with the user before implementing,
+rather than guessed at:
+* **Verity Lakefront** listed Paras/Yanma/Spinarak all at 1%, varying by time
+  of day — impossible, since only the two 10%-weighted slots can ever vary
+  and a 1% slot can't be one of them. Resolved: Yanma fixed at 1% across all
+  three periods.
+* **Route 218**'s Old Rod and Good Rod both summed to only 95% (Horsea at
+  5%, everything else at 30%). Resolved: Horsea bumped to 10% on both,
+  and Good Rod's Horsea corrected to Lv. 10-23 (it had been copy-pasted at
+  Old Rod's Lv. 3-14).
+* **Route 218**'s Mawile (grass, 1%) and **Ravaged Path**'s Relicanth (Surf,
+  10%) were both missing a level — set to Lv. 36 for both per the user.
+
+Also fixed while implementing: Route 203's Ratata → **Rattata** (the actual
+species name; the doc's spelling doesn't exist in `generated/species.txt`
+and broke the build the first time through).
 
 ### Map headers
 

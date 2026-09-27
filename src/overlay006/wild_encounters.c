@@ -101,7 +101,7 @@ static void InitEncounterFieldParams(FieldSystem *fieldSystem, Pokemon *firstPar
 static void ModifyEncounterRateWithHeldItem(Pokemon *param0, u8 *param1);
 static void ModifyEncounterRateWithFlute(FieldSystem *fieldSystem, u8 *param1);
 static u8 GetWildMonLevel(const EncounterSlot *slot, const WildEncounters_FieldParams *encounterFieldParams);
-static u8 GetRockSmashEncounterSlot(void);
+static u8 GetRockSmashEncounterSlot(const u8 *slotRates);
 
 static const u8 UnownMostForms[] = {
     UNOWN_FORM_A,
@@ -416,8 +416,9 @@ BOOL WildEncounters_TryFishingEncounter(FieldSystem *fieldSystem, enum Encounter
 }
 
 // phmode: Rock Smash encounters. Each smash has a flat rockSmashEncounters.encounterRate
-// (%) chance of triggering a battle at all; if it does, the species is a uniform pick
-// among the 5 slots (unlike the weighted grass/water tables) via GetRockSmashEncounterSlot.
+// (%) chance of triggering a battle at all; if it does, the species slot is picked via
+// GetRockSmashEncounterSlot - a per-location custom weighting if rockSmashEncounters.slotRates
+// is set (see HasCustomSlotRates), otherwise a uniform pick among the 5 slots.
 // Species/level are handed back so the caller can start the battle with the existing
 // StartWildBattle script command (Encounter_NewVsSpeciesAtLevel / CreateWildMon_Scripted),
 // same as any other scripted single-species encounter.
@@ -431,7 +432,7 @@ BOOL WildEncounters_TryRockSmashEncounter(FieldSystem *fieldSystem, u16 *species
         return FALSE;
     }
 
-    u8 slotIdx = GetRockSmashEncounterSlot();
+    u8 slotIdx = GetRockSmashEncounterSlot(encounterData->rockSmashEncounters.slotRates);
     EncounterSlot slot;
     slot.species = rockSmashEncounters[slotIdx].species;
     slot.maxLevel = rockSmashEncounters[slotIdx].maxLevel;
@@ -928,8 +929,12 @@ static u8 GetRodEncounterSlot(const int fishingRodType, const u8 *slotRates)
 
 // phmode: unlike the other water tables (which use fixed weighted slot odds),
 // Rock Smash's 5 slots are a flat, uniform 20% each.
-static u8 GetRockSmashEncounterSlot(void)
+static u8 GetRockSmashEncounterSlot(const u8 *slotRates)
 {
+    if (HasCustomSlotRates(slotRates)) {
+        return GetSlotFromCustomRates(slotRates);
+    }
+
     return (u8)LCRNG_RandMod(MAX_WATER_ENCOUNTERS);
 }
 

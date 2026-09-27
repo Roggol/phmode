@@ -13,108 +13,131 @@ Not covered: the Battle Frontier, Turnback Cave, Stark Mountain, Snowpoint Templ
 ## Tier 1 — cap 14
 
 ### Twinleaf Town
+Fish and water creatures gather at the small lake.
 - **Surf**: Psyduck (Lv. 20-30, 30%), Golduck (Lv. 20-40, 20%), Mantyke (Lv. 20-30, 30%), Mantyne (Lv. 20-40, 20%)
 - **Old Rod**: Magikarp (Lv. 3-12, 30%), (Goldeen Lv.3-12, 30%), (finneon Lv. 3-12 30%), (feebas Lv. 3-12 10%)
 - **Good Rod**: Magikarp (Lv. 10-23, 30%), goldeen (Lv. 10-23, 30%), (finneon Lv. 10-23), (feebas Lv. 10-23 10-25)
 - **Super Rod**: Gyarados (Lv. 80, 30%), Seaking (Lv. 80, 30%), Lumineon (Lv 80, 30%), (Milotic Lv 80, 10%)
 
 ### Route 201
+Local fauna find this an ideal habitat.
 - **Grass/Land**:
-  - *Morning*: Starly (Lv. 2-3, 40%), Bidoof (Lv. 2-3, 38%), Pidgey (Lv. 3, 30%), Bulbasaur (Lv. 3, 1%), Chikorita (Lv. 3, 1%)
+  - *Morning*: Starly (Lv. 2-3, 40%), Bidoof (Lv. 2-3, 38%), Pidgey (Lv. 3, 20%), Bulbasaur (Lv. 3, 1%), Chikorita (Lv. 3, 1%)
   - *Day*: Starly (Lv. 2-3, 40%), Bidoof (Lv. 2-3, 38%), Tailow (Lv. 3, 20%), Bulbasaur (Lv. 3, 1%), Chikorita (Lv. 3, 1%)
   - *Night*:  Starly (Lv. 2-3, 40%), Bidoof (Lv. 2-3, 38%), Hoothoot (Lv. 3, 20%), Bulbasaur (Lv. 3, 1%), Chikorita (Lv. 3, 1%)
 
 ### Verity Lakefront
-- **Grass/Land**: Honchkrow (Lv. 50, 24%), Glalie (Lv. 50, 24%), Gallade (Lv. 50, 11%), Drifblim (Lv. 50, 10%), Kecleon (Lv. 50, 10%), Cacturne (Lv. 50, 10%), Grumpig (Lv. 50, 6%), Toxicroak (Lv. 50, 5%)
+Forest bugs like to gather here.
+- **Grass/Land**:
+  - *Morning*: Caterpie (Lv. 2-3, 40%), Weedle (Lv. 2-3, 38%), Wurmple (Lv. 3, 20%), paras (Lv. 3, 1%), Pineco (Lv. 3, 1%)
+  - *Day*: Caterpie (Lv. 2-3, 40%), Weedle (Lv. 2-3, 38%), Burmy (Lv. 3, 20%), Yanma (Lv. 3, 1%), Pineco (Lv. 3, 1%)
+  - *Night*:  Caterpie (Lv. 2-3, 40%), Weedle (Lv. 2-3, 38%), Kricketot (Lv. 3, 20%), Spinarak (Lv. 3, 1%), Pineco (Lv. 3, 1%)
 
 ### Lake Verity
 
 #### Lake Verity
-- **Grass/Land**: Starly (Lv. 2-4, 50%), Bidoof (Lv. 2-4, 50%)
-- **Surf**: Psyduck (Lv. 20-30, 90%), Golduck (Lv. 20-40, 10%)
-- **Old Rod**: Magikarp (Lv. 3-15, 100%)
-- **Good Rod**: Magikarp (Lv. 10-25, 55%), Goldeen (Lv. 15-20, 40%), Seaking (Lv. 25-35, 5%)
-- **Super Rod**: Gyarados (Lv. 30-55, 55%), Seaking (Lv. 30-55, 45%)
+The still water of the lake makes it an ideal habitat for bugs
+- **Grass/Land**:
+  - *Morning*: Surskit (Lv. 2-3, 40%), yanma (Lv. 2-3, 38%), ledyba (Lv. 3, 20%), Scyther (Lv. 3, 1%), Pinsir (Lv. 3, 1%)
+  - *Day*: Surskit (Lv. 2-3, 40%), yanma (Lv. 2-3, 38%), Burmy (Lv. 3, 20%), Scyther (Lv. 3, 1%), Pinsir (Lv. 3, 1%)
+  - *Night*:  Surskit (Lv. 2-3, 40%), yanma (Lv. 2-3, 38%), Venonat (Lv. 3, 20%), Scyther (Lv. 3, 1%), Pinsir (Lv. 3, 1%)
+- **Surf**: Surskit (Lv. 20-30, 60%), psyduck (Lv. 20-30, 40%)
+- **Old Rod**: Magikarp (Lv. 3-12, 30%), (Goldeen Lv.3-12, 30%), (finneon Lv. 3-12 30%), (feebas Lv. 3-12 10%)
+- **Good Rod**: Magikarp (Lv. 10-23, 30%), goldeen (Lv. 10-23, 30%), (finneon Lv. 10-23), (feebas Lv. 10-23 10-25)
+- **Super Rod**: Gyarados (Lv. 80, 30%), Seaking (Lv. 80, 30%), Lumineon (Lv 80, 30%), (Milotic Lv 80, 10%)
 
 #### Low Water
+The still water of the lake makes it an ideal habitat for bugs
 - **Grass/Land**:
-  - *Morning/Day*: Starly (Lv. 2-4, 50%), Bidoof (Lv. 2-4, 50%)
-  - *Night*: Bidoof (Lv. 2-4, 60%), Starly (Lv. 2-4, 40%)
-- **Surf**: Psyduck (Lv. 20-30, 90%), Golduck (Lv. 20-40, 10%)
-- **Old Rod**: Magikarp (Lv. 3-15, 100%)
-- **Good Rod**: Magikarp (Lv. 10-25, 55%), Goldeen (Lv. 15-20, 40%), Seaking (Lv. 25-35, 5%)
-- **Super Rod**: Gyarados (Lv. 30-55, 55%), Seaking (Lv. 30-55, 45%)
+  - *Morning*: Surskit (Lv. 2-3, 40%), yanma (Lv. 2-3, 38%), ledyba (Lv. 3, 20%), Scyther (Lv. 3, 1%), Pinsir (Lv. 3, 1%)
+  - *Day*: Surskit (Lv. 2-3, 40%), yanma (Lv. 2-3, 38%), Burmy (Lv. 3, 20%), Scyther (Lv. 3, 1%), Pinsir (Lv. 3, 1%)
+  - *Night*:  Surskit (Lv. 2-3, 40%), yanma (Lv. 2-3, 38%), Venonat (Lv. 3, 20%), Scyther (Lv. 3, 1%), Pinsir (Lv. 3, 1%)
+- **Surf**: Surskit (Lv. 20-30, 60%), psyduck (Lv. 20-30, 40%)
+- **Old Rod**: Magikarp (Lv. 3-12, 30%), (Goldeen Lv.3-12, 30%), (finneon Lv. 3-12 30%), (feebas Lv. 3-12 10%)
+- **Good Rod**: Magikarp (Lv. 10-23, 30%), goldeen (Lv. 10-23, 30%), (finneon Lv. 10-23), (feebas Lv. 10-23 10-25)
+- **Super Rod**: Gyarados (Lv. 80, 30%), Seaking (Lv. 80, 30%), Lumineon (Lv 80, 30%), (Milotic Lv 80, 10%)
+
 
 ### Route 202
+It's thought that strong magnetic forces from the lab attract electric type pokemon here.
 - **Grass/Land**:
-  - *Morning*: Bidoof (Lv. 2-4, 40%), Shinx (Lv. 3-4, 30%), Starly (Lv. 2-4, 20%), Kricketot (Lv. 3, 10%)
-  - *Day*: Bidoof (Lv. 2-4, 50%), Shinx (Lv. 3-4, 30%), Starly (Lv. 2-4, 20%)
-  - *Night*: Bidoof (Lv. 2-4, 50%), Shinx (Lv. 3-4, 30%), Kricketot (Lv. 4, 10%), Starly (Lv. 2-4, 10%)
+  - *Morning*: Shinx (Lv. 2-4, 38%), Electrike (Lv. 3-4, 30%), Pachurisu (Lv. 2-4, 20%), Houndour (Lv. 3, 10%), Treecko (Lv. 3, 1%), Turtwig (Lv. 3, 1%)
+  - *Day*: Shinx (Lv. 2-4, 38%), Electrike (Lv. 3-4, 30%), Pachurisu (Lv. 2-4, 20%), Growlithe (Lv. 3, 10%), Treecko (Lv. 3, 1%), Turtwig (Lv. 3, 1%)
+  - *Night*: Shinx (Lv. 2-4, 38%), Electrike (Lv. 3-4, 30%), Pachurisu (Lv. 2-4, 20%), Vulpix (Lv. 3, 10%), Treecko (Lv. 3, 1%), Turtwig (Lv. 3, 1%)
 
 ### Route 203
+Zubats from Oreburgh gate fly around at night and are hunted by the Hoothoot. Ratata from the city congregate here.
 - **Grass/Land**:
-  - *Morning*: Starly (Lv. 4-7, 35%), Shinx (Lv. 4-5, 25%), Bidoof (Lv. 5-7, 15%), Abra (Lv. 4-5, 15%), Kricketot (Lv. 4, 10%)
-  - *Day*: Starly (Lv. 4-7, 35%), Shinx (Lv. 4-5, 25%), Bidoof (Lv. 4-7, 25%), Abra (Lv. 4-5, 15%)
-  - *Night*: Starly (Lv. 4-7, 25%), Shinx (Lv. 4-5, 25%), Bidoof (Lv. 5-7, 15%), Abra (Lv. 4-5, 15%), Kricketot (Lv. 5, 10%), Zubat (Lv. 4, 10%)
-- **Surf**: Psyduck (Lv. 20-30, 90%), Golduck (Lv. 20-40, 10%)
-- **Old Rod**: Magikarp (Lv. 3-15, 100%)
-- **Good Rod**: Magikarp (Lv. 10-25, 55%), Goldeen (Lv. 10-25, 45%)
+  - *Morning*: Ratata (Lv. 4-7, 40%), Sentret (Lv. 4-5, 20%), Poochyena (Lv. 4-5, 20%), Zigzagoon (Lv. 4, 20%)
+  - *Day*: Ratata (Lv. 4-7, 40%), Sentret (Lv. 4-5, 20%), Poochyena (Lv. 4-5, 20%), Zigzagoon (Lv. 4, 20%)
+  - *Night*: Ratata (Lv. 4-7, 20%), Sentret (Lv. 4-5, 20%), Poochyena (Lv. 4-5, 20%), Zigzagoon (Lv. 4, 20%), Zubat (Lv. 4, 10%), Hoothoot (Lv. 4, 10%),
+- **Surf**: Psyduck (Lv. 20-30, 40%), Slowpoke (Lv. 20-30, 30%), Staryu (Lv. 20-30, 30%)
+- **Old Rod**: Goldeen (Lv. 3-14, 30%), Magikarp (Lv. 3-14, 30%), Finneon (Lv. 3-14, 30%), Qwilfish (Lv. 3-14, 10%)
+- **Good Rod**: Goldeen (Lv. 10-23, 30%), Magikarp (Lv. 10-23, 30%), Finneon (Lv. 10-23, 30%), Qwilfish (Lv. 10-23, 10%)
 - **Super Rod**: Gyarados (Lv. 30-55, 55%), Seaking (Lv. 30-55, 45%)
 
 ### Route 204 South
+Catlike pokemon have lowered the local starly population.
 - **Grass/Land**:
-  - *Morning*: Starly (Lv. 4-6, 25%), Bidoof (Lv. 4-6, 25%), Budew (Lv. 4-5, 15%), Shinx (Lv. 4-5, 15%), Wurmple (Lv. 4, 10%), Kricketot (Lv. 3, 10%)
-  - *Day*: Starly (Lv. 4-6, 25%), Bidoof (Lv. 4-6, 25%), Budew (Lv. 3-5, 25%), Shinx (Lv. 4-5, 15%), Wurmple (Lv. 4, 10%)
-  - *Night*: Starly (Lv. 4-6, 25%), Bidoof (Lv. 4-6, 25%), Budew (Lv. 4-5, 15%), Shinx (Lv. 4-5, 15%), Kricketot (Lv. 4, 10%), Zubat (Lv. 3, 10%)
-- **Surf**: Psyduck (Lv. 20-30, 90%), Golduck (Lv. 20-40, 10%)
-- **Old Rod**: Magikarp (Lv. 3-15, 100%)
-- **Good Rod**: Magikarp (Lv. 10-25, 55%), Goldeen (Lv. 10-25, 45%)
+  - *Morning*: Skitty (Lv. 4-6, 25%), Meowth (Lv. 4-6, 25%), Glameow (Lv. 4-5, 15%), Shinx (Lv. 4-5, 15%), Snubbull (Lv. 4, 10%), Starly (Lv. 3, 10%)
+  - *Day*: Skitty (Lv. 4-6, 25%), Meowth (Lv. 4-6, 25%), Glameow (Lv. 4-5, 15%), Shinx (Lv. 4-5, 15%), Snubbull (Lv. 4, 10%), Starly (Lv. 3, 10%)
+  - *Night*: Skitty (Lv. 4-6, 25%), Meowth (Lv. 4-6, 25%), Glameow (Lv. 4-5, 15%), Shinx (Lv. 4-5, 15%), Snubbull (Lv. 4, 10%), Starly (Lv. 3, 10%)
+- **Surf**: Psyduck (Lv. 20-30, 40%), Slowpoke (Lv. 20-30, 30%), Staryu (Lv. 20-30, 30%)
+- **Old Rod**: Goldeen (Lv. 3-14, 30%), Magikarp (Lv. 3-14, 30%), Finneon (Lv. 3-14, 30%), Poliwag (Lv. 3-14, 10%)
+- **Good Rod**: Goldeen (Lv. 10-23, 30%), Magikarp (Lv. 10-23, 30%), Finneon (Lv. 10-23, 30%), Poliwag (Lv. 10-23, 10%)
 - **Super Rod**: Gyarados (Lv. 30-55, 55%), Seaking (Lv. 30-55, 45%)
 
 ### Ravaged Path
-- **Grass/Land**: Zubat (Lv. 3-6, 65%), Psyduck (Lv. 4-6, 35%)
-- **Surf**: Psyduck (Lv. 20-30, 60%), Zubat (Lv. 20-30, 30%), Golduck (Lv. 20-40, 5%), Golbat (Lv. 20-40, 5%)
-- **Rock Smash**: Geodude (Lv. 3-6, 100%)
-- **Old Rod**: Magikarp (Lv. 3-15, 100%)
+The damp cave is an ideal habitat for all sorts of cave dwelling pokemon.
+- **Grass/Land**: Zubat (Lv. 3-6, 35%), Psyduck (Lv. 4-6, 30%), Geodude(Lv.3-7, 20%), Whismur(Lv. 3-8, 10%), Cubone(Lv. 12, 5%)
+- **Surf**: Slowpoke (Lv. 20-30, 60%), Zubat (Lv. 20-30, 30%), Relicanth (10%)
+- **Rock Smash**: Geodude (Lv. 3-6, 60%), Nosepass (Lv. 3-6, 30%), Machop (Lv. 3-6, 9%), (Shuckle, Lv. 3-6, 1%)
+- **Old Rod**: Goldeen (Lv. 3-14, 30%), Magikarp (Lv. 3-14, 30%), Finneon (Lv. 3-14, 30%), Barboach (Lv 3-14, 10%)
 - **Good Rod**: Magikarp (Lv. 10-25, 55%), Barboach (Lv. 10-25, 45%)
-- **Super Rod**: Gyarados (Lv. 30-55, 55%), Whiscash (Lv. 30-55, 45%)
+- **Super Rod**: Gyarados (Lv. 30-55, 45%), Whiscash (Lv. 30-55, 45%), Relicanth (Lv. 40, 10%)
 
 ### Oreburgh Gate
 
 #### 1F
-- **Grass/Land**: Zubat (Lv. 5-8, 50%), Psyduck (Lv. 5-7, 35%), Geodude (Lv. 5-7, 15%)
-- **Rock Smash**: Geodude (Lv. 5-8, 100%)
+There's a large population of Zubats in this cave.
+- **Grass/Land**: Zubat (Lv. 5-8, 50%), Geodude (Lv. 5-7, 30%), Whismur (Lv. 5-7, 20%)
+- **Rock Smash**: Geodude (Lv. 5-8, 89%), Nosepass (Lv. 5-8, 10%), Shuckle (Lv. 8, 1%)
 
 #### B1F
-- **Grass/Land**: Zubat (Lv. 6-9, 45%), Psyduck (Lv. 8-10, 35%), Geodude (Lv. 6-8, 15%), Golbat (Lv. 10, 5%)
-- **Surf**: Psyduck (Lv. 20-30, 60%), Zubat (Lv. 20-30, 30%), Golduck (Lv. 20-40, 5%), Golbat (Lv. 20-40, 5%)
-- **Rock Smash**: Geodude (Lv. 6-10, 100%)
-- **Old Rod**: Magikarp (Lv. 3-15, 100%)
-- **Good Rod**: Magikarp (Lv. 10-25, 55%), Barboach (Lv. 10-25, 45%)
-- **Super Rod**: Gyarados (Lv. 30-55, 55%), Whiscash (Lv. 30-55, 45%)
+The wet underground layer is home to many cave dwellers and fish.
+- **Grass/Land**: Zubat (Lv. 6-9, 45%), Psyduck (Lv. 8-10, 35%), Geodude (Lv. 6-8, 15%), Teddiursa (Lv. 10, 5%)
+- **Surf**: Slowpoke (Lv. 20-30, 60%), Zubat (Lv. 20-30, 35%), Lapras(Lv. 36, 5%)
+- **Rock Smash**: Geodude (Lv. 5-8, 89%), Nosepass (Lv. 5-8, 10%), Shuckle (Lv. 8, 1%)
+- **Old Rod**: Goldeen (Lv. 3-14, 30%), Magikarp (Lv. 3-14, 30%), Finneon (Lv. 3-14, 30%), Barboach (Lv 3-14, 10%)
+- **Good Rod**: Goldeen (Lv. 10-23, 30%), Magikarp (Lv. 10-23, 30%), Finneon (Lv. 10-23, 30%), Barboach (Lv 10-23, 10%)
+- **Super Rod**: Gyarados (Lv. 30-55, 45%), Whiscash (Lv. 30-55, 45%), Relicanth (Lv. 40, 10%)
 
 ### Oreburgh Mine
 
 #### B1F
-- **Grass/Land**: Geodude (Lv. 4-8, 65%), Zubat (Lv. 5-7, 25%), Onix (Lv. 6-8, 10%)
+The machops are hard at work in this mine
+- **Grass/Land**:Zubat (Lv. 5-7, 45%), Geodude (Lv. 4-8, 25%), Onix (Lv. 6-8, 10%), Machop (Lv. 6-9, 10%), Rhyhorn(Lv. 13, 10%)
 
 #### B2F
-- **Grass/Land**: Geodude (Lv. 5-9, 65%), Zubat (Lv. 6-8, 25%), Onix (Lv. 7-9, 10%)
-- **Rock Smash**: Geodude (Lv. 5-9, 100%)
+The machops are hard at work in this mine.
+- **Grass/Land**: Geodude (Lv. 4-8, 45%), Zubat (Lv. 5-7, 25%), Onix (Lv. 6-8, 10%), Machop (Lv. 6-9, 10%), Rhyhorn(Lv. 13, 10%)
+- **Rock Smash**: Geodude (Lv. 5-9, 49%), Machop(Lv. 5-9, 30%), Onix (Lv. 6-8, 20%), Shuckle (Lv. 8, 1%)
 
 ### Route 218
+Harbour conditions are ideal for small crustaceans.
 - **Grass/Land**:
-  - *Morning/Day*: Floatzel (Lv. 29-31, 30%), Gastrodon (Lv. 28-30, 25%), Mr. Mime (Lv. 29-31, 25%), Chatot (Lv. 28-30, 20%)
-  - *Night*: Floatzel (Lv. 29-31, 40%), Gastrodon (Lv. 28-30, 35%), Mr. Mime (Lv. 29-31, 25%)
-- **Surf**: Tentacool (Lv. 20-30, 60%), Shellos (Lv. 20-30, 30%), Tentacruel (Lv. 20-40, 9%), Gastrodon (Lv. 20-40, 1%)
-- **Old Rod**: Magikarp (Lv. 3-15, 100%)
-- **Good Rod**: Magikarp (Lv. 10-25, 55%), Finneon (Lv. 10-25, 45%)
+  - *Morning/Day*: Pelipper (Lv. 29-31, 50%), Floatzel (Lv. 29-31, 28%), Chatot (Lv. 28-30, 20%), Swablu (Lv. 36, 1%), Mawile (1%)
+  - *Night*: *Morning/Day*: Pelipper (Lv. 29-31, 50%), Floatzel (Lv. 29-31, 28%), Kingler (Lv. 28-30, 20%), Swablu (Lv. 36, 1%), Mawile (1%)
+- **Surf**: Tentacool (Lv. 20-30, 60%), wingull (Lv. 20-30, 30%), Tentacruel (Lv. 20-40, 9%), Gastrodon (Lv. 20-40, 1%)
+- **Old Rod**: Clamperl (Lv. 3-14, 30%), krabby (Lv. 3-14, 30%), Corphish (Lv. 3-14, 30%), Horsea (Lv. 3-14, 5%)
+- **Good Rod**: Clamperl (Lv. 10-23, 30%), krabby (Lv. 10-23, 30%), Corphish (Lv. 10-23, 30%), Horsea (Lv. 3-14, 5%)
 - **Super Rod**: Gyarados (Lv. 30-55, 55%), Lumineon (Lv. 30-55, 45%)
 
 ### Route 219
-- **Surf**: Tentacool (Lv. 20-30, 60%), Wingull (Lv. 20-30, 30%), Tentacruel (Lv. 20-40, 9%), Pelipper (Lv. 20-40, 1%)
-- **Old Rod**: Magikarp (Lv. 3-15, 100%)
-- **Good Rod**: Magikarp (Lv. 10-25, 55%), Finneon (Lv. 15-20, 40%), Lumineon (Lv. 25-35, 5%)
+The open ocean is home to many deep water species.
+- **Surf**: Tentacool (Lv. 20-30, 60%), Wingull (Lv. 20-30, 30%), Staryu (Lv. 20-40, 9%), Carvanha (Lv. 20-40, 1%)
+- **Old Rod**: Remoraid (Lv. 3-14, 40%), Mantyke (Lv. 3-14, 30%), Tentacool (Lv. 3-14, 20%), Carvanha (Lv. 3-14, 10%)
+- **Good Rod**: Remoraid (Lv. 10-23, 40%), Mantyke (Lv. 10-23, 30%), Tentacool (Lv. 10-23, 20%), Carvanha (Lv. 10-23, 10%)
 - **Super Rod**: Gyarados (Lv. 30-55, 55%), Lumineon (Lv. 30-55, 45%)
 
 ## Tier 2 — cap 23

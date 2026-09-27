@@ -3,18 +3,10 @@
     "land_encounters": [
         {
             "level": 5,
-            "species": "SPECIES_GEODUDE"
-        },
-        {
-            "level": 6,
-            "species": "SPECIES_GEODUDE"
-        },
-        {
-            "level": 5,
             "species": "SPECIES_ZUBAT"
         },
         {
-            "level": 6,
+            "level": 7,
             "species": "SPECIES_ZUBAT"
         },
         {
@@ -22,41 +14,49 @@
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level": 7,
+            "level": 8,
             "species": "SPECIES_GEODUDE"
+        },
+        {
+            "level": 7,
+            "species": "SPECIES_ONIX"
+        },
+        {
+            "level": 8,
+            "species": "SPECIES_MACHOP"
         },
         {
             "level": 6,
-            "species": "SPECIES_ONIX"
-        },
-        {
-            "level": 8,
-            "species": "SPECIES_ONIX"
-        },
-        {
-            "level": 8,
-            "species": "SPECIES_GEODUDE"
-        },
-        {
-            "level": 7,
             "species": "SPECIES_ZUBAT"
         },
         {
-            "level": 8,
+            "level": 13,
+            "species": "SPECIES_RHYHORN"
+        },
+        {
+            "level": 6,
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level": 7,
-            "species": "SPECIES_ZUBAT"
+            "level": 13,
+            "species": "SPECIES_RHYHORN"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_GEODUDE"
+        },
+        {
+            "level": 13,
+            "species": "SPECIES_RHYHORN"
         }
     ],
     "day": [
-        "SPECIES_ZUBAT",
-        "SPECIES_ZUBAT"
+        "SPECIES_GEODUDE",
+        "SPECIES_GEODUDE"
     ],
     "night": [
-        "SPECIES_ZUBAT",
-        "SPECIES_ZUBAT"
+        "SPECIES_GEODUDE",
+        "SPECIES_GEODUDE"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

@@ -2,61 +2,61 @@
     "land_rate": 90,
     "land_encounters": [
         {
-            "level": 50,
-            "species": "SPECIES_HONCHKROW"
+            "level": 2,
+            "species": "SPECIES_CATERPIE"
         },
         {
-            "level": 50,
-            "species": "SPECIES_GLALIE"
+            "level": 3,
+            "species": "SPECIES_CATERPIE"
         },
         {
-            "level": 50,
-            "species": "SPECIES_DRIFBLIM"
+            "level": 3,
+            "species": "SPECIES_WURMPLE"
         },
         {
-            "level": 50,
-            "species": "SPECIES_KECLEON"
+            "level": 3,
+            "species": "SPECIES_WURMPLE"
         },
         {
-            "level": 50,
-            "species": "SPECIES_CACTURNE"
+            "level": 2,
+            "species": "SPECIES_WEEDLE"
         },
         {
-            "level": 50,
-            "species": "SPECIES_GALLADE"
+            "level": 3,
+            "species": "SPECIES_WEEDLE"
         },
         {
-            "level": 50,
-            "species": "SPECIES_GRUMPIG"
+            "level": 2,
+            "species": "SPECIES_WEEDLE"
         },
         {
-            "level": 50,
-            "species": "SPECIES_TOXICROAK"
+            "level": 3,
+            "species": "SPECIES_WEEDLE"
         },
         {
-            "level": 50,
-            "species": "SPECIES_HONCHKROW"
+            "level": 2,
+            "species": "SPECIES_WEEDLE"
         },
         {
-            "level": 50,
-            "species": "SPECIES_GLALIE"
+            "level": 3,
+            "species": "SPECIES_WEEDLE"
         },
         {
-            "level": 50,
-            "species": "SPECIES_GRUMPIG"
+            "level": 3,
+            "species": "SPECIES_YANMA"
         },
         {
-            "level": 50,
-            "species": "SPECIES_GALLADE"
+            "level": 3,
+            "species": "SPECIES_PINECO"
         }
     ],
     "day": [
-        "SPECIES_DRIFBLIM",
-        "SPECIES_KECLEON"
+        "SPECIES_BURMY",
+        "SPECIES_BURMY"
     ],
     "night": [
-        "SPECIES_DRIFBLIM",
-        "SPECIES_KECLEON"
+        "SPECIES_KRICKETOT",
+        "SPECIES_KRICKETOT"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

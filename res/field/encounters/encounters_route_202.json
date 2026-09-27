@@ -2,20 +2,40 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 3,
+            "level": 2,
             "species": "SPECIES_SHINX"
         },
         {
             "level": 3,
-            "species": "SPECIES_BIDOOF"
-        },
-        {
-            "level": 4,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_ELECTRIKE"
         },
         {
             "level": 3,
-            "species": "SPECIES_KRICKETOT"
+            "species": "SPECIES_HOUNDOUR"
+        },
+        {
+            "level": 2,
+            "species": "SPECIES_PACHIRISU"
+        },
+        {
+            "level": 3,
+            "species": "SPECIES_SHINX"
+        },
+        {
+            "level": 4,
+            "species": "SPECIES_PACHIRISU"
+        },
+        {
+            "level": 4,
+            "species": "SPECIES_ELECTRIKE"
+        },
+        {
+            "level": 4,
+            "species": "SPECIES_ELECTRIKE"
+        },
+        {
+            "level": 4,
+            "species": "SPECIES_SHINX"
         },
         {
             "level": 4,
@@ -23,40 +43,20 @@
         },
         {
             "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_TREECKO"
         },
         {
-            "level": 4,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 4,
-            "species": "SPECIES_BIDOOF"
-        },
-        {
-            "level": 2,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
-        },
-        {
-            "level": 2,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
+            "level": 3,
+            "species": "SPECIES_TURTWIG"
         }
     ],
     "day": [
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_GROWLITHE",
+        "SPECIES_PACHIRISU"
     ],
     "night": [
-        "SPECIES_KRICKETOT",
-        "SPECIES_BIDOOF"
+        "SPECIES_VULPIX",
+        "SPECIES_PACHIRISU"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

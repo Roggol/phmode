@@ -2,52 +2,52 @@
     "land_rate": 10,
     "land_encounters": [
         {
-            "level": 6,
+            "level": 4,
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level": 7,
+            "level": 8,
             "species": "SPECIES_GEODUDE"
-        },
-        {
-            "level": 6,
-            "species": "SPECIES_ZUBAT"
-        },
-        {
-            "level": 7,
-            "species": "SPECIES_ZUBAT"
         },
         {
             "level": 5,
-            "species": "SPECIES_GEODUDE"
+            "species": "SPECIES_ZUBAT"
         },
         {
-            "level": 8,
-            "species": "SPECIES_GEODUDE"
+            "level": 7,
+            "species": "SPECIES_ZUBAT"
         },
         {
             "level": 7,
             "species": "SPECIES_ONIX"
         },
         {
-            "level": 9,
-            "species": "SPECIES_ONIX"
+            "level": 8,
+            "species": "SPECIES_MACHOP"
         },
         {
-            "level": 9,
+            "level": 6,
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level": 8,
+            "level": 13,
+            "species": "SPECIES_RHYHORN"
+        },
+        {
+            "level": 6,
             "species": "SPECIES_ZUBAT"
         },
         {
-            "level": 9,
-            "species": "SPECIES_GEODUDE"
+            "level": 13,
+            "species": "SPECIES_RHYHORN"
         },
         {
-            "level": 8,
+            "level": 5,
             "species": "SPECIES_ZUBAT"
+        },
+        {
+            "level": 13,
+            "species": "SPECIES_RHYHORN"
         }
     ],
     "day": [
@@ -113,6 +113,7 @@
         }
     ],
     "rock_smash_rate": 50,
+    "rock_smash_slot_rates": [49, 30, 20, 1, 0],
     "rock_smash_encounters": [
         {
             "level_max": 9,
@@ -122,22 +123,22 @@
         {
             "level_max": 9,
             "level_min": 5,
-            "species": "SPECIES_GEODUDE"
+            "species": "SPECIES_MACHOP"
         },
         {
-            "level_max": 9,
-            "level_min": 5,
-            "species": "SPECIES_GEODUDE"
+            "level_max": 8,
+            "level_min": 6,
+            "species": "SPECIES_ONIX"
         },
         {
-            "level_max": 9,
-            "level_min": 5,
-            "species": "SPECIES_GEODUDE"
+            "level_max": 8,
+            "level_min": 8,
+            "species": "SPECIES_SHUCKLE"
         },
         {
-            "level_max": 9,
-            "level_min": 5,
-            "species": "SPECIES_GEODUDE"
+            "level_max": 0,
+            "level_min": 0,
+            "species": "SPECIES_NONE"
         }
     ],
     "old_rod_rate": 0,

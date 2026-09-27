@@ -2,12 +2,12 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 28,
-            "species": "SPECIES_GASTRODON"
+            "level": 29,
+            "species": "SPECIES_PELIPPER"
         },
         {
-            "level": 29,
-            "species": "SPECIES_FLOATZEL"
+            "level": 31,
+            "species": "SPECIES_PELIPPER"
         },
         {
             "level": 28,
@@ -19,19 +19,7 @@
         },
         {
             "level": 29,
-            "species": "SPECIES_MR_MIME"
-        },
-        {
-            "level": 30,
-            "species": "SPECIES_MR_MIME"
-        },
-        {
-            "level": 30,
             "species": "SPECIES_FLOATZEL"
-        },
-        {
-            "level": 31,
-            "species": "SPECIES_MR_MIME"
         },
         {
             "level": 31,
@@ -39,15 +27,27 @@
         },
         {
             "level": 30,
-            "species": "SPECIES_GASTRODON"
+            "species": "SPECIES_PELIPPER"
         },
         {
-            "level": 31,
-            "species": "SPECIES_FLOATZEL"
+            "level": 29,
+            "species": "SPECIES_PELIPPER"
         },
         {
             "level": 30,
-            "species": "SPECIES_GASTRODON"
+            "species": "SPECIES_FLOATZEL"
+        },
+        {
+            "level": 29,
+            "species": "SPECIES_FLOATZEL"
+        },
+        {
+            "level": 36,
+            "species": "SPECIES_SWABLU"
+        },
+        {
+            "level": 36,
+            "species": "SPECIES_MAWILE"
         }
     ],
     "day": [
@@ -55,8 +55,8 @@
         "SPECIES_CHATOT"
     ],
     "night": [
-        "SPECIES_GASTRODON",
-        "SPECIES_FLOATZEL"
+        "SPECIES_KINGLER",
+        "SPECIES_KINGLER"
     ],
     "rate_form0": 0,
     "rate_form1": 0,
@@ -85,6 +85,7 @@
         "SPECIES_GASTRODON"
     ],
     "surf_rate": 10,
+    "surf_slot_rates": [60, 30, 9, 1, 0],
     "surf_encounters": [
         {
             "level_max": 30,
@@ -94,12 +95,7 @@
         {
             "level_max": 30,
             "level_min": 20,
-            "species": "SPECIES_SHELLOS"
-        },
-        {
-            "level_max": 40,
-            "level_min": 20,
-            "species": "SPECIES_TENTACRUEL"
+            "species": "SPECIES_WINGULL"
         },
         {
             "level_max": 40,
@@ -110,90 +106,98 @@
             "level_max": 40,
             "level_min": 20,
             "species": "SPECIES_GASTRODON"
+        },
+        {
+            "level_max": 0,
+            "level_min": 0,
+            "species": "SPECIES_NONE"
         }
     ],
     "old_rod_rate": 25,
+    "old_rod_slot_rates": [30, 30, 30, 10, 0],
     "old_rod_encounters": [
         {
-            "level_max": 6,
-            "level_min": 4,
-            "species": "SPECIES_MAGIKARP"
-        },
-        {
-            "level_max": 7,
+            "level_max": 14,
             "level_min": 3,
-            "species": "SPECIES_MAGIKARP"
+            "species": "SPECIES_CLAMPERL"
         },
         {
-            "level_max": 10,
-            "level_min": 5,
-            "species": "SPECIES_MAGIKARP"
+            "level_max": 14,
+            "level_min": 3,
+            "species": "SPECIES_KRABBY"
         },
         {
-            "level_max": 10,
-            "level_min": 5,
-            "species": "SPECIES_MAGIKARP"
+            "level_max": 14,
+            "level_min": 3,
+            "species": "SPECIES_CORPHISH"
         },
         {
-            "level_max": 15,
-            "level_min": 5,
-            "species": "SPECIES_MAGIKARP"
+            "level_max": 14,
+            "level_min": 3,
+            "species": "SPECIES_HORSEA"
+        },
+        {
+            "level_max": 0,
+            "level_min": 0,
+            "species": "SPECIES_NONE"
         }
     ],
     "good_rod_rate": 50,
+    "good_rod_slot_rates": [30, 30, 30, 10, 0],
     "good_rod_encounters": [
         {
-            "level_max": 20,
-            "level_min": 15,
-            "species": "SPECIES_MAGIKARP"
-        },
-        {
-            "level_max": 20,
-            "level_min": 15,
-            "species": "SPECIES_FINNEON"
-        },
-        {
-            "level_max": 25,
+            "level_max": 23,
             "level_min": 10,
-            "species": "SPECIES_MAGIKARP"
+            "species": "SPECIES_CLAMPERL"
         },
         {
-            "level_max": 25,
+            "level_max": 23,
             "level_min": 10,
-            "species": "SPECIES_FINNEON"
+            "species": "SPECIES_KRABBY"
         },
         {
-            "level_max": 25,
+            "level_max": 23,
             "level_min": 10,
-            "species": "SPECIES_FINNEON"
+            "species": "SPECIES_CORPHISH"
+        },
+        {
+            "level_max": 23,
+            "level_min": 10,
+            "species": "SPECIES_HORSEA"
+        },
+        {
+            "level_max": 0,
+            "level_min": 0,
+            "species": "SPECIES_NONE"
         }
     ],
     "super_rod_rate": 75,
+    "super_rod_slot_rates": [55, 45, 0, 0, 0],
     "super_rod_encounters": [
         {
-            "level_max": 40,
+            "level_max": 55,
             "level_min": 30,
             "species": "SPECIES_GYARADOS"
         },
         {
-            "level_max": 40,
+            "level_max": 55,
             "level_min": 30,
             "species": "SPECIES_LUMINEON"
         },
         {
-            "level_max": 55,
-            "level_min": 40,
-            "species": "SPECIES_GYARADOS"
+            "level_max": 0,
+            "level_min": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level_max": 55,
-            "level_min": 40,
-            "species": "SPECIES_LUMINEON"
+            "level_max": 0,
+            "level_min": 0,
+            "species": "SPECIES_NONE"
         },
         {
-            "level_max": 55,
-            "level_min": 40,
-            "species": "SPECIES_LUMINEON"
+            "level_max": 0,
+            "level_min": 0,
+            "species": "SPECIES_NONE"
         }
     ],
     "map_category": {

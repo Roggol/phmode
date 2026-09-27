@@ -616,6 +616,12 @@ Pokémon received the exact same change — nothing is merged.
 - SpA: 70 -> 60
 - Level 51: Air Slash -> Brave Bird
 
+### Chinchou
+- Ability slot 2: Illuminate -> None
+
+### Lanturn
+- Ability slot 2: Illuminate -> None
+
 ### Politoed
 - Ability slot 2: Damp -> Drizzle
 
@@ -1695,3 +1701,12 @@ run into, but the small slice of the grass that used to always be Kricketot
 now changes with the time of day — Pidgey in the morning, Taillow during
 the day, and Hoothoot at night. Two of the rarest encounter slots have also
 swapped from more Starly/Bidoof to a Bulbasaur and a Chikorita.
+
+### The early game's wild encounters have been redesigned
+Every area up through the Oreburgh Gate/Mine and Route 219 — Verity
+Lakefront, Lake Verity, Route 202, Route 203, Route 204's southern half,
+Ravaged Path, and more — now has its own hand-picked roster of wild Pokémon
+and fishing/Surf odds, instead of the mix the base game shipped with. Rock
+Smash rocks can also now give some species better odds than others at a
+location instead of always being a flat one-in-five, matching how Surf and
+fishing already worked.

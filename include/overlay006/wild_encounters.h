@@ -25,7 +25,7 @@ typedef struct WaterEncounter {
 } WaterEncounter;
 typedef struct WaterEncounters {
     int encounterRate;
-    u8 slotRates[MAX_WATER_ENCOUNTERS]; // phmode: per-location override for the slot odds below; all-zero means "use the hardcoded default odds for this encounter method" - see GetWaterEncounterSlot/GetRodEncounterSlot
+    u8 slotRates[MAX_WATER_ENCOUNTERS]; // phmode: per-location override for the slot odds below; all-zero means "use the hardcoded default odds for this encounter method" - see GetWaterEncounterSlot/GetRodEncounterSlot/GetRockSmashEncounterSlot
     u8 padding_slotRates[3];
     WaterEncounter encounters[MAX_WATER_ENCOUNTERS];
 } WaterEncounters;
