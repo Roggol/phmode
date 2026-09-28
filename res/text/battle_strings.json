@@ -5515,6 +5515,13 @@
       ]
     },
     {
+      "id": "BattleStrings_Text_NoRunningFromThisBattle",
+      "en_US": [
+        "No! There’s no running\n",
+        "from this battle!\r"
+      ]
+    },
+    {
       "id": "BattleStrings_Text_CantEscape2",
       "en_US": "Can’t escape!\r"
     },
@@ -8723,6 +8730,10 @@
         "The foe’s {STRVAR_1 1, 0, 0}’s\n",
         "{STRVAR_1 5, 1, 0} sharply raised its {STRVAR_1 13, 2, 0}!"
       ]
+    },
+    {
+      "id": "BattleStrings_Text_GiratinaIsTestingYourResolve",
+      "en_US": "Giratina is testing your resolve."
     }
   ]
 }

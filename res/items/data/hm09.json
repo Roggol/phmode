@@ -3,7 +3,8 @@
   "plural": "HM09s",
   "article": "an",
   "description": [
-    "placeholder"
+    "Lowers the opponent’s accuracy.\n",
+    "Lets you see in dark caves."
   ],
   "icon": {
     "sprite": "hm_NCGR",

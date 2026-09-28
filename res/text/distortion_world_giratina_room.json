@@ -26,53 +26,62 @@
     {
       "id": "DistortionWorldGiratinaRoom_Text_ThatPokemonWasDefeated",
       "en_US": [
-        "Cyrus: That Pokémon...\r",
-        "That shadowy Pokémon was defeated?!\r"
+        "Cyrus: GIRATINA...\r",
+        "Where did it go?!\r"
       ]
     },
     {
       "id": "DistortionWorldGiratinaRoom_Text_ThatPokemonWasCaptured",
       "en_US": [
-        "Cyrus: That Pokémon...\r",
-        "That shadowy Pokémon was captured?!\r"
+        "Cyrus: GIRATINA...\r",
+        "Where did it go?!\r"
       ]
     },
     {
       "id": "DistortionWorldGiratinaRoom_Text_YouRefusedToBattle",
       "en_US": [
-        "Cyrus: That shadowy Pokémon...\r",
-        "You quelled its rage by refusing to\n",
-        "battle it?!\r"
+        "Cyrus: GIRATINA...\r",
+        "Where did it go?!\r"
       ]
     },
     {
       "id": "DistortionWorldGiratinaRoom_Text_NewWorldCantBeMade",
       "en_US": [
-        "Your doing so means this irrational\n",
-        "world will remain in existence!\r",
-        "Does that make it impossible for me to\n",
-        "create a new world?\r",
-        "Even if I made new Red Chains, the new\n",
-        "world can’t be made!\r",
-        "Why?! What compels you to protect\n",
-        "the two worlds?\r",
-        "Is spirit, a vague and incomplete\n",
-        "thing, so important to you?!\r"
+        "How can it have just gone?\r",
+        "I was going to create a new world!\r",
+        "I was going to make a world\n",
+        "without joy or suffering!\r",
+        "I was going to make a world\n",
+        "without love or hate!\r",
+        "I was going to make a world\n",
+        "without hope or despair!\r",
+        "I was going to make people\n",
+        "understand how... I feel...\r"
       ]
     },
     {
       "id": "DistortionWorldGiratinaRoom_Text_PokemonUniteUs",
       "en_US": [
-        "Cynthia: ...The places we are born.\r",
+        "Cynthia: ...The places we are\n",
+        "born.\r",
         "The time we spend living...\r",
         "The languages we speak...\r",
-        "We are all different.\n",
-        "But the presence of Pokémon unites us.\r",
-        "We share our lives with our Pokémon,\n",
-        "and our happiness grows as we all\f",
+        "We are all different. But the\n",
+        "presence of Pokémon unites us.\r",
+        "We share our lives with our\n",
+        "Pokémon, and our happiness grows\r",
+        "as we all\f",
         "become greater than we were alone.\r",
-        "That is why we can battle and trade\n",
-        "with anyone we choose...\r"
+        "That is why we can battle and\n",
+        "trade with anyone we choose...\r",
+        "That’s why we keep living.\r",
+        "We accept the duality of joy and\n",
+        "suffering, love and hate, hope and\r",
+        "despair.\r",
+        "Perhaps there is no meaning to any\n",
+        "of it.\r",
+        "So why not have fun with our\n",
+        "Pokémon while we can?\r"
       ]
     },
     {
@@ -83,54 +92,44 @@
       "id": "DistortionWorldGiratinaRoom_Text_EnoughBlathering",
       "en_US": [
         "Cyrus: Enough of your blathering!\r",
-        "That’s how you justify spirit as\n",
-        "something worthwhile?!\r",
-        "That is merely humans hoping,\n",
-        "deluding themselves that they are\f",
-        "happy and safe!\r",
-        "The emotions roiling inside me...\n",
-        "Rage, hatred, frustration...\r",
-        "These ugly emotions arise because of\n",
-        "my own incomplete spirit!\r",
-        "...Enough.\n",
-        "We will never see eye to eye.\r",
-        "This, I promise you.\n",
-        "I will break the secrets of the world.\r",
-        "With that knowledge, I will create my\n",
-        "complete and perfect world.\r",
-        "One day, you will awaken to a world of\n",
-        "my creation.\r",
-        "A world without spirit.\r"
+        "Meaningless sentiment!\r",
+        "There is no purpose to existence!\r",
+        "It is better to return to nothing.\r",
+        "Oblivion is kind.\r",
+        "Oblivion is merciful.\r",
+        "Oblivion is the only truth.\r",
+        "Why doesn’t anyone understand\n",
+        "that?\r",
+        "I will stay here and wait for the\n",
+        "end.\r"
       ]
     },
     {
       "id": "DistortionWorldGiratinaRoom_Text_WeCanFeelJoy",
       "en_US": [
-        "Cynthia: ...\n",
-        "...\r",
-        "Since there is sadness, we can\n",
-        "feel joy.\r",
-        "When there is anger, compassion\n",
-        "is born...\r"
+        "Cynthia: I feel sorry for you,\n",
+        "Cyrus..."
       ]
     },
     {
       "id": "DistortionWorldGiratinaRoom_Text_LetsGoBackHome",
       "en_US": [
-        "Let’s go back home.\r",
-        "The portal where GIRATINA was should\n",
-        "lead back to our world.\r",
-        "GIRATINA was written in legend as\n",
-        "being on the other side of our world.\r",
-        "It stands to reason that it has a link\n",
-        "to the other side."
+        "We have to go back.\r",
+        "If the portal stays open much\n",
+        "longer we risk tearing reality\r",
+        "apart.\r",
+        "I’m sure GIRATINA will visit us\n",
+        "again someday.\r",
+        "The portal where GIRATINA was\n",
+        "should lead back to our world.\r"
       ]
     },
     {
       "id": "DistortionWorldGiratinaRoom_Text_LeapIntoPortal",
       "en_US": [
-        "There is a portal where GIRATINA was.\n",
-        "Will you leap into the portal?"
+        "There is a portal where GIRATINA\n",
+        "was. Will you leap into the\r",
+        "portal?"
       ]
     },
     {

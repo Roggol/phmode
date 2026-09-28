@@ -20,14 +20,8 @@
     {
       "id": "EternaCity_Text_SoThisIsEternasStatue",
       "en_US": [
-        "Cyrus: ...So, this is Eterna’s Pokémon\n",
-        "statue...\r",
-        "Shaping our world are time and space\n",
-        "in an intertwining spiral.\r",
-        "Revered in Sinnoh are the Pokémon of\n",
-        "time and space...\r",
-        "Sinnoh’s myth...\n",
-        "Its truth needs investigation...\r"
+        "Cyrus: ...Time and space...\n",
+        "Nothingness...\r"
       ]
     },
     {
@@ -307,15 +301,16 @@
     },
     {
       "id": "EternaCity_Text_YouDontHaveExplorerKit_ArrowPrompt",
-      "en_US": "placeholder"
+      "en_US": "You should talk to the Underground Man."
+    
     },
     {
       "id": "EternaCity_Text_YouDontHaveExplorerKit",
-      "en_US": "placeholder"
+      "en_US": "You need HM09 Flash to progress."
     },
     {
       "id": "EternaCity_Text_GoingUndergroundIsABlast",
-      "en_US": "placeholder"
+      "en_US": "This move lets you see in dark caves."
     },
     {
       "id": "EternaCity_Text_YouGotABicycle_ArrowPrompt",

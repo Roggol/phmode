@@ -116,11 +116,19 @@
     },
     {
       "id": "TrainersSchool_Text_UseThisTM10",
-      "en_US": "placeholder"
+      "en_US": [
+        "Nice job, I bet you can handle\n",
+        "more advanced movies now."]
     },
     {
       "id": "TrainersSchool_Text_TM10Explanation",
-      "en_US": "placeholder"
+      "en_US": [
+        "This TM is Hidden Power.\r",
+        "Its type depends on the IVs\n",
+        "of the Pokémon.\r",
+        "You can check the memo section\n",
+        "page to see what type it will be."
+      ]
     },
     {
       "id": "TrainersSchool_Text_MayWeBattle",

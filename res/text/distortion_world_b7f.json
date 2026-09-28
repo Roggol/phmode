@@ -10,15 +10,18 @@
     },
     {
       "id": "DistortionWorldB7F_Text_YouWereAlreadyHere",
-      "en_US": "Cynthia: ...So, you were already here.\r"
+      "en_US": [
+        "Cynthia: ...So, you were already\n",
+        "here.\r"
+      ]
     },
     {
       "id": "DistortionWorldB7F_Text_WhyChangeTheWorld",
       "en_US": [
-        "Cynthia: Why do you seek to change the\n",
-        "world?\r",
-        "If you hate our world, you should just\n",
-        "go off somewhere alone.\r",
+        "Cynthia: Why do you seek to\n",
+        "destroy the world?\r",
+        "If you hate our world, you should\n",
+        "just go off somewhere alone.\r",
         "Find somewhere where you can live\n",
         "without seeing others.\r"
       ]
@@ -26,29 +29,31 @@
     {
       "id": "DistortionWorldB7F_Text_ThatsNoJustice",
       "en_US": [
-        "Cynthia: But...\n",
-        "That’s no justice at all!"
+        "Cynthia: You aim to remove\n",
+        "suffering But you will remove joy\r",
+        "as well.\r",
+        "Your suicidal nihilism will not\n",
+        "save people.\r",
+        "You are drowning and trying to\n",
+        "take the rest of us down with you.\r"
       ]
     },
     {
       "id": "DistortionWorldB7F_Text_ThatIsMyJustice",
       "en_US": [
-        "Cyrus: Why should I run and hide from\n",
-        "the world and have to wait quietly?\r",
-        "My aim is to rid our world of the vague\n",
-        "and incomplete thing we call spirit.\r",
-        "By freeing ourselves of that, our\n",
-        "world can be made complete.\r",
-        "That is my justice!\n",
-        "No one can interfere!"
+        "Cyrus: I do not hate this world.\n",
+        "I simply see what it could be.\r",
+        "Others will thank me. They will\n",
+        "thank me for creating a new world\r",
+        "without suffering.\r"
       ]
     },
     {
       "id": "DistortionWorldB7F_Text_IWontLose",
       "en_US": [
         "Cyrus: I won’t lose!\r",
-        "Not to that shadowy Pokémon!\n",
-        "Not in any worthless world!\r"
+        "I will acquire GIRATINA’s power\n",
+        "for myself!\r"
       ]
     },
     {
@@ -56,37 +61,23 @@
       "en_US": [
         "Cyrus: ...Don’t think that you can\n",
         "defeat or capture that Pokémon.\r",
-        "This bizarre world is none other than\n",
-        "that Pokémon itself!\r",
-        "Capturing it or defeating it will make\n",
-        "this world disappear!\r",
-        "Very well!\n",
-        "Do what you will!\r",
-        "Rather than repairing the world, you’re\n",
-        "going to destroy it for me!\r",
+        "This bizarre world is none other\n",
+        "than that Pokémon itself!\r",
+        "Capturing it or defeating it will\n",
+        "make this world disappear and our\r",
+        "world with it!\r",
+        "Go on, destroy it for me!\r",
         "Do it.\n",
-        "You inherit my legacy.\r"
+        "Inherit my legacy.\r"
       ]
     },
     {
       "id": "DistortionWorldB7F_Text_DontBelieveHisLies",
       "en_US": [
-        "Cynthia: Don’t believe his lies.\r",
-        "It’s not possible that a Pokémon can\n",
-        "make the world disappear.\r",
-        "The world awaited your birth.\n",
-        "Not only yours, either.\r",
-        "The Pokémon with you.\n",
-        "The people close to you.\r",
-        "All the Pokémon and people were born\n",
-        "because they have a part in the world.\r",
-        "I’m convinced of that.\r",
-        "GIRATINA won’t go out of existence.\n",
-        "This Distortion World won’t disappear.\f",
-        "Our world won’t disappear, either.\r",
-        "Let’s go meet GIRATINA.\r",
-        "...Oops. I should do something about\n",
-        "your hardworking Pokémon first.\r"
+        "Cynthia: Make GIRATINA understand\n",
+        "our feelings.\r",
+        "I’m sure it will help. It is a\n",
+        "kind Pokémon.\r"
       ]
     },
     {
@@ -98,26 +89,29 @@
     },
     {
       "id": "DistortionWorldB7F_Text_LetsGoMeetGiratina",
-      "en_US": "Cynthia: Now let’s go meet GIRATINA!\r"
+      "en_US": [
+        "Cynthia: Now let’s go meet\n",
+        "GIRATINA!\r"
+      ]
     },
     {
       "id": "DistortionWorldB7F_Text_GiratinaIsEnraged",
       "en_US": [
-        "Cynthia: GIRATINA is enraged because\n",
-        "the two worlds are endangered.\r",
-        "It has merged the Distortion World and\n",
-        "our world at the Spear Pillar.\r",
-        "That’s why both worlds are becoming\n",
-        "distorted.\r",
-        "But there’s nothing to fear.\r",
-        "You can defeat GIRATINA and show the\n",
-        "tight bond you share with your Pokémon.\r",
-        "Or you can demonstrate how much you\n",
-        "want it to join you.\r",
-        "If you succeed in doing either,\n",
+        "Cynthia: GIRATINA is enraged\n",
+        "because the two worlds are\r",
+        "endangered.\r",
+        "It has merged the Distortion World\n",
+        "and our world at the Spear Pillar.\r",
+        "That’s why both worlds are\n",
+        "becoming distorted.\r",
+        "If it continues both worlds will\n",
+        "be destroyed!\r",
+        "If you defeat GIRATINA and show\n",
+        "the tight bond you share with your\r",
+        "Pokémon.\r",
         "GIRATINA will understand.\r",
-        "The distortion of the two worlds will\n",
-        "stop!"
+        "The distortion of the two worlds\n",
+        "will stop!"
       ]
     },
     {

@@ -4166,6 +4166,85 @@ Another follow-up pass, again confined to Tier 1 per the doc:
   Doduo (25%), the Houndour/Growlithe/Vulpix time-of-day swap (10%), and
   Cyndaquil/Charmander (1% each) are unchanged.
 
+### Cyrus storyline rewrite; Giratina cannot be caught in the Distortion World
+The user rewrote most of Cyrus's dialogue across the climactic Distortion
+World sequence — `res/text/{spear_pillar,galactic_hq_4f,distortion_world_b7f,
+distortion_world_giratina_room}.json` — and asked for the new text's line
+breaks to be fixed up. Two mechanical issues showed up while doing that pass
+(both are pure text-formatting fixes, not wording changes):
+* Several new lines used a straight apostrophe (`'`) instead of the curly one
+  (`’`) this project's charmap actually recognizes — `msgenc` fails the whole
+  build on an unrecognized character, so these were replaced throughout the 4
+  files above plus `res/items/data/tm70.json` and `hm09.json` (their
+  descriptions had the same issue).
+* A few lines were missing their `\n`/`\r`/`\f` terminator entirely, which
+  either ran two lines together with no break at all or (for
+  `GalacticHQ4F_Text_SpeechWasBigLie`) left an entire multi-sentence speech
+  as one unbroken paragraph with no pagination whatsoever; both are now split
+  into properly paginated 1-2 line pages, matching the pacing style already
+  established by the surrounding, already-correct lines in the same message.
+
+Also fixed in passing, since they were clear typos rather than the user's
+intended wording: "Giritina" → "GIRATINA" (and a couple of lowercase
+"Giratina"/"giratina" mid-sentence → "GIRATINA", matching how every other
+legendary is written in this game's dialogue), lowercase "pokemon" → "Pokémon"
+in the newly-written lines, "conciousness" → "consciousness", "Its been" →
+"It's been", and "lake Verity" → "Lake Verity". None of these touch the user's
+actual wording, only spelling/capitalization the game's existing text
+consistently uses elsewhere.
+
+**Giratina can no longer be caught during the scripted Distortion World
+battle.** `src/battle/battle_script.c` — `BattleScript_CalcCatchShakes` now
+returns 0 shakes unconditionally when `BATTLE_STATUS_GIRATINA` is set on the
+battle (a status flag that already existed, previously used only for Origin
+Forme sprite display), forcing an immediate break-free regardless of ball,
+species catch rate, or HP/status. The break-free message is also overridden
+for this case — instead of the usual "Oh, no! The Pokémon broke free!" line
+(picked by shake count), it prints a new message,
+`BattleStrings_Text_GiratinaIsTestingYourResolve` (`res/text/battle_strings.json`):
+*"Giratina is testing your resolve."* Catching Giratina for real still works
+exactly as before anywhere else it can be encountered (e.g. Turnback Cave) —
+this only touches the one scripted battle that sets that status flag.
+
+**Running is also blocked in that same battle**, now that it's meant to play
+as a proper boss fight (the user also raised Giratina's level for it).
+`src/battle/battle_controller_player.c` — the `COMMAND_SELECTION_RUN_SELECT_INIT`
+handler gained an `else if` branch checking `BATTLE_STATUS_GIRATINA`, right
+alongside the existing `BATTLE_TYPE_TRAINER` branch it's modeled on, so
+choosing Run shows an alert message and returns to the main command menu
+instead of fleeing. New message `BattleStrings_Text_NoRunningFromThisBattle`
+(`res/text/battle_strings.json`): *"No! There's no running from this
+battle!"* — deliberately not the existing
+`BattleStrings_Text_NoTheresNoRunningFromATrainerBattle` string, since this
+isn't a Trainer battle and reusing that exact wording would be inaccurate.
+
+**Second formatting pass, much larger in scope**: the user did another editing
+pass across the same storyline and asked for every line to fit on screen —
+approximately 34 characters, or 32 if a line has several capital M/W
+characters (which render wider) — and confirmed the pagination rule already
+followed above: a box holds at most 2 lines, and a `\n`-terminated first line
+must always be followed by a `\r`/`\f`-terminated (or, if it's the message's
+very last line, bare) second line, never another `\n`. This turned out to
+apply to 3 more files beyond the original 4 — `res/text/{galactic_hq_hall,
+lake_verity_low_water,sunyshore_city_northwest_house}.json` — which the user
+had also been editing as part of the same storyline pass. A one-off script
+(not committed) found every line over the limit across all 7 files, and for
+each one, reflowed that line's whole page (the run of text between the
+previous hard break and the next `\r`/`\f`/end) with a standard greedy word
+wrap, preserving every word exactly and only changing where the `\n`/`\r`
+breaks fall — splitting a page into multiple pages when its text couldn't
+fit in 2 lines at the limit, which happened for several of the longer new
+monologues (most notably `GalacticHQ4F_Text_IKnowWhyYoureHere`, Cyrus's
+backstory speech, and `GalacticHQHall_Text_TheWorldMustChange`, previously
+one giant unbroken paragraph). Existing lines that already fit were left
+completely untouched, byte-for-byte, so this only touches what actually
+needed to change. Verified afterward: no line in any of the 7 files exceeds
+the limit, and no message has two consecutive `\n`-terminated lines anywhere.
+
+Also fixed in passing in the 3 newly-touched files, same category as the
+typo fixes above: lowercase "pokemon" → "Pokémon" and "buddhists" →
+"Buddhists" in `GalacticHQHall_Text_TheWorldMustChange`.
+
 ### Map headers
 
 `include/data/map_headers.h`:

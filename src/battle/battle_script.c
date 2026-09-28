@@ -11255,7 +11255,13 @@ static void BattleScript_CatchMonTask(SysTask *task, void *inData)
         if (BattleIO_QueueIsEmpty(data->battleCtx)) {
             BattleMessage msg;
 
-            msg.id = BattleStrings_Text_OhNoThePokemonBrokeFree + data->tmpData[CATCH_MON_TOTAL_SHAKES];
+            // phmode: see the comment in BattleScript_CalcCatchShakes - this is the
+            // Distortion World Giratina, which always breaks free with a custom line.
+            if (BattleSystem_GetBattleStatusMask(data->battleSys) & BATTLE_STATUS_GIRATINA) {
+                msg.id = BattleStrings_Text_GiratinaIsTestingYourResolve;
+            } else {
+                msg.id = BattleStrings_Text_OhNoThePokemonBrokeFree + data->tmpData[CATCH_MON_TOTAL_SHAKES];
+            }
             msg.tags = 0;
             data->tmpData[CATCH_MON_MSG_INDEX] = BattleMessage_Print(data->battleSys, msgLoader, &msg, BattleSystem_GetTextSpeed(data->battleSys));
             data->tmpData[CATCH_MON_DELAY] = 30;
@@ -11328,6 +11334,14 @@ static int BattleScript_CalcCatchShakes(BattleSystem *battleSys, BattleContext *
 {
     if (BattleSystem_GetBattleType(battleSys) & BATTLE_TYPE_ALWAYS_CATCH) {
         return BALL_3_SHAKES_SUCCESS;
+    }
+
+    // phmode: the Distortion World Giratina can't be caught here at all - it's
+    // testing the player's resolve, not ready to be caught yet. Force an
+    // immediate 0-shake break-free; SEQ_CATCH_MON_PRINT_POKEMON_BROKE_FREE below
+    // swaps in a dedicated message for this case instead of the usual one.
+    if (BattleSystem_GetBattleStatusMask(battleSys) & BATTLE_STATUS_GIRATINA) {
+        return 0;
     }
 
     u32 speciesMod;

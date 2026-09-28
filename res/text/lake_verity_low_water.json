@@ -8,33 +8,27 @@
     {
       "id": "LakeVerityLowWater_Text_MakeTimeAndSpaceMine",
       "en_US": [
-        "...The flowing time...\n",
-        "...The expanding space...\r",
-        "I will make it all mine one day...\n",
-        "Cyrus is my name. Remember it...\r",
-        "Until then, sleep while you can,\n",
-        "legendary Pokémon of the lake bed...\r"
+        "One last look...\n"
       ]
     },
     {
       "id": "LakeVerityLowWater_Text_AllowMeToPass",
       "en_US": [
-        "Allow me to pass.\n",
-        "Step aside.\r"
+        "Allow me to pass."
       ]
     },
     {
       "id": "LakeVerityLowWater_Text_WhatWasThatAbout",
       "en_US": [
-        "{STRVAR_1 3, 0, 0}: What was that about?\n",
-        "Weird guy...\r"
+        "{STRVAR_1 3, 0, 0}: That guy seemed sad.\n",
+        "I wonder why...\r"
       ]
     },
     {
       "id": "LakeVerityLowWater_Text_LetsCatchThatLegendary",
       "en_US": [
-        "OK, {STRVAR_1 3, 1, 0}!\n",
-        "Let’s catch that legendary Pokémon!\r"
+        "OK, {STRVAR_1 3, 1, 0}! Let’s\n",
+        "catch that legendary Pokémon!\r"
       ]
     },
     {
@@ -46,8 +40,8 @@
       "en_US": [
         "{STRVAR_1 3, 0, 0}: !\n",
         "Did you hear that, {STRVAR_1 3, 1, 0}?!\r",
-        "That was the legendary Pokémon crying!\n",
-        "That had to be it!\r",
+        "That was the legendary Pokémon\n",
+        "crying! That had to be it!\r",
         "OK! This is our chance!\n",
         "Let’s catch it!\r"
       ]
@@ -60,18 +54,19 @@
         "We don’t have anything on us!\r",
         "You know, Poké Balls!\n",
         "P-O-K-accent-E Balls!\r",
-        "If we don’t have those, we can’t catch\n",
-        "Pokémon or take them around with us!\r",
-        "...Do you think Prof. Rowan’d give us\n",
-        "some if we asked him?\r",
-        "You know, you remember what he said,\n",
-        "don’t you?\r",
-        "He said to visit him at his lab if we\n",
-        "needed anything.\r",
+        "If we don’t have those, we can’t\n",
+        "catch Pokémon or take them around\r",
+        "with us!\r",
+        "...Do you think Prof. Rowan’d give\n",
+        "us some if we asked him?\r",
+        "You know, you remember what he\n",
+        "said, don’t you?\r",
+        "He said to visit him at his lab if\n",
+        "we needed anything.\r",
         "OK, {STRVAR_1 3, 1, 0}!\n",
         "I’ll race you!\r",
-        "First one to the professor’s lab in\n",
-        "Sandgem Town rules!\r"
+        "First one to the professor’s lab\n",
+        "in Sandgem Town rules!\r"
       ]
     },
     {
@@ -83,7 +78,8 @@
         "{STRVAR_1 3, 0, 0}, how was Lake Valor?\n",
         "Anything to report?\r",
         "What? You’re just going there now?\n",
-        "You’ve got to move faster than that!"
+        "You’ve got to move faster than\r",
+        "that!"
       ]
     },
     {
@@ -92,7 +88,8 @@
         "Rowan: {STRVAR_1 3, 0, 0}, how was Lake\n",
         "Valor? Anything to report?\r",
         "What? You’re just going there now?\n",
-        "You’ve got to move faster than that!"
+        "You’ve got to move faster than\r",
+        "that!"
       ]
     },
     {

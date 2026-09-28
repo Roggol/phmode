@@ -8,8 +8,9 @@
         "spectacular!\r",
         "Don’t get in the way!\n",
         "Of course you will, won’t you?\r",
-        "That’s why the two of us will team up\n",
-        "to take you down in an epic duel!\r"
+        "That’s why the two of us will team\n",
+        "up to take you down in an epic\r",
+        "duel!\r"
       ]
     },
     {
@@ -19,8 +20,9 @@
         "spectacular!\r",
         "Don’t get in the way!\n",
         "Of course you will, won’t you?\r",
-        "That’s why the two of us will team up\n",
-        "to take you down in an epic duel!\r",
+        "That’s why the two of us will team\n",
+        "up to take you down in an epic\r",
+        "duel!\r",
         "What? You only have one Pokémon?\n",
         "Bah, come back when you’re ready!\r"
       ]
@@ -29,19 +31,22 @@
       "id": "SpearPillar_Text_WeLetYouPass",
       "en_US": [
         "We are not capable of slowing you.\r",
-        "We will let you pass so you can get\n",
-        "pulverized by our bosses!"
+        "We will let you pass so you can\n",
+        "get pulverized by our bosses!"
       ]
     },
     {
       "id": "SpearPillar_Text_GoThroughMeFirst",
       "en_US": [
-        "Mars: Where do you think you’re going?\n",
-        "I won’t let you disturb our boss.\r",
-        "If you’re not going to listen, you’ll\n",
-        "have to go through me first.\r",
+        "Mars: Where do you think you’re\n",
+        "going? I won’t let you disturb our\r",
+        "boss.\r",
+        "If you’re not going to listen,\n",
+        "you’ll have to go through me\r",
+        "first.\r",
         "After all, you’ve made me look bad\n",
-        "more times than I care to remember!\r"
+        "more times than I care to\r",
+        "remember!\r"
       ]
     },
     {
@@ -80,7 +85,8 @@
       "en_US": [
         "Jupiter: Ha!\n",
         "If it isn’t that little boy.\f",
-        "The little crybaby from Lake Acuity.\r",
+        "The little crybaby from Lake\n",
+        "Acuity.\r",
         "Did you toughen up a bit?\n",
         "Sure, let’s battle two-on-two!\r"
       ]
@@ -91,8 +97,8 @@
         "{STRVAR_1 3, 0, 0}: ...Heh.\n",
         "My Pokémon are tough, right?\f",
         "I can get even tougher!\r",
-        "...But, you know, that’s it for us.\n",
-        "We’ve hit the wall...\r",
+        "...But, you know, that’s it for\n",
+        "us. We’ve hit the wall...\r",
         "{STRVAR_1 3, 1, 0}, I’ll help you with this!\r"
       ]
     },
@@ -115,18 +121,21 @@
       "en_US": [
         "Cyrus: ...\n",
         "...\r",
-        "Everything is ready for the creation\n",
-        "of a new world.\r",
+        "Everything is ready for the\n",
+        "creation of a new world.\r",
         "Now, all will end.\n",
-        "And everything will begin.\r",
-        "With this, the Red Chain made from the\n",
-        "crystals of the three lake Pokémon...\r",
-        "And this, the Red Chain I replicated\n",
-        "with technological means...\r",
-        "With these Red Chains I will pry open\n",
-        "the portal to another dimension.\r",
-        "I command that you unleash your power\n",
-        "for me...\r"
+        "All returns to nothing.\r",
+        "With this, the Red Chain made from\n",
+        "the crystals of the three lake\r",
+        "Pokémon...\r",
+        "And this, the Red Chain I\n",
+        "replicated with technological\r",
+        "means...\r",
+        "With these Red Chains I will pry\n",
+        "open the portal to another\r",
+        "dimension.\r",
+        "I command that you unleash your\n",
+        "power for me...\r"
       ]
     },
     {
@@ -145,7 +154,8 @@
       "en_US": [
         "...And the other.\r",
         "PALKIA, the mythical Pokémon, and\n",
-        "the master of space and dimensions!\r"
+        "the master of space and\r",
+        "dimensions!\r"
       ]
     },
     {
@@ -155,39 +165,31 @@
     {
       "id": "SpearPillar_Text_IWillCreateNewWorld",
       "en_US": [
-        "Cyrus: I’ve waited so long for this\n",
-        "moment, DIALGA and PALKIA.\r",
-        "Shaping this world is a double spiral\n",
-        "of time and space.\r",
-        "Yes, the very things that you have the\n",
-        "ability to control!\r",
-        "You will do my bidding!\n",
-        "I will have your abilities as mine!\r",
-        "With the power I wield, I will create\n",
-        "an entirely new world!\r"
+        "Cyrus: I’ve waited so long for\n",
+        "this moment, DIALGA and PALKIA.\r",
+        "Your awakening will bring the one\n",
+        "I seek.\r"
       ]
     },
     {
       "id": "SpearPillar_Text_NothingCanRemain",
       "en_US": [
-        "The incomplete and ugly world we have\n",
-        "now can disappear.\r",
+        "The incomplete and ugly world we\n",
+        "have now can disappear.\r",
         "I am resetting everything to zero.\n",
         "Nothing can remain.\r",
-        "It is all for making the ultimate world.\n",
-        "A world of complete perfection.\r",
-        "Nothing so vague and incomplete as\n",
-        "spirit can remain.\r"
+        "Oblivion will cure this world."
       ]
     },
     {
       "id": "SpearPillar_Text_IShouldHaveExpectedAsMuch",
       "en_US": [
-        "Cyrus: ...I should have expected as\n",
-        "much.\r",
+        "Cyrus: ...I should have expected\n",
+        "as much.\r",
         "UXIE, “The Being of Knowledge.”\r",
         "AZELF, “The Being of Willpower.”\r",
-        "And MESPRIT, “The Being of Emotion”...\r"
+        "And MESPRIT, “The Being of\n",
+        "Emotion”...\r"
       ]
     },
     {
@@ -195,48 +197,46 @@
       "en_US": [
         "The Pokémon have come to protect\n",
         "Sinnoh? Pathetic and worthless.\r",
-        "It takes the three of them, the three\n",
-        "lake Pokémon that symbolize spirit,\f",
-        "to balance either the Pokémon of time\f",
+        "It takes the three of them, the\n",
+        "three lake Pokémon that symbolize\r",
+        "spirit,\f",
+        "to balance either the Pokémon of\n",
+        "time\f",
         "or space.\r",
-        "But they can’t maintain balance against\n",
-        "the two.\r",
-        "Not when both DIALGA and PALKIA are\n",
-        "here.\r",
+        "But they can’t maintain balance\n",
+        "against the two.\r",
+        "Not when both DIALGA and PALKIA\n",
+        "are here.\r",
         "Their coming here is in vain.\n",
-        "So much meaningless drama.\r"
+        "Another is coming.\r"
       ]
     },
     {
       "id": "SpearPillar_Text_MyDreamWillBeReality",
       "en_US": [
         "Now, {STRVAR_1 3, 0, 0}.\r",
-        "You’ve constantly interfered with my\n",
-        "plans, but you will be forgiven.\r",
-        "After all, there will remain no spirit\n",
-        "for all time when I am done.\r",
-        "All spirit will disappear.\n",
-        "It will be ripped away...\r",
-        "From you!\n",
-        "From your Pokémon!\f",
-        "From those precious to you...!\r",
-        "It is time!\n",
-        "My dream will be my reality!\r"
+        "You’ve constantly interfered with\n",
+        "my plans, but you will be\r",
+        "forgiven.\r",
+        "Soon you’ll understand.\r",
+        "As your consciousness fades away.\r",
+        "You will taste Oblivion and\n",
+        "then... you will finally\r",
+        "understand.\r"
       ]
     },
     {
       "id": "SpearPillar_Text_WhatIsThisPressure",
       "en_US": [
-        "What is this pressure I feel...?\n",
-        "Something...is enraged?\r"
+        "Arise and come to me GIRATINA!\r",
+        "Lord of the shadows awaken!"
       ]
     },
     {
       "id": "SpearPillar_Text_PokemonThatAppearsAsShadow",
       "en_US": [
         "Cyrus: Interesting.\r",
-        "So, there is a Pokémon that can only\n",
-        "appear as a shadow.\r"
+        "So, we finally meet GIRATINA.\r"
       ]
     },
     {
@@ -244,8 +244,8 @@
       "en_US": [
         "Regardless, the effort is rash and\n",
         "foolish.\r",
-        "I have harnessed the powers of DIALGA\n",
-        "and PALKIA...\r"
+        "I have harnessed the powers of\n",
+        "DIALGA and PALKIA...\r"
       ]
     },
     {
@@ -322,15 +322,16 @@
     {
       "id": "SpearPillar_Text_SurprisedYouMadeIt",
       "en_US": [
-        "Mars: I’m surprised you made it here.\n",
-        "You can stay if you won’t meddle."
+        "Mars: I’m surprised you made it\n",
+        "here. You can stay if you won’t\r",
+        "meddle."
       ]
     },
     {
       "id": "SpearPillar_Text_BeQuietAndWatch",
       "en_US": [
-        "Jupiter: Be quiet and watch what our\n",
-        "boss is about to do."
+        "Jupiter: Be quiet and watch what\n",
+        "our boss is about to do."
       ]
     },
     {

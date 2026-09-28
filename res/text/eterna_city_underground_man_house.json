@@ -15,7 +15,10 @@
     },
     {
       "id": "EternaCityUndergroundManHouse_Text_MentorYouBecomingSpelunker",
-      "en_US": "placeholder"
+      "en_US": [
+        "Using this HM you can see in\n",
+        "dark caves."
+      ]
     },
     {
       "id": "EternaCityUndergroundManHouse_Text_MentorYouBecomeSpelunker",

@@ -630,6 +630,20 @@ static void BattleControllerPlayer_CommandSelectionInput(BattleSystem *battleSys
                     battleCtx->curCommandState[i] = COMMAND_SELECTION_ALERT_MESSAGE_WAIT;
                     battleCtx->nextCommandState[i] = COMMAND_SELECTION_INIT;
                 }
+            } else if (BattleSystem_GetBattleStatusMask(battleSys) & BATTLE_STATUS_GIRATINA) {
+                // phmode: this is the scripted Distortion World Giratina battle - treat it
+                // like a boss fight and disallow running, same as a Trainer battle.
+                if (BattleSystem_GetBattleStatusMask(battleSys) & BATTLE_STATUS_RECORDING) {
+                    BattleSystem_SetStopRecording(battleSys, 1);
+                    BattleSystem_IsRecordingStopped(battleSys, BattleSystem_GetBattleContext(battleSys));
+                } else {
+                    msg.tags = 0;
+                    msg.id = BattleStrings_Text_NoRunningFromThisBattle;
+                    BattleController_EmitSetAlertMessage(battleSys, i, msg);
+
+                    battleCtx->curCommandState[i] = COMMAND_SELECTION_ALERT_MESSAGE_WAIT;
+                    battleCtx->nextCommandState[i] = COMMAND_SELECTION_INIT;
+                }
             } else if (Battler_IsTrappedMsg(battleSys, battleCtx, i, &msg)) {
                 if (BattleSystem_GetBattleStatusMask(battleSys) & BATTLE_STATUS_RECORDING) {
                     BattleSystem_SetStopRecording(battleSys, 1);

@@ -1789,3 +1789,15 @@ fully evolved on the Super Rod.
 Both floors of the Oreburgh Gate now have a small chance of a Sandshrew
 turning up alongside the usual Zubat/Geodude/Psyduck crowd, and Route 207
 now has a Croagunk mixed in with its fire-type residents.
+
+### Cyrus's story has been rewritten, and the Distortion World Giratina fight is now a real boss battle
+Most of Cyrus's dialogue through the endgame — the confrontation at the
+Spear Pillar, Galactic HQ, and the Distortion World itself — has been
+rewritten, and Giratina's level in that climactic fight has been raised to
+match. On top of the new writing, **Giratina can no longer be captured, and
+you can no longer run away, during the scripted battle at the heart of the
+Distortion World.** No matter what ball you throw, it always breaks free
+immediately, with its own message: *"Giratina is testing your resolve."*
+Trying to run gives you a similar refusal instead of fleeing. If you want
+Giratina on your team, you'll need to find and catch it somewhere else,
+later on.
