@@ -7,16 +7,16 @@
         "also be used to\n",
         "clear deep fog, etc."
     ],
-    "class": "CLASS_STATUS",
+    "class": "CLASS_SPECIAL",
     "type": "TYPE_FLYING",
-    "power": 0,
-    "accuracy": 0,
+    "power": 60,
+    "accuracy": 100,
     "pp": 15,
     "effect": {
         "type": "BATTLE_EFFECT_REMOVE_HAZARDS_SCREENS_EVA_DOWN",
-        "chance": 0
+        "chance": 100
     },
-    "range": "RANGE_SINGLE_TARGET",
+    "range": "RANGE_ADJACENT_OPPONENTS",
     "priority": 0,
     "flags": [
         "MOVE_FLAG_CAN_PROTECT",
