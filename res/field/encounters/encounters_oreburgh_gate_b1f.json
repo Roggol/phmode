@@ -26,8 +26,8 @@
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level": 7,
-            "species": "SPECIES_ZUBAT"
+            "level": 13,
+            "species": "SPECIES_SANDSHREW"
         },
         {
             "level": 8,
@@ -38,16 +38,16 @@
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level": 10,
-            "species": "SPECIES_TEDDIURSA"
+            "level": 13,
+            "species": "SPECIES_SANDSHREW"
         },
         {
             "level": 7,
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level": 10,
-            "species": "SPECIES_TEDDIURSA"
+            "level": 13,
+            "species": "SPECIES_SANDSHREW"
         }
     ],
     "day": [

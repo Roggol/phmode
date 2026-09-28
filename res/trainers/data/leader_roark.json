@@ -8,7 +8,9 @@
     "ai_flags": [
         "AI_FLAG_BASIC",
         "AI_FLAG_EVAL_ATTACK",
-        "AI_FLAG_EXPERT"
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_SETUP_FIRST_TURN",
+        "AI_FLAG_CHECK_HP"
     ],
     "double_battle": false,
     "party": [
@@ -19,7 +21,33 @@
             "item": null,
             "moves": [
                 "MOVE_STEALTH_ROCK",
-                "MOVE_ROCK_THROW"
+                "MOVE_SELFDESTRUCT"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_GEODUDE",
+            "form": 0,
+            "level": 12,
+            "item": null,
+            "moves": [
+                "MOVE_DEFENSE_CURL",
+                "MOVE_ROLLOUT"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_GEODUDE",
+            "form": 0,
+            "level": 13,
+            "item": null,
+            "moves": [
+                "MOVE_MAGNITUDE",
+                "MOVE_ROCK_TOMB"
             ],
             "nature": null,
             "ability": null,
@@ -28,12 +56,27 @@
         {
             "species": "SPECIES_ONIX",
             "form": 0,
-            "level": 12,
-            "item": null,
+            "level": 13,
+            "item": "ITEM_SITRUS_BERRY",
             "moves": [
-                "MOVE_STEALTH_ROCK",
-                "MOVE_ROCK_THROW",
-                "MOVE_SCREECH"
+                "MOVE_SCREECH",
+                "MOVE_ROCK_TOMB",
+                "MOVE_SAND_TOMB"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_NOSEPASS",
+            "form": 0,
+            "level": 13,
+            "item": "ITEM_SITRUS_BERRY",
+            "moves": [
+                "MOVE_BLOCK",
+                "MOVE_ROCK_TOMB",
+                "MOVE_THUNDER_WAVE",
+                "MOVE_SHOCK_WAVE"
             ],
             "nature": null,
             "ability": null,
@@ -43,11 +86,12 @@
             "species": "SPECIES_CRANIDOS",
             "form": 0,
             "level": 14,
-            "item": null,
+            "item": "ITEM_HARD_STONE",
             "moves": [
-                "MOVE_HEADBUTT",
                 "MOVE_PURSUIT",
-                "MOVE_LEER"
+                "MOVE_ROCK_TOMB",
+                "MOVE_ZEN_HEADBUTT",
+                "MOVE_FIRE_PUNCH"
             ],
             "nature": null,
             "ability": null,

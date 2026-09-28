@@ -8,20 +8,24 @@
     "ai_flags": [
         "AI_FLAG_BASIC",
         "AI_FLAG_EVAL_ATTACK",
-        "AI_FLAG_EXPERT"
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_SETUP_FIRST_TURN",
+        "AI_FLAG_TAG_STRATEGY",
+        "AI_FLAG_CHECK_HP",
+        "AI_FLAG_WEATHER"
     ],
     "double_battle": false,
     "party": [
         {
             "species": "SPECIES_GYARADOS",
             "form": 0,
-            "level": 33,
-            "item": "ITEM_NONE",
+            "level": 44,
+            "item": "ITEM_WACAN_BERRY",
             "moves": [
                 "MOVE_WATERFALL",
-                "MOVE_BRINE",
-                "MOVE_BITE",
-                "MOVE_TWISTER"
+                "MOVE_DRAGON_DANCE",
+                "MOVE_EARTHQUAKE",
+                "MOVE_ICE_FANG"
             ],
             "nature": null,
             "ability": null,
@@ -30,13 +34,58 @@
         {
             "species": "SPECIES_QUAGSIRE",
             "form": 0,
-            "level": 34,
-            "item": "ITEM_NONE",
+            "level": 44,
+            "item": "ITEM_RINDO_BERRY",
             "moves": [
-                "MOVE_MUD_SHOT",
-                "MOVE_ROCK_TOMB",
-                "MOVE_WATER_PULSE",
+                "MOVE_EARTHQUAKE",
+                "MOVE_RAIN_DANCE",
+                "MOVE_WATERFALL",
                 "MOVE_YAWN"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_EMPOLEON",
+            "form": 0,
+            "level": 44,
+            "item": "ITEM_MYSTIC_WATER",
+            "moves": [
+                "MOVE_SURF",
+                "MOVE_FLASH_CANNON",
+                "MOVE_ICE_BEAM",
+                "MOVE_AQUA_JET"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_LUDICOLO",
+            "form": 0,
+            "level": 44,
+            "item": "ITEM_LIFE_ORB",
+            "moves": [
+                "MOVE_GIGA_DRAIN",
+                "MOVE_HYDRO_PUMP",
+                "MOVE_FOCUS_BLAST",
+                "MOVE_RAIN_DANCE"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_GASTRODON",
+            "form": 0,
+            "level": 44,
+            "item": "ITEM_LEFTOVERS",
+            "moves": [
+                "MOVE_MIRROR_COAT",
+                "MOVE_COUNTER",
+                "MOVE_STOCKPILE",
+                "MOVE_SURF"
             ],
             "nature": null,
             "ability": null,
@@ -45,11 +94,11 @@
         {
             "species": "SPECIES_FLOATZEL",
             "form": 0,
-            "level": 37,
-            "item": "ITEM_SITRUS_BERRY",
+            "level": 45,
+            "item": "ITEM_KINGS_ROCK",
             "moves": [
-                "MOVE_BRINE",
-                "MOVE_ICE_FANG",
+                "MOVE_PURSUIT",
+                "MOVE_WATERFALL",
                 "MOVE_CRUNCH",
                 "MOVE_AQUA_JET"
             ],

@@ -1297,6 +1297,18 @@ meaningfully sharper game than before.
 
 ---
 
+## Every Gym Leader Has a Brand New Team
+
+All 8 gym leaders — Roark through Volkner — have been completely redesigned
+with full 6-Pokémon teams, every one of them fully evolved and built around
+their type theme (Volkner, for example, now runs Raichu, Luxray, Jolteon,
+Lanturn, Manectric, and Electivire). Their levels climb from Roark's team in
+the low teens up to Volkner's team in the low sixties, and several of them
+— Byron, Gardenia, Candice, and Volkner — now fight you in double battles.
+Expect every gym battle to be a real fight from here on out.
+
+---
+
 ## Trainer Pokémon Now Have Perfect IVs
 
 Every Pokémon on every trainer you fight — gym trainers, rivals, random
@@ -1716,3 +1728,7 @@ Water-type starter instead of the usual fish — Mudkip at Ravaged Path,
 Totodile at the Oreburgh Gate's flooded lower floor, Piplup on Route 218,
 and Squirtle on Route 219 — evolved into its next stage on the Good Rod and
 fully evolved on the Super Rod.
+
+Both floors of the Oreburgh Gate now have a small chance of a Sandshrew
+turning up alongside the usual Zubat/Geodude/Psyduck crowd, and Route 207
+now has a Croagunk mixed in with its fire-type residents.

@@ -8,19 +8,37 @@
     "ai_flags": [
         "AI_FLAG_BASIC",
         "AI_FLAG_EVAL_ATTACK",
-        "AI_FLAG_EXPERT"
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_TAG_STRATEGY",
+        "AI_FLAG_CHECK_HP",
+        "AI_FLAG_WEATHER"
     ],
-    "double_battle": false,
+    "double_battle": true,
     "party": [
         {
-            "species": "SPECIES_SNEASEL",
+            "species": "SPECIES_DELIBIRD",
             "form": 0,
-            "level": 40,
-            "item": "ITEM_NONE",
+            "level": 56,
+            "item": "ITEM_FOCUS_SASH",
             "moves": [
-                "MOVE_SLASH",
-                "MOVE_AERIAL_ACE",
-                "MOVE_FAINT_ATTACK",
+                "MOVE_FAKE_OUT",
+                "MOVE_ENDURE",
+                "MOVE_RAPID_SPIN",
+                "MOVE_ICY_WIND"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_MAMOSWINE",
+            "form": 0,
+            "level": 56,
+            "item": "ITEM_SOFT_SAND",
+            "moves": [
+                "MOVE_AVALANCHE",
+                "MOVE_STONE_EDGE",
+                "MOVE_EARTHQUAKE",
                 "MOVE_ICE_SHARD"
             ],
             "nature": null,
@@ -28,15 +46,15 @@
             "ball_seal": 0
         },
         {
-            "species": "SPECIES_PILOSWINE",
+            "species": "SPECIES_WEAVILE",
             "form": 0,
-            "level": 40,
-            "item": "ITEM_NONE",
+            "level": 56,
+            "item": "ITEM_MUSCLE_BAND",
             "moves": [
-                "MOVE_AVALANCHE",
-                "MOVE_STONE_EDGE",
-                "MOVE_EARTHQUAKE",
-                "MOVE_HAIL"
+                "MOVE_FAKE_OUT",
+                "MOVE_NIGHT_SLASH",
+                "MOVE_AERIAL_ACE",
+                "MOVE_ICE_SHARD"
             ],
             "nature": null,
             "ability": null,
@@ -45,13 +63,28 @@
         {
             "species": "SPECIES_ABOMASNOW",
             "form": 0,
-            "level": 42,
-            "item": "ITEM_NONE",
+            "level": 56,
+            "item": "ITEM_LIFE_ORB",
             "moves": [
-                "MOVE_AVALANCHE",
+                "MOVE_BLIZZARD",
                 "MOVE_WOOD_HAMMER",
-                "MOVE_WATER_PULSE",
+                "MOVE_ICE_SHARD",
                 "MOVE_FOCUS_BLAST"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_GLACEON",
+            "form": 0,
+            "level": 56,
+            "item": "ITEM_LEFTOVERS",
+            "moves": [
+                "MOVE_BLIZZARD",
+                "MOVE_WISH",
+                "MOVE_YAWN",
+                "MOVE_PROTECT"
             ],
             "nature": null,
             "ability": null,
@@ -60,13 +93,12 @@
         {
             "species": "SPECIES_FROSLASS",
             "form": 0,
-            "level": 44,
-            "item": "ITEM_SITRUS_BERRY",
+            "level": 57,
+            "item": "ITEM_NEVERMELTICE",
             "moves": [
                 "MOVE_BLIZZARD",
-                "MOVE_DOUBLE_TEAM",
-                "MOVE_SHADOW_BALL",
-                "MOVE_PSYCHIC"
+                "MOVE_PROTECT",
+                "MOVE_SHADOW_BALL"
             ],
             "nature": null,
             "ability": null,

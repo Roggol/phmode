@@ -8,20 +8,39 @@
     "ai_flags": [
         "AI_FLAG_BASIC",
         "AI_FLAG_EVAL_ATTACK",
-        "AI_FLAG_EXPERT"
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_SETUP_FIRST_TURN",
+        "AI_FLAG_TAG_STRATEGY",
+        "AI_FLAG_CHECK_HP",
+        "AI_FLAG_HARRASSMENT"
     ],
-    "double_battle": false,
+    "double_battle": true,
     "party": [
         {
-            "species": "SPECIES_MAGNETON",
+            "species": "SPECIES_MAGNEZONE",
             "form": 0,
-            "level": 37,
-            "item": "ITEM_NONE",
+            "level": 50,
+            "item": "ITEM_MAGNET",
             "moves": [
-                "MOVE_FLASH_CANNON",
+                "MOVE_DISCHARGE",
                 "MOVE_THUNDERBOLT",
-                "MOVE_TRI_ATTACK",
+                "MOVE_FLASH_CANNON",
                 "MOVE_METAL_SOUND"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_BRONZONG",
+            "form": 0,
+            "level": 50,
+            "item": "ITEM_LIGHT_CLAY",
+            "moves": [
+                "MOVE_LIGHT_SCREEN",
+                "MOVE_REFLECT",
+                "MOVE_GYRO_BALL",
+                "MOVE_CONFUSE_RAY"
             ],
             "nature": null,
             "ability": null,
@@ -30,13 +49,43 @@
         {
             "species": "SPECIES_STEELIX",
             "form": 0,
-            "level": 38,
-            "item": "ITEM_NONE",
+            "level": 50,
+            "item": "ITEM_GRIP_CLAW",
             "moves": [
-                "MOVE_FLASH_CANNON",
-                "MOVE_ICE_FANG",
-                "MOVE_EARTHQUAKE",
-                "MOVE_SANDSTORM"
+                "MOVE_SAND_TOMB",
+                "MOVE_IRON_HEAD",
+                "MOVE_AQUA_TAIL",
+                "MOVE_ROCK_SLIDE"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_AGGRON",
+            "form": 0,
+            "level": 50,
+            "item": "ITEM_MUSCLE_BAND",
+            "moves": [
+                "MOVE_IRON_HEAD",
+                "MOVE_ROCK_SLIDE",
+                "MOVE_AERIAL_ACE",
+                "MOVE_BRICK_BREAK"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_METAGROSS",
+            "form": 0,
+            "level": 50,
+            "item": "ITEM_SITRUS_BERRY",
+            "moves": [
+                "MOVE_METEOR_MASH",
+                "MOVE_HAMMER_ARM",
+                "MOVE_BULLET_PUNCH",
+                "MOVE_PURSUIT"
             ],
             "nature": null,
             "ability": null,
@@ -45,13 +94,13 @@
         {
             "species": "SPECIES_BASTIODON",
             "form": 0,
-            "level": 41,
-            "item": "ITEM_SITRUS_BERRY",
+            "level": 51,
+            "item": "ITEM_LEFTOVERS",
             "moves": [
-                "MOVE_METAL_BURST",
-                "MOVE_STONE_EDGE",
+                "MOVE_FISSURE",
+                "MOVE_COUNTER",
                 "MOVE_IRON_DEFENSE",
-                "MOVE_TAUNT"
+                "MOVE_PROTECT"
             ],
             "nature": null,
             "ability": null,

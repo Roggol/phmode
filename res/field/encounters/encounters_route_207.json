@@ -6,20 +6,20 @@
             "species": "SPECIES_PONYTA"
         },
         {
-            "level": 5,
-            "species": "SPECIES_MAGBY"
+            "level": 13,
+            "species": "SPECIES_CROAGUNK"
         },
         {
             "level": 6,
             "species": "SPECIES_HOUNDOUR"
         },
         {
-            "level": 7,
-            "species": "SPECIES_PONYTA"
-        },
-        {
             "level": 3,
             "species": "SPECIES_DODUO"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_MAGBY"
         },
         {
             "level": 6,
@@ -52,11 +52,11 @@
     ],
     "day": [
         "SPECIES_GROWLITHE",
-        "SPECIES_PONYTA"
+        "SPECIES_DODUO"
     ],
     "night": [
         "SPECIES_VULPIX",
-        "SPECIES_PONYTA"
+        "SPECIES_DODUO"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

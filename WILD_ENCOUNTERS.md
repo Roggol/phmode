@@ -100,12 +100,12 @@ The damp cave is an ideal habitat for all sorts of cave dwelling pokemon.
 
 #### 1F
 There's a large population of Zubats in this cave.
-- **Grass/Land**: Zubat (Lv. 5-8, 50%), Geodude (Lv. 5-7, 30%), Whismur (Lv. 5-7, 20%)
+- **Grass/Land**: Zubat (Lv. 5-8, 50%), Geodude (Lv. 5-7, 30%), Whismur (Lv. 5-7, 10%), Sandshrew(Lv. 13, 10%)
 - **Rock Smash**: Geodude (Lv. 5-8, 89%), Nosepass (Lv. 5-8, 10%), Shuckle (Lv. 8, 1%)
 
 #### B1F
 The wet underground layer is home to many cave dwellers and fish.
-- **Grass/Land**: Zubat (Lv. 6-9, 45%), Psyduck (Lv. 8-10, 35%), Geodude (Lv. 6-8, 15%), Teddiursa (Lv. 10, 5%)
+- **Grass/Land**: Zubat (Lv. 6-9, 40%), Psyduck (Lv. 8-10, 35%), Geodude (Lv. 6-8, 15%), Sandshrew(Lv. 13, 10%)
 - **Surf**: Slowpoke (Lv. 20-30, 60%), Zubat (Lv. 20-30, 35%), Lapras(Lv. 36, 5%)
 - **Rock Smash**: Geodude (Lv. 5-8, 89%), Nosepass (Lv. 5-8, 10%), Shuckle (Lv. 8, 1%)
 - **Old Rod**: Goldeen (Lv. 3-14, 30%), Magikarp (Lv. 3-14, 30%), Finneon (Lv. 3-14, 30%), Barboach (Lv 3-14, 9%), Totodile (Lv. 3, 1%)
@@ -124,11 +124,11 @@ The machops are hard at work in this mine.
 - **Rock Smash**: Geodude (Lv. 5-9, 49%), Machop(Lv. 5-9, 30%), Onix (Lv. 6-8, 20%), Shuckle (Lv. 8, 1%)
 
 ### Route 207
-The arid mud slides attract fire type pokemon
+The arid mud slides attract fire type pokemon.
 - **Grass/Land**:
-  - *Morning*: Ponyta (Lv. 6-8, 35%), Magby (Lv. 5-7, 28%), Doduo (Lv. 3-9, 25%), Hondour (Lv. 5-7, 10%), Cyndaquill (Lv. 5, 1%), Charmander (Lv. 5, 1%)
-  - *Day*: Ponyta (Lv. 6-8, 35%), Magby (Lv. 5-7, 28%), Doduo (Lv. 3-9, 25%), Growlithe (Lv. 5-7, 10%), Cyndaquill (Lv. 5, 1%), Charmander (Lv. 5, 1%)
-  - *Night*: Ponyta (Lv. 6-8, 35%), Magby (Lv. 5-7, 28%), Doduo (Lv. 3-9, 25%), Vulpix (Lv. 5-7, 10%), Cyndaquill (Lv. 5, 1%), Charmander (Lv. 5, 1%)
+  - *Morning*: Ponyta (Lv. 6-8, 25%), Croagunk (Lv.13, 20%) Magby (Lv. 5-7, 18%), Doduo (Lv. 3-9, 25%), Hondour (Lv. 5-7, 10%), Cyndaquill (Lv. 5, 1%), Charmander (Lv. 5, 1%)
+  - *Day*: Ponyta (Lv. 6-8, 25%), Croagunk (Lv.13, 20%) Magby (Lv. 5-7, 18%), Doduo (Lv. 3-9, 25%), Growlithe (Lv. 5-7, 10%), Cyndaquill (Lv. 5, 1%), Charmander (Lv. 5, 1%)
+  - *Night*: Ponyta (Lv. 6-8, 25%), Croagunk (Lv.13, 20%) Magby (Lv. 5-7, 18%), Doduo (Lv. 3-9, 25%), Vulpix (Lv. 5-7, 10%), Cyndaquill (Lv. 5, 1%), Charmander (Lv. 5, 1%)
 
 ### Route 218
 Harbour conditions are ideal for small crustaceans.

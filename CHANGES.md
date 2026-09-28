@@ -3453,6 +3453,54 @@ chambers, etc.) are omitted, and postgame-only areas are deferred to a
 "Tier 10 - tbd later" placeholder, matching `TRAINER_LOCATIONS.md`'s own
 scope.
 
+### All 8 gym leaders imported from DSPRE .trf files
+
+The user built full 6-Pokémon, all-fully-evolved, single-type-themed teams for
+all 8 gym leaders in DSPRE (DS Pokémon ROM Editor) and exported each as a
+`.trf` trainer file, dropped into a new `trainerfiles/` directory at the repo
+root. These were parsed and imported directly into
+`res/trainers/data/leader_{roark,byron,gardenia,wake,maylene,fantina,candice,
+volkner}.json`, replacing each trainer's `items`, `ai_flags`, `double_battle`,
+and full `party` array (`name`, `class`, and `messages` were left untouched,
+since none of that is present in a `.trf` file).
+
+* Every leader now runs a full 6-mon party (up from Roark's 3, for example),
+  fully evolved, single-type themed (e.g. Volkner: Raichu/Luxray/Jolteon/
+  Lanturn/Manectric/Electivire), at a level curve from Roark (12-14) up to
+  Volkner (61-62) — Gardenia, Fantina, Maylene, Wake, Byron, and Candice fall
+  in between in that order, which is the tier order this hack already uses
+  rather than vanilla Platinum's Roark→Gardenia→Maylene→Wake→Fantina→Byron.
+  Byron, Gardenia, Candice, and Volkner are now double battles.
+* **The `.trf` format has no `nature` or `ability` field at all** — Gen 4's
+  in-game trainer data never carried per-mon nature or ability overrides
+  (nature came from personality value, ability from the species' default
+  slot), so DSPRE has nothing to export there even though phmode's own
+  `TrainerMonBase` struct added both fields this hack introduced. Every
+  imported party member has `"nature": null` and `"ability": null` for now
+  (the same "not yet curated" placeholder this project already uses
+  elsewhere — see `trainerproc.c`'s handling of a missing `nature`/`ability`),
+  and will need real values chosen by hand.
+* Parsing notes for future imports: a `.trf` file is
+  `[len-prefixed name][1-byte TrainerProperties length][TrainerProperties]
+  [1-byte party length][party data]`. `TrainerProperties` is
+  `flags(1) trainerClass(1) unknown/sprite(1) partyCount(1) items(u16×4)
+  aiMask(u32) doubleBattle(u32, 2=double)` — byte-for-byte the same 20-byte
+  layout as this project's own `TrainerHeader` in
+  `include/struct_defs/trainer_data.h`, just with DSPRE's own field names.
+  Each party member is `difficulty/ivScale(1) genderAbilityFlags(1,
+  HGSS-only) level(u16) species|form(u16, 10-bit species + 6-bit form)
+  [heldItem(u16) if flags bit1] [4× move(u16) if flags bit0] ballSeals(u16)`
+  — `difficulty` is the vanilla IV-scale byte this project's own struct
+  already replaced with `nature`/`ability` (see the comment in
+  `trainer_data.h`), so it's discarded on import along with the HGSS-only
+  gender/ability byte. AI flag bit *i* maps to the (*i*+1)th entry in
+  `generated/ai_flags.txt`, since entry 0 (`AI_FLAG_NONE` = value 0) isn't a
+  real bit. This was all confirmed against DSPRE's own source
+  (`DS_Map/ROMFiles/TrainerFile.cs` in the
+  `DS-Pokemon-Rom-Editor/DSPRE` GitHub repo) and cross-checked byte-for-byte
+  against Roark's pre-existing `leader_roark.json` before trusting it for
+  the rest.
+
 ---
 
 ## Map data
@@ -3899,6 +3947,23 @@ Follow-up pass after the Tier 1 sync above, prompted by further doc edits:
   can ever change by time of day, never a 1% one); and Route 218's Good Rod
   Horsea (10% → 9%, since 30+30+30+10+1 overshot 100 once Prinplup was
   added — Old Rod already used the correct 9%).
+
+### Wild encounter doc sync — Oreburgh Gate/Route 207 tweaks
+
+Another follow-up pass, again confined to Tier 1 per the doc:
+
+* **Oreburgh Gate 1F** (`encounters_oreburgh_gate_1f.json`) — Whismur's grass
+  share halved from 20% to 10%, with the freed 10% going to a new Sandshrew
+  (Lv. 13). Zubat (50%) and Geodude (30%) are unchanged.
+* **Oreburgh Gate B1F** (`encounters_oreburgh_gate_b1f.json`) — Teddiursa
+  (5%) is replaced outright by Sandshrew, now at 10% (Zubat dropped 45%→40%
+  to make room; Psyduck 35% and Geodude 15% unchanged).
+* **Route 207** (`encounters_route_207.json`) — gains Croagunk (Lv. 13, 20%,
+  fixed across all three periods, occupying a single slot on its own) and
+  picks up new flavor text ("The arid mud slides attract fire type
+  pokemon."). Ponyta drops 35%→25% and Magby drops 28%→18% to make room;
+  Doduo (25%), the Houndour/Growlithe/Vulpix time-of-day swap (10%), and
+  Cyndaquil/Charmander (1% each) are unchanged.
 
 ### Map headers
 
