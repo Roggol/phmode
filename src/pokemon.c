@@ -3824,6 +3824,44 @@ u16 Pokemon_GetEvolutionTargetSpecies(Party *party, Pokemon *mon, u8 evoClass, u
     return targetSpecies;
 }
 
+// phmode: returns the lowest level-gated evolution threshold for monSpecies that's
+// still above curLevel (0 if none). Used by Rare Candy (see Pokemon_ApplyItemEffects)
+// to stop a multi-level jump at each evolution boundary in turn instead of jumping
+// straight to the level cap and skipping intermediate evolution stages (e.g. a
+// candy'd Caterpie should stop at Metapod, not land on Butterfree with Metapod's
+// stage never having happened). Only considers the methods the EVO_CLASS_BY_LEVEL
+// switch above gates on "param <= level" - friendship, beauty, held-item, move,
+// party-composition, and location-conditional evolutions don't depend on level to
+// become eligible, so they're not relevant to deciding where to stop.
+u16 Pokemon_GetNextLevelEvolutionThreshold(int monSpecies, u8 curLevel)
+{
+    SpeciesEvolution *speciesEvolutions = Heap_Alloc(HEAP_ID_SYSTEM, sizeof(SpeciesEvolution) * MAX_EVOLUTIONS);
+    LoadSpeciesEvolutions(monSpecies, speciesEvolutions);
+
+    u16 nextThreshold = 0;
+
+    for (int i = 0; i < MAX_EVOLUTIONS; i++) {
+        switch (speciesEvolutions[i].method) {
+        case EVO_LEVEL:
+        case EVO_LEVEL_ATK_GT_DEF:
+        case EVO_LEVEL_ATK_EQ_DEF:
+        case EVO_LEVEL_ATK_LT_DEF:
+        case EVO_LEVEL_PID_LOW:
+        case EVO_LEVEL_PID_HIGH:
+        case EVO_LEVEL_NINJASK:
+        case EVO_LEVEL_MALE:
+        case EVO_LEVEL_FEMALE:
+            if (speciesEvolutions[i].param > curLevel && (nextThreshold == 0 || speciesEvolutions[i].param < nextThreshold)) {
+                nextThreshold = speciesEvolutions[i].param;
+            }
+            break;
+        }
+    }
+
+    Heap_Free(speciesEvolutions);
+    return nextThreshold;
+}
+
 u16 Pokemon_GetBaseSpeciesFromPersonalData(const u16 species)
 {
     u16 result = 0;

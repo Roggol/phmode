@@ -3144,6 +3144,49 @@ itself) are unchanged - only the player-visible name and plural form moved.
   used everywhere else in that file. Pre-existing issue, not part of this
   session's feature work.
 
+### Bug fix: Rare Candy skipped intermediate evolutions on a multi-level jump
+
+Since Rare Candy jumps a Pokémon straight to the level cap in one use (see
+above) rather than +1 level like vanilla, a low-level Pokémon with more than
+one evolution ahead of it (e.g. a level-3 Caterpie, cap 14) would skip a
+stage entirely: `PartyMenuCB_LevelUp`'s evolution check
+(`src/applications/party_menu/callbacks.c`, `LEVELUP_STATE_CHECK_EVOLUTION`)
+only ever runs once per item use, checked against whatever species the mon
+*started* as — so Caterpie resolved straight to Metapod and stopped there,
+never re-checking whether the now-level-14 Metapod should *also* evolve into
+Butterfree.
+
+* New `u16 Pokemon_GetNextLevelEvolutionThreshold(int monSpecies, u8 curLevel)`
+  in `src/pokemon.c`/`include/pokemon.h` — scans a species' evolution table
+  (the same one `Pokemon_GetEvolutionTargetSpecies` reads via
+  `LoadSpeciesEvolutions`) for the lowest level-gated threshold above
+  `curLevel`, considering only the methods that actually gate on
+  `param <= level` in that function's `EVO_CLASS_BY_LEVEL` switch (`EVO_LEVEL`,
+  the Atk/Def-comparison variants, `EVO_LEVEL_PID_LOW/HIGH`,
+  `EVO_LEVEL_NINJASK`, `EVO_LEVEL_MALE/FEMALE`) — friendship, beauty,
+  held-item, move-known, party-composition, and location-conditional
+  evolutions don't depend on level to become eligible, so they're irrelevant
+  to deciding where a candy-driven jump should stop.
+* `Pokemon_ApplyItemEffects` (`src/item_use_pokemon.c`) now uses this to pick
+  the jump's target level: the next evolution threshold if one exists below
+  the level cap, otherwise the cap itself as before. In practice this means
+  each Rare Candy use advances a Pokémon to its *next* evolution stage (or
+  the cap, if none remain) rather than always jumping straight to the cap —
+  a level-3 Caterpie candy'd once becomes a level-7 Metapod, candied again
+  becomes a level-10 Butterfree, and a third use finally reaches the cap.
+  A Pokémon that's already past its evolution level for some other reason
+  (e.g. caught in the wild already above it) is unaffected — it still jumps
+  straight to the cap and evolves there, same as before.
+* Both `Pokemon_CheckItemEffects` and `Pokemon_ApplyItemEffects` also gained
+  a narrow exception to the level-cap gate: if a Pokémon is *at* the cap but
+  already past the level a pending evolution requires (e.g. a level-14
+  Metapod at a level-14 cap — level exceeds Metapod's own cap, so it could
+  never candy past Butterfree's threshold the normal way), using a Rare
+  Candy now triggers just that evolution through the ordinary post-use
+  evolution check, without granting any EXP or levels at all. Previously
+  this case was blocked outright by the level-cap gate with no way to force
+  the evolution short of leveling up normally in battle.
+
 ### Common Candy cycles through Egg Moves at level 1
 When Common Candy lowers a Pokémon all the way down to level 1, it now offers
 every Egg Move its species can learn, one at a time, reusing the exact same

@@ -583,6 +583,8 @@ BoxPokemon *Pokemon_GetBoxPokemon(Pokemon *mon);
 
 BOOL Pokemon_ShouldLevelUp(Pokemon *mon);
 u16 Pokemon_GetEvolutionTargetSpecies(Party *party, Pokemon *mon, u8 evoClass, u16 evoParam, int *evoTypeResult);
+// phmode: the lowest level-gated evolution threshold for monSpecies above curLevel (0 if none) - see the comment on the definition in pokemon.c
+u16 Pokemon_GetNextLevelEvolutionThreshold(int monSpecies, u8 curLevel);
 u16 Pokemon_GetBaseSpeciesFromPersonalData(const u16 species);
 u16 Pokemon_GetBaseSpeciesForBattle(const u16 species);
 

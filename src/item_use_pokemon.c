@@ -189,7 +189,14 @@ u8 Pokemon_CheckItemEffects(Pokemon *mon, u16 itemId, u16 moveSlot, enum HeapID 
     }
 
     if (Item_Get(item, ITEM_PARAM_LEVEL_UP)) {
-        if (Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL) < MAX_POKEMON_LEVEL && Pokemon_BelowHardLevelCap(mon)) {
+        if (Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL) < MAX_POKEMON_LEVEL
+            && (Pokemon_BelowHardLevelCap(mon)
+                // phmode: still allow using a Rare Candy at the level cap if the
+                // Pokemon has a level-based evolution it's already past due for
+                // (e.g. a level-14 Metapod sitting at a level-14 cap) - the candy
+                // triggers just the evolution without granting any more levels
+                // (see Pokemon_ApplyItemEffects).
+                || Pokemon_GetEvolutionTargetSpecies(NULL, mon, EVO_CLASS_BY_LEVEL, 0, NULL) != SPECIES_NONE)) {
             Heap_Free(item);
             return TRUE;
         }
@@ -323,12 +330,23 @@ u8 Pokemon_ApplyItemEffects(Pokemon *mon, u16 itemId, u16 moveSlot, u16 location
     if (Item_Get(item, ITEM_PARAM_LEVEL_UP)) {
         if (vApplyLevel < MAX_POKEMON_LEVEL && Pokemon_BelowHardLevelCap(mon)) {
             u16 levelCap = Pokemon_GetHardLevelCap();
+            u16 targetLevel = levelCap;
 
             if (levelCap != 0 && levelCap < MAX_POKEMON_LEVEL && levelCap > vApplyLevel) {
-                // Rare Candy jumps straight to the hard level cap in one use; the
-                // party menu then walks the skipped levels' learnsets.
-                u32 capExp = Pokemon_GetSpeciesBaseExpAt(Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL), levelCap);
-                Pokemon_IncreaseValue(mon, MON_DATA_EXPERIENCE, capExp - Pokemon_GetValue(mon, MON_DATA_EXPERIENCE, NULL));
+                // phmode: rather than always jumping straight to the hard level cap
+                // in one use, stop early at the next level-based evolution boundary
+                // (if one exists below the cap) so a multi-stage evolution line
+                // (e.g. Caterpie -> Metapod -> Butterfree) evolves once per stage
+                // across separate candy uses, instead of skipping an intermediate
+                // stage entirely.
+                u16 nextEvoLevel = Pokemon_GetNextLevelEvolutionThreshold(Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL), vApplyLevel);
+
+                if (nextEvoLevel != 0 && nextEvoLevel < levelCap) {
+                    targetLevel = nextEvoLevel;
+                }
+
+                u32 targetExp = Pokemon_GetSpeciesBaseExpAt(Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL), targetLevel);
+                Pokemon_IncreaseValue(mon, MON_DATA_EXPERIENCE, targetExp - Pokemon_GetValue(mon, MON_DATA_EXPERIENCE, NULL));
             } else {
                 Pokemon_IncreaseValue(mon, MON_DATA_EXPERIENCE, Pokemon_GetExpToNextLevel(mon));
             }
@@ -340,6 +358,13 @@ u8 Pokemon_ApplyItemEffects(Pokemon *mon, u16 itemId, u16 moveSlot, u16 location
                 RestorePokemonHP(mon, vApplyCurrentHP, vApplyLevelUpMaxHP, vApplyLevelUpMaxHP - vApplyMaxHP);
             }
 
+            effectApplied = TRUE;
+        } else if (vApplyLevel < MAX_POKEMON_LEVEL && Pokemon_GetEvolutionTargetSpecies(NULL, mon, EVO_CLASS_BY_LEVEL, 0, NULL) != SPECIES_NONE) {
+            // phmode: at (or above) the level cap already, but there's a level-based
+            // evolution still pending (the mon's level already qualifies for it) -
+            // let the candy trigger just that evolution via the normal post-use
+            // evolution check (see PartyMenuCB_LevelUp), without granting any
+            // EXP/levels at all.
             effectApplied = TRUE;
         }
 

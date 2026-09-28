@@ -1244,6 +1244,16 @@ offers every move that Pokémon would have learned along the way, so you
 won't miss out on level-up moves just because you skipped several levels
 at once.
 
+If that jump would carry the Pokémon past a stage it's due to evolve at,
+the candy now stops right at that evolution instead of skipping over it —
+a level-3 Caterpie candied up will stop at a level-7 Metapod, not jump
+straight to a level-14 Metapod that skipped Butterfree entirely. Candy it
+again and it'll stop at level 10 to become Butterfree, and a third candy
+finally carries it the rest of the way to the cap. If a Pokémon is already
+sitting at the level cap with an evolution it's overdue for, using a candy
+on it will now trigger that evolution on the spot, even though it can't
+gain any more levels.
+
 **Common Candy** is a new item that works the other way around — it
 lowers a Pokémon's level by exactly one, down to a minimum of level 1.
 If a Common Candy brings a Pokémon all the way down to level 1, it also

@@ -8,6 +8,8 @@ Every trainer battle before the Elite Four, listed in the rough order you'll fig
 
 This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer data files under `res/trainers/data/`. If trainers are moved, re-leveled, or re-teamed by hand, this file will need to be regenerated to stay accurate.
 
+Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes them from its per-location trainer lists, since a leader's level and team are hand-curated rather than derived from the tier's "active cap" formula the way every other trainer's is (see that file's own note on this). Each leader's entry below was added by hand, straight from their `res/trainers/data/leader_*.json`, as the last entry in their gym's section - if this file is ever regenerated from `TRAINER_LOCATIONS.md` alone, the leaders will need to be re-added the same way.
+
 ## Tier 1 — cap 14
 
 ### Route 201
@@ -387,6 +389,67 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
+
+### Oreburgh Gym (Roark) — active cap 14
+
+**Darius** (Youngster)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Geodude** — Lv. 13
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Tackle, Defense Curl
+    - **Onix** — Lv. 13
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Rock Throw, Tackle, Harden
+
+**Jonathon** (Youngster)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Geodude** — Lv. 13
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Tackle, Defense Curl
+
+**Roark** (Leader)
+  - AI Flags: Basic, Evaluate Attack, Expert, Setup First Turn, Check HP
+  - Battle Items: Potion, Potion
+  - Party:
+    - **Geodude** — Lv. 12
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Stealth Rock, Selfdestruct
+    - **Geodude** — Lv. 12
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Defense Curl, Rollout
+    - **Geodude** — Lv. 13
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: None
+      - Moves: Magnitude, Rock Tomb
+    - **Onix** — Lv. 13
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Screech, Rock Tomb, Sand Tomb
+    - **Nosepass** — Lv. 13
+      - Ability: Sturdy
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Block, Rock Tomb, Thunder Wave, Shock Wave
+    - **Cranidos** — Lv. 14
+      - Ability: Mold Breaker
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Hard Stone
+      - Moves: Pursuit, Rock Tomb, Zen Headbutt, Fire Punch
+
 
 ## Tier 2 — cap 23
 
@@ -5770,30 +5833,6 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
 
 ## Gyms
 
-### Oreburgh Gym (Roark) — active cap 14
-
-**Darius** (Youngster)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Geodude** — Lv. 13
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Tackle, Defense Curl
-    - **Onix** — Lv. 13
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Rock Throw, Tackle, Harden
-
-**Jonathon** (Youngster)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Geodude** — Lv. 13
-      - Ability: Rock Head
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Tackle, Defense Curl
 
 ### Eterna Gym (Gardenia) — active cap 23
 
@@ -5847,6 +5886,41 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Mega Drain, Poison Sting, Stun Spore
+
+**Gardenia** (Leader) — *double battle*
+  - AI Flags: Basic, Evaluate Attack, Expert, Setup First Turn, Tag Strategy, Check HP, Weather
+  - Battle Items: Super Potion, Super Potion
+  - Party:
+    - **Sunflora** — Lv. 21
+      - Ability: Chlorophyll
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: BrightPowder
+      - Moves: Solar Beam, Double Team, Sunny Day, Giga Drain
+    - **Cherrim** — Lv. 22
+      - Ability: Flower Gift
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Big Root
+      - Moves: Sunny Day, Leech Seed, Giga Drain, Protect
+    - **Tropius** — Lv. 22
+      - Ability: Chlorophyll
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Solar Beam, Aerial Ace, Synthesis, Growth
+    - **Grotle** — Lv. 22
+      - Ability: Overgrow
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Lum Berry
+      - Moves: Curse, Bite, Razor Leaf, Rest
+    - **Bellossom** — Lv. 22
+      - Ability: Chlorophyll
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Stun Spore, Charm, Giga Drain, Attract
+    - **Roserade** — Lv. 23
+      - Ability: Natural Cure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Expert Belt
+      - Moves: Weather Ball, Sludge Bomb, Leaf Storm, Shadow Ball
 
 ### Hearthome Gym (Fantina) — active cap 30
 
@@ -5964,6 +6038,41 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Spit Up, Swallow, Stockpile
 
+**Fantina** (Leader)
+  - AI Flags: Basic, Evaluate Attack, Expert, Setup First Turn, Baton Pass, Check HP
+  - Battle Items: Super Potion, Super Potion
+  - Party:
+    - **Drifblim** — Lv. 28
+      - Ability: Flare Boost
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: BrightPowder
+      - Moves: Ominous Wind, Calm Mind, Pain Split, Baton Pass
+    - **Sableye** — Lv. 29
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Fake Out, Shadow Sneak, Knock Off, Swagger
+    - **Gengar** — Lv. 29
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Shadow Ball, Curse, Psychic, Sludge Bomb
+    - **Rotom** — Lv. 29
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Leftovers
+      - Moves: Charge Beam, Shadow Ball, Substitute, Thunder Wave
+    - **Spiritomb** — Lv. 29
+      - Ability: Pressure
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Quick Claw
+      - Moves: Ominous Wind, Hypnosis, Pursuit, Confuse Ray
+    - **Mismagius** — Lv. 30
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Lum Berry
+      - Moves: Shadow Ball, Energy Ball, Thunderbolt, Psychic
+
 ### Veilstone Gym (Maylene) — active cap 37
 
 **Colby** (Black Belt)
@@ -6026,6 +6135,40 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Karate Chop, Foresight
+
+**Maylene** (Leader)
+  - AI Flags: Basic, Evaluate Attack, Expert, Setup First Turn
+  - Party:
+    - **Medicham** — Lv. 37
+      - Ability: Pure Power
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Drain Punch, Bulk Up, Rock Tomb, Fake Out
+    - **Machamp** — Lv. 37
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Flame Orb
+      - Moves: Focus Energy, Fling, Cross Chop, Stone Edge
+    - **Hitmontop** — Lv. 37
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Wide Lens
+      - Moves: Hi Jump Kick, Agility, Bullet Punch, Pursuit
+    - **Hitmonchan** — Lv. 37
+      - Ability: Keen Eye
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Leftovers
+      - Moves: Bulk Up, Thunder Punch, Ice Punch, Fire Punch
+    - **Hitmonlee** — Lv. 37
+      - Ability: Limber
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Life Orb
+      - Moves: Sucker Punch, Knock Off, Agility, Superpower
+    - **Lucario** — Lv. 38
+      - Ability: Steadfast
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Focus Sash
+      - Moves: Nasty Plot, Aura Sphere, Psychic, Shadow Ball
 
 ### Pastoria Gym (Wake) — active cap 45
 
@@ -6117,6 +6260,41 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Water Gun, Rollout, Hyper Fang, Yawn
+
+**Wake** (Leader)
+  - AI Flags: Basic, Evaluate Attack, Expert, Setup First Turn, Tag Strategy, Check HP, Weather
+  - Battle Items: Hyper Potion, Hyper Potion
+  - Party:
+    - **Gyarados** — Lv. 44
+      - Ability: Intimidate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Wacan Berry
+      - Moves: Waterfall, Dragon Dance, Earthquake, Ice Fang
+    - **Quagsire** — Lv. 44
+      - Ability: Damp
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Rindo Berry
+      - Moves: Earthquake, Rain Dance, Waterfall, Yawn
+    - **Empoleon** — Lv. 44
+      - Ability: Torrent
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Mystic Water
+      - Moves: Surf, Flash Cannon, Ice Beam, Aqua Jet
+    - **Ludicolo** — Lv. 44
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Life Orb
+      - Moves: Giga Drain, Hydro Pump, Focus Blast, Rain Dance
+    - **Gastrodon** — Lv. 44
+      - Ability: Storm Drain
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Leftovers
+      - Moves: Mirror Coat, Counter, Stockpile, Surf
+    - **Floatzel** — Lv. 45
+      - Ability: Swift Swim
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: King’s Rock
+      - Moves: Pursuit, Waterfall, Crunch, Aqua Jet
 
 ### Canalave Gym (Byron) — active cap 51
 
@@ -6213,6 +6391,41 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Held Item: None
       - Moves: Magnet Bomb, Spark, Thunder Wave
 
+**Byron** (Leader) — *double battle*
+  - AI Flags: Basic, Evaluate Attack, Expert, Setup First Turn, Tag Strategy, Check HP, Harassment
+  - Battle Items: Hyper Potion, Full Restore
+  - Party:
+    - **Magnezone** — Lv. 50
+      - Ability: Magnet Pull
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Magnet
+      - Moves: Discharge, Thunderbolt, Flash Cannon, Metal Sound
+    - **Bronzong** — Lv. 50
+      - Ability: Levitate
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Light Clay
+      - Moves: Light Screen, Reflect, Gyro Ball, Confuse Ray
+    - **Steelix** — Lv. 50
+      - Ability: Rock Head
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Grip Claw
+      - Moves: Sand Tomb, Iron Head, Aqua Tail, Rock Slide
+    - **Aggron** — Lv. 50
+      - Ability: Sturdy
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Muscle Band
+      - Moves: Iron Head, Rock Slide, Aerial Ace, Brick Break
+    - **Metagross** — Lv. 50
+      - Ability: Clear Body
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Meteor Mash, Hammer Arm, Bullet Punch, Pursuit
+    - **Bastiodon** — Lv. 51
+      - Ability: Sturdy
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Leftovers
+      - Moves: Fissure, Counter, Iron Defense, Protect
+
 ### Snowpoint Gym (Candice) — active cap 57
 
 **Alicia** (Ace Trainer Snow Female)
@@ -6298,6 +6511,41 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Icy Wind, Slash, Faint Attack, Quick Attack
+
+**Candice** (Leader) — *double battle*
+  - AI Flags: Basic, Evaluate Attack, Expert, Tag Strategy, Check HP, Weather
+  - Battle Items: Hyper Potion, Full Restore
+  - Party:
+    - **Delibird** — Lv. 56
+      - Ability: Vital Spirit
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Focus Sash
+      - Moves: Fake Out, Endure, Rapid Spin, Icy Wind
+    - **Mamoswine** — Lv. 56
+      - Ability: Thick Fat
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Soft Sand
+      - Moves: Avalanche, Stone Edge, Earthquake, Ice Shard
+    - **Weavile** — Lv. 56
+      - Ability: Sharpness
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Muscle Band
+      - Moves: Fake Out, Night Slash, Aerial Ace, Ice Shard
+    - **Abomasnow** — Lv. 56
+      - Ability: Snow Warning
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Life Orb
+      - Moves: Blizzard, Wood Hammer, Ice Shard, Focus Blast
+    - **Glaceon** — Lv. 56
+      - Ability: Snow Cloak
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Leftovers
+      - Moves: Blizzard, Wish, Yawn, Protect
+    - **Froslass** — Lv. 57
+      - Ability: Snow Warning
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: NeverMeltIce
+      - Moves: Blizzard, Protect, Shadow Ball
 
 ### Sunyshore Gym (Volkner) — active cap 62
 
@@ -6414,3 +6662,38 @@ This file is generated from `res/trainers/TRAINER_LOCATIONS.md` and the trainer 
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Last Resort, Super Fang, Discharge, Sweet Kiss
+**Volkner** (Leader) — *double battle*
+  - AI Flags: Basic, Evaluate Attack, Expert, Setup First Turn, Tag Strategy, Harassment
+  - Battle Items: Hyper Potion, Full Restore
+  - Party:
+    - **Raichu** — Lv. 61
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Wise Glasses
+      - Moves: Charge Beam, Discharge, Focus Blast, Grass Knot
+    - **Luxray** — Lv. 61
+      - Ability: Guts
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Light Clay
+      - Moves: Ice Fang, Light Screen, Crunch, Reflect
+    - **Jolteon** — Lv. 61
+      - Ability: Volt Absorb
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Magnet
+      - Moves: Thunder Wave, Charge Beam, Thunderbolt, Discharge
+    - **Lanturn** — Lv. 61
+      - Ability: Volt Absorb
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Sitrus Berry
+      - Moves: Discharge, Hydro Pump, Brine, Icy Wind
+    - **Manectric** — Lv. 61
+      - Ability: Static
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Life Orb
+      - Moves: Discharge, Flamethrower, Signal Beam, Charge Beam
+    - **Electivire** — Lv. 62
+      - Ability: Motor Drive
+      - Nature: Hardy (default, not yet curated)
+      - Held Item: Muscle Band
+      - Moves: Thunder Punch, Fire Punch, Quick Attack, Ice Punch
+
