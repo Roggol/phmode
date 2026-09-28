@@ -14,7 +14,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
 
 ### Route 201
 
-**Cedric** (Rival) — *exception: the very first rival battle keeps its vanilla level instead of following the rival rule*
+**Barry** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
   - Party:
     - **Piplup** — Lv. 5
@@ -23,7 +23,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Held Item: None
       - Moves: Default level-up moves
 
-**Cedric** (Rival) — *exception, see above*
+**Barry** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
   - Party:
     - **Turtwig** — Lv. 5
@@ -32,7 +32,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Held Item: None
       - Moves: Default level-up moves
 
-**Cedric** (Rival) — *exception, see above*
+**Barry** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes
   - Party:
     - **Chimchar** — Lv. 5
@@ -42,6 +42,15 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Moves: Default level-up moves
 
 ### Route 202
+
+**Tristan** (Youngster)
+  - AI Flags: Basic, Evaluate Attack, Expert
+  - Party:
+    - **Starly** — Lv. 10
+      - Ability: Keen Eye
+      - Nature: Adamant
+      - Held Item: None
+      - Moves: Default level-up moves
 
 **Natalie** (Lass)
   - AI Flags: Basic, Evaluate Attack, Expert
@@ -61,42 +70,33 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Held Item: None
       - Moves: Tackle
 
-**Tristan** (Youngster)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Party:
-    - **Starly** — Lv. 10
-      - Ability: Keen Eye
-      - Nature: Adamant
-      - Held Item: None
-      - Moves: Default level-up moves
-
 ### Jubilife City
 
-**Dawn** (Rival)
+**Dawn/Lucas** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Battle Items: Potion
   - Party:
-    - **Turtwig** — Lv. 10
+    - **Grotle** — Lv. 20
       - Ability: Overgrow
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Absorb, Tackle
 
-**Dawn** (Rival)
+**Dawn/Lucas** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Battle Items: Potion
   - Party:
-    - **Chimchar** — Lv. 10
+    - **Monferno** — Lv. 20
       - Ability: Blaze
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Ember, Scratch
 
-**Dawn** (Rival)
+**Dawn/Lucas** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert
   - Battle Items: Potion
   - Party:
-    - **Piplup** — Lv. 10
+    - **Prinplup** — Lv. 20
       - Ability: Torrent
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
@@ -105,7 +105,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
 **Grunt** (Galactic Grunt Male) — *Galactic grunt*
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Stunky** — Lv. 11
+    - **Stunky** — Lv. 20
       - Ability: Stench
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
@@ -114,7 +114,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
 **Grunt** (Galactic Grunt Male) — *Galactic grunt*
   - AI Flags: Basic, Evaluate Attack, Expert
   - Party:
-    - **Glameow** — Lv. 11
+    - **Glameow** — Lv. 20
       - Ability: Limber
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
@@ -128,36 +128,6 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Nature: Hardy (default, not yet curated)
       - Held Item: None
       - Moves: Default level-up moves
-
-**Lucas** (Rival)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Potion
-  - Party:
-    - **Turtwig** — Lv. 10
-      - Ability: Overgrow
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Absorb, Tackle
-
-**Lucas** (Rival)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Potion
-  - Party:
-    - **Chimchar** — Lv. 10
-      - Ability: Blaze
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Ember, Scratch
-
-**Lucas** (Rival)
-  - AI Flags: Basic, Evaluate Attack, Expert
-  - Battle Items: Potion
-  - Party:
-    - **Piplup** — Lv. 10
-      - Ability: Torrent
-      - Nature: Hardy (default, not yet curated)
-      - Held Item: None
-      - Moves: Bubble, Pound
 
 ### Trainers School
 

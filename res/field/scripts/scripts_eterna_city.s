@@ -41,7 +41,7 @@ EternaCity_OnTransition:
     End
 
 EternaCity_CheckShouldBlockExits:
-    CheckItem ITEM_EXPLORER_KIT, 1, VAR_MAP_LOCAL_0x00
+    CheckItem ITEM_HM09, 1, VAR_MAP_LOCAL_0x00
     GoToIfEq VAR_MAP_LOCAL_0x00, TRUE, EternaCity_SetVarDontBlockExits
     End
 
@@ -387,7 +387,7 @@ EternaCity_Statue:
     End
 
 EternaCity_PokemonBreederF2:
-    GoToIfSet FLAG_RECEIVED_EXPLORER_KIT, EternaCity_GoingUndergroundIsABlast
+    GoToIfSet FLAG_RECEIVED_HM_FLASH, EternaCity_GoingUndergroundIsABlast
     NPCMessage EternaCity_Text_YouDontHaveExplorerKit
     End
 

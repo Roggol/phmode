@@ -338,6 +338,13 @@ void BagUI_PrintTMHMNumber(BagController *controller, BagItem *itemSlot, u32 yOf
 {
     u16 item = itemSlot->item;
 
+    // phmode: ITEM_HM09 (Flash) lives outside the normal contiguous TM01..HM08
+    // item range (see the comment on Item_MoveForTMHM in src/item.c), so remap
+    // it here to land in the "9th HM" slot the arithmetic below expects.
+    if (item == ITEM_HM09) {
+        item = ITEM_HM01 + NUM_HMS;
+    }
+
     if (item < ITEM_HM01) {
         item = item - ITEM_TM01 + 1;
         FontSpecialChars_DrawPartyScreenText(controller->specialChars, SPECIAL_CHAR_NUMBER, item, 2, PADDING_MODE_ZEROES, &controller->windows[BAG_UI_WINDOW_ITEM_LIST], 0, yOffset + 5);

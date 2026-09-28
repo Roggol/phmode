@@ -15,18 +15,7 @@
     },
     {
       "id": "EternaCityUndergroundManHouse_Text_MentorYouBecomingSpelunker",
-      "en_US": [
-        "My gift to you, the Explorer Kit,\n",
-        "will instantly take you underground!\r",
-        "You need only to use it, and you\n",
-        "will be down in the tunnels!\r",
-        "The Underground is a different world\n",
-        "where you can do this, that,\f",
-        "and the other thing, too!\r",
-        "Let me mentor you into becoming\n",
-        "a full-fledged spelunker!\r",
-        "Will you take on that challenge?"
-      ]
+      "en_US": "placeholder"
     },
     {
       "id": "EternaCityUndergroundManHouse_Text_MentorYouBecomeSpelunker",

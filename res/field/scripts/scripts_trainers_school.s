@@ -135,8 +135,8 @@ TrainersSchool_SchoolKidHarrison:
     PlaySE SE_CONFIRM_sseq_3
     LockAll
     FacePlayer
-    GoToIfSet FLAG_RECEIVED_TRAINERS_SCHOOL_POTION, TrainersSchool_PotionRestoresHP
-    GoToIfSet FLAG_DEFEATED_TRAINERS_SCHOOL_SCHOOL_KID_HARRISON, TrainersSchool_TryGivePotion
+    GoToIfSet FLAG_RECEIVED_TRAINERS_SCHOOL_TM10, TrainersSchool_TM10Explanation
+    GoToIfSet FLAG_DEFEATED_TRAINERS_SCHOOL_SCHOOL_KID_HARRISON, TrainersSchool_TryGiveTM10
     Message TrainersSchool_Text_CanWeBattleYou
     ShowYesNoMenu VAR_RESULT
     GoToIfEq VAR_RESULT, MENU_YES, TrainersSchool_BattleSchoolKidHarrison
@@ -171,7 +171,7 @@ TrainersSchool_CheckWonBattleHarrison:
     CheckWonBattle VAR_RESULT
     GoToIfEq VAR_RESULT, FALSE, TrainersSchool_LostBattleHarrison
     SetFlag FLAG_DEFEATED_TRAINERS_SCHOOL_SCHOOL_KID_HARRISON
-    GoToIfSet FLAG_DEFEATED_TRAINERS_SCHOOL_SCHOOL_KID_CHRISTINE, TrainersSchool_GivePotion
+    GoToIfSet FLAG_DEFEATED_TRAINERS_SCHOOL_SCHOOL_KID_CHRISTINE, TrainersSchool_GiveTM10
     GoToIfUnset FLAG_DEFEATED_TRAINERS_SCHOOL_SCHOOL_KID_CHRISTINE, TrainersSchool_HardToWin
     End
 
@@ -182,18 +182,18 @@ TrainersSchool_HardToWin:
     ReleaseAll
     End
 
-TrainersSchool_GivePotion:
-    Message TrainersSchool_Text_UseThisPotion
-    SetVar VAR_0x8004, ITEM_POTION
+TrainersSchool_GiveTM10:
+    Message TrainersSchool_Text_UseThisTM10
+    SetVar VAR_0x8004, ITEM_TM10
     SetVar VAR_0x8005, 1
     GoToIfCannotFitItem VAR_0x8004, VAR_0x8005, VAR_RESULT, TrainersSchool_BagIsFull
     Common_GiveItemQuantity
-    SetFlag FLAG_RECEIVED_TRAINERS_SCHOOL_POTION
-    GoTo TrainersSchool_PotionRestoresHP
+    SetFlag FLAG_RECEIVED_TRAINERS_SCHOOL_TM10
+    GoTo TrainersSchool_TM10Explanation
     End
 
-TrainersSchool_PotionRestoresHP:
-    Message TrainersSchool_Text_PotionRestoresHP
+TrainersSchool_TM10Explanation:
+    Message TrainersSchool_Text_TM10Explanation
     WaitButton
     CloseMessage
     ReleaseAll
@@ -205,8 +205,8 @@ TrainersSchool_BagIsFull:
     ReleaseAll
     End
 
-TrainersSchool_TryGivePotion:
-    GoToIfSet FLAG_DEFEATED_TRAINERS_SCHOOL_SCHOOL_KID_CHRISTINE, TrainersSchool_GivePotion
+TrainersSchool_TryGiveTM10:
+    GoToIfSet FLAG_DEFEATED_TRAINERS_SCHOOL_SCHOOL_KID_CHRISTINE, TrainersSchool_GiveTM10
     Message TrainersSchool_Text_HardToWin
     WaitButton
     CloseMessage
@@ -290,7 +290,7 @@ TrainersSchool_CouldHaveDoneBetter:
     End
 
 TrainersSchool_DefeatedChristineAndHarrison:
-    GoToIfSet FLAG_RECEIVED_TRAINERS_SCHOOL_POTION, TrainersSchool_CouldHaveDoneBetter
+    GoToIfSet FLAG_RECEIVED_TRAINERS_SCHOOL_TM10, TrainersSchool_CouldHaveDoneBetter
     Message TrainersSchool_Text_TalkToMyFriend
     WaitButton
     CloseMessage

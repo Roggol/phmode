@@ -449,7 +449,10 @@ static const WindowTemplate sExtraWindowTemplates_Memo[] = {
         .tilemapLeft = 14,
         .tilemapTop = 5,
         .width = 17,
-        .height = 18,
+        // phmode: +2 tiles (one text row) so the "HP: <Type>" line added after the
+        // page's other memo lines (see InitializeHiddenPowerTypeString) always fits;
+        // row 10 is the deepest it can land, and the screen has room down to tile 24.
+        .height = 20,
         .palette = 15,
         .baseTile = 0x23B,
     },
@@ -1121,6 +1124,10 @@ static void PrintTrainerMemo(Window *window, Pokemon *mon, BOOL monOTMatches)
 
     if (infoDisplay->unk_34.unk_04 != NULL) {
         Text_AddPrinterWithParamsAndColor(window, FONT_SYSTEM, infoDisplay->unk_34.unk_04, 0, (infoDisplay->unk_34.unk_00 - 1) * 16, TEXT_SPEED_NO_TRANSFER, SUMMARY_TEXT_BLACK, NULL);
+    }
+
+    if (infoDisplay->unk_3C.unk_04 != NULL) {
+        Text_AddPrinterWithParamsAndColor(window, FONT_SYSTEM, infoDisplay->unk_3C.unk_04, 0, (infoDisplay->unk_3C.unk_00 - 1) * 16, TEXT_SPEED_NO_TRANSFER, SUMMARY_TEXT_BLACK, NULL);
     }
 
     sub_0209282C(infoDisplay);

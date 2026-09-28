@@ -11,6 +11,7 @@
 #include "overlay005/daycare.h"
 
 #include "heap.h"
+#include "inlines.h"
 #include "party.h"
 #include "pc_boxes.h"
 #include "pokemon.h"
@@ -49,7 +50,32 @@ int Pokemon_AddToPartyOrBox(SaveData *saveData, Pokemon *mon)
     return GIVE_MON_RESULT_NO_ROOM;
 }
 
-int Pokemon_GiveMonFromScript(enum HeapID heapID, SaveData *saveData, u16 species, u8 level, u16 heldItem, int metLocation, int metTerrain)
+// phmode: sets exactly `count` of the mon's 6 IVs (chosen at random, no repeats) to a
+// perfect 31, leaving the rest whatever they already rolled. Used to give the player's
+// starter 3 guaranteed-perfect IVs in random stats - see Pokemon_GiveMonFromScript.
+static void Pokemon_SetRandomPerfectIVs(Pokemon *mon, u8 count)
+{
+    static const u8 ivParams[6] = {
+        MON_DATA_HP_IV, MON_DATA_ATK_IV, MON_DATA_DEF_IV,
+        MON_DATA_SPATK_IV, MON_DATA_SPDEF_IV, MON_DATA_SPEED_IV
+    };
+    u8 order[6] = { 0, 1, 2, 3, 4, 5 };
+
+    // Fisher-Yates shuffle, then set the first `count` shuffled entries.
+    for (int i = 5; i > 0; i--) {
+        int j = LCRNG_RandMod(i + 1);
+        u8 tmp = order[i];
+        order[i] = order[j];
+        order[j] = tmp;
+    }
+
+    u8 perfectIV = 31;
+    for (int i = 0; i < count && i < 6; i++) {
+        Pokemon_SetValue(mon, ivParams[order[i]], &perfectIV);
+    }
+}
+
+int Pokemon_GiveMonFromScript(enum HeapID heapID, SaveData *saveData, u16 species, u8 level, u16 heldItem, int metLocation, int metTerrain, BOOL threeRandomPerfectIVs)
 {
     int result;
     Pokemon *mon;
@@ -61,6 +87,10 @@ int Pokemon_GiveMonFromScript(enum HeapID heapID, SaveData *saveData, u16 specie
     Pokemon_Init(mon);
     Pokemon_InitWith(mon, species, level, INIT_IVS_RANDOM, FALSE, 0, OTID_NOT_SET, 0);
     Pokemon_SetCatchData(mon, trainerInfo, ITEM_POKE_BALL, metLocation, metTerrain, heapID);
+
+    if (threeRandomPerfectIVs) {
+        Pokemon_SetRandomPerfectIVs(mon, 3);
+    }
 
     item = heldItem;
     Pokemon_SetValue(mon, MON_DATA_HELD_ITEM, &item);

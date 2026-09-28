@@ -1232,7 +1232,7 @@ static int TVSegment_LoadMessage_CaptureTheFlagDigest_LoseFlag(FieldSystem *fiel
 
 static BOOL TVSegment_IsEligible_HasExplorerKit(FieldSystem *fieldSystem, TVEpisode *episode)
 {
-    return Bag_CanRemoveItem(SaveData_GetBag(fieldSystem->saveData), ITEM_EXPLORER_KIT, 1, HEAP_ID_FIELD3);
+    return Bag_CanRemoveItem(SaveData_GetBag(fieldSystem->saveData), ITEM_HM09, 1, HEAP_ID_FIELD3);
 }
 
 void FieldSystem_SaveTVSegment_HomeAndManor_NoFurniture(FieldSystem *fieldSystem)
@@ -1554,7 +1554,7 @@ static int sub_0206DF88(FieldSystem *fieldSystem, StringTemplate *param1, TVEpis
 
 static BOOL sub_0206DFC8(FieldSystem *fieldSystem, TVEpisode *episode)
 {
-    return Bag_CanRemoveItem(SaveData_GetBag(fieldSystem->saveData), ITEM_EXPLORER_KIT, 1, HEAP_ID_FIELD3);
+    return Bag_CanRemoveItem(SaveData_GetBag(fieldSystem->saveData), ITEM_HM09, 1, HEAP_ID_FIELD3);
 }
 
 void sub_0206DFE0(SaveData *saveData)

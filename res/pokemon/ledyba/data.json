@@ -75,14 +75,14 @@
             "TM58",
             "TM60",
             "TM62",
-            "TM70",
             "TM75",
             "TM78",
             "TM82",
             "TM83",
             "TM87",
             "TM89",
-            "TM90"
+            "TM90",
+            "HM09"
         ],
         "by_tutor": [
             "MOVE_ROLLOUT",

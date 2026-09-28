@@ -31,7 +31,7 @@ MiningMuseum_FossilResearcher:
     FacePlayer
     GoToIfSet FLAG_MAP_LOCAL_0x01, MiningMuseum_ExtractingPokemon
     Message MiningMuseum_Text_FossilResearcherGreeting
-    GoToIfUnset FLAG_RECEIVED_EXPLORER_KIT, MiningMuseum_NotYetReady
+    GoToIfUnset FLAG_RECEIVED_HM_FLASH, MiningMuseum_NotYetReady
     GoToIfNe VAR_REVIVED_POKEMON_SPECIES, 0, MiningMuseum_PokemonRevival
     GetFossilCount VAR_0x8000
     GoToIfEq VAR_0x8000, 0, MiningMuseum_NoFossils

@@ -3,9 +3,7 @@
   "plural": "TM70s",
   "article": "a",
   "description": [
-    "The user flashes a light that cuts the\n",
-    "foe’s accuracy. It can also be used to\n",
-    "illuminate caves."
+    "placeholder"
   ],
   "icon": {
     "sprite": "tm_NCGR",
@@ -27,5 +25,5 @@
   "fieldUseFunc": "ITEM_USE_FUNC_TM_HM",
   "battleUseFunc": 0,
   "itemUseParams": null,
-  "teachesMove": "MOVE_FLASH"
+  "teachesMove": "MOVE_CHARM"
 }

@@ -1,15 +1,13 @@
 {
-  "name": "Explorer Kit",
-  "plural": "Explorer Kits",
+  "name": "HM09",
+  "plural": "HM09s",
   "article": "an",
   "description": [
-    "A bag filled with convenient tools\n",
-    "for exploring. It provides access to\n",
-    "the Underground."
+    "placeholder"
   ],
   "icon": {
-    "sprite": "explorer_kit_NCGR",
-    "palette": "explorer_kit_NCLR"
+    "sprite": "hm_NCGR",
+    "palette": "tm_electric_NCLR"
   },
   "gbaID": "GBA_ITEM_NONE",
   "price": 0,
@@ -21,10 +19,11 @@
   "naturalGiftPower": 0,
   "naturalGiftType": null,
   "preventToss": true,
-  "canRegister": true,
-  "fieldPocket": "POCKET_KEY_ITEMS",
+  "canRegister": false,
+  "fieldPocket": "POCKET_TMHMS",
   "battlePocket": "BATTLE_POCKET_MASK_NONE",
-  "fieldUseFunc": "ITEM_USE_FUNC_EXPLORER_KIT",
+  "fieldUseFunc": "ITEM_USE_FUNC_TM_HM",
   "battleUseFunc": 0,
-  "itemUseParams": null
+  "itemUseParams": null,
+  "teachesMove": "MOVE_FLASH"
 }

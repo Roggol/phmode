@@ -21,12 +21,12 @@ EternaCityUndergroundManHouse_UndergroundMan:
     FacePlayer
     GoToIfGe VAR_CURRENT_UNDERGROUND_MISSION, 9, EternaCityUndergroundManHouse_YouAreSpelunkingMaster
     GoToIfSet FLAG_ACCEPTED_UNDERGROUND_MAN_AS_MENTOR, EternaCityUndergroundManHouse_GoToCurrentMission
-    GoToIfSet FLAG_RECEIVED_EXPLORER_KIT, EternaCityUndergroundManHouse_LetMeMentorYou
+    GoToIfSet FLAG_RECEIVED_HM_FLASH, EternaCityUndergroundManHouse_LetMeMentorYou
     Message EternaCityUndergroundManHouse_Text_CallMeUndergroundMan
-    SetVar VAR_0x8004, ITEM_EXPLORER_KIT
+    SetVar VAR_0x8004, ITEM_HM09
     SetVar VAR_0x8005, 1
     Common_GiveItemQuantity
-    SetFlag FLAG_RECEIVED_EXPLORER_KIT
+    SetFlag FLAG_RECEIVED_HM_FLASH
     ClearFlag FLAG_HAS_ACTIVE_UNDERGROUND_MISSION
     Message EternaCityUndergroundManHouse_Text_MentorYouBecomingSpelunker
     ShowYesNoMenu VAR_RESULT

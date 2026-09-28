@@ -68,12 +68,12 @@
             "TM46",
             "TM48",
             "TM58",
-            "TM70",
             "TM78",
             "TM82",
             "TM83",
             "TM87",
-            "TM90"
+            "TM90",
+            "HM09"
         ],
         "by_tutor": [
             "MOVE_SNORE",

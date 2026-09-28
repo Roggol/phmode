@@ -387,6 +387,15 @@ a specific species, but here's what each one actually does:
   Moves like Thunder, Blizzard, Focus Blast, Hydro Pump, Stone Edge, Fire
   Spin, Bounce, Rock Climb, Rock Tomb, and many others have all had their
   accuracy raised — none of their other stats changed.
+- **Flash is now a real Electric-type attack** instead of a weak status
+  move — see Items, below, for the full story (it also moved to its own HM).
+- **Defog is now a real Flying-type attack** instead of a status move — a
+  60-power, 100-accuracy special attack that hits both opponents in a
+  double battle. It still lowers the target's evasion by one stage and
+  still clears hazards (Spikes, Toxic Spikes, Stealth Rock, Sticky Web),
+  screens (Reflect, Light Screen, Mist, Safeguard), Tailwind, Gravity, and
+  deep fog exactly like it always did — that part didn't change at all,
+  only now it deals damage too.
 
 ---
 
@@ -1334,12 +1343,46 @@ yet, but the tooling now supports curating it going forward.
 
 ---
 
+## Your Starter Always Has 3 Perfect IVs
+
+Whichever starter you pick now always comes with exactly 3 of its 6 IVs
+rolled to a perfect 31 — which 3 stats get the perfect roll is random, so
+your starter's strengths will still vary run to run, but it's guaranteed to
+never be a dud in every stat at once.
+
+The party summary screen's Memo page also now shows that Pokémon's Hidden
+Power type at the very end of the page, as a "HP: Fire" (or whichever type
+applies) line — handy for a party member you're planning to teach Hidden
+Power to, without having to work it out from IVs by hand.
+
+---
+
 ## Items
 
 ### The Underground is closed
-The Underground can no longer be entered at all, through any means. Trying
-to use the Explorer Kit tells you: *"Sorry, the underground is undergoing
-maintenance."*
+The Underground can no longer be entered at all, through any means. The
+Explorer Kit that used to unlock it has been removed from the game entirely,
+since it no longer did anything.
+
+### Flash is now an Electric-type attack, taught by a new HM
+Flash used to be a weak status move you'd teach from a TM, whose only real
+job was lowering the target's accuracy and lighting up dark caves. It's now a
+proper attack: Electric-type, 60 power, 100% accuracy, and it still lowers
+the target's accuracy by one stage every time it hits. It's also no longer a
+TM — it's **HM09**, meaning once a Pokémon knows it, it can use it forever
+without ever running out, just like Cut or Surf. You'll still get it from the
+same person as before (the Underground Man in Eterna City, on your first
+visit to his house), it's just handed over as HM09 now instead of the old
+Explorer Kit — and it can't be bought or found anywhere else.
+
+### TM70 now teaches Charm instead of Flash
+Since Flash moved to its own HM (see above), the TM70 slot it used to occupy
+now teaches Charm — a move that lowers the target's Attack by two stages.
+Every Pokémon whose evolutionary family can already learn Charm on its own
+(by leveling up, as an Egg Move, or from a Move Tutor) can learn it from this
+TM too, even if that particular species' own movepool doesn't list Charm
+directly. Wherever you used to find or buy the Flash TM, you'll now find or
+buy this Charm TM instead.
 
 ### Shops: things you can only buy once, and purchase limits
 Shops used to sell everything with unlimited stock. Now:
@@ -1636,6 +1679,10 @@ call for him by it if you ever see anything suspicious, and hurries off.
 ### Jubilife City's quiz clowns throw in a bonus
 The three clowns who quiz you for a Pokétch Coupon now each hand over a
 Common Candy too, right after the coupon — "And here's a bonus!"
+
+### The Trainers' School reward is now TM10 (Hidden Power), not a Potion
+Beating both kids at Jubilife City's Trainers' School used to hand over a
+Potion. It now gives you TM10, teaching Hidden Power instead.
 
 ### Route 212 and the south exit of Veilstone City now open after beating Maylene
 Route 212 (the path between Hearthome and Pastoria) used to open the moment

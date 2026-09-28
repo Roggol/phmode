@@ -7,20 +7,19 @@
         "It can also be used\n",
         "to illuminate caves."
     ],
-    "class": "CLASS_STATUS",
-    "type": "TYPE_NORMAL",
-    "power": 0,
+    "class": "CLASS_SPECIAL",
+    "type": "TYPE_ELECTRIC",
+    "power": 60,
     "accuracy": 100,
     "pp": 20,
     "effect": {
-        "type": "BATTLE_EFFECT_ACC_DOWN",
-        "chance": 0
+        "type": "BATTLE_EFFECT_LOWER_ACCURACY_HIT",
+        "chance": 100
     },
     "range": "RANGE_SINGLE_TARGET",
     "priority": 0,
     "flags": [
         "MOVE_FLAG_CAN_PROTECT",
-        "MOVE_FLAG_CAN_MAGIC_COAT",
         "MOVE_FLAG_CAN_MIRROR_MOVE",
         "MOVE_FLAG_HIDES_SHADOWS"
     ],

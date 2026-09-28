@@ -146,7 +146,6 @@
 #define ITEM_USE_FUNC_NONE         0
 #define ITEM_USE_FUNC_HEALING      1
 #define ITEM_USE_FUNC_TOWN_MAP     2
-#define ITEM_USE_FUNC_EXPLORER_KIT 3
 #define ITEM_USE_FUNC_BICYCLE      4
 #define ITEM_USE_FUNC_JOURNAL      5
 #define ITEM_USE_FUNC_TM_HM        6

@@ -1686,6 +1686,82 @@ This is the existing Sketch guard, not new code.
   Poison Gas (55), Poison Powder (75), Glare (75), Stone Edge (80),
   Iron Tail (75), Hydro Pump (80), Will-O-Wisp (75).
 
+### Flash reworked into an Electric attack; moved to HM09; TM70 repurposed to Charm
+`res/moves/flash/data.json` — Flash is no longer a 0-power status move. It's now
+`CLASS_SPECIAL`, `TYPE_ELECTRIC`, 60 power / 100 accuracy / 20 PP,
+`BATTLE_EFFECT_LOWER_ACCURACY_HIT` at 100% chance (a guaranteed secondary effect
+on a damaging hit, same pattern as Mud-Slap, rather than the old
+`BATTLE_EFFECT_ACC_DOWN` primary-effect status move). `MOVE_FLAG_CAN_MAGIC_COAT`
+is removed from its flags (that flag only matters for a status move's primary
+effect); `MOVE_FLAG_CAN_PROTECT`, `MOVE_FLAG_CAN_MIRROR_MOVE`, and
+`MOVE_FLAG_HIDES_SHADOWS` (its field cave-lighting effect) are unchanged. Its
+description text is untouched — it was already accurate for the new version
+("flashes a light that cuts the foe's accuracy... used to illuminate caves").
+
+Since it's now meant to be an always-available, infinite-use field tool rather
+than a limited-use TM, Flash moves from TM70 to a new **HM09**
+(`res/items/data/hm09.json`), which reuses the item slot the old, functionally
+dead **Explorer Kit** occupied (`ITEM_EXPLORER_KIT` renamed to `ITEM_HM09` in
+`generated/items.txt`, same position, so no other item's ID shifts) rather than
+being appended as a new, non-contiguous item — the Underground it unlocked was
+already closed for good (see "Underground disabled entirely" under Trainer
+data, below), so it was a dead item ripe for reuse. Flash keeps no badge
+requirement to use in the
+field, matching how it already worked (`FieldMoves_CheckFlash` in
+`src/field_move_tasks.c` never checked one).
+
+Because `ITEM_HM09` sits outside the normal contiguous `ITEM_TM01..ITEM_HM08`
+run every TM/HM helper assumes, `src/item.c`'s `Item_MoveForTMHM`,
+`Item_TMHMNumber`, and `Item_IsHMMove` each gained a one-off special case for it
+(returning `MOVE_FLASH`, a dedicated compatibility bit — `NUM_TMHMS`, i.e. bit 4
+of the species data's 4th TM-learnset mask word, previously unused — and `TRUE`
+respectively), and `tools/dataproc/src/speciesproc.c`'s `proc_tmlearnset` now
+accepts one `"HM09"` marker past the normal `NUM_HMS` (8) range to set that bit
+from species data. `src/applications/bag/windows.c`'s `BagUI_PrintTMHMNumber`
+and `src/unk_0205DFC4.c`'s `Item_IsTMHM` special-case it too, so the bag's TM/HM
+pocket still shows "09" instead of a garbage number and still recognizes it as
+a TM/HM item. `src/overlay005/daycare.c`'s TM/HM breeding-inheritance loop
+(which walks `ITEM_TM01 + j`) can't reach `ITEM_HM09` either, so it gained one
+manual extra check right after the loop so a father that knows Flash still
+passes it down like any other TM/HM move.
+
+**Species compatibility**, `res/pokemon/*/data.json` `.learnset.by_tm`:
+* Every one of the 212 species that had `"TM70"` (Flash) before now has
+  `"HM09"` instead, preserving exactly who could learn Flash — the marker
+  changed, not the set of eligible species.
+* `"TM70"` itself was completely recomputed from scratch to mean **Charm**
+  compatibility instead: every species in the full evolutionary family of the
+  40 species that can learn Charm by any means (level-up, egg move, or tutor)
+  — including pre-evolutions and further evolutions that don't themselves
+  list it, e.g. Pikachu and Raichu inheriting it from Pichu's own level-up
+  Charm — now has `"TM70"`; every species that only had it because of the old
+  Flash association and isn't Charm-eligible had it removed. Net effect: 30
+  species gained `TM70`, 164 lost it, 48 already had it and keep it, for a
+  final Charm-TM-compatible family of 78 species.
+
+Both of the above were computed and applied with a one-off script rather than
+by hand, given the number of files involved.
+
+### Defog reworked into a Flying attack that hits both foes
+`res/moves/defog/data.json` — no longer a 0-power status move. Now
+`CLASS_SPECIAL`, stays `TYPE_FLYING`, 60 power / 100 accuracy / 15 PP,
+`RANGE_SINGLE_TARGET` → `RANGE_ADJACENT_OPPONENTS` (hits both opposing
+Pokémon in a double battle, same range as Attack Order above), same
+`BATTLE_EFFECT_REMOVE_HAZARDS_SCREENS_EVA_DOWN` effect id at 100% chance
+instead of 0%. `res/battle/scripts/effects/effect_script_0258.s` (the effect
+script itself) gained `CalcCrit`/`CalcDamage` before applying the effect, and
+`BTLVAR_SIDE_EFFECT_FLAGS_DIRECT` → `BTLVAR_SIDE_EFFECT_FLAGS_INDIRECT` — the
+same direct-primary-effect-on-a-status-move → indirect-secondary-effect-on-a-
+hit conversion the Flash rework above used, following the exact pattern
+already established by Mud-Slap's own effect script. `MOVE_SIDE_EFFECT_ON_HIT`
+is kept, so the effect still only applies if the hit actually lands (not
+blocked by Protect, immunity, etc.), matching its old behavior as a status
+move. `subscript_defog.s` (the actual hazard/screen-clearing and evasion-drop
+logic) is completely untouched — it already clears Spikes, Toxic Spikes,
+Stealth Rock, Sticky Web, Tailwind, and Gravity from both sides of the field,
+plus Reflect/Light Screen/Mist/Safeguard from the defender's side, and drops
+the defender's evasion by one stage, regardless of which pipeline invoked it.
+
 ---
 
 ## Species changes
@@ -2687,6 +2763,45 @@ it — `Bag_Text_CannotUseUndergroundMaintenance`
 — whether the Explorer Kit is used from the Bag, in the field, or registered
 to Y.
 
+### Explorer Kit removed entirely; its item slot became HM09 (Flash)
+Now that the Underground above can never be entered, the Explorer Kit served
+no purpose at all, so it's gone completely rather than staying around as a
+dead item with a "sorry, maintenance" message forever. `ITEM_EXPLORER_KIT` is
+renamed in place to `ITEM_HM09` in `generated/items.txt` (see "Flash reworked
+into an Electric attack..." under Moves, above, for the full HM09 story), and
+everything specific to the old item is deleted: `res/items/data/explorer_kit.json`,
+its `explorer_kit.png`/`.pal` icon assets and their `res/items/icons/meson.build`
++ `res/items/item_icon.order` listings, the `ITEM_USE_FUNC_EXPLORER_KIT` dispatch
+slot (`include/constants/items.h`), and its three handler functions plus the
+now-dead `ITEM_USE_CANNOT_USE_UNDERGROUND_MAINTENANCE` result and
+`Bag_Text_CannotUseUndergroundMaintenance` message from the entry directly
+above (`src/item_use_functions.c`, `include/item_use_functions.h`,
+`src/bag_context.c`, `res/text/bag.json`) — HM09 uses the plain
+`ITEM_USE_FUNC_TM_HM` handler like every other TM/HM, so none of that
+Underground-specific plumbing is needed any more.
+
+The Eterna City "Underground Man" (`res/field/scripts/scripts_eterna_city_underground_man_house.s`)
+still gives out this same item slot on your first visit, just as HM09 now
+instead of the Explorer Kit — his own "received" flag,
+`FLAG_RECEIVED_EXPLORER_KIT`, is renamed in place to `FLAG_RECEIVED_HM_FLASH`
+(same save slot). Every other place that gated on either the flag or having
+the item in your bag now checks the renamed flag/`ITEM_HM09` instead: Eterna
+City's fossil-adjacent "Pokémon Breeder F2" dialogue and its south-exit block
+(`res/field/scripts/scripts_eterna_city.s`), and — the one that actually
+matters for progression — the Mining Museum's Fossil Researcher, who still
+requires this same milestone before he'll revive a fossil for you
+(`res/field/scripts/scripts_mining_museum.s`). The one line of the Underground
+Man's own dialogue that explicitly described the Explorer Kit and what it did
+(`EternaCityUndergroundManHouse_Text_MentorYouBecomingSpelunker`) is placeholder
+text pending a rewrite, since it's no longer accurate; the two Eterna City
+Breeder lines that named the Explorer Kit by name are placeholder for the same
+reason. The Underground Man's own later mission dialogue (further Explorer
+Kit mentions deep in his now-unreachable "go underground" quest chain) and two
+`src/tv_segment.c` Underground-flavored TV segment eligibility checks are left
+as mechanical renames only (`ITEM_EXPLORER_KIT` → `ITEM_HM09`) without a
+dialogue rewrite, since that content was already unreachable before this
+change and rewriting it is out of scope here.
+
 ### Shop purchase limits: TMs and select held items bought once, EV vitamins and PP Up capped at 10
 Shops (the Veilstone Dept Store, the Battle Frontier's BP Exchange Service
 Corner, and the Game Corner's Prize Corner) previously sold every item with
@@ -3543,6 +3658,49 @@ since none of that is present in a `.trf` file).
   `DS-Pokemon-Rom-Editor/DSPRE` GitHub repo) and cross-checked byte-for-byte
   against Roark's pre-existing `leader_roark.json` before trusting it for
   the rest.
+
+### Starter Pokémon get 3 guaranteed-perfect IVs in random stats
+
+`include/unk_02054884.h`, `src/unk_02054884.c`, `src/scrcmd_party.c` — the
+shared helper behind both `GivePokemon` and `GivePokemonWithMetLocation`
+script commands, `Pokemon_GiveMonFromScript`, gained a trailing
+`BOOL threeRandomPerfectIVs` parameter. When set, a new
+`Pokemon_SetRandomPerfectIVs` helper Fisher-Yates-shuffles the 6 IV stats and
+sets 3 of them (chosen at random, no repeats) to a perfect 31, leaving the
+other 3 at whatever `Pokemon_InitWith`'s normal IV roll gave them.
+`ScrCmd_GivePokemonWithMetLocation` passes `TRUE` — it's used exactly once in
+the whole game, for the starter (`scripts_route_201.s`) — while
+`ScrCmd_GivePokemon` (every other scripted gift) passes `FALSE`, unaffected.
+
+### "HP: &lt;Type&gt;" Hidden Power line on the party summary Memo page
+
+`include/struct_defs/struct_02090800.h`, `src/unk_02092494.c`,
+`src/applications/pokemon_summary_screen/window.c`,
+`res/text/pokemon_summary_screen.json` — the Memo page of a Pokémon's summary
+screen now always shows a `HP: <Type>` line (e.g. "HP: Fire") right after
+whichever line was previously last on the page, reusing the same Hidden Power
+type formula already used in battle (`Move_CalcVariableType`,
+`src/battle/battle_lib.c`) since that function needs a live `BattleContext`
+this screen doesn't have. `PokemonInfoDisplayStruct` gained a 6th optional
+line slot (`unk_3C`) for this; it's populated only when the IV-derived
+characteristic line is also shown (i.e. never for an unhatched egg, matching
+that line's own existing hide-until-hatched behavior). The `SUMMARY_WINDOW_MEMO`
+window's height grew from 18 to 20 tiles (one more text row) so the new line
+always has room even on the longest-winded Memo variants, whose existing
+content already reached the previous bottom edge.
+
+### Trainers' School reward changed from a Potion to TM10 (Hidden Power)
+
+`generated/vars_flags.txt`, `res/field/scripts/scripts_trainers_school.s`,
+`res/text/trainers_school.json` — beating both kids in the Trainers' School
+now gives `ITEM_TM10` instead of `ITEM_POTION`. `FLAG_RECEIVED_TRAINERS_
+SCHOOL_POTION` was renamed in place to `FLAG_RECEIVED_TRAINERS_SCHOOL_TM10`
+(same save-data slot, per this project's flag/var renumbering rule), and the
+script's labels/message IDs were renamed to match
+(`TrainersSchool_GivePotion` → `TrainersSchool_GiveTM10`, etc.). The two
+message strings describing the reward are new placeholder text pending the
+user's own wording, since the old Potion-flavored text no longer applies to
+a TM.
 
 ---
 

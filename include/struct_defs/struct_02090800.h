@@ -18,6 +18,8 @@ typedef struct {
     PokemonInfoDisplayStruct_sub1 unk_24;
     PokemonInfoDisplayStruct_sub1 unk_2C;
     PokemonInfoDisplayStruct_sub1 unk_34;
+    // phmode: the "HP: <Type>" Hidden Power line shown at the end of the memo page.
+    PokemonInfoDisplayStruct_sub1 unk_3C;
 } PokemonInfoDisplayStruct;
 
 #endif // POKEPLATINUM_STRUCT_02090800_H

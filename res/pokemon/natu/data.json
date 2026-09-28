@@ -77,7 +77,6 @@
             "TM51",
             "TM58",
             "TM62",
-            "TM70",
             "TM73",
             "TM77",
             "TM78",
@@ -89,7 +88,8 @@
             "TM88",
             "TM89",
             "TM90",
-            "TM92"
+            "TM92",
+            "HM09"
         ],
         "by_tutor": [
             "MOVE_OMINOUS_WIND",

@@ -4,6 +4,8 @@
 
 #include "constants/versions.h"
 
+#include "generated/pokemon_types.h"
+
 #include "struct_defs/struct_02090800.h"
 
 #include "heap.h"
@@ -15,6 +17,45 @@
 #include "trainer_info.h"
 #include "unk_02017038.h"
 
+#include "res/text/bank/pokemon_summary_screen.h"
+
+// phmode: same Hidden Power type formula used in battle (Move_CalcVariableType,
+// src/battle/battle_lib.c) - duplicated here since that function needs a live
+// BattleContext this screen doesn't have.
+static u8 Pokemon_CalcHiddenPowerType(Pokemon *mon)
+{
+    u8 type = ((Pokemon_GetValue(mon, MON_DATA_HP_IV, NULL) & 1) >> 0)
+        | ((Pokemon_GetValue(mon, MON_DATA_ATK_IV, NULL) & 1) << 1)
+        | ((Pokemon_GetValue(mon, MON_DATA_DEF_IV, NULL) & 1) << 2)
+        | ((Pokemon_GetValue(mon, MON_DATA_SPEED_IV, NULL) & 1) << 3)
+        | ((Pokemon_GetValue(mon, MON_DATA_SPATK_IV, NULL) & 1) << 4)
+        | ((Pokemon_GetValue(mon, MON_DATA_SPDEF_IV, NULL) & 1) << 5);
+
+    type = (type * 15 / 63) + 1;
+
+    if (type >= TYPE_MYSTERY) {
+        type++;
+    }
+
+    return type;
+}
+
+static void InitializeHiddenPowerTypeString(PokemonInfoDisplayStruct *param0, u8 row)
+{
+    StringTemplate *template = StringTemplate_New(1, 32, param0->heapID);
+    String *raw = String_Init(((2 * 18) * 2), param0->heapID);
+
+    param0->unk_3C.unk_00 = row;
+    param0->unk_3C.unk_04 = String_Init(((2 * 18) * 2), param0->heapID);
+
+    StringTemplate_SetPokemonTypeName(template, 0, Pokemon_CalcHiddenPowerType(param0->unk_0C));
+    MessageLoader_GetString(param0->unk_04, PokemonSummary_Text_HiddenPowerType, raw);
+    StringTemplate_Format(template, param0->unk_3C.unk_04, raw);
+
+    String_Free(raw);
+    StringTemplate_Free(template);
+}
+
 static int DeterminePokemonStatus(Pokemon *param0, BOOL param1, int param2);
 static void InitializeNatureRelatedString(PokemonInfoDisplayStruct *param0);
 static void InitializePokemonMetInfoString(PokemonInfoDisplayStruct *param0, int param1);
@@ -23,6 +64,8 @@ static void InitializeSpecialMetInfoString(PokemonInfoDisplayStruct *param0, int
 static void InitializeIVsString(PokemonInfoDisplayStruct *param0);
 static void InitializeFlavorAffinityString(PokemonInfoDisplayStruct *param0);
 static void InitializeFriendshipLevelString(PokemonInfoDisplayStruct *param0);
+static u8 Pokemon_CalcHiddenPowerType(Pokemon *mon);
+static void InitializeHiddenPowerTypeString(PokemonInfoDisplayStruct *param0, u8 row);
 static void AssignTrainerInfoToBoxPokemon(BoxPokemon *boxMon, TrainerInfo *param1, enum HeapID heapID);
 static void BoxPokemon_SetMetLocationAndDate(BoxPokemon *boxMon, int metLocation, int isHatch);
 static void BoxPokemon_ResetMetLocationAndDate(BoxPokemon *boxMon, int isHatch);
@@ -53,6 +96,9 @@ PokemonInfoDisplayStruct *sub_02092494(Pokemon *param0, BOOL param1, enum HeapID
 
         v0->unk_34.unk_00 = 0;
         v0->unk_34.unk_04 = NULL;
+
+        v0->unk_3C.unk_00 = 0;
+        v0->unk_3C.unk_04 = NULL;
     }
 
     switch (DeterminePokemonStatus(v0->unk_0C, v0->unk_10, v0->heapID)) {
@@ -283,6 +329,27 @@ PokemonInfoDisplayStruct *sub_02092494(Pokemon *param0, BOOL param1, enum HeapID
         break;
     }
 
+    // phmode: append the Hidden Power type line right after whichever line is
+    // currently last on the page. Skipped for eggs (unk_24 unset above), matching
+    // how the IV-derived characteristic line is also hidden until the egg hatches.
+    if (v0->unk_24.unk_04 != NULL) {
+        u8 lastRow = v0->unk_14.unk_00;
+
+        if (v0->unk_1C.unk_00 > lastRow) {
+            lastRow = v0->unk_1C.unk_00;
+        }
+
+        if (v0->unk_24.unk_00 > lastRow) {
+            lastRow = v0->unk_24.unk_00;
+        }
+
+        if (v0->unk_2C.unk_00 > lastRow) {
+            lastRow = v0->unk_2C.unk_00;
+        }
+
+        InitializeHiddenPowerTypeString(v0, lastRow + 1);
+    }
+
     return v0;
 }
 
@@ -306,6 +373,10 @@ void sub_0209282C(PokemonInfoDisplayStruct *param0)
 
     if (param0->unk_34.unk_04 != NULL) {
         Heap_Free(param0->unk_34.unk_04);
+    }
+
+    if (param0->unk_3C.unk_04 != NULL) {
+        Heap_Free(param0->unk_3C.unk_04);
     }
 
     StringTemplate_Free(param0->unk_08);

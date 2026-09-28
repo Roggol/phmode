@@ -564,13 +564,6 @@
         "The time of day will now follow\n",
         "the clock again."
       ]
-    },
-    {
-      "id": "Bag_Text_CannotUseUndergroundMaintenance",
-      "en_US": [
-        "Sorry, the underground is undergoing\n",
-        "maintenance."
-      ]
     }
   ]
 }

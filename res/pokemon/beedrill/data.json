@@ -72,7 +72,6 @@
             "TM62",
             "TM66",
             "TM68",
-            "TM70",
             "TM75",
             "TM78",
             "TM81",
@@ -84,7 +83,8 @@
             "TM90",
             "HM01",
             "HM05",
-            "HM06"
+            "HM06",
+            "HM09"
         ],
         "by_tutor": [
             "MOVE_FURY_CUTTER",

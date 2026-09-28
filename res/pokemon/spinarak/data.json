@@ -68,13 +68,13 @@
             "TM45",
             "TM46",
             "TM58",
-            "TM70",
             "TM78",
             "TM82",
             "TM83",
             "TM84",
             "TM87",
-            "TM90"
+            "TM90",
+            "HM09"
         ],
         "by_tutor": [
             "MOVE_SIGNAL_BEAM",

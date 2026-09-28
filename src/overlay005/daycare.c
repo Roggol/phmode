@@ -527,6 +527,15 @@ static void Egg_BuildMoveset(Pokemon *egg, BoxPokemon *father, BoxPokemon *mothe
                     }
                 }
             }
+
+            // phmode: ITEM_HM09 (Flash) isn't reachable through the ITEM_TM01+j
+            // addressing above (see the comment on Item_MoveForTMHM), so it needs
+            // its own check here to inherit like every other TM/HM move.
+            if (builder->fatherMoves[i] == MOVE_FLASH && CanPokemonFormLearnTM(species, form, Item_TMHMNumber(ITEM_HM09))) {
+                if (Pokemon_AddMove(egg, builder->fatherMoves[i]) == LEARNSET_ALL_SLOTS_FILLED) {
+                    Pokemon_ReplaceMove(egg, builder->fatherMoves[i]);
+                }
+            }
         }
     }
 

@@ -307,28 +307,15 @@
     },
     {
       "id": "EternaCity_Text_YouDontHaveExplorerKit_ArrowPrompt",
-      "en_US": [
-        "Oh, don’t tell me you don’t have\n",
-        "an Explorer Kit?\r",
-        "You should have a word with the man\n",
-        "next door to the Pokémon Center.\r"
-      ]
+      "en_US": "placeholder"
     },
     {
       "id": "EternaCity_Text_YouDontHaveExplorerKit",
-      "en_US": [
-        "Oh, don’t tell me you don’t have\n",
-        "an Explorer Kit?\r",
-        "You should have a word with the man\n",
-        "next door to the Pokémon Center."
-      ]
+      "en_US": "placeholder"
     },
     {
       "id": "EternaCity_Text_GoingUndergroundIsABlast",
-      "en_US": [
-        "Going underground with the Explorer\n",
-        "Kit is a blast, isn’t it?"
-      ]
+      "en_US": "placeholder"
     },
     {
       "id": "EternaCity_Text_YouGotABicycle_ArrowPrompt",

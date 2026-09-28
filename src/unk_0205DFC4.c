@@ -62,6 +62,12 @@ u16 GetNumberDigitCount(u32 number)
 
 u16 Item_IsTMHM(u16 item)
 {
+    // phmode: ITEM_HM09 (Flash) lives outside the normal contiguous TM01..HM08
+    // item range - see the comment on Item_MoveForTMHM in src/item.c.
+    if (item == ITEM_HM09) {
+        return TRUE;
+    }
+
     if (item >= ITEM_TM01 && item <= ITEM_HM08) {
         return TRUE;
     }

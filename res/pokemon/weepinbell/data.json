@@ -69,7 +69,6 @@
             "TM46",
             "TM53",
             "TM58",
-            "TM70",
             "TM75",
             "TM78",
             "TM82",
@@ -77,7 +76,8 @@
             "TM86",
             "TM87",
             "TM90",
-            "HM01"
+            "HM01",
+            "HM09"
         ],
         "by_tutor": [
             "MOVE_GASTRO_ACID",

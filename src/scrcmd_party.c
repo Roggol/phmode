@@ -38,7 +38,7 @@ BOOL ScrCmd_GivePokemon(ScriptContext *ctx)
     u16 *success = ScriptContext_GetVarPointer(ctx);
 
     Party *unused = SaveData_GetParty(fieldSystem->saveData);
-    *success = Pokemon_GiveMonFromScript(HEAP_ID_FIELD2, fieldSystem->saveData, species, level, heldItem, metLocation, metTerrain);
+    *success = Pokemon_GiveMonFromScript(HEAP_ID_FIELD2, fieldSystem->saveData, species, level, heldItem, metLocation, metTerrain, FALSE);
 
     return FALSE;
 }
@@ -56,7 +56,9 @@ BOOL ScrCmd_GivePokemonWithMetLocation(ScriptContext *ctx)
     u16 metLocation = ScriptContext_GetVar(ctx);
     u16 *success = ScriptContext_GetVarPointer(ctx);
 
-    *success = Pokemon_GiveMonFromScript(HEAP_ID_FIELD2, fieldSystem->saveData, species, level, heldItem, metLocation, metTerrain);
+    // phmode: this is the starter-exclusive path (see the comment above), so give it
+    // 3 guaranteed-perfect IVs in random stats.
+    *success = Pokemon_GiveMonFromScript(HEAP_ID_FIELD2, fieldSystem->saveData, species, level, heldItem, metLocation, metTerrain, TRUE);
 
     return FALSE;
 }

@@ -18,7 +18,6 @@ enum ItemUseCheckResult {
     ITEM_USE_CANNOT_DISMOUNT,
     ITEM_USE_CANNOT_USE_WITH_PARTNER,
     ITEM_USE_CANNOT_FISH_HERE,
-    ITEM_USE_CANNOT_USE_UNDERGROUND_MAINTENANCE,
 };
 
 typedef void *(*FieldApplicationWorkCtor)(void *fieldSystem);

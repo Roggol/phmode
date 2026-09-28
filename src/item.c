@@ -297,6 +297,13 @@ static s32 ItemPartyParam_Get(ItemPartyParam *partyParam, enum ItemDataParam att
 
 u16 Item_MoveForTMHM(u16 item)
 {
+    // phmode: ITEM_HM09 (Flash) lives outside the normal contiguous TM01..HM08
+    // item range (it reuses the item slot vacated by the old Explorer Kit), so
+    // it can't be resolved through sTMHMMoves like every other TM/HM below.
+    if (item == ITEM_HM09) {
+        return MOVE_FLASH;
+    }
+
     if (item < ITEM_TM01 || item > ITEM_HM08) {
         return MOVE_NONE;
     }
@@ -307,6 +314,10 @@ u16 Item_MoveForTMHM(u16 item)
 
 u8 Item_IsHMMove(u16 move)
 {
+    if (move == MOVE_FLASH) {
+        return TRUE;
+    }
+
     for (u8 i = 0; i < NUM_HMS; i++) {
         if (sTMHMMoves[NUM_TMS + i] == move) {
             return TRUE;
@@ -318,6 +329,14 @@ u8 Item_IsHMMove(u16 move)
 
 u8 Item_TMHMNumber(u16 item)
 {
+    // phmode: see the comment in Item_MoveForTMHM above. NUM_TMHMS (100) is the
+    // first tmLearnsetMasks bit index past the normal TM01..HM08 range, so this
+    // reuses it as ITEM_HM09's own dedicated compatibility bit (set via the
+    // "HM09" by_tm marker - see proc_tmlearnset's NUM_HMS + 1 special case).
+    if (item == ITEM_HM09) {
+        return NUM_TMHMS;
+    }
+
     if (item < ITEM_TM01 || item > ITEM_HM08) {
         return ITEM_NONE;
     }

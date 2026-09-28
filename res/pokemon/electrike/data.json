@@ -70,14 +70,14 @@
             "TM46",
             "TM57",
             "TM58",
-            "TM70",
             "TM73",
             "TM78",
             "TM82",
             "TM83",
             "TM87",
             "TM90",
-            "HM04"
+            "HM04",
+            "HM09"
         ],
         "by_tutor": [
             "MOVE_MUD_SLAP",

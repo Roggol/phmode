@@ -115,25 +115,12 @@
       ]
     },
     {
-      "id": "TrainersSchool_Text_UseThisPotion",
-      "en_US": [
-        "Whew! You’re really good!\r",
-        "We’ve been studying every day, but\n",
-        "we were no match for you at all!\r",
-        "You’d be able to use this Potion\n",
-        "properly. Here you go!\r"
-      ]
+      "id": "TrainersSchool_Text_UseThisTM10",
+      "en_US": "placeholder"
     },
     {
-      "id": "TrainersSchool_Text_PotionRestoresHP",
-      "en_US": [
-        "When a Potion is used, it restores the\n",
-        "HP, the health, of a Pokémon.\r",
-        "Being a good Trainer isn’t only about\n",
-        "ordering your Pokémon around.\r",
-        "A superior Trainer knows how to use\n",
-        "items to the full advantage!"
-      ]
+      "id": "TrainersSchool_Text_TM10Explanation",
+      "en_US": "placeholder"
     },
     {
       "id": "TrainersSchool_Text_MayWeBattle",

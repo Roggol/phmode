@@ -532,7 +532,11 @@ static void proc_tmlearnset(datafile_t *df, SpeciesData *out) {
             value = strtol(&entry[2], &endptr, 10);
             if (*endptr != 0 || value < 1) goto errmarker;
             if (entry[0] == 'T' && (size_t)value > NUM_TMS) goto errmarker;
-            if (entry[0] == 'H' && (size_t)value > NUM_HMS) goto errmarker;
+            // phmode: HM09 (Flash) lives outside the normal contiguous TM/HM item
+            // range (see ITEM_HM09 in generated/items.txt) so it isn't counted in
+            // NUM_HMS, but it still gets a bit in the same tmLearnsetMasks scheme -
+            // see Item_TMHMNumber's ITEM_HM09 special case in src/item.c.
+            if (entry[0] == 'H' && (size_t)value > NUM_HMS && value != NUM_HMS + 1) goto errmarker;
 
             value -= 1;
             value += NUM_TMS * (entry[0] == 'H');

@@ -87,7 +87,6 @@ void *FieldSystem_OpenTownMapItem(FieldSystem *fieldSystem);
 static void ItemUseContext_InitForDistortionWorld(FieldSystem *fieldSystem, ItemUseContext *usageContext);
 static void UseHealingItemFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseTownMapFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
-static void UseExplorerKitFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseBicycleFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseJournalFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
 static void UseTMHMFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext);
@@ -116,7 +115,6 @@ static BOOL UseBagMessageItem(ItemFieldUseContext *usageContext);
 static BOOL UseTownMapInField(ItemFieldUseContext *usageContext);
 static BOOL UsePoffinCaseInField(ItemFieldUseContext *usageContext);
 static BOOL UsePalPadInField(ItemFieldUseContext *usageContext);
-static BOOL UseExplorerKitInField(ItemFieldUseContext *usageContext);
 static BOOL UseSprayDuckInField(ItemFieldUseContext *usageContext);
 static BOOL UseAzureFluteInField(ItemFieldUseContext *usageContext);
 static BOOL UseVsRecorderInField(ItemFieldUseContext *usageContext);
@@ -138,7 +136,6 @@ static void *sub_02068A28(void *some_param);
 static void *sub_020691CC(void *some_param);
 static void *OpenPartyMenuForGracidea(void *fieldSystem);
 static enum ItemUseCheckResult CanUseBicycle(const ItemUseContext *usageContext);
-static enum ItemUseCheckResult CanUseExplorerKit(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseBerry(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseSprayDuck(const ItemUseContext *usageContext);
 static enum ItemUseCheckResult CanUseMulch(const ItemUseContext *usageContext);
@@ -160,7 +157,6 @@ static const ItemUseFuncDat sItemUseFuncs[] = {
     [ITEM_USE_FUNC_NONE]         = { NULL,                   UseBagMessageItem,     NULL              },
     [ITEM_USE_FUNC_HEALING]      = { UseHealingItemFromMenu, NULL,                  NULL              },
     [ITEM_USE_FUNC_TOWN_MAP]     = { UseTownMapFromMenu,     UseTownMapInField,     NULL              },
-    [ITEM_USE_FUNC_EXPLORER_KIT] = { UseExplorerKitFromMenu, UseExplorerKitInField, CanUseExplorerKit },
     [ITEM_USE_FUNC_BICYCLE]      = { UseBicycleFromMenu,     UseBicycleInField,     CanUseBicycle     },
     [ITEM_USE_FUNC_JOURNAL]      = { UseJournalFromMenu,     UseJournalInField,     NULL              },
     [ITEM_USE_FUNC_TM_HM]        = { UseTMHMFromMenu,        NULL,                  NULL              },
@@ -355,37 +351,6 @@ static BOOL UseTownMapInField(ItemFieldUseContext *usageContext)
 static void *sub_02068708(void *fieldSystem)
 {
     return FieldSystem_OpenTownMapItem(fieldSystem);
-}
-
-static void UseExplorerKitFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext)
-{
-    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(usageContext->fieldTask);
-    StartMenu *menu = FieldTask_GetEnv(usageContext->fieldTask);
-
-    FieldSystem_StartFieldMap(fieldSystem);
-
-    menu->callback = FieldTask_MapChangeToUnderground;
-    menu->taskData = MapChangeUndergroundContext_New(fieldSystem);
-    menu->state = START_MENU_STATE_NEW_TASK;
-
-    fieldSystem->menuCursorPos = 0;
-}
-
-static BOOL UseExplorerKitInField(ItemFieldUseContext *usageContext)
-{
-    MapChangeUndergroundContext *ctx = MapChangeUndergroundContext_New(usageContext->fieldSystem);
-
-    MapObjectMan_PauseAllMovement(usageContext->fieldSystem->mapObjMan);
-    FieldSystem_CreateTask(usageContext->fieldSystem, FieldTask_MapChangeToUnderground, ctx);
-
-    usageContext->fieldSystem->menuCursorPos = 0;
-    return FALSE;
-}
-
-static enum ItemUseCheckResult CanUseExplorerKit(const ItemUseContext *usageContext)
-{
-    // phmode: the Underground is closed for maintenance and cannot be entered at all.
-    return ITEM_USE_CANNOT_USE_UNDERGROUND_MAINTENANCE;
 }
 
 static void UseBicycleFromMenu(ItemMenuUseContext *usageContext, const ItemUseContext *additionalContext)
