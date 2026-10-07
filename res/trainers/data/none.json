@@ -2,7 +2,9 @@
     "name": " -",
     "class": "TRAINER_CLASS_PLAYER_MALE",
     "items": [],
-    "ai_flags": [],
+    "ai_flags": [
+        "AI_FLAG_CHECK_HP"
+    ],
     "double_battle": false,
     "party": [],
     "messages": []

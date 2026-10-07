@@ -7,7 +7,8 @@
     "ai_flags": [
         "AI_FLAG_BASIC",
         "AI_FLAG_EVAL_ATTACK",
-        "AI_FLAG_EXPERT"
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_CHECK_HP"
     ],
     "double_battle": false,
     "party": [
@@ -16,8 +17,11 @@
             "form": 0,
             "level": 10,
             "item": null,
-            "moves": null,
-            "nature": null,
+            "moves": [
+                "MOVE_DEFENSE_CURL",
+                "MOVE_ROLLOUT"
+            ],
+            "nature": "NATURE_ADAMANT",
             "ability": null,
             "ball_seal": 0
         }

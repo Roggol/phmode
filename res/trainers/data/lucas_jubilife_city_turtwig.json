@@ -7,14 +7,15 @@
     "ai_flags": [
         "AI_FLAG_BASIC",
         "AI_FLAG_EVAL_ATTACK",
-        "AI_FLAG_EXPERT"
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_CHECK_HP"
     ],
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_PIPLUP",
+            "species": "SPECIES_PRINPLUP",
             "form": 0,
-            "level": 10,
+            "level": 20,
             "item": null,
             "moves": [
                 "MOVE_BUBBLE",

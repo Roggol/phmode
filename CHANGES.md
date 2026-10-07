@@ -2463,6 +2463,10 @@ Base Rotom stays Electric / Ghost.
 ### Lanturn
 * Ability slot 2: Illuminate → **none**. Volt Absorb is now its only ability.
 
+### Yanma
+* Learnset: Sonic Boom and Double Team swapped levels — **Sonic Boom now at
+  level 11**, **Double Team now at level 14** (previously the reverse).
+
 ---
 
 ## Level cap (`5c436cf12`)
@@ -3701,6 +3705,65 @@ script's labels/message IDs were renamed to match
 message strings describing the reward are new placeholder text pending the
 user's own wording, since the old Potion-flavored text no longer applies to
 a TM.
+
+### Every trainer now uses the Check HP AI flag by default
+`res/trainers/data/*.json` — every trainer's `ai_flags` now includes
+`AI_FLAG_CHECK_HP` alongside whatever it already had, in the same style as
+the earlier project-wide rollout of `AI_FLAG_EVAL_ATTACK`/`AI_FLAG_EXPERT`.
+922 of the 928 trainer files gained the flag (the other 6 — Roark and a
+handful of others — already had it from earlier hand-curation). Applied with
+a one-off script rather than by hand, given the number of files.
+
+### Trainer Encyclopedia now shows real values instead of "not yet curated" placeholders
+`TRAINER_ENCYCLOPEDIA.md` previously showed `Default level-up moves` for any
+Pokémon whose trainer data left `moves` as `null`, and appended
+`(default, not yet curated)` to every non-curated `Nature: Hardy` line. Both
+were replaced doc-wide with the actual value that resolves in battle:
+* Every `Default level-up moves` line (535 of them) was replaced with the
+  real moveset that species/level combination gets from its level-up
+  learnset — the same last-4-moves-learned-by-that-level algorithm
+  `BoxPokemon_SetDefaultMoves` (`src/pokemon.c`) uses at runtime, computed
+  with a one-off script rather than by hand.
+* Every `(default, not yet curated)` annotation (919 per-Pokémon lines, plus
+  the doc's own intro paragraph explaining the convention) was removed —
+  `Nature: Hardy` alone already meant "not curated, defaults to Hardy" and
+  reads the same either way, matching how the `Ability:` line already worked.
+* Every `AI Flags:` line (434 of them) gained a trailing `Check HP`, to
+  reflect the flag rollout above.
+
+### Tier 1 trainer data synced to the user's hand-edited Trainer Encyclopedia
+Mirroring the `WILD_ENCOUNTERS.md` → JSON sync workflow: the user hand-edited
+the Tier 1 section of `TRAINER_ENCYCLOPEDIA.md` directly (rather than
+`res/trainers/TRAINER_LOCATIONS.md`, which is unchanged), and every
+`res/trainers/data/*.json` file for a Tier 1 trainer was updated to match
+whatever the doc now says — species, level, ability, nature, held item, and
+moves, written in verbatim (per the user's explicit call on a few short
+default-looking movesets, e.g. Tristan's Starly only knowing Wing Attack:
+these are meant as real curation, not stale leftover text, so they're now
+set explicitly rather than left as `null`/default). Notable changes:
+* **Tristan's Starly**, **Natalie's Bidoof**, **Christine's Bidoof**, and
+  **Harrison's Starly** (Route 202/Trainers School) all gained curated
+  natures and/or explicit movesets in place of their previous defaults.
+* **The Jubilife City rival fight** (Dawn/Lucas) now fights their starter's
+  **first evolution at level 20** instead of the base starter at level 10 —
+  Turtwig→Grotle, Chimchar→Monferno, Piplup→Prinplup — and **both Jubilife
+  City Galactic Grunts go from level 11 to level 20** to match. Per the user:
+  these three fights are only reachable after beating Roark, not on the
+  first pass through Jubilife, so the higher level is intentional.
+* **Looker's scripted Jubilife City fight gains a second Pokémon**, a level
+  10 Machop alongside his existing Hoothoot.
+* **All three of Barry's Route 203 teams grow from 2 Pokémon to 4** (his
+  starter's second stage and a Starly gain a Ponyta+Sandshrew, a
+  Poliwag+Shinx, or a Yanma+Glameow teammate depending on which fight), every
+  member's level rises from 12 to 13, and every Pokémon on the team gets a
+  curated nature and full moveset; the starter-line Pokémon on each team
+  also picks up a held Sitrus Berry.
+* One correction along the way: the doc listed one of these new Glameow
+  teammates with `Ability: Keen Eye` (not a real Glameow ability - almost
+  certainly copied from the Starly line just above it in the same block).
+  That Glameow's ability was left as its real default (Limber) instead, and
+  the doc's own line was corrected to match — `trainerproc` rejects an
+  invalid species/ability pairing outright, which is what caught it.
 
 ---
 

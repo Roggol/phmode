@@ -1314,6 +1314,9 @@ recognizing Substitute and Distortion Terrain, timing moves like Sucker
 Punch, and so on. Expect trainer battles across the board to play a
 meaningfully sharper game than before.
 
+On top of that, every trainer's AI now also pays attention to remaining HP
+when picking a move, instead of ignoring it entirely.
+
 ---
 
 ## Every Gym Leader Has a Brand New Team
@@ -1709,6 +1712,14 @@ trainers got a modest bump. Everything else on Routes 209, 210 South, 212,
 and around Solaceon/the Cafe/Pokémon Mansion shifted level slightly to match,
 as a knock-on effect of Route 212 and Pokémon Mansion moving later (see
 above) and Route 208's move freeing up room earlier in the curve.
+
+### A batch of early-game trainers have freshly curated teams
+Several trainers between Route 201 and Oreburgh City — including both
+starter rival fights, a couple of the Jubilife City encounters, and Barry's
+second battle on Route 203 — now have hand-picked natures, movesets, and (in
+a few cases) extra teammates, instead of a generic default team. Route 203
+Barry in particular now brings a full four-Pokémon team to that fight
+instead of two.
 
 ### The house on Route 221 gives its rewards all at once
 The NPC in the house on Route 221 used to run a daily minigame where you'd
