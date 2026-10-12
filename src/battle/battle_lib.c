@@ -3012,7 +3012,6 @@ int BattleSystem_CountAbility(BattleSystem *battleSys, BattleContext *battleCtx,
 BOOL Move_IsMultiTurn(BattleContext *battleCtx, int move)
 {
     switch (MOVE_DATA(move).effect) {
-    case BATTLE_EFFECT_BIDE:
     case BATTLE_EFFECT_CHARGE_TURN_HIGH_CRIT:
     case BATTLE_EFFECT_CHARGE_TURN_HIGH_CRIT_FLINCH:
     case BATTLE_EFFECT_CHARGE_TURN_DEF_UP:
@@ -7987,7 +7986,6 @@ static int ApplyTypeMultiplier(BattleContext *battleCtx, int attacker, int mul, 
 static BOOL MoveIsOnDamagingTurn(BattleContext *battleCtx, int move)
 {
     switch (MOVE_DATA(move).effect) {
-    case BATTLE_EFFECT_BIDE:
     case BATTLE_EFFECT_CHARGE_TURN_HIGH_CRIT:
     case BATTLE_EFFECT_CHARGE_TURN_HIGH_CRIT_FLINCH:
     case BATTLE_EFFECT_CHARGE_TURN_DEF_UP:

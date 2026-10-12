@@ -18,8 +18,10 @@
             "level": 20,
             "item": null,
             "moves": [
-                "MOVE_BUBBLE",
-                "MOVE_POUND"
+                "MOVE_BUBBLE_BEAM",
+                "MOVE_AURORA_BEAM",
+                "MOVE_METAL_CLAW",
+                "MOVE_PECK"
             ],
             "nature": null,
             "ability": null,

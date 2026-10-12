@@ -1503,6 +1503,30 @@ flag (not the Endure flag), so `subscript_move_followup_message` /
 * **Cut** → Grass
 * **Rock Climb** → Rock
 
+### Bide — reworked into a 1-turn Counter-style move, now Bug-type
+`res/moves/bide/data.json` — type Normal → Bug, priority 1 → -5, no longer
+locks the user in for 2 turns (removed `MOVE_FLAG_HIDES_HP_GAUGES`), and now
+retaliates for the exact amount of damage taken (not double) at the end of
+the same turn it's used, instead of double damage after charging for 2 turns.
+
+* `src/battle/battle_script.c` — new `BtlCmd_Bide` (`BTLCMD_BIDE` in
+  `include/data/scripts/btlcmd.h`, `Bide` macro in `asm/macros/btlcmd.inc`),
+  modeled on `BtlCmd_Counter`/`BtlCmd_MirrorCoat`: fails unless the attacker
+  took physical or special damage this turn, otherwise hits the last battler
+  that damaged it (or a random opponent if that battler is gone) for the
+  combined physical + special damage taken this turn.
+* `res/battle/scripts/effects/effect_script_0026.s` — rewritten to the same
+  one-line `IGNORE_TYPE_CHECKS` + command pattern as Counter/Mirror Coat's
+  effect scripts, replacing the old 2-turn charge/lock/unleash subscript
+  sequence (`subscript_bide_start`/`subscript_bide_end` are no longer called).
+* `src/battle/battle_lib.c` — removed `BATTLE_EFFECT_BIDE` from
+  `Move_IsMultiTurn` and `MoveIsOnDamagingTurn`, since Bide no longer spans
+  multiple turns.
+* `src/battle/trainer_ai/script.s` — trainers now evaluate Bide with
+  `Expert_Counter`'s scoring (removed the old `Expert_Bide`, which only
+  docked score for already being below 90% HP, a holdover from the charging
+  mechanic).
+
 ### X-Scissor — high critical-hit ratio
 `res/moves/x_scissor/data.json` — effect changed from `BATTLE_EFFECT_HIT` to
 `BATTLE_EFFECT_HIGH_CRITICAL`.
@@ -1761,6 +1785,12 @@ logic) is completely untouched — it already clears Spikes, Toxic Spikes,
 Stealth Rock, Sticky Web, Tailwind, and Gravity from both sides of the field,
 plus Reflect/Light Screen/Mist/Safeguard from the defender's side, and drops
 the defender's evasion by one stage, regardless of which pipeline invoked it.
+
+### Recharge moves buffed to 180 base power
+`res/moves/{hyper_beam,giga_impact,blast_burn,hydro_cannon,frenzy_plant,rock_wrecker,roar_of_time}/data.json`
+— base power 150 → 180 for every move with `BATTLE_EFFECT_RECHARGE_AFTER`
+(the user must skip their next turn after using it). Nothing else about these
+moves changed.
 
 ---
 
@@ -2232,11 +2262,15 @@ ability; any slot not mentioned is unchanged.
 ### Empoleon
 * Ability slot 2: none → **Competitive**.
 
+### Kricketot
+* Stats: HP 37 → 57, SpAtk 25 → 10, Spe 25 → 20. BST 194 (unchanged).
+
 ### Kricketune
 * Ability slot 1: Swarm → **Technician**; ability slot 2: none → **Technician**
   (Technician in both slots).
 * Learnset: Aerial Ace replaces X-Scissor at level 30; Bug Bite replaces
   Screech at level 34.
+* Stats: HP 77 → 97, SpAtk 55 → 40, Spe 65 → 60. BST 384 (unchanged).
 
 ### Shinx
 * Ability slot 1: Rivalry → **Guts** (slot 2 stays Intimidate).
@@ -3769,6 +3803,23 @@ set explicitly rather than left as `null`/default). Notable changes:
 
 ## Map data
 
+### Repel/Super Repel/Max Repel removed from the overworld, hidden items, and every shop
+`res/field/scripts/scripts_visible_items.s` (10 ground-item-ball placements)
+and `include/data/field/hidden_items.h` (7 hidden-item entries) no longer give
+Repel, Super Repel, or Max Repel. Each is replaced in place with 5 of the
+matching Poké Ball tier — Repel → 5 Poké Balls, Super Repel → 5 Great Balls,
+Max Repel → 5 Ultra Balls — same location, same pickup flag, just a different
+item/quantity.
+
+`include/data/mart_items.h` — all three are also removed from sale: the
+`PokeMartCommonItems` badge-gated listing every regular town/city Mart shares,
+and the Veilstone Dept Store's `VeilstoneDeptStoreStock_1F_LEFT`. Same
+treatment as the X items/Guard Spec./Dire Hit and Revive/Max Revive/Revival
+Herb removals above — there is no longer any way to buy or find one anywhere
+in the game. (The Pickup ability's loot table in `include/data/pickup.h`
+still includes Repel and is unaffected, same as Rare Candy staying in that
+table after its own ground-item swap.)
+
 ### Jubilife City — Looker now battles you right after his reveal, and gives up the Vs. Recorder speech
 Previously, after "unmasking" Looker (the shady man following Dawn/Lucas
 around) and hearing his full introduction (through the "Don't be a thief!"
@@ -4228,6 +4279,27 @@ Another follow-up pass, again confined to Tier 1 per the doc:
   pokemon."). Ponyta drops 35%→25% and Magby drops 28%→18% to make room;
   Doduo (25%), the Houndour/Growlithe/Vulpix time-of-day swap (10%), and
   Cyndaquil/Charmander (1% each) are unchanged.
+
+### Wild encounter doc sync — Route 207 levels flattened to 10, Doduo dropped from the time-of-day swap
+
+A further follow-up, this time sourced from the project's Google Sheets
+encounter tracker rather than a direct `WILD_ENCOUNTERS.md` edit (the tracker
+is now also treated as a valid source of truth when the user edits a
+location's table there directly — same sync-the-JSON-and-doc-to-match
+workflow as a hand-edit of the markdown doc):
+
+* **Route 207** (`encounters_route_207.json`) — every land-table slot's level
+  was flattened to a uniform Lv. 10 (previously a 3-16 spread across the 12
+  slots). The second time-of-day-swappable slot (worth 10% of the table, see
+  `WildEncounters_ReplaceTimedEncounters`) no longer holds Doduo at any time
+  of day: it's now Houndour in the Morning (mirroring the first swappable
+  slot), Growlithe by Day, and Vulpix by Night — i.e. `day`/`night` both
+  changed from `[<species>, SPECIES_DODUO]` to `[<species>, <species>]`.
+  Doduo remains present on the route, just confined to its two ordinary
+  fixed-weight slots (10% + 5%, unchanged). `WILD_ENCOUNTERS.md`'s Route 207
+  entry was rewritten to match: Ponyta 25%, Croagunk 20%, Magby 18%, Doduo
+  15%, the Houndour/Growlithe/Vulpix swap at 20%, Cyndaquil/Charmander 1%
+  each — all at the new flat Lv. 10.
 
 ### Cyrus storyline rewrite; Giratina cannot be caught in the Distortion World
 The user rewrote most of Cyrus's dialogue across the climactic Distortion

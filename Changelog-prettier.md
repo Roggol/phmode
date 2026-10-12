@@ -344,6 +344,12 @@ a specific species, but here's what each one actually does:
 - **Strength is now Fighting-type, Cut is now Grass-type, and Rock Climb
   is now Rock-type** — matching their names/themes. Nothing else about
   them changed.
+- **Bide is now a Bug-type move that works in a single turn.** Instead of
+  locking you in for two turns and then striking back for double the
+  damage you took, it now acts like Counter or Mirror Coat: use it, and if
+  you get hit before your next turn, you immediately strike back that same
+  turn for exactly the amount of damage you took (physical or special,
+  whichever hit you).
 - **X-Scissor now has a high critical-hit ratio.**
 - **Boomburst is a new move** — a powerful Normal-type special attack
   that hits every Pokémon on the field at once.
@@ -1653,6 +1659,13 @@ Pokémon or a gifted egg will now automatically be sent to an open PC box
 if your party is full at the time. You'll be told it was sent to your PC.
 An egg sitting in a box doesn't make progress toward hatching until it's
 moved into your active party.
+
+### Repel, Super Repel, and Max Repel are gone entirely
+Every ground item and hidden item that used to give one of these now gives
+Poké Balls instead — 5 Poké Balls where a Repel was, 5 Great Balls where a
+Super Repel was, and 5 Ultra Balls where a Max Repel was. All three are also
+gone from every shop that used to sell them. There's no way to buy or find
+any of the three anymore.
 
 ### The Poké Radar and wild Pokémon swarms are gone
 Both features have been removed entirely. You'll never find a Poké Radar

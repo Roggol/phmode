@@ -1,10 +1,10 @@
 {
     "base_stats": {
-        "hp": 37,
+        "hp": 57,
         "attack": 25,
         "defense": 41,
-        "speed": 25,
-        "special_attack": 25,
+        "speed": 20,
+        "special_attack": 10,
         "special_defense": 41
     },
     "types": [ "TYPE_BUG", "TYPE_BUG" ],
@@ -36,6 +36,7 @@
         "by_level": [
             [ 1, "MOVE_GROWL" ],
             [ 1, "MOVE_BIDE" ],
+            [ 10, "MOVE_LEECH_LIFE" ],
             [ 16, "MOVE_BUG_BITE" ]
         ],
         "by_tm": [  ],

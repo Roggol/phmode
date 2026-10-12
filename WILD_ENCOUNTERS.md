@@ -126,9 +126,9 @@ The machops are hard at work in this mine.
 ### Route 207
 The arid mud slides attract fire type pokemon.
 - **Grass/Land**:
-  - *Morning*: Ponyta (Lv. 6-8, 25%), Croagunk (Lv.13, 20%) Magby (Lv. 5-7, 18%), Doduo (Lv. 3-9, 25%), Hondour (Lv. 5-7, 10%), Cyndaquill (Lv. 5, 1%), Charmander (Lv. 5, 1%)
-  - *Day*: Ponyta (Lv. 6-8, 25%), Croagunk (Lv.13, 20%) Magby (Lv. 5-7, 18%), Doduo (Lv. 3-9, 25%), Growlithe (Lv. 5-7, 10%), Cyndaquill (Lv. 5, 1%), Charmander (Lv. 5, 1%)
-  - *Night*: Ponyta (Lv. 6-8, 25%), Croagunk (Lv.13, 20%) Magby (Lv. 5-7, 18%), Doduo (Lv. 3-9, 25%), Vulpix (Lv. 5-7, 10%), Cyndaquill (Lv. 5, 1%), Charmander (Lv. 5, 1%)
+  - *Morning*: Ponyta (Lv. 10, 25%), Croagunk (Lv. 10, 20%), Houndour (Lv. 10, 20%), Magby (Lv. 10, 18%), Doduo (Lv. 10, 15%), Cyndaquil (Lv. 10, 1%), Charmander (Lv. 10, 1%)
+  - *Day*: Ponyta (Lv. 10, 25%), Croagunk (Lv. 10, 20%), Growlithe (Lv. 10, 20%), Magby (Lv. 10, 18%), Doduo (Lv. 10, 15%), Cyndaquil (Lv. 10, 1%), Charmander (Lv. 10, 1%)
+  - *Night*: Ponyta (Lv. 10, 25%), Croagunk (Lv. 10, 20%), Vulpix (Lv. 10, 20%), Magby (Lv. 10, 18%), Doduo (Lv. 10, 15%), Cyndaquil (Lv. 10, 1%), Charmander (Lv. 10, 1%)
 
 ### Route 218
 Harbour conditions are ideal for small crustaceans.

@@ -18,8 +18,10 @@
             "level": 20,
             "item": null,
             "moves": [
+                "MOVE_RAZOR_LEAF",
+                "MOVE_STOMP",
                 "MOVE_ABSORB",
-                "MOVE_TACKLE"
+                "MOVE_WITHDRAW"
             ],
             "nature": null,
             "ability": null,

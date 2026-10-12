@@ -21,7 +21,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Ability: Torrent
       - Nature: Hardy
       - Held Item: None
-      - Moves: Pound, Growl
+      - Moves: Pound
 
 **Barry** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes, Check HP
@@ -30,7 +30,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Ability: Overgrow
       - Nature: Hardy
       - Held Item: None
-      - Moves: Tackle, Withdraw
+      - Moves: Tackle
 
 **Barry** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert, Prioritize Extremes, Check HP
@@ -39,7 +39,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Ability: Blaze
       - Nature: Hardy
       - Held Item: None
-      - Moves: Scratch, Leer
+      - Moves: Scratch
 
 ### Route 202
 
@@ -51,6 +51,11 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Nature: Adamant
       - Held Item: None
       - Moves: Wing attack
+    - **Ratata** — Lv. 10
+      - Ability: Hustle
+      - Nature: Adamant
+      - Held Item: None
+      - Moves: Quick attack
 
 **Natalie** (Lass)
   - AI Flags: Basic, Evaluate Attack, Expert, Check HP
@@ -60,6 +65,11 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Nature: Adamant
       - Held Item: None
       - Moves: Growl, Headbutt
+    - **Bidoof** — Lv. 10
+      - Ability: Simple
+      - Nature: Adamant
+      - Held Item: None
+      - Moves: Curse, Quick attack
 
 **Logan** (Youngster)
   - AI Flags: Basic, Evaluate Attack, Expert, Check HP
@@ -68,7 +78,12 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Ability: Shed Skin
       - Nature: Hardy
       - Held Item: None
-      - Moves: Tackle
+      - Moves: Leech life, Razor leaf
+    - **Kriketot** — Lv. 10
+      - Ability: Shed Skin
+      - Nature: Hardy
+      - Held Item: None
+      - Moves: Bide, Leech life
 
 ### Jubilife City
 
@@ -80,7 +95,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Ability: Overgrow
       - Nature: Hardy
       - Held Item: None
-      - Moves: Absorb, Tackle
+      - Moves: Razor Leaf, Stomp, Absorb, Withdraw
 
 **Dawn/Lucas** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert, Check HP
@@ -90,7 +105,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Ability: Blaze
       - Nature: Hardy
       - Held Item: None
-      - Moves: Ember, Scratch
+      - Moves: Flame wheel, Mach punch, Ember, Fury swipes
 
 **Dawn/Lucas** (Rival)
   - AI Flags: Basic, Evaluate Attack, Expert, Check HP
@@ -100,16 +115,16 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Ability: Torrent
       - Nature: Hardy
       - Held Item: None
-      - Moves: Bubble, Pound
+      - Moves: Bubblebeam, Aurora Beam, Metal Claw, Peck
 
 **Grunt** (Galactic Grunt Male) — *Galactic grunt*
   - AI Flags: Basic, Evaluate Attack, Expert, Check HP
   - Party:
     - **Stunky** — Lv. 20
       - Ability: Stench
-      - Nature: Hardy
+      - Nature: Adamant
       - Held Item: None
-      - Moves: Screech, Fury Swipes, SmokeScreen, Feint
+      - Moves: Screech, Fury Swipes, Faint attack, Poison gas
 
 **Grunt** (Galactic Grunt Male) — *Galactic grunt*
   - AI Flags: Basic, Evaluate Attack, Expert, Check HP
@@ -118,7 +133,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Ability: Limber
       - Nature: Hardy
       - Held Item: None
-      - Moves: Growl, Hypnosis, Faint Attack, Fury Swipes
+      - Moves: Fake out, Hypnosis, Faint Attack, Fury Swipes
 
 **Looker** (Policeman) — *scripted one-off, right after his "cover is blown" reveal*
   - AI Flags: Basic, Evaluate Attack, Expert, Check HP
@@ -127,12 +142,12 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Ability: Insomnia
       - Nature: Hardy
       - Held Item: None
-      - Moves: Growl, Foresight, Hypnosis, Peck
+      - Moves: Hypnosis, Peck, Dream Eater
     - **Machop** — Lv. 10
       - Ability: Guts
-      - Nature: Hardy
-      - Held Item: None
-      - Moves: Low Kick, Leer, Focus Energy, Karate Chop
+      - Nature: Adamant
+      - Held Item: White Herb
+      - Moves: Focus Energy, Karate Chop
 
 ### Trainers School
 

@@ -2,61 +2,61 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 6,
+            "level": 10,
             "species": "SPECIES_PONYTA"
         },
         {
-            "level": 13,
+            "level": 10,
             "species": "SPECIES_CROAGUNK"
         },
         {
-            "level": 6,
+            "level": 10,
             "species": "SPECIES_HOUNDOUR"
         },
         {
-            "level": 3,
-            "species": "SPECIES_DODUO"
+            "level": 10,
+            "species": "SPECIES_HOUNDOUR"
         },
         {
-            "level": 5,
+            "level": 10,
             "species": "SPECIES_MAGBY"
         },
         {
-            "level": 6,
+            "level": 10,
             "species": "SPECIES_DODUO"
         },
         {
-            "level": 8,
+            "level": 10,
             "species": "SPECIES_PONYTA"
         },
         {
-            "level": 9,
+            "level": 10,
             "species": "SPECIES_DODUO"
         },
         {
-            "level": 6,
+            "level": 10,
             "species": "SPECIES_MAGBY"
         },
         {
-            "level": 7,
+            "level": 10,
             "species": "SPECIES_MAGBY"
         },
         {
-            "level": 5,
+            "level": 10,
             "species": "SPECIES_CYNDAQUIL"
         },
         {
-            "level": 5,
+            "level": 10,
             "species": "SPECIES_CHARMANDER"
         }
     ],
     "day": [
         "SPECIES_GROWLITHE",
-        "SPECIES_DODUO"
+        "SPECIES_GROWLITHE"
     ],
     "night": [
         "SPECIES_VULPIX",
-        "SPECIES_DODUO"
+        "SPECIES_VULPIX"
     ],
     "rate_form0": 0,
     "rate_form1": 0,

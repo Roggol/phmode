@@ -339,8 +339,8 @@ VisibleItems_Route202_Potion:
     End
 
 VisibleItems_Route203_Repel:
-    SetVar VAR_0x8008, ITEM_REPEL
-    SetVar VAR_0x8009, 1
+    SetVar VAR_0x8008, ITEM_POKE_BALL
+    SetVar VAR_0x8009, 5
     GoTo VisibleItems_TryGiveItem
     End
 
@@ -525,8 +525,8 @@ VisibleItems_Route206_PPUp:
     End
 
 VisibleItems_Route206_SuperRepel:
-    SetVar VAR_0x8008, ITEM_SUPER_REPEL
-    SetVar VAR_0x8009, 1
+    SetVar VAR_0x8008, ITEM_GREAT_BALL
+    SetVar VAR_0x8009, 5
     GoTo VisibleItems_TryGiveItem
     End
 
@@ -927,14 +927,14 @@ VisibleItems_SolaceonRuinsRoom7_HM05:
     End
 
 VisibleItems_Route210South_SuperRepel:
-    SetVar VAR_0x8008, ITEM_SUPER_REPEL
-    SetVar VAR_0x8009, 1
+    SetVar VAR_0x8008, ITEM_GREAT_BALL
+    SetVar VAR_0x8009, 5
     GoTo VisibleItems_TryGiveItem
     End
 
 VisibleItems_Route210South_MaxRepel:
-    SetVar VAR_0x8008, ITEM_MAX_REPEL
-    SetVar VAR_0x8009, 1
+    SetVar VAR_0x8008, ITEM_ULTRA_BALL
+    SetVar VAR_0x8009, 5
     GoTo VisibleItems_TryGiveItem
     End
 
@@ -1017,8 +1017,8 @@ VisibleItems_Route214_RedShard:
     End
 
 VisibleItems_Route214_MaxRepel:
-    SetVar VAR_0x8008, ITEM_MAX_REPEL
-    SetVar VAR_0x8009, 1
+    SetVar VAR_0x8008, ITEM_ULTRA_BALL
+    SetVar VAR_0x8009, 5
     GoTo VisibleItems_TryGiveItem
     End
 
@@ -1089,8 +1089,8 @@ VisibleItems_Route220_SplashPlate:
     End
 
 VisibleItems_Route205South_Repel:
-    SetVar VAR_0x8008, ITEM_REPEL
-    SetVar VAR_0x8009, 1
+    SetVar VAR_0x8008, ITEM_POKE_BALL
+    SetVar VAR_0x8009, 5
     GoTo VisibleItems_TryGiveItem
     End
 
@@ -1101,8 +1101,8 @@ VisibleItems_Route220_Carbos:
     End
 
 VisibleItems_Route220_MaxRepel:
-    SetVar VAR_0x8008, ITEM_MAX_REPEL
-    SetVar VAR_0x8009, 1
+    SetVar VAR_0x8008, ITEM_ULTRA_BALL
+    SetVar VAR_0x8009, 5
     GoTo VisibleItems_TryGiveItem
     End
 
@@ -1155,8 +1155,8 @@ VisibleItems_IronIslandB1FRightRoom_EscapeRope:
     End
 
 VisibleItems_IronIslandB1FRightRoom_MaxRepel:
-    SetVar VAR_0x8008, ITEM_MAX_REPEL
-    SetVar VAR_0x8009, 1
+    SetVar VAR_0x8008, ITEM_ULTRA_BALL
+    SetVar VAR_0x8009, 5
     GoTo VisibleItems_TryGiveItem
     End
 
@@ -1365,8 +1365,8 @@ VisibleItems_MtCoronet2F_TM80:
     End
 
 VisibleItems_MtCoronet2F_MaxRepel:
-    SetVar VAR_0x8008, ITEM_MAX_REPEL
-    SetVar VAR_0x8009, 1
+    SetVar VAR_0x8008, ITEM_ULTRA_BALL
+    SetVar VAR_0x8009, 5
     GoTo VisibleItems_TryGiveItem
     End
 
@@ -1425,8 +1425,8 @@ VisibleItems_VictoryRoad1F_TM41:
     End
 
 VisibleItems_VictoryRoad1F_MaxRepel:
-    SetVar VAR_0x8008, ITEM_MAX_REPEL
-    SetVar VAR_0x8009, 1
+    SetVar VAR_0x8008, ITEM_ULTRA_BALL
+    SetVar VAR_0x8009, 5
     GoTo VisibleItems_TryGiveItem
     End
 

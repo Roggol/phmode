@@ -572,6 +572,10 @@
     .long BTLCMD_MIRRORCOAT
     .endm
 
+    .macro Bide
+    .long BTLCMD_BIDE
+    .endm
+
     .macro TryEncore jump_if_fail
     .long BTLCMD_TRYENCORE
     .long (\jump_if_fail-.) / 4 - 1

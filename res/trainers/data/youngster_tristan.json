@@ -21,6 +21,18 @@
             "nature": "NATURE_ADAMANT",
             "ability": null,
             "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_RATTATA",
+            "form": 0,
+            "level": 10,
+            "item": null,
+            "moves": [
+                "MOVE_QUICK_ATTACK"
+            ],
+            "nature": "NATURE_ADAMANT",
+            "ability": "ABILITY_HUSTLE",
+            "ball_seal": 0
         }
     ],
     "messages": [

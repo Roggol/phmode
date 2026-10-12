@@ -2005,7 +2005,7 @@ Expert_Main:
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_ACC_DOWN, Expert_StatusAccuracyDown
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_EVA_DOWN, Expert_StatusEvasionDown
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_RESET_STAT_CHANGES, Expert_Haze
-    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_BIDE, Expert_Bide
+    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_BIDE, Expert_Counter
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_FORCE_SWITCH, Expert_ForceSwitch
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_CONVERSION, Expert_Conversion
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_RESTORE_HALF_HP, Expert_Recovery
@@ -2919,14 +2919,6 @@ Expert_Haze_TryScorePlus3:
     AddToMoveScore 3
 
 Expert_Haze_End:
-    PopOrEnd 
-
-Expert_Bide:
-    // If the attacker's HP is <= 90%, score -2.
-    IfHPPercentGreaterThan AI_BATTLER_ATTACKER, 90, Expert_Bide_End
-    AddToMoveScore -2
-
-Expert_Bide_End:
     PopOrEnd 
 
 Expert_ForceSwitch:

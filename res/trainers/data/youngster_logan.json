@@ -16,7 +16,21 @@
             "level": 10,
             "item": null,
             "moves": [
-                "MOVE_TACKLE"
+                "MOVE_LEECH_LIFE",
+                "MOVE_RAZOR_LEAF"
+            ],
+            "nature": null,
+            "ability": null,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_KRICKETOT",
+            "form": 0,
+            "level": 10,
+            "item": null,
+            "moves": [
+                "MOVE_BIDE",
+                "MOVE_LEECH_LIFE"
             ],
             "nature": null,
             "ability": null,

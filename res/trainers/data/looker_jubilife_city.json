@@ -15,7 +15,11 @@
             "form": 0,
             "level": 10,
             "item": null,
-            "moves": null,
+            "moves": [
+                "MOVE_HYPNOSIS",
+                "MOVE_PECK",
+                "MOVE_DREAM_EATER"
+            ],
             "nature": null,
             "ability": null,
             "ball_seal": 0
@@ -24,9 +28,12 @@
             "species": "SPECIES_MACHOP",
             "form": 0,
             "level": 10,
-            "item": null,
-            "moves": null,
-            "nature": null,
+            "item": "ITEM_WHITE_HERB",
+            "moves": [
+                "MOVE_FOCUS_ENERGY",
+                "MOVE_KARATE_CHOP"
+            ],
+            "nature": "NATURE_ADAMANT",
             "ability": null,
             "ball_seal": 0
         }

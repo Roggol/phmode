@@ -176,6 +176,7 @@ static BOOL BtlCmd_Metronome(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_TryDisable(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_Counter(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_MirrorCoat(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_Bide(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_TryEncore(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_TryConversion2(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_TrySketch(BattleSystem *battleSys, BattleContext *battleCtx);
@@ -4743,6 +4744,58 @@ static BOOL BtlCmd_MirrorCoat(BattleSystem *battleSys, BattleContext *battleCtx)
         && attackingSide != defendingSide
         && battleCtx->battleMons[lastAttacker].curHP) {
         battleCtx->damage = ATTACKER_TURN_FLAGS.specialDamageTakenFrom[lastAttacker] * 2;
+
+        if (battleCtx->sideConditions[defendingSide].followMe && FOLLOW_ME_MON(defendingSide).curHP) {
+            battleCtx->defender = FOLLOW_ME_USER(defendingSide);
+        } else {
+            battleCtx->defender = lastAttacker;
+        }
+
+        // CompareVarToValue the target is no longer active, pick a random opponent
+        // This should always give us an active opponent, unless both have fainted
+        if (DEFENDING_MON.curHP == 0) {
+            battleCtx->defender = BattleSystem_RandomOpponent(battleSys, battleCtx, battleCtx->attacker);
+
+            // CompareVarToValue there are no possible targets, fail
+            if (DEFENDING_MON.curHP == 0) {
+                battleCtx->commandNext = BATTLE_CONTROL_UPDATE_MOVE_BUFFERS;
+                BattleScript_Jump(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_no_target);
+            }
+        }
+
+        BattleSystem_DecPPForPressure(battleCtx, battleCtx->attacker, battleCtx->defender);
+    } else {
+        ATTACKER_SELF_TURN_FLAGS.skipPressureCheck = TRUE;
+        battleCtx->moveStatusFlags |= MOVE_STATUS_FAILED;
+    }
+
+    return FALSE;
+}
+
+/**
+ * @brief Execute the Bide effect.
+ *
+ * This command will fail if any of the following are true:
+ * - The attacker did not receive damage this turn
+ * - The last battler to attack this one is their teammate
+ * - The last battler to attack this one is no longer active
+ * - Both opponents have fainted by other means
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @return FALSE
+ */
+static BOOL BtlCmd_Bide(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+
+    int lastAttacker = battleCtx->lastHitByBattler[battleCtx->attacker];
+    int damageTaken = ATTACKER_SELF_TURN_FLAGS.physicalDamageTaken + ATTACKER_SELF_TURN_FLAGS.specialDamageTaken;
+    int attackingSide = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker);
+    int defendingSide = BattleSystem_GetBattlerSide(battleSys, lastAttacker);
+
+    if (damageTaken && attackingSide != defendingSide && battleCtx->battleMons[lastAttacker].curHP) {
+        battleCtx->damage = damageTaken;
 
         if (battleCtx->sideConditions[defendingSide].followMe && FOLLOW_ME_MON(defendingSide).curHP) {
             battleCtx->defender = FOLLOW_ME_USER(defendingSide);

@@ -15,8 +15,13 @@
             "form": 0,
             "level": 20,
             "item": null,
-            "moves": null,
-            "nature": null,
+            "moves": [
+                "MOVE_SCREECH",
+                "MOVE_FURY_SWIPES",
+                "MOVE_FAINT_ATTACK",
+                "MOVE_POISON_GAS"
+            ],
+            "nature": "NATURE_ADAMANT",
             "ability": null,
             "ball_seal": 0
         }
