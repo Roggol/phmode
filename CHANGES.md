@@ -4005,12 +4005,22 @@ the map's own data.
   `ScriptEntry` table) that asks a multiple-choice question instead
   (`InitGlobalTextMenu ..., FALSE` — the `FALSE` disables canceling out with
   B, so the question must be answered):
-  * Rock 1: *"What item did your rival give you on Route 207?"* — Hard Stone
-    / Dusk Balls / Rare Candies / **Silk Scarf** (correct — matches the Route
-    207 rival-gift change earlier in this document).
-  * Rock 2: *"What item did your rival give you on Route 202?"* — Rare
-    Candies / TM27 / Great Balls / **Repel Toggle** (correct — matches the
-    existing Repel Toggle gift on Route 202).
+  * Rock 1 (the first one reached, near the entrance): *"What item did your
+    rival give you on Route 202?"*. The options are Rare Candies / TM27 /
+    Great Balls / **Repel Toggle**. Repel Toggle is correct, matching the
+    existing Repel Toggle gift on Route 202.
+  * Rock 2 (the harder question, further in): *"Which of these Pokémon cannot
+    learn Surf?"*. The options are Weavile / **Iron Bundle** / Tauros /
+    Dragonite, and Iron Bundle is correct. Its four answers are new
+    `menu_entries.json` entries `MenuEntries_Text_Weavile`, `_IronBundle`,
+    `_Tauros` and `_Dragonite`, appended at the end so no existing entry ids
+    shift.
+  * History: rock 1 used to ask *"What item did your rival give you on Route
+    207?"* (Hard Stone / Dusk Balls / Rare Candies / **Silk Scarf**), and the
+    Route 202 question was on rock 2. That Silk Scarf question was replaced,
+    and the Route 202 question moved to rock 1 so the harder Surf question
+    comes second. The old Hard Stone / Dusk Balls / Silk Scarf menu entries
+    are now unused but kept, so later entry ids don't shift.
 * **Correct answer**: the message "Correct! The rock crumbles away." plays and
   `RemoveObject VAR_LAST_TALKED` permanently removes that rock (same
   mechanism ordinary Rock Smash rocks use to stay gone), opening the path.
@@ -4427,6 +4437,66 @@ Also fixed in passing in the 3 newly-touched files, same category as the
 typo fixes above: lowercase "pokemon" → "Pokémon" and "buddhists" →
 "Buddhists" in `GalacticHQHall_Text_TheWorldMustChange`.
 
+### Ledge decal props, and map props can now be rotated
+
+Ledges can be added to a map without editing its 3D model. A ledge is now a
+flat one-tile decal prop with a jump tile underneath.
+
+* Six one-tile ledge decals are registered as map prop models, appended to
+  `map_prop_models.order` and the models `meson.build`. Appending is safe for
+  saves.
+  * **Outdoor style, 590–592:** `res/field/props/models/ledge_jump_b.nsbmd`
+    (middle) and `ledge_jump_l.nsbmd` / `ledge_jump_r.nsbmd` (the mirrored end
+    pieces), made in PDSMS. They use the `allpeak` texture and `apeak` palette.
+  * **Cave style, 593–595:** `ledge_jump_cave_b/l/r.nsbmd`. These are the same
+    geometry and UVs, with the texture and palette references renamed to
+    `dun_allpeak` / `dun_apeak`. That's the cave ledge texture Oreburgh Mine's
+    own map model uses (from `map_texture_set_054.nsbtx`). They also copy the
+    vanilla cave ledge's baked shading (its `dun_allpeak_lm13` material):
+    * the lighting-enable bits are off.
+    * the shape uses vertex colours instead of a normal: `COLOR(12,12,12)` on
+      the lip edge and `COLOR(19,19,19)` on the back edge.
+
+    Without this they rendered much brighter than the map's own ledges. The
+    display list stays the same size; one `VTX_16` became the equivalent
+    `VTX_10`. Vanilla outdoor ledges carry no vertex colours, so the outdoor
+    models are unchanged.
+  * **End-piece naming:** PDSMS names the end pieces from the opposite side.
+    `_r` is the left end seen facing the jump direction, and `_l` is the right
+    end. The placer's "Left end"/"Right end" options account for this.
+* **Material/shape table:** `res/prebuilt/fielddata/build_model/build_model_matshp.dat`
+  is indexed by prop model id, so its locator table grows from 590 to 596
+  entries. The new entries are empty, so the ledges draw as plain render
+  objects.
+* **Textures:** the engine binds a prop's texture by name from the area's prop
+  texture set, not from the model. For Oreburgh Mine, `prop_texture_set_051.nsbtx`
+  is the vanilla file with `dun_allpeak`/`dun_apeak` appended. They're copied
+  byte-for-byte from the mine's map texture set, and every existing texture and
+  palette stays byte-identical. `prop_model_set_051.json` lists the three cave
+  models.
+* **Engine (`src/overlay005/map_prop.c`, `MapPropManager_Render`):** vanilla
+  drew every map prop with an identity rotation and ignored the rotation stored
+  in the map's prop list. It now applies that rotation when it isn't zero, using
+  the same X/Y/Z order as `MTX_Rot33Vec`, and the visibility box test uses it
+  too. All 3,476 vanilla props are stored with rotation 0, so nothing already in
+  the game changes. This is what lets one decal face any of the four
+  directions: `0x0000` is a southward jump, `0x4000` east, `0x8000` north and
+  `0xC000` west.
+* **Placing ledges:** use the Ledge tool in `tools/trainer_placer` (see "Build
+  / repo housekeeping"). For each tile it:
+  * writes the prop entry into that chunk's `map_data_NNN.bin` at the BDHC floor
+    height.
+  * sets the tile to `TILE_BEHAVIOR_JUMP_<dir>` with the collision bit, as
+    vanilla ledges are stored.
+  * adds the models and that style's texture to the area's prop model set and
+    prop texture set, if a map in another area uses them for the first time.
+
+  The tool suggests the cave style on maps whose own texture set has
+  `dun_allpeak`, and the outdoor style everywhere else.
+* **Oreburgh Mine B2F:** a new west-jumping ledge at x 19, z 15–17, in the
+  cave style. The mine's existing ledge at x 2–4, z 19 is the vanilla one,
+  drawn by the map's own model.
+
 ### Map headers
 
 `include/data/map_headers.h`:
@@ -4465,6 +4535,36 @@ typo fixes above: lowercase "pokemon" → "Pokémon" and "buddhists" →
   remove an object whose `LOCALID_` is referenced by that map's scripts. It does
   not update `TRAINER_ENCYCLOPEDIA.md`, `res/trainers/TRAINER_LOCATIONS.md` or
   the tracker sheet. Rebuild to test.
+  It also places, moves, edits and removes item balls, hidden items, Rock Smash
+  rocks, Cut trees and Strength boulders, none of which need map-file changes:
+  * Obstacles take the next free `FLAG_MAP_LOCAL_HIDE_OBSTACLE_*` on that map
+    (map-local, reset on every map load).
+  * A new item ball reuses an unplaced entry in
+    `res/field/scripts/scripts_visible_items.s` (the vanilla `Unused*` ones
+    first), otherwise appends one after the last `ScriptEntry`. Its "obtained"
+    flag is an unreferenced `FLAG_UNUSED_*` in the item-flag area of
+    `generated/vars_flags.txt`, renamed in place to
+    `FLAG_OBTAINED_<MAP>_<ITEM>`.
+  * A new hidden item reuses an unplaced `include/data/field/hidden_items.h`
+    entry (the vanilla `UNUSED_NUGGET_*` ones first), otherwise takes a free
+    `FLAG_UNUSED_*` inside the hidden-item flag range and adds a
+    `HIDDEN_ITEM_ENTRY` line for it.
+  * `vars_flags.txt` is never appended to, so existing saves stay compatible.
+    If only a flag freed by a removed item is left, the save message warns that
+    old saves may already have it set.
+  * Editing an existing item's contents rewrites its `SetVar` lines or
+    `HIDDEN_ITEM_ENTRY` line. A warning shows when that same script or entry
+    is also placed on another map.
+  * **Ledge tool:** places, drags, re-rotates and removes the ledge decal props
+    described under "Map data". It writes the chunk's prop list and the jump
+    tile together. Removing a ledge puts the tile back the way it was, so a
+    vanilla behaviour-only ledge comes back untouched.
+  * **Texture sets:** they're appended to directly, with the name dictionaries
+    and their PATRICIA trees rebuilt. Nothing is round-tripped through
+    `nitrobtx` (its `merge` command isn't implemented, and it can't write every
+    vanilla texture format). The writer was checked against all 145 vanilla
+    texture sets: every texture and palette came back byte-identical, and
+    every name resolved through the game's lookup.
 
 ---
 

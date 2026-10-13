@@ -1204,6 +1204,22 @@
     {
       "id": "MenuEntries_Text_RepelToggle",
       "en_US": "Repel Toggle"
+    },
+    {
+      "id": "MenuEntries_Text_Weavile",
+      "en_US": "Weavile"
+    },
+    {
+      "id": "MenuEntries_Text_IronBundle",
+      "en_US": "Iron Bundle"
+    },
+    {
+      "id": "MenuEntries_Text_Tauros",
+      "en_US": "Tauros"
+    },
+    {
+      "id": "MenuEntries_Text_Dragonite",
+      "en_US": "Dragonite"
     }
   ]
 }

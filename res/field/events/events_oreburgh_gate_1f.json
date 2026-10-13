@@ -10,12 +10,12 @@
             "script": "TRAINER_PICNICKER_DIANA",
             "initial_dir": 1,
             "data": [
-                3
+                4
             ],
             "movement_range_x": 0,
             "movement_range_z": 0,
             "x": 24,
-            "z": 21,
+            "z": 20,
             "y": 0
         },
         {
@@ -27,12 +27,12 @@
             "script": "TRAINER_CAMPER_CURTIS",
             "initial_dir": 0,
             "data": [
-                3
+                4
             ],
             "movement_range_x": 0,
             "movement_range_z": 0,
             "x": 17,
-            "z": 25,
+            "z": 26,
             "y": 1
         },
         {

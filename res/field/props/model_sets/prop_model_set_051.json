@@ -6,6 +6,9 @@
         "prop_model_315_nsbmd",
         "prop_model_494_nsbmd",
         "iron_island_platform_lift_nsbmd",
-        "prop_model_253_nsbmd"
+        "prop_model_253_nsbmd",
+        "ledge_jump_cave_b_nsbmd",
+        "ledge_jump_cave_l_nsbmd",
+        "ledge_jump_cave_r_nsbmd"
     ]
 }

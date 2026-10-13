@@ -589,6 +589,12 @@ map_prop_model_files = copy_gen.process(files(
     'prop_model_587.nsbmd',
     'prop_model_588.nsbmd',
     'prop_model_589.nsbmd',
+    'ledge_jump_b.nsbmd',
+    'ledge_jump_l.nsbmd',
+    'ledge_jump_r.nsbmd',
+    'ledge_jump_cave_b.nsbmd',
+    'ledge_jump_cave_l.nsbmd',
+    'ledge_jump_cave_r.nsbmd',
 ))
 
 map_prop_model_narc = custom_target('prop_models.narc',

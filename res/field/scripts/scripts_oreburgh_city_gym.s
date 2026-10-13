@@ -129,10 +129,10 @@ OreburghGym_PuzzleRock1:
     FacePlayer
     Message OreburghGym_Text_PuzzleQuestion1
     InitGlobalTextMenu 20, 8, 0, VAR_RESULT, FALSE
-    AddMenuEntry MenuEntries_Text_HardStone, 0
-    AddMenuEntry MenuEntries_Text_DuskBalls, 1
-    AddMenuEntry MenuEntries_Text_RareCandies, 2
-    AddMenuEntry MenuEntries_Text_SilkScarf, 3
+    AddMenuEntry MenuEntries_Text_RareCandies, 0
+    AddMenuEntry MenuEntries_Text_TM27, 1
+    AddMenuEntry MenuEntries_Text_GreatBalls, 2
+    AddMenuEntry MenuEntries_Text_RepelToggle, 3
     ShowMenu
     GoToIfEq VAR_RESULT, 3, OreburghGym_PuzzleCorrect
     GoTo OreburghGym_PuzzleWrong
@@ -144,12 +144,12 @@ OreburghGym_PuzzleRock2:
     FacePlayer
     Message OreburghGym_Text_PuzzleQuestion2
     InitGlobalTextMenu 20, 8, 0, VAR_RESULT, FALSE
-    AddMenuEntry MenuEntries_Text_RareCandies, 0
-    AddMenuEntry MenuEntries_Text_TM27, 1
-    AddMenuEntry MenuEntries_Text_GreatBalls, 2
-    AddMenuEntry MenuEntries_Text_RepelToggle, 3
+    AddMenuEntry MenuEntries_Text_Weavile, 0
+    AddMenuEntry MenuEntries_Text_IronBundle, 1
+    AddMenuEntry MenuEntries_Text_Tauros, 2
+    AddMenuEntry MenuEntries_Text_Dragonite, 3
     ShowMenu
-    GoToIfEq VAR_RESULT, 3, OreburghGym_PuzzleCorrect
+    GoToIfEq VAR_RESULT, 1, OreburghGym_PuzzleCorrect
     GoTo OreburghGym_PuzzleWrong
     End
 

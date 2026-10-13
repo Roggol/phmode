@@ -141,15 +141,15 @@
       "en_US": [
         "The rock seems to be testing you...\r",
         "What item did your rival give you\n",
-        "on Route 207?"
+        "on Route 202?"
       ]
     },
     {
       "id": "OreburghGym_Text_PuzzleQuestion2",
       "en_US": [
         "The rock seems to be testing you...\r",
-        "What item did your rival give you\n",
-        "on Route 202?"
+        "Which of these Pokémon\n",
+        "cannot learn Surf?"
       ]
     },
     {

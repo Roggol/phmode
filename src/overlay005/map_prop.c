@@ -147,6 +147,15 @@ void MapPropManager_Render(const VecFx32 *positionOffset, const AreaDataManager 
             position.x += positionOffset->x;
             position.z += positionOffset->z;
 
+            // phmode: vanilla ignores the rotation stored in a map's prop list (every vanilla
+            // prop has rotation 0), so honour it here; this lets one-tile decals such as the
+            // ledge props be placed in any direction.
+            if (loadedProp->rotation.x != 0 || loadedProp->rotation.y != 0 || loadedProp->rotation.z != 0) {
+                MTX_Rot33Vec(&rotationMatrix, &loadedProp->rotation);
+            } else {
+                MTX_Identity33(&rotationMatrix);
+            }
+
             if (GFXBoxTest_IsModelInView(loadedProp->model, &position, &rotationMatrix, &loadedProp->scale)) {
                 const MapPropMaterialShape *propMatShp = AreaDataManager_GetMapPropMaterialShape(areaDataManager);
                 u16 propMatShpIDsCount;

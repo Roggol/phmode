@@ -483,7 +483,7 @@ VisibleItems_EternaCity_TM46:
     End
 
 VisibleItems_Unused7025_PPUp:
-    SetVar VAR_0x8008, ITEM_PP_UP
+    SetVar VAR_0x8008, ITEM_TM88
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End

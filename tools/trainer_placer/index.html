@@ -40,10 +40,12 @@
   #placeHint.placing { color: #111; background: #00e5ff; padding: 6px 8px; border-radius: 4px; font-weight: 600; }
   .legend { display: grid; grid-template-columns: 14px 1fr 14px 1fr; gap: 3px 6px; align-items: center; }
   .sw { width: 14px; height: 14px; border-radius: 2px; border: 1px solid #0006; }
-  #toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); background: #30343d; border: 1px solid var(--line); border-radius: 6px; padding: 10px 14px; max-width: 70ch; display: none; white-space: pre-wrap; z-index: 10; }
+  #toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); background: #30343d; border: 1px solid var(--line); border-radius: 6px; padding: 10px 14px; max-width: 80ch; display: none; white-space: pre-wrap; z-index: 10; }
   #toast.err { border-color: var(--danger); }
   #toast.ok { border-color: var(--ok); }
   kbd { background: #30343d; border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; font-size: 11px; }
+  .addpane { display: none; }
+  .addpane.on { display: block; }
 </style>
 </head>
 <body>
@@ -51,6 +53,7 @@
   <h1>Trainer Placer</h1>
   <input id="mapInput" list="mapList" placeholder="Search maps (e.g. ROUTE_203)">
   <datalist id="mapList"></datalist>
+  <datalist id="itemList"></datalist>
   <button id="loadBtn">Load</button>
   <label class="chk"><input type="checkbox" id="lyTerrain" checked> Terrain</label>
   <label class="chk"><input type="checkbox" id="lyCollision" checked> Collision</label>
@@ -68,13 +71,50 @@
     <h2>Tile</h2>
     <div id="tileInfo" class="muted">Hover the map.</div>
 
-    <h2>Selected object</h2>
-    <div id="editor" class="muted">Click an object to select it. Drag to move, arrow keys nudge, <kbd>Del</kbd> removes a trainer.</div>
+    <h2>Selected</h2>
+    <div id="editor" class="muted"></div>
 
-    <h2>Add a trainer</h2>
-    <div class="muted" style="margin-bottom:6px">Only trainers that aren't on any map and aren't started by a script are listed, so their defeat flags can't clash. Pick one, then click a tile.</div>
-    <input id="trainerSearch" placeholder="Filter by name / class / Pokémon" style="width:100%;margin-bottom:6px">
-    <div id="trainerList"></div>
+    <h2>Add</h2>
+    <select id="addKind" style="width:100%;margin-bottom:6px">
+      <option value="trainer">Trainer</option>
+      <option value="item">Item ball</option>
+      <option value="hidden">Hidden item</option>
+      <option value="rock">Rock Smash rock</option>
+      <option value="tree">Cut tree</option>
+      <option value="boulder">Strength boulder</option>
+      <option value="ledge">Ledge</option>
+    </select>
+    <div class="addpane" data-kind="trainer">
+      <div class="muted" style="margin-bottom:6px">Only trainers that aren't on any map and aren't started by a script are listed, so their defeat flags can't clash. Pick one, then click a tile.</div>
+      <input id="trainerSearch" placeholder="Filter by name / class / Pokémon" style="width:100%;margin-bottom:6px">
+      <div id="trainerList"></div>
+    </div>
+    <div class="addpane" data-kind="item hidden">
+      <div class="grid">
+        <div class="muted">Item</div><input id="addItem" list="itemList" placeholder="ITEM_POTION">
+        <div class="muted">Quantity</div><input id="addQty" type="number" min="1" max="99" value="1">
+        <div class="muted addHiddenOnly">Dowsing range</div><input id="addRange" class="addHiddenOnly" type="number" min="0" max="15" value="2">
+      </div>
+      <div class="muted" id="addItemNote" style="margin:6px 0"></div>
+      <button id="addItemBtn">Place…</button>
+    </div>
+    <div class="addpane" data-kind="rock tree boulder">
+      <div class="muted" style="margin-bottom:6px">Uses the next free <code>FLAG_MAP_LOCAL_HIDE_OBSTACLE_*</code> on this map (reset every time the map loads), so nothing global changes. The tile underneath doesn't need collision: the object itself blocks movement.</div>
+      <button id="addObstacleBtn">Place…</button>
+    </div>
+    <div class="addpane" data-kind="ledge">
+      <div class="grid">
+        <div class="muted">Piece</div>
+        <select id="ledgePiece"><option value="b">Middle</option><option value="l">Left end</option><option value="r">Right end</option></select>
+        <div class="muted">Style</div>
+        <select id="ledgeStyle"><option value="outdoor">Outdoor (allpeak)</option><option value="cave">Cave (dun_allpeak)</option></select>
+        <div class="muted">Jump direction</div>
+        <select id="ledgeDir"><option value="1">South</option><option value="0">North</option><option value="2">West</option><option value="3">East</option></select>
+      </div>
+      <div class="muted" style="margin:6px 0">Left/right end are as seen facing the jump direction. Each tile gets a ledge decal prop and its tile becomes a jump tile in that direction (with collision, like vanilla ledges). Removing one puts the tile back. The player hops over the ledge tile, so leave the tile beyond it walkable.</div>
+      <div class="warn" id="ledgeNote" style="margin-bottom:6px"></div>
+      <button id="addLedgeBtn">Place…</button>
+    </div>
     <div id="placeHint" class="warn" style="margin-top:6px"></div>
 
     <h2>Legend</h2>
@@ -89,16 +129,118 @@ const $ = id => document.getElementById(id);
 const DIRS = ["North", "South", "West", "East"];
 const DIR_VEC = [[0, -1], [0, 1], [-1, 0], [1, 0]];
 const OBJ_KEYS = ["id", "graphics_id", "movement_type", "trainer_type", "hidden_flag", "script", "initial_dir", "data", "movement_range_x", "movement_range_z", "x", "z", "y"];
+const VISIBLE_BASE = 7000, HIDDEN_BASE = 8000, HIDDEN_LIMIT = 8800;
+const OBSTACLES = {
+  rock:    { script: 10001, gfx: "OBJ_EVENT_GFX_ROCK_SMASH",      id: "LOCALID_ROCK_SMASH",      name: "Rock Smash rock",  colour: "#a0785a" },
+  tree:    { script: 10000, gfx: "OBJ_EVENT_GFX_CUT_TREE",        id: "LOCALID_CUT_TREE",        name: "Cut tree",         colour: "#2e9d3a" },
+  boulder: { script: 10002, gfx: "OBJ_EVENT_GFX_STRENGTH_BOULDER", id: "LOCALID_STRENGTH_BOULDER", name: "Strength boulder", colour: "#a7a7a7" },
+};
+const COLOURS = { trainer: "#ff4fd8", item: "#f2c14e", npc: "#4a90e2", hidden: "#fff36b" };
+const FX = 4096;
+// Facing index (0 N, 1 S, 2 W, 3 E) -> prop Y rotation (u16 angle; the decal faces south unrotated) and jump behaviour.
+const LEDGE_ROT = { 1: 0x0000, 3: 0x4000, 0: 0x8000, 2: 0xC000 };
+const JUMP_BEHAVIOUR = { 3: 0x38, 2: 0x39, 0: 0x3A, 1: 0x3B };
+const COLLISION = 0x8000;
 
-let META = null, MAP = null, objects = [], original = "", selected = -1;
+let META = null, MAP = null, objects = [], bgs = [], props = [], raw = [], original = "", selected = null;
+let loadedLedgeTiles = new Set();
 let drag = null, placing = null, hover = null;
 let terrainImg = null, collisionImg = null;
 
 const isTrainer = o => typeof o.script === "string" && o.script.startsWith("TRAINER_");
-const isItem = o => /POKEBALL/.test(o.graphics_id);
-const dirty = () => JSON.stringify(objects) !== original;
+const isItemBall = o => o.script === "NEW_ITEM" || (Number.isInteger(o.script) && o.script >= VISIBLE_BASE && o.script < HIDDEN_BASE);
+const obstacleKind = o => Object.keys(OBSTACLES).find(k => OBSTACLES[k].script === o.script);
+const isHidden = b => b.script === "NEW_HIDDEN" || (Number.isInteger(b.script) && b.script >= HIDDEN_BASE && b.script < HIDDEN_LIMIT);
+const objKind = o => isTrainer(o) ? "trainer" : isItemBall(o) ? "item" : obstacleKind(o) ? "obstacle" : "npc";
+const evOf = s => s && (s.k === "o" ? objects[s.i] : s.k === "b" ? bgs[s.i] : props[s.i]);
+const same = (a, b) => a && b && a.k === b.k && a.i === b.i;
+const snapshot = () => JSON.stringify({ objects, bgs, props: props.map(p => [p.map, p.raw]), raw });
+
+// ---------- props / ledges ----------
+// Ledge keys are "style:piece" (e.g. "cave:l"), matching MAP.ledge_ids / MAP.ledge_names.
+const ledgePiece = p => Object.keys(MAP.ledge_ids).find(k => MAP.ledge_ids[k] === p.raw[0]);
+const PIECE_NAMES = { b: "Middle", l: "Left end", r: "Right end" };
+const ledgeLabel = key => `${key.split(":")[0]} ${PIECE_NAMES[key.split(":")[1]].toLowerCase()}`;
+const isLedge = p => ledgePiece(p) !== undefined;
+const ledgeDir = p => +Object.keys(LEDGE_ROT).find(d => LEDGE_ROT[d] === (p.raw[5] & 0xFFFF));
+function chunkAt(gx, gz) { return MAP.chunks.find(c => gx >= c.gx && gx < c.gx + 32 && gz >= c.gz && gz < c.gz + 32); }
+function chunkOf(mapName) { return MAP.chunks.find(c => c.map === mapName); }
+// Global tile a prop sits on (ledges: the tile their rotated quad covers).
+function propTile(p) {
+  const ch = chunkOf(p.map);
+  let x = p.raw[1], z = p.raw[3];
+  if (isLedge(p)) {
+    const a = (p.raw[5] & 0xFFFF) / 0x10000 * 2 * Math.PI, s = Math.round(Math.sin(a)), c = Math.round(Math.cos(a));
+    x += (8 * c - 8 * s) * FX; z += (-8 * s - 8 * c) * FX;
+  }
+  return [ch.gx + Math.floor((x / FX + 256) / 16), ch.gz + Math.floor((z / FX + 256) / 16)];
+}
+function ledgeRaw(piece, dir, gx, gz) {
+  const ch = chunkAt(gx, gz), rot = LEDGE_ROT[dir];
+  const a = rot / 0x10000 * 2 * Math.PI, s = Math.round(Math.sin(a)), c = Math.round(Math.cos(a));
+  const corners = [[0, 0], [16, 0], [16, -16], [0, -16]].map(([x, z]) => [x * c + z * s, -x * s + z * c]);
+  const minX = Math.min(...corners.map(p => p[0])), minZ = Math.min(...corners.map(p => p[1]));
+  const lx = gx - ch.gx, lz = gz - ch.gz;
+  return [MAP.ledge_ids[piece], (lx * 16 - 256 - minX) * FX, 0, (lz * 16 - 256 - minZ) * FX, 0, rot, 0, FX, FX, FX, 0, 0];
+}
+const isJumpWord = v => [0x38, 0x39, 0x3A, 0x3B].includes(v & 0xFF);
+function setJumpTile(gx, gz, dir) { const i = tileIndex(gx, gz); if (i >= 0) raw[i] = COLLISION | JUMP_BEHAVIOUR[dir]; }
+// Put a tile back to what it was when the map loaded, or (if it was already a ledge) to its neighbours' most common floor.
+function restoreTile(gx, gz) {
+  const i = tileIndex(gx, gz);
+  if (i < 0) return;
+  // A jump tile with no ledge prop at load is a vanilla (model-drawn) ledge: give it back as it was.
+  if (!isJumpWord(MAP.raw[i]) || !loadedLedgeTiles.has(gx + "," + gz)) { raw[i] = MAP.raw[i]; return; }
+  const counts = {};
+  for (const [dx, dz] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+    const j = tileIndex(gx + dx, gz + dz);
+    if (j >= 0 && !isJumpWord(raw[j])) counts[raw[j]] = (counts[raw[j]] || 0) + 1;
+  }
+  const best = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+  raw[i] = best ? +best[0] : 0;
+}
+function ledgeAtTile(gx, gz, except = -1) {
+  return props.findIndex((p, k) => k !== except && isLedge(p) && propTile(p)[0] === gx && propTile(p)[1] === gz);
+}
+function moveLedge(k, gx, gz, dir = ledgeDir(props[k]), piece = ledgePiece(props[k])) {
+  const p = props[k], [ox, oz] = propTile(p);
+  if (!chunkAt(gx, gz) || MAP.own[tileIndex(gx, gz)] !== 1) { toast("Ledges can only go on this map's own tiles.", "err"); return false; }
+  if (ledgeAtTile(gx, gz, k) >= 0) { toast("There's already a ledge on that tile.", "err"); return false; }
+  const target = chunkAt(gx, gz);
+  if (target.map !== p.map && props.filter(q => q.map === target.map).length >= MAP.max_props_per_chunk) {
+    toast(`That map chunk already has ${MAP.max_props_per_chunk} props.`, "err"); return false;
+  }
+  restoreTile(ox, oz);
+  p.map = target.map;
+  p.raw = ledgeRaw(piece, dir, gx, gz);
+  setJumpTile(gx, gz, dir);
+  buildLayers();
+  return true;
+}
+const dirty = () => snapshot() !== original;
 const trainerInfo = c => META.trainers.find(t => t.const === c);
-const pretty = s => s.replace(/^MAP_HEADER_|^TRAINER_|^OBJ_EVENT_GFX_|^MOVEMENT_TYPE_|^TRAINER_TYPE_/, "").replace(/_/g, " ").toLowerCase().replace(/\b\w/g, m => m.toUpperCase());
+const visibleEntry = o => Number.isInteger(o.script) ? META.visible_items[o.script - VISIBLE_BASE] : null;
+const hiddenEntry = b => Number.isInteger(b.script) ? META.hidden_items.find(h => h.index === b.script - HIDDEN_BASE) : null;
+const pretty = s => String(s).replace(/^MAP_HEADER_|^TRAINER_|^OBJ_EVENT_GFX_|^MOVEMENT_TYPE_|^TRAINER_TYPE_|^ITEM_/, "").replace(/_/g, " ").toLowerCase().replace(/\b\w/g, m => m.toUpperCase());
+
+// Effective item/qty/range for an item ball or hidden item, including unsaved edits.
+function itemOf(ev, k) {
+  const e = k === "o" ? visibleEntry(ev) : hiddenEntry(ev);
+  return { entry: e, item: ev._item ?? e?.item, qty: ev._qty ?? e?.qty ?? 1, range: ev._range ?? e?.range ?? 2 };
+}
+function removable(s) {
+  const ev = evOf(s);
+  if (!ev) return false;
+  if (s.k === "b") return isHidden(ev);
+  if (s.k === "p") return isLedge(ev);
+  return objKind(ev) !== "npc" && !MAP.localid_refs.includes(ev.id);
+}
+function visibleAt(s) {
+  const ev = evOf(s);
+  if (s.k === "b") return isHidden(ev) && $("lyOther").checked;
+  if (s.k === "p") return isLedge(ev) || $("lyOther").checked;
+  return isTrainer(ev) || $("lyOther").checked;
+}
 
 // ---------- terrain colours ----------
 const CATS = [
@@ -127,7 +269,10 @@ function hexToRgb(h) { const n = parseInt(h.slice(1), 16); return [n >> 16, (n >
 
 function buildLegend() {
   const items = [[DEFAULT_COLOUR, "Ground"], ...CATS.map(c => [c[1], c[2]]), ["#5a3a36", "Collision (overlay)"],
-                 ["#ff4fd8", "Trainer (with sight line)"], ["#4a90e2", "Other NPC"], ["#f2c14e", "Item ball"], ["#b05cd6", "Warp (outline)"]];
+                 [COLOURS.trainer, "Trainer (with sight line)"], [COLOURS.npc, "Other NPC"], [COLOURS.item, "Item ball"],
+                 [COLOURS.hidden, "Hidden item (diamond)"],
+                 ...Object.values(OBSTACLES).map(o => [o.colour, o.name + " (square)"]), ["#c9a26b", "Ledge prop (lip + arrow)"],
+                 ["#777", "Other map prop (dashed)"], ["#b05cd6", "Warp (outline)"]];
   $("legend").innerHTML = items.map(([c, l]) => `<div class="sw" style="background:${c}"></div><div>${l}</div>`).join("");
 }
 
@@ -142,7 +287,10 @@ async function getJSON(url, opts) {
 async function init() {
   META = await getJSON("/api/meta");
   $("mapList").innerHTML = META.maps.map(m => `<option value="${m.header}">${pretty(m.header)}</option>`).join("");
+  $("itemList").innerHTML = META.items.map(i => `<option value="${i}">${pretty(i)}</option>`).join("");
   buildLegend();
+  showAddPane();
+  renderEditor();
   renderTrainerList();
   const q = new URLSearchParams(location.search).get("map");
   const want = q ? (q.toUpperCase().startsWith("MAP_HEADER_") ? q.toUpperCase() : "MAP_HEADER_" + q.toUpperCase()) : localStorageGet("tp_lastMap");
@@ -159,8 +307,12 @@ async function loadMap(header) {
     MAP = await getJSON("/api/map?header=" + encodeURIComponent(header));
   } catch (e) { toast(e.message, "err"); status("Failed to load."); return; }
   objects = JSON.parse(JSON.stringify(MAP.events.object_events || []));
-  original = JSON.stringify(objects);
-  selected = -1; setPlacing(null);
+  bgs = JSON.parse(JSON.stringify(MAP.events.bg_events || []));
+  props = MAP.props.map(p => ({ map: p.map, raw: p.raw.slice(), name: p.name }));
+  raw = MAP.raw.slice();
+  loadedLedgeTiles = new Set(props.filter(isLedge).map(p => propTile(p).join(",")));
+  original = snapshot();
+  selected = null; setPlacing(null);
   localStorageSet("tp_lastMap", header);
   const fit = Math.floor(($("viewport").clientWidth - 4) / MAP.w);
   $("zoom").value = Math.max(8, Math.min(24, fit || 16));
@@ -169,7 +321,12 @@ async function loadMap(header) {
   renderEditor();
   renderTrainerList();
   updateButtons();
-  status(`${pretty(header)} — ${MAP.events_file}.json, ${MAP.w}×${MAP.h} tiles, ${objects.filter(isTrainer).length} trainers`);
+  status(`${pretty(header)} — ${MAP.events_file}.json, ${MAP.w}×${MAP.h} tiles, ${objects.filter(isTrainer).length} trainers, ` +
+         `${objects.filter(isItemBall).length} item balls, ${bgs.filter(isHidden).length} hidden items, ${props.filter(isLedge).length} ledge props`);
+  const ok = Object.keys(MAP.ledge_ids).length === Object.keys(MAP.ledge_names).length;
+  $("ledgeStyle").value = MAP.ledge_default_style;
+  $("ledgeNote").textContent = ok ? "" : "The ledge prop models aren't registered in res/field/props/models.";
+  $("addLedgeBtn").disabled = !ok;
 }
 
 function buildLayers() {
@@ -183,12 +340,12 @@ function buildLayers() {
     let rgb, a = 255;
     if (own === 0) { rgb = [17, 17, 17]; }
     else {
-      const v = MAP.behavior[i];
+      const v = raw[i] & 0xFF;
       rgb = cache[v] || (cache[v] = hexToRgb(behaviourColour(v)));
       if (own === 2) rgb = rgb.map(x => Math.round(x * 0.45));
     }
     ti.data.set([...rgb, a], i * 4);
-    if (MAP.collision[i] && own) ci.data.set([70, 20, 25, 160], i * 4);
+    if ((raw[i] & COLLISION) && own) ci.data.set([70, 20, 25, 160], i * 4);
   }
   terrainImg.getContext("2d").putImageData(ti, 0, 0);
   collisionImg.getContext("2d").putImageData(ci, 0, 0);
@@ -196,6 +353,12 @@ function buildLayers() {
 
 // ---------- drawing ----------
 function Z() { return +$("zoom").value; }
+
+function posOf(s) {
+  const ev = evOf(s);
+  if (drag && same(drag.sel, s)) return drag.pos;
+  return s.k === "p" ? propTile(ev) : [ev.x, ev.z];
+}
 
 function draw() {
   if (!MAP) return;
@@ -218,11 +381,18 @@ function draw() {
   ctx.stroke();
 
   const lx = x => x - MAP.x0, lz = v => v - MAP.z0;
-  // warps / signs / triggers
+  // warps / signs / triggers / hidden items
   if ($("lyOther").checked) {
     ctx.lineWidth = 2;
     for (const w of MAP.events.warp_events || []) { ctx.strokeStyle = "#d58cf2"; ctx.strokeRect(lx(w.x) * z + 2, lz(w.z) * z + 2, z - 4, z - 4); }
-    for (const b of MAP.events.bg_events || []) { ctx.fillStyle = "rgba(242,193,78,.6)"; ctx.fillRect(lx(b.x) * z + z / 3, lz(b.z) * z + z / 3, z / 3, z / 3); }
+    bgs.forEach((b, i) => {
+      const s = { k: "b", i }, [x, y] = posOf(s), cx = (lx(x) + .5) * z, cy = (lz(y) + .5) * z;
+      if (!isHidden(b)) { ctx.fillStyle = "rgba(242,193,78,.6)"; ctx.fillRect(lx(x) * z + z / 3, lz(y) * z + z / 3, z / 3, z / 3); return; }
+      const r = Math.max(4, z * .42);
+      ctx.beginPath(); ctx.moveTo(cx, cy - r); ctx.lineTo(cx + r, cy); ctx.lineTo(cx, cy + r); ctx.lineTo(cx - r, cy); ctx.closePath();
+      ctx.fillStyle = COLOURS.hidden; ctx.fill();
+      ctx.lineWidth = same(selected, s) ? 3 : 1.5; ctx.strokeStyle = same(selected, s) ? "#00e5ff" : "#333"; ctx.stroke();
+    });
     ctx.setLineDash([4, 3]);
     for (const c of MAP.events.coord_events || []) { ctx.strokeStyle = "#f0a35e"; ctx.strokeRect(lx(c.x) * z + 1, lz(c.z) * z + 1, (c.width || 1) * z - 2, (c.length || 1) * z - 2); }
     ctx.setLineDash([]);
@@ -232,7 +402,7 @@ function draw() {
   if ($("lySight").checked) {
     objects.forEach((o, i) => {
       if (!isTrainer(o)) return;
-      const pos = drag && drag.index === i ? drag.pos : [o.x, o.z];
+      const pos = posOf({ k: "o", i });
       const range = (o.data && o.data[0]) || 0;
       const dirs = o.trainer_type === "TRAINER_TYPE_VIEW_ALL_DIRECTIONS" ? [0, 1, 2, 3] : [o.initial_dir];
       ctx.fillStyle = "rgba(255,79,216,.28)";
@@ -243,27 +413,52 @@ function draw() {
     });
   }
 
+  // props: ledges as a lip on the far edge with an arrow; anything else as a faint outline
+  props.forEach((p, i) => {
+    const s = { k: "p", i };
+    if (!visibleAt(s)) return;
+    const [x, y] = posOf(s), sel = same(selected, s), X = lx(x) * z, Y = lz(y) * z;
+    if (!isLedge(p)) {
+      ctx.setLineDash([3, 3]); ctx.strokeStyle = sel ? "#00e5ff" : "rgba(255,255,255,.45)"; ctx.lineWidth = sel ? 3 : 1;
+      ctx.strokeRect(X + 2, Y + 2, z - 4, z - 4); ctx.setLineDash([]);
+      return;
+    }
+    const d = drag && same(drag.sel, s) && drag.dir !== undefined ? drag.dir : ledgeDir(p), v = DIR_VEC[d];
+    ctx.fillStyle = "rgba(201,162,107,.85)"; ctx.fillRect(X, Y, z, z);
+    ctx.fillStyle = "#5b3a1c";
+    const t = Math.max(2, z / 5);
+    if (v[1] === 1) ctx.fillRect(X, Y + z - t, z, t); else if (v[1] === -1) ctx.fillRect(X, Y, z, t);
+    else if (v[0] === 1) ctx.fillRect(X + z - t, Y, t, z); else ctx.fillRect(X, Y, t, z);
+    const cx = X + z / 2, cy = Y + z / 2, r = z * .3;
+    ctx.beginPath(); ctx.moveTo(cx + v[0] * r, cy + v[1] * r);
+    ctx.lineTo(cx - v[0] * r * .2 + v[1] * r * .6, cy - v[1] * r * .2 + v[0] * r * .6);
+    ctx.lineTo(cx - v[0] * r * .2 - v[1] * r * .6, cy - v[1] * r * .2 - v[0] * r * .6);
+    ctx.closePath(); ctx.fill();
+    if (sel) { ctx.strokeStyle = "#00e5ff"; ctx.lineWidth = 3; ctx.strokeRect(X + 1.5, Y + 1.5, z - 3, z - 3); }
+  });
+
   // objects
   objects.forEach((o, i) => {
-    const t = isTrainer(o);
-    if (!t && !$("lyOther").checked) return;
-    const pos = drag && drag.index === i ? drag.pos : [o.x, o.z];
+    const s = { k: "o", i };
+    if (!visibleAt(s)) return;
+    const kind = objKind(o), pos = posOf(s), sel = same(selected, s);
     const cx = (lx(pos[0]) + .5) * z, cy = (lz(pos[1]) + .5) * z, r = Math.max(3, z * .38);
-    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.fillStyle = t ? "#ff4fd8" : isItem(o) ? "#f2c14e" : "#4a90e2";
+    ctx.beginPath();
+    if (kind === "obstacle") ctx.rect(cx - r, cy - r, 2 * r, 2 * r); else ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = kind === "obstacle" ? OBSTACLES[obstacleKind(o)].colour : COLOURS[kind];
     ctx.fill();
-    ctx.lineWidth = i === selected ? 3 : 1.5;
-    ctx.strokeStyle = i === selected ? "#00e5ff" : "#fff";
+    ctx.lineWidth = sel ? 3 : 1.5;
+    ctx.strokeStyle = sel ? "#00e5ff" : "#fff";
     ctx.stroke();
-    if (t || !isItem(o)) {               // facing tick
+    if (kind === "trainer" || kind === "npc") {          // facing tick
       const v = DIR_VEC[o.initial_dir] || [0, 1];
       ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + v[0] * r, cy + v[1] * r);
       ctx.strokeStyle = "#111"; ctx.lineWidth = Math.max(1.5, z / 10); ctx.stroke();
     }
-    if (drag && drag.index === i && blocked(pos[0], pos[1])) {
-      ctx.strokeStyle = "#ff0"; ctx.lineWidth = 2; ctx.strokeRect(lx(pos[0]) * z + 1, lz(pos[1]) * z + 1, z - 2, z - 2);
-    }
   });
+  if (drag && drag.sel.k !== "p" && blocked(...drag.pos)) {
+    ctx.strokeStyle = "#ff0"; ctx.lineWidth = 2; ctx.strokeRect(lx(drag.pos[0]) * z + 1, lz(drag.pos[1]) * z + 1, z - 2, z - 2);
+  }
 
   if (hover && placing) {
     ctx.strokeStyle = "#00e5ff"; ctx.lineWidth = 2;
@@ -276,38 +471,39 @@ function tileIndex(x, z) {
   if (tx < 0 || tz < 0 || tx >= MAP.w || tz >= MAP.h) return -1;
   return tz * MAP.w + tx;
 }
-function blocked(x, z) { const i = tileIndex(x, z); return i < 0 || MAP.collision[i] === 1 || MAP.own[i] === 0; }
+function blocked(x, z) { const i = tileIndex(x, z); return i < 0 || (raw[i] & COLLISION) !== 0 || MAP.own[i] === 0; }
 
 // ---------- mouse ----------
 function eventTile(e) {
   const r = $("canvas").getBoundingClientRect(), z = Z();
   return [Math.floor((e.clientX - r.left) / z) + MAP.x0, Math.floor((e.clientY - r.top) / z) + MAP.z0];
 }
-function objectAt(x, z) {
-  for (let i = objects.length - 1; i >= 0; i--) {
-    const o = objects[i];
-    if (!isTrainer(o) && !$("lyOther").checked) continue;
-    if (o.x === x && o.z === z) return i;
+// Everything selectable on a tile, topmost first (objects are drawn over hidden items).
+function selectablesAt(x, z) {
+  const out = [];
+  for (let i = objects.length - 1; i >= 0; i--) if (objects[i].x === x && objects[i].z === z && visibleAt({ k: "o", i })) out.push({ k: "o", i });
+  for (let i = bgs.length - 1; i >= 0; i--) if (bgs[i].x === x && bgs[i].z === z && visibleAt({ k: "b", i })) out.push({ k: "b", i });
+  for (let i = props.length - 1; i >= 0; i--) {
+    const [px, pz] = propTile(props[i]);
+    if (px === x && pz === z && visibleAt({ k: "p", i })) out.push({ k: "p", i });
   }
-  return -1;
+  return out;
 }
 
 $("canvas").addEventListener("mousedown", e => {
   if (!MAP) return;
   const [x, z] = eventTile(e);
-  let i = objectAt(x, z);
+  const here = selectablesAt(x, z);
   if (placing) {
     // Clicking an existing object while placing cancels place mode and selects it
-    // instead of stacking a new trainer on top of it.
-    if (i < 0) { placeTrainer(placing, x, z); return; }
+    // instead of stacking something on top of it.
+    if (!here.length) { placeAt(x, z); return; }
     setPlacing(null);
   }
-  // Several objects on one tile: repeated clicks cycle through them.
-  const here = objects.map((o, k) => k).filter(k => objects[k].x === x && objects[k].z === z &&
-    (isTrainer(objects[k]) || $("lyOther").checked));
-  if (here.length > 1 && here.includes(selected)) i = here[(here.indexOf(selected) + here.length - 1) % here.length];
-  selected = i;
-  if (i >= 0) drag = { index: i, pos: [x, z], start: [x, z] };
+  // Several things on one tile: repeated clicks cycle through them.
+  const at = here.findIndex(s => same(s, selected));
+  selected = here.length ? here[at >= 0 ? (at + 1) % here.length : 0] : null;
+  if (selected && (selected.k !== "p" || removable(selected))) drag = { sel: selected, pos: [x, z], start: [x, z] };
   renderEditor(); draw();
 });
 window.addEventListener("mousemove", e => {
@@ -320,30 +516,46 @@ window.addEventListener("mousemove", e => {
 });
 window.addEventListener("mouseup", () => {
   if (!drag) return;
-  const o = objects[drag.index];
-  if (drag.pos[0] !== drag.start[0] || drag.pos[1] !== drag.start[1]) {
-    if (tileIndex(...drag.pos) >= 0) { o.x = drag.pos[0]; o.z = drag.pos[1]; }
+  const ev = evOf(drag.sel);
+  if ((drag.pos[0] !== drag.start[0] || drag.pos[1] !== drag.start[1]) && tileIndex(...drag.pos) >= 0) {
+    if (drag.sel.k === "p") moveLedge(drag.sel.i, ...drag.pos);
+    else { ev.x = drag.pos[0]; ev.z = drag.pos[1]; }
   }
   drag = null; renderEditor(); updateButtons(); draw();
 });
 window.addEventListener("keydown", e => {
   if (!MAP || ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
   if (e.key === "Escape") { setPlacing(null); draw(); return; }
-  if (selected < 0) return;
-  const o = objects[selected];
+  const ev = evOf(selected);
+  if (!ev) return;
   const mv = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }[e.key];
-  if (mv) { e.preventDefault(); o.x += mv[0]; o.z += mv[1]; renderEditor(); updateButtons(); draw(); }
-  if ((e.key === "Delete" || e.key === "Backspace") && isTrainer(o)) { e.preventDefault(); removeSelected(); }
+  if (mv && selected.k === "p") {
+    e.preventDefault();
+    if (removable(selected)) { const [x, z] = propTile(ev); moveLedge(selected.i, x + mv[0], z + mv[1]); }
+    renderEditor(); updateButtons(); draw();
+  } else if (mv) { e.preventDefault(); ev.x += mv[0]; ev.z += mv[1]; renderEditor(); updateButtons(); draw(); }
+  if ((e.key === "Delete" || e.key === "Backspace") && removable(selected)) { e.preventDefault(); removeSelected(); }
 });
+
+function describe(s) {
+  const ev = evOf(s);
+  if (s.k === "b") { const it = itemOf(ev, "b"); return `hidden ${it.qty}× ${pretty(it.item || "?")}`; }
+  if (s.k === "p") return isLedge(ev) ? `ledge (${ledgeLabel(ledgePiece(ev))}, jump ${DIRS[ledgeDir(ev)].toLowerCase()})` : `prop ${ev.name}`;
+  const kind = objKind(ev);
+  if (kind === "trainer") { const t = trainerInfo(ev.script) || {}; return `${pretty(t.class || "")} ${t.name || ev.script}`; }
+  if (kind === "item") { const it = itemOf(ev, "o"); return `item ball ${it.qty}× ${pretty(it.item || "?")}`; }
+  if (kind === "obstacle") return OBSTACLES[obstacleKind(ev)].name;
+  return ev.id;
+}
 
 function showTile(x, z) {
   const i = tileIndex(x, z);
   if (i < 0) { $("tileInfo").textContent = "Outside the map."; return; }
-  const name = META.behaviors[MAP.behavior[i]] || `behaviour 0x${MAP.behavior[i].toString(16)}`;
+  const b = raw[i] & 0xFF, name = META.behaviors[b] || `behaviour 0x${b.toString(16)}`;
   const area = MAP.own[i] === 1 ? "" : MAP.own[i] === 2 ? " · <span class='warn'>neighbouring map</span>" : " · empty";
-  const occ = objects.filter(o => o.x === x && o.z === z).map(o => o.id).join(", ");
+  const occ = selectablesAt(x, z).map(describe).join(", ");
   $("tileInfo").innerHTML = `x <b>${x}</b>, z <b>${z}</b>${area}<br>${pretty(name.replace("TILE_BEHAVIOR_", "")) || "Ground"}` +
-    (MAP.collision[i] ? " · <span class='warn'>collision</span>" : " · walkable") + (occ ? `<br>${occ}` : "");
+    (raw[i] & COLLISION ? " · <span class='warn'>collision</span>" : " · walkable") + (occ ? `<br>${occ}` : "");
 }
 
 // ---------- editor ----------
@@ -353,69 +565,167 @@ function sel(options, value, onchange, label = x => x) {
   if (!options.includes(value)) { const op = document.createElement("option"); op.value = value; op.textContent = value + " (?)"; s.prepend(op); }
   s.value = value; s.onchange = () => onchange(s.value); return s;
 }
-function inp(value, type, onchange) {
-  const i = document.createElement("input"); i.type = type; i.value = value;
+function inp(value, type, onchange, attrs = {}) {
+  const i = document.createElement("input"); i.type = type; i.value = value ?? "";
+  Object.assign(i, attrs);
   i.onchange = () => onchange(type === "number" ? parseInt(i.value, 10) || 0 : i.value); return i;
+}
+function note(ed, text, cls = "muted") { const n = document.createElement("div"); n.className = cls; n.style.marginTop = "6px"; n.textContent = text; ed.appendChild(n); }
+
+// Store an item edit only while it differs from what's already in the scripts / header.
+function setItemField(ev, k, field, value) {
+  const e = k === "o" ? visibleEntry(ev) : hiddenEntry(ev);
+  const key = "_" + field;
+  if (e && e[field] === value) delete ev[key]; else ev[key] = value;
+  updateButtons(); draw();
+}
+
+function itemRows(row, ev, k) {
+  const it = itemOf(ev, k);
+  const itemInput = inp(it.item, "text", v => {
+    v = v.trim().toUpperCase(); if (v && !v.startsWith("ITEM_")) v = "ITEM_" + v.replace(/ /g, "_");
+    if (!META.items.includes(v)) { toast("Unknown item " + v, "err"); renderEditor(); return; }
+    setItemField(ev, k, "item", v); renderEditor();
+  }, { list: "itemList" });
+  row("Item", itemInput);
+  row("Quantity", inp(it.qty, "number", v => setItemField(ev, k, "qty", Math.max(1, Math.min(99, v))), { min: 1, max: 99 }));
+  if (k === "b") row("Dowsing range", inp(it.range, "number", v => setItemField(ev, k, "range", Math.max(0, Math.min(15, v))), { min: 0, max: 15 }));
 }
 
 function renderEditor() {
   const ed = $("editor");
-  if (selected < 0 || !objects[selected]) {
+  const ev = evOf(selected);
+  if (!ev) {
     ed.className = "muted";
-    ed.innerHTML = "Click an object to select it. Drag to move, arrow keys nudge, <kbd>Del</kbd> removes a trainer.";
+    ed.innerHTML = "Click something to select it. Drag to move, arrow keys nudge, <kbd>Del</kbd> removes trainers, items and obstacles.";
     return;
   }
-  const o = objects[selected], t = isTrainer(o);
   ed.className = ""; ed.innerHTML = "";
-  if (t) {
-    const info = trainerInfo(o.script) || {};
-    const head = document.createElement("div");
-    head.innerHTML = `<b>${pretty(info.class || "")} ${info.name || ""}</b> <span class="muted">${o.script}</span><br><span class="muted">${(info.party || []).join(", ")}</span>`;
-    head.style.marginBottom = "8px"; ed.appendChild(head);
-  }
+  const head = document.createElement("div"); head.style.marginBottom = "8px"; ed.appendChild(head);
   const g = document.createElement("div"); g.className = "grid"; ed.appendChild(g);
   const row = (label, el) => { const l = document.createElement("div"); l.className = "muted"; l.textContent = label; g.append(l, el); };
-  const upd = (k, v) => { o[k] = v; updateButtons(); draw(); };
+  const upd = (key, v) => { ev[key] = v; updateButtons(); draw(); };
+  const xz = () => { const d = document.createElement("div"); d.style.display = "flex"; d.style.gap = "4px";
+    d.append(inp(ev.x, "number", v => upd("x", v)), inp(ev.z, "number", v => upd("z", v))); return d; };
 
-  row("Local id", inp(o.id, "text", v => { upd("id", v.trim().toUpperCase()); renderEditor(); }));
-  row("x / z", (() => { const d = document.createElement("div"); d.style.display = "flex"; d.style.gap = "4px";
-    d.append(inp(o.x, "number", v => upd("x", v)), inp(o.z, "number", v => upd("z", v))); return d; })());
-  row("Height (y)", inp(o.y, "number", v => upd("y", v)));
-  row("Facing", sel([0, 1, 2, 3].map(String), String(o.initial_dir), v => upd("initial_dir", +v), v => DIRS[v]));
-  row("Sprite", sel(META.gfx, o.graphics_id, v => upd("graphics_id", v), pretty));
-  row("Movement", sel(META.movement_types, o.movement_type, v => upd("movement_type", v), pretty));
-  row("Move range x/z", (() => { const d = document.createElement("div"); d.style.display = "flex"; d.style.gap = "4px";
-    d.append(inp(o.movement_range_x, "number", v => upd("movement_range_x", v)), inp(o.movement_range_z, "number", v => upd("movement_range_z", v))); return d; })());
-  if (t) {
-    row("Trainer type", sel(META.trainer_types, o.trainer_type, v => upd("trainer_type", v), pretty));
-    row("Sight range", inp((o.data && o.data[0]) || 0, "number", v => { o.data = [v, ...(o.data || []).slice(1)]; updateButtons(); draw(); }));
-  } else {
-    row("Script", (() => { const s = document.createElement("span"); s.className = "muted"; s.textContent = String(o.script); return s; })());
-  }
-  row("Hidden flag", inp(o.hidden_flag, "text", v => upd("hidden_flag", v)));
-
-  if (blocked(o.x, o.z)) { const w = document.createElement("div"); w.className = "warn"; w.style.marginTop = "6px"; w.textContent = "This tile has collision or is outside the map."; ed.appendChild(w); }
-
-  if (t) {
-    const refd = MAP.localid_refs.includes(o.id);
+  if (selected.k === "p") {
+    const [tx, tz] = propTile(ev), k = selected.i;
+    if (!isLedge(ev)) {
+      head.innerHTML = `<b>Map prop</b> <span class="muted">${ev.name} on ${ev.map}</span>`;
+      note(ed, "Only ledge props are editable here.");
+      return;
+    }
+    head.innerHTML = `<b>Ledge</b> <span class="muted">${ev.name} on ${ev.map} · tile ${tx}, ${tz}</span>`;
+    const refresh = () => { renderEditor(); updateButtons(); draw(); };
+    const [style, piece] = ledgePiece(ev).split(":");
+    row("Piece", sel(["b", "l", "r"], piece, v => { moveLedge(k, tx, tz, ledgeDir(ev), `${style}:${v}`); refresh(); }, v => PIECE_NAMES[v]));
+    row("Style", sel(["outdoor", "cave"], style, v => { moveLedge(k, tx, tz, ledgeDir(ev), `${v}:${piece}`); refresh(); },
+      v => ({ outdoor: "Outdoor (allpeak)", cave: "Cave (dun_allpeak)" })[v]));
+    row("Jump direction", sel(["1", "0", "2", "3"], String(ledgeDir(ev)), v => { moveLedge(k, tx, tz, +v, ledgePiece(ev)); refresh(); }, v => DIRS[v]));
     const b = document.createElement("button"); b.className = "danger"; b.style.marginTop = "10px";
-    b.textContent = "Remove trainer from map"; b.disabled = refd; b.onclick = removeSelected;
+    b.textContent = "Remove ledge"; b.onclick = removeSelected; ed.appendChild(b);
+    return;
+  }
+
+  if (selected.k === "b") {
+    const e = hiddenEntry(ev);
+    head.innerHTML = `<b>Hidden item</b> <span class="muted">${ev.script === "NEW_HIDDEN" ? "new — gets a free flag on save" : `script ${ev.script} · ${e?.flag || "?"}`}</span>`;
+    itemRows(row, ev, "b");
+    row("x / z", xz());
+    row("Height (y)", inp(ev.y, "number", v => upd("y", v)));
+    const others = (e?.placed_on || []).filter(p => p !== MAP.events_file);
+    if (others.length) note(ed, `This hidden item is also placed on ${others.join(", ")}; changing the item changes it there too.`, "warn");
+  } else {
+    const kind = objKind(ev);
+    if (kind === "trainer") {
+      const info = trainerInfo(ev.script) || {};
+      head.innerHTML = `<b>${pretty(info.class || "")} ${info.name || ""}</b> <span class="muted">${ev.script}</span><br><span class="muted">${(info.party || []).join(", ")}</span>`;
+    } else if (kind === "item") {
+      const e = visibleEntry(ev);
+      head.innerHTML = `<b>Item ball</b> <span class="muted">${ev.script === "NEW_ITEM" ? "new — gets a free script + flag on save" : `script ${ev.script} · ${e?.label || "?"}`}</span>`;
+      if (ev.script === "NEW_ITEM" || e?.editable) itemRows(row, ev, "o");
+      else row("Item", (() => { const s = document.createElement("span"); s.className = "muted"; s.textContent = "Custom script — edit it by hand"; return s; })());
+    } else if (kind === "obstacle") {
+      head.innerHTML = `<b>${OBSTACLES[obstacleKind(ev)].name}</b>`;
+    } else {
+      head.innerHTML = `<b>${ev.id}</b>`;
+    }
+    row("Local id", inp(ev.id, "text", v => { upd("id", v.trim().toUpperCase()); renderEditor(); }));
+    row("x / z", xz());
+    row("Height (y)", inp(ev.y, "number", v => upd("y", v)));
+    if (kind === "trainer" || kind === "npc") {
+      row("Facing", sel([0, 1, 2, 3].map(String), String(ev.initial_dir), v => upd("initial_dir", +v), v => DIRS[v]));
+      row("Sprite", sel(META.gfx, ev.graphics_id, v => upd("graphics_id", v), pretty));
+      row("Movement", sel(META.movement_types, ev.movement_type, v => upd("movement_type", v), pretty));
+      row("Move range x/z", (() => { const d = document.createElement("div"); d.style.display = "flex"; d.style.gap = "4px";
+        d.append(inp(ev.movement_range_x, "number", v => upd("movement_range_x", v)), inp(ev.movement_range_z, "number", v => upd("movement_range_z", v))); return d; })());
+    }
+    if (kind === "trainer") {
+      row("Trainer type", sel(META.trainer_types, ev.trainer_type, v => upd("trainer_type", v), pretty));
+      row("Sight range", inp((ev.data && ev.data[0]) || 0, "number", v => { ev.data = [v, ...(ev.data || []).slice(1)]; updateButtons(); draw(); }));
+    }
+    if (kind === "npc") row("Script", (() => { const s = document.createElement("span"); s.className = "muted"; s.textContent = String(ev.script); return s; })());
+    row("Hidden flag", inp(ev.hidden_flag, "text", v => upd("hidden_flag", v)));
+    if (kind === "item") {
+      const others = (visibleEntry(ev)?.placed_on || []).filter(p => p !== MAP.events_file);
+      if (others.length) note(ed, `This item script is also used on ${others.join(", ")}; changing the item changes it there too.`, "warn");
+    }
+  }
+
+  if (blocked(ev.x, ev.z)) note(ed, "This tile has collision or is outside the map.", "warn");
+
+  if (selected.k === "b" ? isHidden(ev) : objKind(ev) !== "npc") {
+    const b = document.createElement("button"); b.className = "danger"; b.style.marginTop = "10px";
+    b.textContent = "Remove from map"; b.disabled = !removable(selected); b.onclick = removeSelected;
     ed.appendChild(b);
-    if (refd) { const n = document.createElement("div"); n.className = "warn"; n.textContent = `Can't remove: ${o.id} is used in this map's scripts.`; ed.appendChild(n); }
+    if (!removable(selected)) note(ed, `Can't remove: ${ev.id} is used in this map's scripts.`, "warn");
   }
 }
 
 function removeSelected() {
-  const o = objects[selected];
-  if (!o || !isTrainer(o) || MAP.localid_refs.includes(o.id)) return;
-  objects.splice(selected, 1); selected = -1;
+  if (!removable(selected)) return;
+  if (selected.k === "p") {
+    restoreTile(...propTile(props[selected.i]));
+    props.splice(selected.i, 1);
+    buildLayers();
+  } else {
+    (selected.k === "o" ? objects : bgs).splice(selected.i, 1);
+  }
+  selected = null;
   renderEditor(); renderTrainerList(); updateButtons(); draw();
 }
 
 // ---------- adding ----------
+function showAddPane() {
+  const k = $("addKind").value;
+  for (const p of document.querySelectorAll(".addpane")) p.classList.toggle("on", p.dataset.kind.split(" ").includes(k));
+  for (const el of document.querySelectorAll(".addHiddenOnly")) el.style.display = k === "hidden" ? "" : "none";
+  $("addItemNote").textContent = k === "item"
+    ? "Reuses an unplaced item-ball script if there is one (otherwise adds one to scripts_visible_items.s) and renames an unused flag in vars_flags.txt in place."
+    : "Reuses an unplaced hidden-item entry or an unused flag in the hidden-item range of vars_flags.txt; adds its line to hidden_items.h.";
+  setPlacing(null);
+}
+$("addKind").onchange = showAddPane;
+
+function readAddItem() {
+  let v = $("addItem").value.trim().toUpperCase();
+  if (v && !v.startsWith("ITEM_")) v = "ITEM_" + v.replace(/ /g, "_");
+  if (!META.items.includes(v)) { toast(v ? "Unknown item " + v : "Pick an item first.", "err"); return null; }
+  return v;
+}
+$("addItemBtn").onclick = () => {
+  const item = readAddItem(); if (!item) return;
+  const qty = Math.max(1, Math.min(99, parseInt($("addQty").value, 10) || 1));
+  const range = Math.max(0, Math.min(15, parseInt($("addRange").value, 10) || 0));
+  setPlacing({ kind: $("addKind").value, item, qty, range });
+};
+$("addObstacleBtn").onclick = () => setPlacing({ kind: "obstacle", type: $("addKind").value });
+$("addLedgeBtn").onclick = () => setPlacing({ kind: "ledge", piece: `${$("ledgeStyle").value}:${$("ledgePiece").value}`, dir: +$("ledgeDir").value });
+$("ledgePiece").onchange = $("ledgeDir").onchange = $("ledgeStyle").onchange = () => { if (placing && placing.kind === "ledge") $("addLedgeBtn").click(); };
+
 function availableTrainers() {
   const onMap = new Set(objects.filter(isTrainer).map(o => o.script));
-  const removedHere = new Set(JSON.parse(original).filter(isTrainer).map(o => o.script).filter(s => !onMap.has(s)));
+  const removedHere = new Set(JSON.parse(original).objects.filter(isTrainer).map(o => o.script).filter(s => !onMap.has(s)));
   return META.trainers.filter(t => t.has_json && !onMap.has(t.const) && !t.used_by_script &&
     (t.placed_on.length === 0 || (removedHere.has(t.const) && t.placed_on.every(p => p === MAP.events_file))));
 }
@@ -425,34 +735,90 @@ function renderTrainerList() {
   const q = $("trainerSearch").value.toLowerCase();
   const list = MAP ? availableTrainers() : [];
   const rows = list.filter(t => !q || [t.const, t.name, t.class, ...t.party].join(" ").toLowerCase().includes(q));
+  const cur = placing && placing.kind === "trainer" ? placing.c : null;
   $("trainerList").innerHTML = rows.length ? rows.map(t =>
-    `<div class="trow${placing === t.const ? " sel" : ""}" data-c="${t.const}"><b>${pretty(t.class)} ${t.name}</b>${/^TRAINER_DUMMY_/.test(t.const) ? ' <span class="muted">(unused slot)</span>' : ""} <small>${t.const} · ${t.party.join(", ") || "no party"}</small></div>`).join("")
+    `<div class="trow${cur === t.const ? " sel" : ""}" data-c="${t.const}"><b>${pretty(t.class)} ${t.name}</b>${/^TRAINER_DUMMY_/.test(t.const) ? ' <span class="muted">(unused slot)</span>' : ""} <small>${t.const} · ${t.party.join(", ") || "no party"}</small></div>`).join("")
     : `<div class="trow muted">${MAP ? "No unplaced trainers match." : "Load a map first."}</div>`;
   for (const el of $("trainerList").querySelectorAll(".trow[data-c]")) el.onclick = () =>
-    setPlacing(placing === el.dataset.c ? null : el.dataset.c);
+    setPlacing(cur === el.dataset.c ? null : { kind: "trainer", c: el.dataset.c });
 }
 $("trainerSearch").oninput = renderTrainerList;
 
-function setPlacing(c) {
-  placing = c;
-  const info = c && trainerInfo(c);
-  $("placeHint").textContent = c ? `Placing ${pretty(info.class)} ${info.name} (${c}): click an empty tile. Esc or click the row again to cancel.` : "";
-  $("placeHint").className = c ? "placing" : "warn";
-  $("canvas").style.cursor = c ? "crosshair" : "default";
+function setPlacing(p) {
+  if (p && !MAP) { toast("Load a map first.", "err"); p = null; }
+  placing = p;
+  let text = "";
+  if (p) {
+    const what = p.kind === "trainer" ? (() => { const info = trainerInfo(p.c); return `${pretty(info.class)} ${info.name} (${p.c})`; })()
+      : p.kind === "item" ? `item ball: ${p.qty}× ${pretty(p.item)}`
+      : p.kind === "hidden" ? `hidden item: ${p.qty}× ${pretty(p.item)}`
+      : p.kind === "ledge" ? `ledge (${ledgeLabel(p.piece)}, jump ${DIRS[p.dir].toLowerCase()})`
+      : OBSTACLES[p.type].name;
+    text = `Placing ${what}: click an empty tile. Esc to cancel.`;
+  }
+  $("placeHint").textContent = text;
+  $("placeHint").className = p ? "placing" : "warn";
+  $("canvas").style.cursor = p ? "crosshair" : "default";
   renderTrainerList();
 }
 
-function placeTrainer(c, x, z) {
+function uniqueId(base) {
+  let id = base, n = 2;
+  while (objects.some(o => o.id === id)) id = base + "_" + n++;
+  return id;
+}
+function nearestY(x, z) {
+  const all = [...objects, ...bgs].filter(o => Number.isInteger(o.y));
+  all.sort((a, b) => Math.hypot(a.x - x, a.z - z) - Math.hypot(b.x - x, b.z - z));
+  return all.length ? all[0].y : 0;
+}
+function plainObject(id, gfx, script, x, z, extra = {}) {
+  return { id, graphics_id: gfx, movement_type: "MOVEMENT_TYPE_NONE", trainer_type: "TRAINER_TYPE_NONE", hidden_flag: "0",
+           script, initial_dir: 0, data: [], movement_range_x: 0, movement_range_z: 0, x, z, y: nearestY(x, z), ...extra };
+}
+
+function placeAt(x, z) {
   if (tileIndex(x, z) < 0) return;
-  const info = trainerInfo(c);
-  let id = "LOCALID_" + c.slice("TRAINER_".length), n = 2;
-  while (objects.some(o => o.id === id)) id = "LOCALID_" + c.slice(8) + "_" + n++;
-  const nearest = objects.slice().sort((a, b) => Math.hypot(a.x - x, a.z - z) - Math.hypot(b.x - x, b.z - z))[0];
-  const gfx = info.default_gfx && META.gfx.includes(info.default_gfx) ? info.default_gfx : META.gfx[0];
-  const mov = META.movement_types.includes("MOVEMENT_TYPE_LOOK_AROUND") ? "MOVEMENT_TYPE_LOOK_AROUND" : META.movement_types[0];
-  const o = { id, graphics_id: gfx, movement_type: mov, trainer_type: "TRAINER_TYPE_NORMAL", hidden_flag: "0",
-              script: c, initial_dir: 1, data: [3], movement_range_x: 0, movement_range_z: 0, x, z, y: nearest ? nearest.y : 0 };
-  objects.push(o); selected = objects.length - 1;
+  const p = placing;
+  if (p.kind === "trainer") {
+    const info = trainerInfo(p.c);
+    const gfx = info.default_gfx && META.gfx.includes(info.default_gfx) ? info.default_gfx : META.gfx[0];
+    const mov = META.movement_types.includes("MOVEMENT_TYPE_LOOK_AROUND") ? "MOVEMENT_TYPE_LOOK_AROUND" : META.movement_types[0];
+    objects.push({ id: uniqueId("LOCALID_" + p.c.slice("TRAINER_".length)), graphics_id: gfx, movement_type: mov, trainer_type: "TRAINER_TYPE_NORMAL",
+                   hidden_flag: "0", script: p.c, initial_dir: 1, data: [3], movement_range_x: 0, movement_range_z: 0, x, z, y: nearestY(x, z) });
+    selected = { k: "o", i: objects.length - 1 };
+  } else if (p.kind === "item") {
+    objects.push(plainObject(uniqueId("LOCALID_ITEM_" + p.item.slice(5)), "OBJ_EVENT_GFX_POKEBALL", "NEW_ITEM", x, z, { _item: p.item, _qty: p.qty }));
+    selected = { k: "o", i: objects.length - 1 };
+  } else if (p.kind === "hidden") {
+    bgs.push({ script: "NEW_HIDDEN", type: 2, x, z, y: nearestY(x, z), player_facing_dir: "BG_EVENT_DIR_ALL", _item: p.item, _qty: p.qty, _range: p.range });
+    selected = { k: "b", i: bgs.length - 1 };
+  } else if (p.kind === "ledge") {
+    const ch = chunkAt(x, z);
+    if (!ch || MAP.own[tileIndex(x, z)] !== 1) { toast("Ledges can only go on this map's own tiles.", "err"); return; }
+    if (props.filter(q => q.map === ch.map).length >= MAP.max_props_per_chunk) { toast(`That map chunk already has ${MAP.max_props_per_chunk} props.`, "err"); return; }
+    props.push({ map: ch.map, raw: ledgeRaw(p.piece, p.dir, x, z), name: MAP.ledge_names[p.piece] });
+    setJumpTile(x, z, p.dir);
+    buildLayers();
+    selected = { k: "p", i: props.length - 1 };
+    setPlacing(p);            // keep placing: ledges are usually a row of tiles
+    renderEditor(); updateButtons(); draw();
+    return;
+  } else {
+    const ob = OBSTACLES[p.type];
+    const used = new Set([...objects.map(o => o.hidden_flag), ...MAP.local_flag_refs]);
+    let flag = null;
+    for (let n = 1; n <= 30 && !flag; n++) if (!used.has("FLAG_MAP_LOCAL_HIDE_OBSTACLE_" + n)) flag = "FLAG_MAP_LOCAL_HIDE_OBSTACLE_" + n;
+    if (!flag) { toast("This map already uses all 30 obstacle flags.", "err"); setPlacing(null); return; }
+    let n = 1; while (objects.some(o => o.id === `${ob.id}_${n}`)) n++;
+    objects.push(plainObject(`${ob.id}_${n}`, ob.gfx, ob.script, x, z, { hidden_flag: flag }));
+    selected = { k: "o", i: objects.length - 1 };
+    if (!$("lyOther").checked) $("lyOther").checked = true;
+    setPlacing(p);            // obstacles: keep placing until Esc, handy for rows of rocks
+    renderEditor(); updateButtons(); draw();
+    return;
+  }
+  if (p.kind === "hidden" && !$("lyOther").checked) $("lyOther").checked = true;
   setPlacing(null);
   renderEditor(); updateButtons(); draw();
 }
@@ -467,33 +833,48 @@ function updateButtons() {
 $("saveBtn").onclick = async () => {
   const payload = objects.map(o => Object.fromEntries([...OBJ_KEYS.filter(k => k in o).map(k => [k, o[k]]),
     ...Object.keys(o).filter(k => !OBJ_KEYS.includes(k)).map(k => [k, o[k]])]));
+  // Only send the chunks whose props changed, and the tile words that differ from what was loaded.
+  const before = JSON.parse(original).props, chunkProps = {};
+  for (const ch of MAP.chunks) {
+    const now = props.filter(p => p.map === ch.map).map(p => p.raw);
+    const was = before.filter(p => p[0] === ch.map).map(p => p[1]);
+    if (JSON.stringify(now) !== JSON.stringify(was)) chunkProps[ch.map] = now;
+  }
+  const tiles = {};
+  raw.forEach((v, i) => { if (v !== MAP.raw[i]) tiles[`${MAP.x0 + i % MAP.w},${MAP.z0 + Math.floor(i / MAP.w)}`] = v; });
   let res;
   try {
     res = await getJSON("/api/save", { method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ header: MAP.header, object_events: payload }) });
+      body: JSON.stringify({ header: MAP.header, object_events: payload, bg_events: bgs, props: chunkProps, tiles }) });
   } catch (e) { toast(e.message, "err"); return; }
   if (!res.ok) { toast("Not saved:\n" + res.errors.join("\n"), "err"); return; }
   let msg = `Saved res/field/events/${MAP.events_file}.json`;
-  if (res.added_trainers.length || res.removed_trainers.length) {
-    if (res.added_trainers.length) msg += `\nAdded: ${res.added_trainers.join(", ")}`;
-    if (res.removed_trainers.length) msg += `\nRemoved: ${res.removed_trainers.join(", ")}`;
+  if (res.changed_files.length) msg += `\nAlso changed: ${res.changed_files.join(", ")}`;
+  if (res.added_trainers.length) msg += `\nAdded: ${res.added_trainers.join(", ")}`;
+  if (res.removed_trainers.length) msg += `\nRemoved: ${res.removed_trainers.join(", ")}`;
+  if (res.notes.length) msg += "\n" + res.notes.join("\n");
+  if (res.added_trainers.length || res.removed_trainers.length)
     msg += "\nRemember TRAINER_ENCYCLOPEDIA.md, TRAINER_LOCATIONS.md, CHANGES.md and the tracker sheet.";
-  }
+  else msg += "\nRemember CHANGES.md and the tracker sheet.";
   toast(msg + "\nRebuild to test in game.", "ok");
   META = await getJSON("/api/meta");
   const h = MAP.header; MAP = null; await loadMap(h);
 };
 $("revertBtn").onclick = () => {
   if (!confirm("Throw away unsaved changes on this map?")) return;
-  objects = JSON.parse(original); selected = -1; renderEditor(); renderTrainerList(); updateButtons(); draw();
+  const o = JSON.parse(original); objects = o.objects; bgs = o.bgs; raw = o.raw;
+  props = o.props.map(([map, r]) => ({ map, raw: r, name: (MAP.props.find(p => p.map === map && p.raw[0] === r[0]) || {}).name || MAP.ledge_names[Object.keys(MAP.ledge_ids).find(k => MAP.ledge_ids[k] === r[0])] }));
+  buildLayers();
+  selected = null; renderEditor(); renderTrainerList(); updateButtons(); draw();
 };
 
 // ---------- misc ----------
 let toastTimer;
 function toast(msg, kind) {
   const t = $("toast"); t.textContent = msg; t.className = kind || ""; t.style.display = "block";
-  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.style.display = "none", kind === "err" ? 12000 : 7000);
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.style.display = "none", kind === "err" ? 12000 : 15000);
 }
+$("toast").onclick = () => $("toast").style.display = "none";
 function status(s) { $("status").textContent = s; $("status").title = s; }
 
 $("loadBtn").onclick = () => {
