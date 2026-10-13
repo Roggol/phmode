@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trainer Placer</title>
+<style>
+  :root {
+    --bg: #1d1f24; --panel: #262930; --line: #3a3e48; --text: #e6e6e6; --muted: #9aa0ab;
+    --accent: #f2c14e; --danger: #e5534b; --ok: #57ab5a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 13px/1.4 system-ui, sans-serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; }
+  header { display: flex; gap: 10px; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--line); background: var(--panel); flex-wrap: wrap; }
+  header h1 { font-size: 14px; margin: 0 8px 0 0; color: var(--accent); }
+  input, select, button { font: inherit; color: var(--text); background: #30343d; border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; }
+  button { cursor: pointer; }
+  button:hover:not(:disabled) { border-color: var(--accent); }
+  button:disabled { opacity: .45; cursor: default; }
+  button.primary { background: #3d3418; border-color: var(--accent); }
+  button.danger { border-color: var(--danger); color: #ffb3ad; }
+  label.chk { display: inline-flex; gap: 4px; align-items: center; color: var(--muted); }
+  #mapInput { width: 260px; }
+  main { flex: 1; display: flex; min-height: 0; }
+  #viewport { flex: 1; overflow: auto; position: relative; background: #111; }
+  #canvas { display: block; image-rendering: pixelated; cursor: default; }
+  aside { width: 340px; border-left: 1px solid var(--line); background: var(--panel); overflow-y: auto; padding: 10px 12px; }
+  aside h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 14px 0 6px; }
+  aside h2:first-child { margin-top: 0; }
+  .grid { display: grid; grid-template-columns: 110px 1fr; gap: 4px 8px; align-items: center; }
+  .grid input, .grid select { width: 100%; }
+  .muted { color: var(--muted); }
+  .warn { color: #f0a35e; }
+  #status { margin-left: auto; color: var(--muted); max-width: 40ch; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #trainerList { max-height: 260px; overflow-y: auto; border: 1px solid var(--line); border-radius: 4px; }
+  .trow { padding: 4px 6px; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .trow:hover { background: #30343d; }
+  .trow.sel { background: #3d3418; }
+  .trow small { color: var(--muted); display: block; }
+  #placeHint.placing { color: #111; background: #00e5ff; padding: 6px 8px; border-radius: 4px; font-weight: 600; }
+  .legend { display: grid; grid-template-columns: 14px 1fr 14px 1fr; gap: 3px 6px; align-items: center; }
+  .sw { width: 14px; height: 14px; border-radius: 2px; border: 1px solid #0006; }
+  #toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); background: #30343d; border: 1px solid var(--line); border-radius: 6px; padding: 10px 14px; max-width: 70ch; display: none; white-space: pre-wrap; z-index: 10; }
+  #toast.err { border-color: var(--danger); }
+  #toast.ok { border-color: var(--ok); }
+  kbd { background: #30343d; border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; font-size: 11px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Trainer Placer</h1>
+  <input id="mapInput" list="mapList" placeholder="Search maps (e.g. ROUTE_203)">
+  <datalist id="mapList"></datalist>
+  <button id="loadBtn">Load</button>
+  <label class="chk"><input type="checkbox" id="lyTerrain" checked> Terrain</label>
+  <label class="chk"><input type="checkbox" id="lyCollision" checked> Collision</label>
+  <label class="chk"><input type="checkbox" id="lyGrid" checked> Grid</label>
+  <label class="chk"><input type="checkbox" id="lySight" checked> Sight lines</label>
+  <label class="chk"><input type="checkbox" id="lyOther" checked> Other objects</label>
+  <label class="chk">Zoom <input type="range" id="zoom" min="6" max="32" value="16"></label>
+  <button id="revertBtn" disabled>Revert</button>
+  <button id="saveBtn" class="primary" disabled>Save</button>
+  <span id="status">Pick a map to start.</span>
+</header>
+<main>
+  <div id="viewport"><canvas id="canvas" width="10" height="10"></canvas></div>
+  <aside>
+    <h2>Tile</h2>
+    <div id="tileInfo" class="muted">Hover the map.</div>
+
+    <h2>Selected object</h2>
+    <div id="editor" class="muted">Click an object to select it. Drag to move, arrow keys nudge, <kbd>Del</kbd> removes a trainer.</div>
+
+    <h2>Add a trainer</h2>
+    <div class="muted" style="margin-bottom:6px">Only trainers that aren't on any map and aren't started by a script are listed, so their defeat flags can't clash. Pick one, then click a tile.</div>
+    <input id="trainerSearch" placeholder="Filter by name / class / Pokémon" style="width:100%;margin-bottom:6px">
+    <div id="trainerList"></div>
+    <div id="placeHint" class="warn" style="margin-top:6px"></div>
+
+    <h2>Legend</h2>
+    <div class="legend" id="legend"></div>
+  </aside>
+</main>
+<div id="toast"></div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const DIRS = ["North", "South", "West", "East"];
+const DIR_VEC = [[0, -1], [0, 1], [-1, 0], [1, 0]];
+const OBJ_KEYS = ["id", "graphics_id", "movement_type", "trainer_type", "hidden_flag", "script", "initial_dir", "data", "movement_range_x", "movement_range_z", "x", "z", "y"];
+
+let META = null, MAP = null, objects = [], original = "", selected = -1;
+let drag = null, placing = null, hover = null;
+let terrainImg = null, collisionImg = null;
+
+const isTrainer = o => typeof o.script === "string" && o.script.startsWith("TRAINER_");
+const isItem = o => /POKEBALL/.test(o.graphics_id);
+const dirty = () => JSON.stringify(objects) !== original;
+const trainerInfo = c => META.trainers.find(t => t.const === c);
+const pretty = s => s.replace(/^MAP_HEADER_|^TRAINER_|^OBJ_EVENT_GFX_|^MOVEMENT_TYPE_|^TRAINER_TYPE_/, "").replace(/_/g, " ").toLowerCase().replace(/\b\w/g, m => m.toUpperCase());
+
+// ---------- terrain colours ----------
+const CATS = [
+  [/VERY_TALL_GRASS/, "#3e8f2b", "Very tall grass"],
+  [/TALL_GRASS/, "#6fbf4a", "Tall grass"],
+  [/SHALLOW_WATER|PUDDLE/, "#8fc0ec", "Shallow water / puddle"],
+  [/WATER|WATERFALL/, "#3f7fd6", "Water"],
+  [/ICE|SLIDE/, "#c9f0ff", "Ice"],
+  [/SAND/, "#ecd78c", "Sand"],
+  [/JUMP/, "#8b5a2b", "Ledge"],
+  [/WARP|DOOR|ENTRANCE|ESCALATOR|STAIRS/, "#b05cd6", "Door / warp"],
+  [/BRIDGE/, "#b08654", "Bridge"],
+  [/ROCK_CLIMB/, "#7d6e5d", "Rock Climb"],
+  [/CAVE_FLOOR/, "#b49a7a", "Cave floor"],
+  [/MOUNTAIN_FLOOR/, "#a89a88", "Mountain floor"],
+  [/BLOCK_/, "#9aa3ad", "One-way block"],
+  [/TABLE|PC|TV|TOWN_MAP/, "#c08b5c", "Furniture"],
+];
+const DEFAULT_COLOUR = "#d8d0b4";
+function behaviourColour(v) {
+  const name = META.behaviors[v] || "";
+  for (const [re, col] of CATS) if (re.test(name)) return col;
+  return DEFAULT_COLOUR;
+}
+function hexToRgb(h) { const n = parseInt(h.slice(1), 16); return [n >> 16, (n >> 8) & 255, n & 255]; }
+
+function buildLegend() {
+  const items = [[DEFAULT_COLOUR, "Ground"], ...CATS.map(c => [c[1], c[2]]), ["#5a3a36", "Collision (overlay)"],
+                 ["#ff4fd8", "Trainer (with sight line)"], ["#4a90e2", "Other NPC"], ["#f2c14e", "Item ball"], ["#b05cd6", "Warp (outline)"]];
+  $("legend").innerHTML = items.map(([c, l]) => `<div class="sw" style="background:${c}"></div><div>${l}</div>`).join("");
+}
+
+// ---------- loading ----------
+async function getJSON(url, opts) {
+  const r = await fetch(url, opts);
+  const j = await r.json();
+  if (j.error) throw new Error(j.error);
+  return j;
+}
+
+async function init() {
+  META = await getJSON("/api/meta");
+  $("mapList").innerHTML = META.maps.map(m => `<option value="${m.header}">${pretty(m.header)}</option>`).join("");
+  buildLegend();
+  renderTrainerList();
+  const q = new URLSearchParams(location.search).get("map");
+  const want = q ? (q.toUpperCase().startsWith("MAP_HEADER_") ? q.toUpperCase() : "MAP_HEADER_" + q.toUpperCase()) : localStorageGet("tp_lastMap");
+  if (want && META.maps.some(m => m.header === want)) { $("mapInput").value = want; loadMap(want); }
+}
+
+function localStorageGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
+function localStorageSet(k, v) { try { localStorage.setItem(k, v); } catch {} }
+
+async function loadMap(header) {
+  if (MAP && dirty() && !confirm("You have unsaved changes on this map. Discard them?")) return;
+  try {
+    status("Loading " + pretty(header) + "…");
+    MAP = await getJSON("/api/map?header=" + encodeURIComponent(header));
+  } catch (e) { toast(e.message, "err"); status("Failed to load."); return; }
+  objects = JSON.parse(JSON.stringify(MAP.events.object_events || []));
+  original = JSON.stringify(objects);
+  selected = -1; setPlacing(null);
+  localStorageSet("tp_lastMap", header);
+  const fit = Math.floor(($("viewport").clientWidth - 4) / MAP.w);
+  $("zoom").value = Math.max(8, Math.min(24, fit || 16));
+  buildLayers();
+  draw();
+  renderEditor();
+  renderTrainerList();
+  updateButtons();
+  status(`${pretty(header)} — ${MAP.events_file}.json, ${MAP.w}×${MAP.h} tiles, ${objects.filter(isTrainer).length} trainers`);
+}
+
+function buildLayers() {
+  const mk = () => { const c = document.createElement("canvas"); c.width = MAP.w; c.height = MAP.h; return c; };
+  terrainImg = mk(); collisionImg = mk();
+  const ti = terrainImg.getContext("2d").createImageData(MAP.w, MAP.h);
+  const ci = collisionImg.getContext("2d").createImageData(MAP.w, MAP.h);
+  const cache = {};
+  for (let i = 0; i < MAP.w * MAP.h; i++) {
+    const own = MAP.own[i];
+    let rgb, a = 255;
+    if (own === 0) { rgb = [17, 17, 17]; }
+    else {
+      const v = MAP.behavior[i];
+      rgb = cache[v] || (cache[v] = hexToRgb(behaviourColour(v)));
+      if (own === 2) rgb = rgb.map(x => Math.round(x * 0.45));
+    }
+    ti.data.set([...rgb, a], i * 4);
+    if (MAP.collision[i] && own) ci.data.set([70, 20, 25, 160], i * 4);
+  }
+  terrainImg.getContext("2d").putImageData(ti, 0, 0);
+  collisionImg.getContext("2d").putImageData(ci, 0, 0);
+}
+
+// ---------- drawing ----------
+function Z() { return +$("zoom").value; }
+
+function draw() {
+  if (!MAP) return;
+  const z = Z(), cv = $("canvas"), ctx = cv.getContext("2d");
+  cv.width = MAP.w * z; cv.height = MAP.h * z;
+  ctx.imageSmoothingEnabled = false;
+  ctx.fillStyle = "#111"; ctx.fillRect(0, 0, cv.width, cv.height);
+  if ($("lyTerrain").checked) ctx.drawImage(terrainImg, 0, 0, cv.width, cv.height);
+  if ($("lyCollision").checked) ctx.drawImage(collisionImg, 0, 0, cv.width, cv.height);
+
+  if ($("lyGrid").checked && z >= 8) {
+    ctx.strokeStyle = "rgba(0,0,0,.18)"; ctx.lineWidth = 1; ctx.beginPath();
+    for (let x = 0; x <= MAP.w; x++) { ctx.moveTo(x * z + .5, 0); ctx.lineTo(x * z + .5, cv.height); }
+    for (let y = 0; y <= MAP.h; y++) { ctx.moveTo(0, y * z + .5); ctx.lineTo(cv.width, y * z + .5); }
+    ctx.stroke();
+  }
+  ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.lineWidth = 2; ctx.beginPath();
+  for (let x = 0; x <= MAP.w; x += 32) { ctx.moveTo(x * z, 0); ctx.lineTo(x * z, cv.height); }
+  for (let y = 0; y <= MAP.h; y += 32) { ctx.moveTo(0, y * z); ctx.lineTo(cv.width, y * z); }
+  ctx.stroke();
+
+  const lx = x => x - MAP.x0, lz = v => v - MAP.z0;
+  // warps / signs / triggers
+  if ($("lyOther").checked) {
+    ctx.lineWidth = 2;
+    for (const w of MAP.events.warp_events || []) { ctx.strokeStyle = "#d58cf2"; ctx.strokeRect(lx(w.x) * z + 2, lz(w.z) * z + 2, z - 4, z - 4); }
+    for (const b of MAP.events.bg_events || []) { ctx.fillStyle = "rgba(242,193,78,.6)"; ctx.fillRect(lx(b.x) * z + z / 3, lz(b.z) * z + z / 3, z / 3, z / 3); }
+    ctx.setLineDash([4, 3]);
+    for (const c of MAP.events.coord_events || []) { ctx.strokeStyle = "#f0a35e"; ctx.strokeRect(lx(c.x) * z + 1, lz(c.z) * z + 1, (c.width || 1) * z - 2, (c.length || 1) * z - 2); }
+    ctx.setLineDash([]);
+  }
+
+  // sight lines
+  if ($("lySight").checked) {
+    objects.forEach((o, i) => {
+      if (!isTrainer(o)) return;
+      const pos = drag && drag.index === i ? drag.pos : [o.x, o.z];
+      const range = (o.data && o.data[0]) || 0;
+      const dirs = o.trainer_type === "TRAINER_TYPE_VIEW_ALL_DIRECTIONS" ? [0, 1, 2, 3] : [o.initial_dir];
+      ctx.fillStyle = "rgba(255,79,216,.28)";
+      for (const d of dirs) {
+        const v = DIR_VEC[d] || [0, 0];
+        for (let s = 1; s <= range; s++) ctx.fillRect(lx(pos[0] + v[0] * s) * z, lz(pos[1] + v[1] * s) * z, z, z);
+      }
+    });
+  }
+
+  // objects
+  objects.forEach((o, i) => {
+    const t = isTrainer(o);
+    if (!t && !$("lyOther").checked) return;
+    const pos = drag && drag.index === i ? drag.pos : [o.x, o.z];
+    const cx = (lx(pos[0]) + .5) * z, cy = (lz(pos[1]) + .5) * z, r = Math.max(3, z * .38);
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = t ? "#ff4fd8" : isItem(o) ? "#f2c14e" : "#4a90e2";
+    ctx.fill();
+    ctx.lineWidth = i === selected ? 3 : 1.5;
+    ctx.strokeStyle = i === selected ? "#00e5ff" : "#fff";
+    ctx.stroke();
+    if (t || !isItem(o)) {               // facing tick
+      const v = DIR_VEC[o.initial_dir] || [0, 1];
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + v[0] * r, cy + v[1] * r);
+      ctx.strokeStyle = "#111"; ctx.lineWidth = Math.max(1.5, z / 10); ctx.stroke();
+    }
+    if (drag && drag.index === i && blocked(pos[0], pos[1])) {
+      ctx.strokeStyle = "#ff0"; ctx.lineWidth = 2; ctx.strokeRect(lx(pos[0]) * z + 1, lz(pos[1]) * z + 1, z - 2, z - 2);
+    }
+  });
+
+  if (hover && placing) {
+    ctx.strokeStyle = "#00e5ff"; ctx.lineWidth = 2;
+    ctx.strokeRect(lx(hover[0]) * z + 1, lz(hover[1]) * z + 1, z - 2, z - 2);
+  }
+}
+
+function tileIndex(x, z) {
+  const tx = x - MAP.x0, tz = z - MAP.z0;
+  if (tx < 0 || tz < 0 || tx >= MAP.w || tz >= MAP.h) return -1;
+  return tz * MAP.w + tx;
+}
+function blocked(x, z) { const i = tileIndex(x, z); return i < 0 || MAP.collision[i] === 1 || MAP.own[i] === 0; }
+
+// ---------- mouse ----------
+function eventTile(e) {
+  const r = $("canvas").getBoundingClientRect(), z = Z();
+  return [Math.floor((e.clientX - r.left) / z) + MAP.x0, Math.floor((e.clientY - r.top) / z) + MAP.z0];
+}
+function objectAt(x, z) {
+  for (let i = objects.length - 1; i >= 0; i--) {
+    const o = objects[i];
+    if (!isTrainer(o) && !$("lyOther").checked) continue;
+    if (o.x === x && o.z === z) return i;
+  }
+  return -1;
+}
+
+$("canvas").addEventListener("mousedown", e => {
+  if (!MAP) return;
+  const [x, z] = eventTile(e);
+  let i = objectAt(x, z);
+  if (placing) {
+    // Clicking an existing object while placing cancels place mode and selects it
+    // instead of stacking a new trainer on top of it.
+    if (i < 0) { placeTrainer(placing, x, z); return; }
+    setPlacing(null);
+  }
+  // Several objects on one tile: repeated clicks cycle through them.
+  const here = objects.map((o, k) => k).filter(k => objects[k].x === x && objects[k].z === z &&
+    (isTrainer(objects[k]) || $("lyOther").checked));
+  if (here.length > 1 && here.includes(selected)) i = here[(here.indexOf(selected) + here.length - 1) % here.length];
+  selected = i;
+  if (i >= 0) drag = { index: i, pos: [x, z], start: [x, z] };
+  renderEditor(); draw();
+});
+window.addEventListener("mousemove", e => {
+  if (!MAP) return;
+  const [x, z] = eventTile(e);
+  hover = [x, z];
+  showTile(x, z);
+  if (drag) { drag.pos = [x, z]; }
+  if (drag || placing) draw();
+});
+window.addEventListener("mouseup", () => {
+  if (!drag) return;
+  const o = objects[drag.index];
+  if (drag.pos[0] !== drag.start[0] || drag.pos[1] !== drag.start[1]) {
+    if (tileIndex(...drag.pos) >= 0) { o.x = drag.pos[0]; o.z = drag.pos[1]; }
+  }
+  drag = null; renderEditor(); updateButtons(); draw();
+});
+window.addEventListener("keydown", e => {
+  if (!MAP || ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+  if (e.key === "Escape") { setPlacing(null); draw(); return; }
+  if (selected < 0) return;
+  const o = objects[selected];
+  const mv = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }[e.key];
+  if (mv) { e.preventDefault(); o.x += mv[0]; o.z += mv[1]; renderEditor(); updateButtons(); draw(); }
+  if ((e.key === "Delete" || e.key === "Backspace") && isTrainer(o)) { e.preventDefault(); removeSelected(); }
+});
+
+function showTile(x, z) {
+  const i = tileIndex(x, z);
+  if (i < 0) { $("tileInfo").textContent = "Outside the map."; return; }
+  const name = META.behaviors[MAP.behavior[i]] || `behaviour 0x${MAP.behavior[i].toString(16)}`;
+  const area = MAP.own[i] === 1 ? "" : MAP.own[i] === 2 ? " · <span class='warn'>neighbouring map</span>" : " · empty";
+  const occ = objects.filter(o => o.x === x && o.z === z).map(o => o.id).join(", ");
+  $("tileInfo").innerHTML = `x <b>${x}</b>, z <b>${z}</b>${area}<br>${pretty(name.replace("TILE_BEHAVIOR_", "")) || "Ground"}` +
+    (MAP.collision[i] ? " · <span class='warn'>collision</span>" : " · walkable") + (occ ? `<br>${occ}` : "");
+}
+
+// ---------- editor ----------
+function sel(options, value, onchange, label = x => x) {
+  const s = document.createElement("select");
+  for (const o of options) { const op = document.createElement("option"); op.value = o; op.textContent = label(o); s.appendChild(op); }
+  if (!options.includes(value)) { const op = document.createElement("option"); op.value = value; op.textContent = value + " (?)"; s.prepend(op); }
+  s.value = value; s.onchange = () => onchange(s.value); return s;
+}
+function inp(value, type, onchange) {
+  const i = document.createElement("input"); i.type = type; i.value = value;
+  i.onchange = () => onchange(type === "number" ? parseInt(i.value, 10) || 0 : i.value); return i;
+}
+
+function renderEditor() {
+  const ed = $("editor");
+  if (selected < 0 || !objects[selected]) {
+    ed.className = "muted";
+    ed.innerHTML = "Click an object to select it. Drag to move, arrow keys nudge, <kbd>Del</kbd> removes a trainer.";
+    return;
+  }
+  const o = objects[selected], t = isTrainer(o);
+  ed.className = ""; ed.innerHTML = "";
+  if (t) {
+    const info = trainerInfo(o.script) || {};
+    const head = document.createElement("div");
+    head.innerHTML = `<b>${pretty(info.class || "")} ${info.name || ""}</b> <span class="muted">${o.script}</span><br><span class="muted">${(info.party || []).join(", ")}</span>`;
+    head.style.marginBottom = "8px"; ed.appendChild(head);
+  }
+  const g = document.createElement("div"); g.className = "grid"; ed.appendChild(g);
+  const row = (label, el) => { const l = document.createElement("div"); l.className = "muted"; l.textContent = label; g.append(l, el); };
+  const upd = (k, v) => { o[k] = v; updateButtons(); draw(); };
+
+  row("Local id", inp(o.id, "text", v => { upd("id", v.trim().toUpperCase()); renderEditor(); }));
+  row("x / z", (() => { const d = document.createElement("div"); d.style.display = "flex"; d.style.gap = "4px";
+    d.append(inp(o.x, "number", v => upd("x", v)), inp(o.z, "number", v => upd("z", v))); return d; })());
+  row("Height (y)", inp(o.y, "number", v => upd("y", v)));
+  row("Facing", sel([0, 1, 2, 3].map(String), String(o.initial_dir), v => upd("initial_dir", +v), v => DIRS[v]));
+  row("Sprite", sel(META.gfx, o.graphics_id, v => upd("graphics_id", v), pretty));
+  row("Movement", sel(META.movement_types, o.movement_type, v => upd("movement_type", v), pretty));
+  row("Move range x/z", (() => { const d = document.createElement("div"); d.style.display = "flex"; d.style.gap = "4px";
+    d.append(inp(o.movement_range_x, "number", v => upd("movement_range_x", v)), inp(o.movement_range_z, "number", v => upd("movement_range_z", v))); return d; })());
+  if (t) {
+    row("Trainer type", sel(META.trainer_types, o.trainer_type, v => upd("trainer_type", v), pretty));
+    row("Sight range", inp((o.data && o.data[0]) || 0, "number", v => { o.data = [v, ...(o.data || []).slice(1)]; updateButtons(); draw(); }));
+  } else {
+    row("Script", (() => { const s = document.createElement("span"); s.className = "muted"; s.textContent = String(o.script); return s; })());
+  }
+  row("Hidden flag", inp(o.hidden_flag, "text", v => upd("hidden_flag", v)));
+
+  if (blocked(o.x, o.z)) { const w = document.createElement("div"); w.className = "warn"; w.style.marginTop = "6px"; w.textContent = "This tile has collision or is outside the map."; ed.appendChild(w); }
+
+  if (t) {
+    const refd = MAP.localid_refs.includes(o.id);
+    const b = document.createElement("button"); b.className = "danger"; b.style.marginTop = "10px";
+    b.textContent = "Remove trainer from map"; b.disabled = refd; b.onclick = removeSelected;
+    ed.appendChild(b);
+    if (refd) { const n = document.createElement("div"); n.className = "warn"; n.textContent = `Can't remove: ${o.id} is used in this map's scripts.`; ed.appendChild(n); }
+  }
+}
+
+function removeSelected() {
+  const o = objects[selected];
+  if (!o || !isTrainer(o) || MAP.localid_refs.includes(o.id)) return;
+  objects.splice(selected, 1); selected = -1;
+  renderEditor(); renderTrainerList(); updateButtons(); draw();
+}
+
+// ---------- adding ----------
+function availableTrainers() {
+  const onMap = new Set(objects.filter(isTrainer).map(o => o.script));
+  const removedHere = new Set(JSON.parse(original).filter(isTrainer).map(o => o.script).filter(s => !onMap.has(s)));
+  return META.trainers.filter(t => t.has_json && !onMap.has(t.const) && !t.used_by_script &&
+    (t.placed_on.length === 0 || (removedHere.has(t.const) && t.placed_on.every(p => p === MAP.events_file))));
+}
+
+function renderTrainerList() {
+  if (!META) return;
+  const q = $("trainerSearch").value.toLowerCase();
+  const list = MAP ? availableTrainers() : [];
+  const rows = list.filter(t => !q || [t.const, t.name, t.class, ...t.party].join(" ").toLowerCase().includes(q));
+  $("trainerList").innerHTML = rows.length ? rows.map(t =>
+    `<div class="trow${placing === t.const ? " sel" : ""}" data-c="${t.const}"><b>${pretty(t.class)} ${t.name}</b>${/^TRAINER_DUMMY_/.test(t.const) ? ' <span class="muted">(unused slot)</span>' : ""} <small>${t.const} · ${t.party.join(", ") || "no party"}</small></div>`).join("")
+    : `<div class="trow muted">${MAP ? "No unplaced trainers match." : "Load a map first."}</div>`;
+  for (const el of $("trainerList").querySelectorAll(".trow[data-c]")) el.onclick = () =>
+    setPlacing(placing === el.dataset.c ? null : el.dataset.c);
+}
+$("trainerSearch").oninput = renderTrainerList;
+
+function setPlacing(c) {
+  placing = c;
+  const info = c && trainerInfo(c);
+  $("placeHint").textContent = c ? `Placing ${pretty(info.class)} ${info.name} (${c}): click an empty tile. Esc or click the row again to cancel.` : "";
+  $("placeHint").className = c ? "placing" : "warn";
+  $("canvas").style.cursor = c ? "crosshair" : "default";
+  renderTrainerList();
+}
+
+function placeTrainer(c, x, z) {
+  if (tileIndex(x, z) < 0) return;
+  const info = trainerInfo(c);
+  let id = "LOCALID_" + c.slice("TRAINER_".length), n = 2;
+  while (objects.some(o => o.id === id)) id = "LOCALID_" + c.slice(8) + "_" + n++;
+  const nearest = objects.slice().sort((a, b) => Math.hypot(a.x - x, a.z - z) - Math.hypot(b.x - x, b.z - z))[0];
+  const gfx = info.default_gfx && META.gfx.includes(info.default_gfx) ? info.default_gfx : META.gfx[0];
+  const mov = META.movement_types.includes("MOVEMENT_TYPE_LOOK_AROUND") ? "MOVEMENT_TYPE_LOOK_AROUND" : META.movement_types[0];
+  const o = { id, graphics_id: gfx, movement_type: mov, trainer_type: "TRAINER_TYPE_NORMAL", hidden_flag: "0",
+              script: c, initial_dir: 1, data: [3], movement_range_x: 0, movement_range_z: 0, x, z, y: nearest ? nearest.y : 0 };
+  objects.push(o); selected = objects.length - 1;
+  setPlacing(null);
+  renderEditor(); updateButtons(); draw();
+}
+
+// ---------- save ----------
+function updateButtons() {
+  const d = MAP && dirty();
+  $("saveBtn").disabled = !d; $("revertBtn").disabled = !d;
+  $("saveBtn").textContent = d ? "Save •" : "Save";
+}
+
+$("saveBtn").onclick = async () => {
+  const payload = objects.map(o => Object.fromEntries([...OBJ_KEYS.filter(k => k in o).map(k => [k, o[k]]),
+    ...Object.keys(o).filter(k => !OBJ_KEYS.includes(k)).map(k => [k, o[k]])]));
+  let res;
+  try {
+    res = await getJSON("/api/save", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ header: MAP.header, object_events: payload }) });
+  } catch (e) { toast(e.message, "err"); return; }
+  if (!res.ok) { toast("Not saved:\n" + res.errors.join("\n"), "err"); return; }
+  let msg = `Saved res/field/events/${MAP.events_file}.json`;
+  if (res.added_trainers.length || res.removed_trainers.length) {
+    if (res.added_trainers.length) msg += `\nAdded: ${res.added_trainers.join(", ")}`;
+    if (res.removed_trainers.length) msg += `\nRemoved: ${res.removed_trainers.join(", ")}`;
+    msg += "\nRemember TRAINER_ENCYCLOPEDIA.md, TRAINER_LOCATIONS.md, CHANGES.md and the tracker sheet.";
+  }
+  toast(msg + "\nRebuild to test in game.", "ok");
+  META = await getJSON("/api/meta");
+  const h = MAP.header; MAP = null; await loadMap(h);
+};
+$("revertBtn").onclick = () => {
+  if (!confirm("Throw away unsaved changes on this map?")) return;
+  objects = JSON.parse(original); selected = -1; renderEditor(); renderTrainerList(); updateButtons(); draw();
+};
+
+// ---------- misc ----------
+let toastTimer;
+function toast(msg, kind) {
+  const t = $("toast"); t.textContent = msg; t.className = kind || ""; t.style.display = "block";
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.style.display = "none", kind === "err" ? 12000 : 7000);
+}
+function status(s) { $("status").textContent = s; $("status").title = s; }
+
+$("loadBtn").onclick = () => {
+  const v = $("mapInput").value.trim().toUpperCase();
+  const h = META.maps.find(m => m.header === v || m.header === "MAP_HEADER_" + v.replace(/ /g, "_"));
+  if (!h) { toast("No map called " + v, "err"); return; }
+  loadMap(h.header);
+};
+$("mapInput").addEventListener("keydown", e => { if (e.key === "Enter") $("loadBtn").click(); });
+for (const id of ["lyTerrain", "lyCollision", "lyGrid", "lySight", "lyOther", "zoom"]) $(id).addEventListener("input", draw);
+window.addEventListener("beforeunload", e => { if (MAP && dirty()) { e.preventDefault(); e.returnValue = ""; } });
+
+init().catch(e => toast("Couldn't start: " + e.message, "err"));
+</script>
+</body>
+</html>

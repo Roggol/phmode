@@ -2,23 +2,6 @@
     "bg_events": [],
     "object_events": [
         {
-            "id": "LOCALID_VETERAN_GRANT",
-            "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
-            "movement_type": "MOVEMENT_TYPE_LOOK_NORTH_AND_SOUTH",
-            "trainer_type": "TRAINER_TYPE_NORMAL",
-            "hidden_flag": "0",
-            "script": "TRAINER_VETERAN_GRANT",
-            "initial_dir": 1,
-            "data": [
-                3
-            ],
-            "movement_range_x": 0,
-            "movement_range_z": 0,
-            "x": 13,
-            "z": 17,
-            "y": 1
-        },
-        {
             "id": "LOCALID_ROCK_SMASH_1",
             "graphics_id": "OBJ_EVENT_GFX_ROCK_SMASH",
             "movement_type": "MOVEMENT_TYPE_NONE",

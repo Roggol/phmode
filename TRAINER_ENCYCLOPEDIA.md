@@ -51,7 +51,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Nature: Adamant
       - Held Item: None
       - Moves: Wing attack
-    - **Ratata** — Lv. 10
+    - **Rattata** — Lv. 10
       - Ability: Hustle
       - Nature: Adamant
       - Held Item: None
@@ -79,61 +79,13 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Nature: Hardy
       - Held Item: None
       - Moves: Leech life, Razor leaf
-    - **Kriketot** — Lv. 10
+    - **Kricketot** — Lv. 10
       - Ability: Shed Skin
       - Nature: Hardy
       - Held Item: None
       - Moves: Bide, Leech life
 
 ### Jubilife City
-
-**Dawn/Lucas** (Rival)
-  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
-  - Battle Items: Potion
-  - Party:
-    - **Grotle** — Lv. 20
-      - Ability: Overgrow
-      - Nature: Hardy
-      - Held Item: None
-      - Moves: Razor Leaf, Stomp, Absorb, Withdraw
-
-**Dawn/Lucas** (Rival)
-  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
-  - Battle Items: Potion
-  - Party:
-    - **Monferno** — Lv. 20
-      - Ability: Blaze
-      - Nature: Hardy
-      - Held Item: None
-      - Moves: Flame wheel, Mach punch, Ember, Fury swipes
-
-**Dawn/Lucas** (Rival)
-  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
-  - Battle Items: Potion
-  - Party:
-    - **Prinplup** — Lv. 20
-      - Ability: Torrent
-      - Nature: Hardy
-      - Held Item: None
-      - Moves: Bubblebeam, Aurora Beam, Metal Claw, Peck
-
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
-  - Party:
-    - **Stunky** — Lv. 20
-      - Ability: Stench
-      - Nature: Adamant
-      - Held Item: None
-      - Moves: Screech, Fury Swipes, Faint attack, Poison gas
-
-**Grunt** (Galactic Grunt Male) — *Galactic grunt*
-  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
-  - Party:
-    - **Glameow** — Lv. 20
-      - Ability: Limber
-      - Nature: Hardy
-      - Held Item: None
-      - Moves: Fake out, Hypnosis, Faint Attack, Fury Swipes
 
 **Looker** (Policeman) — *scripted one-off, right after his "cover is blown" reveal*
   - AI Flags: Basic, Evaluate Attack, Expert, Check HP
@@ -159,7 +111,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Ability: Simple
       - Nature: Adamant
       - Held Item: None
-      - Moves: Defence Curl, Rollout
+      - Moves: Defense Curl, Rollout
 
 **Harrison** (School Kid Male)
   - AI Flags: Basic, Evaluate Attack, Expert, Check HP
@@ -170,6 +122,35 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Nature: Adamant
       - Held Item: None
       - Moves: Wing attack, Quick Attack
+
+### Route 204 South
+
+**Samantha** (Lass)
+  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
+  - Party:
+    - **Budew** — Lv. 10
+      - Ability: Natural Cure
+      - Nature: Hardy
+      - Held Item: None
+      - Moves: Absorb, Growth, Water Sport, Stun Spore
+
+**Sarah** (Lass)
+  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
+  - Party:
+    - **Shinx** — Lv. 10
+      - Ability: Guts
+      - Nature: Hardy
+      - Held Item: None
+      - Moves: Tackle, Leer, Charge
+
+**Tyler** (Youngster)
+  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
+  - Party:
+    - **Magikarp** — Lv. 10
+      - Ability: Swift Swim
+      - Nature: Hardy
+      - Held Item: None
+      - Moves: Splash
 
 ### Route 203
 
@@ -190,7 +171,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Ability: Rough Skin
       - Nature: Impish
       - Held Item: None
-      - Moves: Defence Curl, Scratch, Sand attack, Poison Sting
+      - Moves: Defense Curl, Scratch, Sand attack, Poison Sting
     - **Piplup** — Lv. 13
       - Ability: Torrent
       - Nature: Impish
@@ -217,7 +198,7 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Moves: Spark, Bite, Charge, Leer
     - **Turtwig** — Lv. 13
       - Ability: Overgrow
-      - Nature: 
+      - Nature: Hardy
       - Held Item: Sitrus Berry
       - Moves: Tackle, Withdraw, Razor Leaf
 
@@ -310,35 +291,6 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Held Item: None
       - Moves: Low Kick, Leer
 
-### Route 204 South
-
-**Samantha** (Lass)
-  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
-  - Party:
-    - **Budew** — Lv. 10
-      - Ability: Natural Cure
-      - Nature: Hardy
-      - Held Item: None
-      - Moves: Absorb, Growth, Water Sport, Stun Spore
-
-**Sarah** (Lass)
-  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
-  - Party:
-    - **Shinx** — Lv. 10
-      - Ability: Guts
-      - Nature: Hardy
-      - Held Item: None
-      - Moves: Tackle, Leer, Charge
-
-**Tyler** (Youngster)
-  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
-  - Party:
-    - **Magikarp** — Lv. 10
-      - Ability: Swift Swim
-      - Nature: Hardy
-      - Held Item: None
-      - Moves: Splash
-
 ### Oreburgh Gate 1F
 
 **Curtis** (Camper)
@@ -363,27 +315,6 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
       - Nature: Hardy
       - Held Item: None
       - Moves: Tackle, Growl, Defense Curl
-
-### Oreburgh Gate B1F
-
-**Grant** (Veteran)
-  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
-  - Party:
-    - **Riolu** — Lv. 10
-      - Ability: Steadfast
-      - Nature: Hardy
-      - Held Item: None
-      - Moves: Force Palm, Quick Attack, Counter, Screech
-    - **Staraptor** — Lv. 10
-      - Ability: Intimidate
-      - Nature: Hardy
-      - Held Item: None
-      - Moves: Aerial Ace, Take Down, Quick Attack, Growl
-    - **Graveler** — Lv. 10
-      - Ability: Rock Head
-      - Nature: Hardy
-      - Held Item: None
-      - Moves: Earthquake, Rock Slide, Rock Polish, Defense Curl
 
 ### Oreburgh Mine B2F
 
@@ -472,6 +403,56 @@ Gym Leaders are the one exception: `TRAINER_LOCATIONS.md` deliberately excludes 
 
 
 ## Tier 2 — cap 23
+
+### Jubilife City
+
+**Dawn/Lucas** (Rival)
+  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
+  - Battle Items: Potion
+  - Party:
+    - **Grotle** — Lv. 20
+      - Ability: Overgrow
+      - Nature: Hardy
+      - Held Item: None
+      - Moves: Razor Leaf, Stomp, Absorb, Withdraw
+
+**Dawn/Lucas** (Rival)
+  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
+  - Battle Items: Potion
+  - Party:
+    - **Monferno** — Lv. 20
+      - Ability: Blaze
+      - Nature: Hardy
+      - Held Item: None
+      - Moves: Flame wheel, Mach punch, Ember, Fury swipes
+
+**Dawn/Lucas** (Rival)
+  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
+  - Battle Items: Potion
+  - Party:
+    - **Prinplup** — Lv. 20
+      - Ability: Torrent
+      - Nature: Hardy
+      - Held Item: None
+      - Moves: Bubblebeam, Aurora Beam, Metal Claw, Peck
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
+  - Party:
+    - **Stunky** — Lv. 20
+      - Ability: Stench
+      - Nature: Adamant
+      - Held Item: None
+      - Moves: Screech, Fury Swipes, Faint attack, Poison gas
+
+**Grunt** (Galactic Grunt Male) — *Galactic grunt*
+  - AI Flags: Basic, Evaluate Attack, Expert, Check HP
+  - Party:
+    - **Glameow** — Lv. 20
+      - Ability: Limber
+      - Nature: Hardy
+      - Held Item: None
+      - Moves: Fake out, Hypnosis, Faint Attack, Fury Swipes
 
 ### Route 204 North
 

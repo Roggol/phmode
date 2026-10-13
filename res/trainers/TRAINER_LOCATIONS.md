@@ -30,42 +30,31 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 - `youngster_tristan.json` — Lv. 10
 
 ### Jubilife City
-- `dawn_jubilife_city_chimchar.json` — Lv. 10
-- `dawn_jubilife_city_piplup.json` — Lv. 10
-- `dawn_jubilife_city_turtwig.json` — Lv. 10
-- `galactic_grunt_jubilife_city_1.json` — Lv. 11 (Galactic grunt)
-- `galactic_grunt_jubilife_city_2.json` — Lv. 11 (Galactic grunt)
 - `looker_jubilife_city.json` — Lv. 10 (scripted one-off, right after his
   "cover is blown" reveal)
-- `lucas_jubilife_city_chimchar.json` — Lv. 10
-- `lucas_jubilife_city_piplup.json` — Lv. 10
-- `lucas_jubilife_city_turtwig.json` — Lv. 10
 
 ### Trainers School
 - `school_kid_christine.json` — Lv. 10
 - `school_kid_harrison.json` — Lv. 10
-
-### Route 203
-- `lass_kaitlin.json` — Lv. 10
-- `lass_madeline.json` — Lv. 10
-- `rival_route_203_chimchar.json` — Lv. 12
-- `rival_route_203_piplup.json` — Lv. 12
-- `rival_route_203_turtwig.json` — Lv. 12
-- `youngster_dallas.json` — Lv. 10
-- `youngster_michael.json` — Lv. 10
-- `youngster_sebastian.json` — Lv. 10
 
 ### Route 204 South
 - `lass_samantha.json` — Lv. 10
 - `lass_sarah.json` — Lv. 10
 - `youngster_tyler.json` — Lv. 10
 
+### Route 203
+- `lass_kaitlin.json` — Lv. 10
+- `lass_madeline.json` — Lv. 10
+- `rival_route_203_chimchar.json` — Lv. 13
+- `rival_route_203_piplup.json` — Lv. 13
+- `rival_route_203_turtwig.json` — Lv. 13
+- `youngster_dallas.json` — Lv. 10
+- `youngster_michael.json` — Lv. 10
+- `youngster_sebastian.json` — Lv. 10
+
 ### Oreburgh Gate 1F
 - `camper_curtis.json` — Lv. 10
 - `picnicker_diana.json` — Lv. 10
-
-### Oreburgh Gate B1F
-- `veteran_grant.json` — Lv. 10
 
 ### Oreburgh Mine B2F
 - `worker_colin.json` — Lv. 10
@@ -73,6 +62,16 @@ Marley/Buck/Mira battles at `battleground`, etc.).
 
 
 ## Tier 2 — cap 23
+
+### Jubilife City
+- `dawn_jubilife_city_chimchar.json` — Lv. 20
+- `dawn_jubilife_city_piplup.json` — Lv. 20
+- `dawn_jubilife_city_turtwig.json` — Lv. 20
+- `galactic_grunt_jubilife_city_1.json` — Lv. 20 (Galactic grunt)
+- `galactic_grunt_jubilife_city_2.json` — Lv. 20 (Galactic grunt)
+- `lucas_jubilife_city_chimchar.json` — Lv. 20
+- `lucas_jubilife_city_piplup.json` — Lv. 20
+- `lucas_jubilife_city_turtwig.json` — Lv. 20
 
 ### Route 204 North
 - `aroma_lady_taylor.json` — Lv. 19
