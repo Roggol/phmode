@@ -1261,8 +1261,9 @@ u8 BattleSystem_CompareBattlerSpeed(BattleSystem *battleSys, BattleContext *batt
         battler1Speed /= 2;
     }
 
+    // phmode: Slow Start only lasts for the holder's first 2 turns on the field (vanilla: 5 turns).
     if (battler1Ability == ABILITY_SLOW_START
-        && battleCtx->totalTurns - battleCtx->battleMons[battler1].moveEffectsData.slowStartTurnNumber < 5) {
+        && battleCtx->totalTurns - battleCtx->battleMons[battler1].moveEffectsData.slowStartTurnNumber < 2) {
         battler1Speed /= 2;
     }
 
@@ -1329,7 +1330,7 @@ u8 BattleSystem_CompareBattlerSpeed(BattleSystem *battleSys, BattleContext *batt
     }
 
     if (battler2Ability == ABILITY_SLOW_START
-        && battleCtx->totalTurns - battleCtx->battleMons[battler2].moveEffectsData.slowStartTurnNumber < 5) {
+        && battleCtx->totalTurns - battleCtx->battleMons[battler2].moveEffectsData.slowStartTurnNumber < 2) {
         battler2Speed /= 2;
     }
 
@@ -4263,7 +4264,7 @@ int BattleSystem_TriggerEffectOnSwitch(BattleSystem *battleSys, BattleContext *b
                 if (battleCtx->battleMons[battler].slowStartFinished == 0
                     && battleCtx->battleMons[battler].curHP
                     && Battler_Ability(battleCtx, battler) == ABILITY_SLOW_START
-                    && (battleCtx->totalTurns - battleCtx->battleMons[battler].moveEffectsData.slowStartTurnNumber) == 5) {
+                    && (battleCtx->totalTurns - battleCtx->battleMons[battler].moveEffectsData.slowStartTurnNumber) == 2) { // phmode: was 5
                     battleCtx->battleMons[battler].slowStartFinished = 1;
                     battleCtx->msgBattlerTemp = battler;
                     subscript = subscript_slow_start_end;
@@ -7075,10 +7076,11 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     if (attackerParams.ability == ABILITY_HUGE_POWER || attackerParams.ability == ABILITY_PURE_POWER) {
         attackStat = attackStat * 2;
     }
+    // phmode: Slow Start only lasts for the holder's first 2 turns on the field (vanilla: 5 turns).
     if (attackerParams.ability == ABILITY_SLOW_START
         && BattleContext_Get(battleSys, battleCtx, BATTLECTX_TOTAL_TURNS, NULL)
                 - BattleMon_Get(battleCtx, attacker, BATTLEMON_SLOW_START_TURN_NUMBER, NULL)
-            < 5) {
+            < 2) {
         attackStat /= 2;
     }
 

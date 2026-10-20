@@ -1,10 +1,10 @@
 {
     "base_stats": {
         "hp": 40,
-        "attack": 30,
+        "attack": 50,
         "defense": 50,
         "speed": 100,
-        "special_attack": 55,
+        "special_attack": 35,
         "special_defense": 55
     },
     "types": [ "TYPE_ELECTRIC", "TYPE_ELECTRIC" ],

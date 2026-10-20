@@ -668,6 +668,17 @@ heals, X items, etc. do not.
   sandstorm's Rock-type SpDef boost).
 * `res/text/battle_strings.json`, `res/text/unk_0329.json`,
   `res/text/unk_0662.json` — weather strings reworded from "hail" to "snow".
+* Follow-up wording pass (user-specified text):
+  * **Ability descriptions** (`res/text/ability_descriptions.json`): Snow Cloak,
+    Ice Body and Snow Warning now say "snowstorm" instead of "hailstorm".
+  * **TM07** (`res/items/data/tm07.json`): description is now "Summons a
+    snowstorm that boosts defence for ice type pokemon."
+  * **Icy Rock** (`res/items/data/icy_rock.json` and
+    `res/text/underground_items.json`): "the move Hail" → "the move Snow".
+  * **Battle Arcade** (`res/text/battle_arcade_scene.json`): "pelting hail" →
+    "pelting snow".
+  * **Weather lines** (`res/text/unk_0662.json`): "It's hailing here" and "Oh,
+    it's hailing over there!" now say "snowing" (both copies of each).
 
 ### No EVs from battle
 `src/battle/battle_script.c` — `BattleScript_CalcEffortValues` returns
@@ -1491,6 +1502,25 @@ flag (not the Endure flag), so `subscript_move_followup_message` /
 (`BattleStrings_Text_PokemonSurvivedTheHitWithSturdy_*`) rather than the generic
 "endured the hit!".
 
+### Slow Start — two turns per switch-in
+`src/battle/battle_lib.c`. Slow Start now halves Attack and Speed only for the
+holder's **first 2 turns on the field** each time it comes in, instead of 5.
+This applies to battle leads, Pokémon sent in after a faint, and mid-turn
+switch-ins alike.
+* **How the turns are counted:** the turn counter `slowStartTurnNumber` (set on
+  switch-in, the same way as Fake Out's) is unchanged. All the "5" checks are
+  now "2":
+  * the Speed halving (`BattleSystem_CompareBattlerSpeed`, both battlers) and the
+    Attack halving (`BattleSystem_CalcMoveDamage`) use
+    `totalTurns - slowStartTurnNumber < 2`.
+  * the "got its act together" message in `SWITCH_IN_CHECK_STATE_SLOW_START`
+    fires at `== 2`. The "can't get it going" announcement keeps its vanilla
+    condition.
+* **AI:** the trainer AI's Slow Start scoring is left as vanilla. It still
+  values Skill Swap or Gastro Acid for removing it.
+* The ability description ("Temporarily halves Attack and Speed") is unchanged
+  and still accurate.
+
 ---
 
 ## Moves
@@ -1571,6 +1601,12 @@ into it, so every species that had one of them now learns Knock Off instead:
 
 ### Leech Life — modern power
 `res/moves/leech_life/data.json` — base power 20 → 80 (in line with Gen 7+).
+
+### Crabhammer, Doom Desire and Tackle — later-gen power
+* `res/moves/crabhammer/data.json` — base power 90 → 100, accuracy 90 → 95
+  (vanilla 85), matching Pokémon Champions.
+* `res/moves/doom_desire/data.json` — base power 120 → 140 (Gen 5+).
+* `res/moves/tackle/data.json` — base power 35 → 50 (Gen 5-6).
 
 ### Attack Order — spread hit
 `res/moves/attack_order/data.json` — power 90 → 100, range `RANGE_SINGLE_TARGET`
@@ -1702,9 +1738,9 @@ This is the existing Sketch guard, not new code.
   Double Slap (85), Double Hit (90), Fury Attack (85), Fury Swipes (80),
   Mega Punch (85), Slam (75), Take Down (85), Wrap (85), Smog (70),
   Psywave (80), Steel Wing (90), Mirror Shot (85), Clamp (75), Octazooka (85),
-  Whirlpool (70), Aqua Tail (90).
-* **→ 90:** Rock Climb (85), Head Smash (80), Rock Blast (80), Rock Tomb (80),
-  Crabhammer (85).
+  Whirlpool (70), Aqua Tail (90), Crabhammer (85; was 90 in this batch,
+  raised to 95 with its power change below).
+* **→ 90:** Rock Climb (85), Head Smash (80), Rock Blast (80), Rock Tomb (80).
 * **→ 85:** Thunder (70), Focus Blast (70), Magma Storm (70), Blizzard (70),
   Dragon Rush (75), Egg Bomb (75), Mega Kick (75), Gunk Shot (70),
   Poison Gas (55), Poison Powder (75), Glare (75), Stone Edge (80),
@@ -1827,10 +1863,25 @@ ability; any slot not mentioned is unchanged.
 ### Blastoise
 * Ability slot 2: none → **Rain Dish**.
 
+### Butterfree
+* Stats: Atk 45 → 35, Sp. Atk 80 → 90. BST 385 (unchanged).
+
 ### Beedrill
 * Learnset: X-Scissor replaces Rage at level 19; Cross Poison replaces Toxic
   Spikes at level 25.
 * Stats: SpAtk 45 → 10, Spe 75 → 110. BST 385 (unchanged).
+
+### Pidgeot
+* Stats: Atk 80 → 90, Sp. Atk 70 → 50, Spe 91 → 101. BST 469 (unchanged).
+
+### Raticate
+* Stats: Atk 81 → 91, Sp. Atk 50 → 40. BST 413 (unchanged).
+
+### Fearow
+* Stats: Atk 90 → 100, Sp. Atk 61 → 51. BST 442 (unchanged).
+
+### Arbok
+* Stats: Def 69 → 89, Sp. Atk 65 → 45. BST 438 (unchanged).
 
 ### Sandshrew
 * Ability slot 1: Sand Veil → **Rough Skin**.
@@ -1841,10 +1892,16 @@ ability; any slot not mentioned is unchanged.
 * Ability slot 2: none → **Sharpness**.
 
 ### Nidoqueen
+* Stats: Atk 82 → 62, Sp. Atk 75 → 95. BST 495 (unchanged).
 * Ability slot 2: Rivalry → **Sheer Force** (slot 1 stays Poison Point).
 
 ### Nidoking
+* Stats: Atk 92 → 112, Sp. Atk 85 → 65. BST 495 (unchanged).
 * Ability slot 2: Rivalry → **Sheer Force** (slot 1 stays Poison Point).
+
+### Clefable
+* Stats: Atk 70 → 50, Def 73 → 83, Sp. Def 90 → 100. BST 473 (unchanged).
+* Ability slot 1: Cute Charm → **Magic Guard**.
 
 ### Vulpix
 * Ability slot 2: none → **Drought** (slot 1 stays Flash Fire).
@@ -1852,20 +1909,48 @@ ability; any slot not mentioned is unchanged.
 ### Ninetales
 * Ability slot 2: none → **Drought** (slot 1 stays Flash Fire).
 
-### Mankey
-* Ability slot 1: Vital Spirit → **Defiant** (slot 2 stays Anger Point).
-
-### Primeape
-* Ability slot 1: Vital Spirit → **Defiant** (slot 2 stays Anger Point).
-
-### Poliwrath
-* Learnset: Drain Punch (new) at level 37.
+### Wigglytuff
+* Stats: Def 45 → 55, Sp. Atk 75 → 55, Sp. Def 50 → 60. BST 425 (unchanged).
+* Ability slot 1: Cute Charm → **Competitive**.
+* Ability slot 2: none → **Competitive**.
 
 ### Parasect
 * Stats: HP 60 → 90, Sp. Atk 60 → 30. BST 405 (unchanged).
 
+### Dugtrio
+* Stats: Atk 80 → 100, Sp. Atk 50 → 30. BST 405 (unchanged).
+
+### Persian
+* Stats: Atk 70 → 85, Sp. Atk 65 → 50. BST 440 (unchanged).
+
+### Psyduck
+* Stats: Atk 52 → 22, Sp. Atk 65 → 80, Sp. Def 50 → 65. BST 320 (unchanged).
+
+### Golduck
+* Stats: Atk 82 → 52, Sp. Atk 95 → 110, Sp. Def 80 → 95. BST 500 (unchanged).
+
+### Mankey
+* Ability slot 1: Vital Spirit → **Defiant** (slot 2 stays Anger Point).
+
+### Primeape
+* Stats: HP 65 → 85, Sp. Atk 60 → 40. BST 455 (unchanged).
+* Ability slot 1: Vital Spirit → **Defiant** (slot 2 stays Anger Point).
+
+### Poliwrath
+* Stats: Atk 85 → 95, Sp. Atk 70 → 60. BST 500 (unchanged).
+* Learnset: Drain Punch (new) at level 37.
+
+### Weepinbell
+* Stats: Atk 90 → 110, Sp. Atk 85 → 65. BST 390 (unchanged).
+
+### Victreebel
+* Stats: Atk 105 → 125, Sp. Atk 100 → 80. BST 480 (unchanged).
+
 ### Ponyta
 * Evolves into Rapidash at level 30 (was 40).
+
+### Rapidash
+* Ability slot 1: Run Away → **Reckless**.
 
 ### Slowpoke
 * Evolves into Slowbro at level 30 (was 37). The King's Rock → Slowking
@@ -1873,8 +1958,27 @@ ability; any slot not mentioned is unchanged.
   happens by using the item on it, not by trading (see Link Cable).
 
 ### Farfetch'd
+* Stats: Atk 65 → 95, Sp. Atk 58 → 28. BST 352 (unchanged).
 * Ability slot 1: Keen Eye → **Defiant**.
 * Ability slot 2: Inner Focus → **Defiant**.
+
+### Dodrio
+* Ability slot 1: Run Away → **Unburden**.
+
+### Seel
+* Ability slot 2: Hydration → **Technician**.
+
+### Dewgong
+* Ability slot 2: Hydration → **Technician**.
+
+### Grimer
+* Ability slot 2: Sticky Hold → **Poison Touch**.
+
+### Muk
+* Ability slot 2: Sticky Hold → **Poison Touch**.
+
+### Shellder
+* Stats: Sp. Atk 45 → 25, Sp. Def 25 → 45. BST 305 (unchanged).
 
 ### Cloyster
 * Stats: Sp. Atk 85 → 45, Sp. Def 45 → 85 (swapped). BST 525 (unchanged).
@@ -1883,12 +1987,42 @@ ability; any slot not mentioned is unchanged.
 * Stats: Atk 45 → 70, Spe 70 → 45. BST 385 (unchanged).
 * Evolution: trade holding Metal Coat → use Metal Coat (see Link Cable).
 
+### Drowzee
+* Stats: Atk 48 → 28, Sp. Atk 43 → 63. BST 328 (unchanged).
+* Ability slot 2: Forewarn → **Bad Dreams**.
+
+### Hypno
+* Stats: Atk 73 → 53, Sp. Atk 73 → 93. BST 483 (unchanged).
+* Ability slot 2: Forewarn → **Bad Dreams**.
+
+### Voltorb
+* Stats: Atk 30 → 50, Sp. Atk 55 → 35. BST 330 (unchanged).
+
 ### Electrode
 * Stats: Atk 50 → 90, Sp. Atk 80 → 40 (swapped). BST 480 (unchanged).
 * Learnset: Wild Charge replaces Charge Beam at level 26.
 
+### Cubone
+* Stats: HP 50 → 60, Atk 50 → 60, Sp. Atk 40 → 20. BST 320 (unchanged).
+
+### Marowak
+* Stats: HP 60 → 70, Atk 80 → 90, Sp. Atk 50 → 30. BST 425 (unchanged).
+
+### Hitmonlee
+* Ability slot 1: Limber → **Reckless**.
+
+### Hitmonchan
+* Ability slot 1: Keen Eye → **Iron Fist**.
+
+### Lickitung
+* Ability slot 1: Own Tempo → **Thick Fat**.
+* Ability slot 2: Oblivious → **Simple**.
+
 ### Tangela
 * Learnset: Power Whip moved from level 54 to 40, Natural Gift from 40 to 54.
+
+### Kangaskhan
+* Ability slot 1: Early Bird → **Scrappy**.
 
 ### Goldeen
 * Evolution level (into Seaking): 33 → 23.
@@ -1897,6 +2031,12 @@ ability; any slot not mentioned is unchanged.
 ### Seaking
 * Stats: Atk 92 → 100, Spe 68 → 60. BST 450 (unchanged).
 * Ability slot 2: Water Veil → **Lightning Rod**.
+
+### Starmie
+* Ability slot 1: Illuminate → **Adaptability**.
+
+### Jynx
+* Ability slot 2: Forewarn → **Snow Cloak**.
 
 ### Jolteon
 * Learnset: Thunderbolt replaces Thunder Fang at level 43; Discharge replaces
@@ -1927,6 +2067,9 @@ ability; any slot not mentioned is unchanged.
 ### Kabutops
 * Stats: SpAtk 65 → 20, SpDef 70 → 115. BST 495 (unchanged).
 
+### Aerodactyl
+* Ability slot 2: Pressure → **Rock Head**.
+
 ### Chikorita
 * Ability slot 2: none → **Leaf Guard**.
 
@@ -1955,19 +2098,25 @@ ability; any slot not mentioned is unchanged.
 * Ability slot 2: none → **Sheer Force**.
 
 ### Furret
-* Stats: Atk 76 → 91, Spe 90 → 100, Sp. Atk 45 → 20. BST 415 (unchanged).
+* Stats: Atk 76 → 91, Sp. Atk 45 → 20, Spe 90 → 100. BST 415 (unchanged).
+* Ability slot 1: Run Away → **Prankster**.
+* Ability slot 2: Keen Eye → **Prankster**.
 
 ### Noctowl
 * Stats: Atk 50 → 26, Sp. Atk 76 → 100. BST 442 (unchanged).
 
 ### Ledian
 * Stats: Atk 35 → 90, Sp. Atk 55 → 20, Sp. Def 110 → 90. BST 390 (unchanged).
+* Ability slot 1: Swarm → **Iron Fist**.
+* Ability slot 2: Early Bird → **Iron Fist**.
 
 ### Spinarak
 * Learnset: Spider Web at level 29 → **Sticky Web**.
 
 ### Ariados
 * Stats: Atk 90 → 100, Sp. Atk 60 → 50. BST 390 (unchanged).
+* Ability slot 1: Swarm → **Intimidate**.
+* Ability slot 2: Insomnia → **Intimidate**.
 * Learnset: Spider Web at level 32 → **Sticky Web**.
 
 ### Togepi
@@ -1980,7 +2129,7 @@ ability; any slot not mentioned is unchanged.
 * Stats: Atk 75 → 60, Sp. Atk 95 → 110. BST 470 (unchanged).
 
 ### Ampharos
-* Ability slot 2: none → **Electric Surge**.
+* Ability slot 1: Static → **Electric Surge**.
 
 ### Crobat
 * Stats: Atk 90 → 100, Sp. Atk 70 → 60. BST 535 (unchanged).
@@ -2007,11 +2156,18 @@ ability; any slot not mentioned is unchanged.
 * Stats: HP 70 → 90, Atk 80 → 60, Def 65 → 90, Spe 85 → 65, Sp. Atk 90 → 60,
   Sp. Def 65 → 90. BST 455 (unchanged).
 
+### Granbull
+* Ability slot 2: Quick Feet → **Intimidate**.
+
+### Ursaring
+* Ability slot 2: Quick Feet → **Guts**.
+
 ### Kingdra
 * Learnset: Draco Meteor (new) at level 63.
 
 ### Dunsparce
 * Stats: Def 70 → 90, Spe 45 → 25. BST 415 (unchanged).
+* Ability slot 2: Run Away → **none**.
 
 ### Qwilfish
 * Stats: HP 65 → 90, Spe 85 → 60. BST 430 (unchanged).
@@ -2027,6 +2183,7 @@ ability; any slot not mentioned is unchanged.
 
 ### Corsola
 * Stats: HP 55 → 90, Sp. Atk 65 → 30. BST 380 (unchanged).
+* Ability slot 1: Hustle → **Water Absorb**.
 
 ### Octillery
 * Stats: Atk 105 → 85, Sp. Atk 105 → 125. BST 480 (unchanged).
@@ -2043,8 +2200,27 @@ ability; any slot not mentioned is unchanged.
 ### Houndoom
 * Learnset: gains Dark Pulse at level 66.
 
+### Donphan
+* Ability slot 1: Sturdy → **Sheer Force**.
+
 ### Stantler
 * Stats: Atk 95 → 110, Sp. Atk 85 → 70. BST 465 (unchanged).
+* Ability slot 2: Frisk → **none**.
+
+### Raikou
+* Ability slot 1: Pressure → **Electric Surge**.
+
+### Entei
+* Ability slot 1: Pressure → **Drought**.
+
+### Suicune
+* Ability slot 1: Pressure → **Drizzle**.
+
+### Lugia
+* Ability slot 1: Pressure → **Psychic Surge**.
+
+### Ho-Oh
+* Ability slot 1: Pressure → **Magic Guard**.
 
 ### Treecko
 * Ability slot 2: none → **Unburden**.
@@ -2074,10 +2250,13 @@ ability; any slot not mentioned is unchanged.
 * Ability slot 2: none → **Damp**.
 
 ### Mightyena
-* Stats: Spe 70 → 100, Sp. Atk 60 → 30. BST 420 (unchanged).
+* Stats: Sp. Atk 60 → 30, Spe 70 → 100. BST 420 (unchanged).
+* Ability slot 2: Quick Feet → **Intimidate**.
 
 ### Linoone
 * Stats: Atk 70 → 90, Sp. Atk 50 → 30. BST 420 (unchanged).
+* Ability slot 1: Pickup → **Unburden**.
+* Ability slot 2: Gluttony → **Unburden**.
 
 ### Beautifly
 * Stats: Atk 70 → 50, Sp. Def 50 → 70. BST 385 (unchanged).
@@ -2088,17 +2267,32 @@ ability; any slot not mentioned is unchanged.
 ### Shiftry
 * Stats: Atk 100 → 120, Sp. Atk 90 → 70. BST 480 (unchanged).
 
+### Pelipper
+* Ability slot 1: Keen Eye → **Drizzle**.
+* Ability slot 2: none → **Drizzle**.
+
 ### Masquerain
 * Stats: Atk 60 → 30, Spe 60 → 110, Sp. Def 82 → 62. BST 414 (unchanged).
 
 ### Breloom
 * Learnset: gains Spore at level 50.
 
+### Whismur
+* Stats: Atk 51 → 21, Sp. Atk 51 → 81. BST 240 (unchanged).
+
+### Loudred
+* Stats: Atk 71 → 41, Sp. Atk 71 → 101. BST 360 (unchanged).
+
 ### Exploud
+* Stats: Atk 91 → 61, Sp. Atk 91 → 121. BST 480 (unchanged).
 * Learnset: gains Boomburst at level 45; its level-up Roar was dropped to stay
   within the 20-move learnset cap (Roar is still on TM05 for it).
 
+### Delcatty
+* Ability slot 1: Cute Charm → **Normalize**.
+
 ### Sableye
+* Ability slot 1: Keen Eye → **Prankster**.
 * Ability slot 2: Stall → **Prankster**.
 * Learnset: gains Gravity at level 30, loses Mean Look at level 57.
 
@@ -2114,34 +2308,44 @@ ability; any slot not mentioned is unchanged.
 
 ### Volbeat
 * Stats: Atk 73 → 58, Spe 85 → 100. BST 400 (unchanged).
+* Ability slot 1: Illuminate → **Prankster**.
 * Ability slot 2: Swarm → **Prankster**.
 
 ### Illumise
 * Stats: Atk 47 → 32, Sp. Atk 73 → 88. BST 400 (unchanged).
 * Ability slot 1: Oblivious → **Prankster**.
+* Ability slot 2: Tinted Lens → **Prankster**.
+
+### Gulpin
+* Ability slot 1: Liquid Ooze → **Poison Touch**.
+* Ability slot 2: Sticky Hold → **Poison Touch**.
 
 ### Swalot
-* Stats: Def 83 → 98, Spe 55 → 25, Sp. Def 83 → 98. BST 467 (unchanged).
+* Stats: Def 83 → 98, Sp. Def 83 → 98, Spe 55 → 25. BST 467 (unchanged).
+* Ability slot 1: Liquid Ooze → **Poison Touch**.
+* Ability slot 2: Sticky Hold → **Poison Touch**.
 
 ### Sharpedo
 * Stats: Def 40 → 95, Sp. Atk 95 → 40. BST 460 (unchanged).
 
 ### Wailord
-* Stats: Def 45 → 55, Spe 60 → 40, Sp. Def 45 → 55. BST 500 (unchanged).
+* Stats: Def 45 → 55, Sp. Def 45 → 55, Spe 60 → 40. BST 500 (unchanged).
+* Ability slot 1: Water Veil → **Filter**.
 * Ability slot 2: Oblivious → **Filter**.
 
 ### Camerupt
 * Stats: HP 70 → 90, Spe 40 → 20. BST 460 (unchanged).
-* Ability slot 1: Magma Armor → **Anger Point**.
+* Ability slot 1: Magma Armor → **Solid Rock**.
 
 ### Torkoal
 * Ability slot 2: none → **Drought**.
 
 ### Grumpig
-* Ability slot 2: Own Tempo → **Psychic Surge**.
+* Ability slot 2: Own Tempo → **Unaware**.
 
 ### Spinda
 * Ability slot 1: Own Tempo → **Contrary**.
+* Ability slot 2: Tangled Feet → **Contrary**.
 
 ### Vibrava
 * Stats: Atk 70 → 20, Sp. Atk 50 → 100. BST 340 (unchanged).
@@ -2161,6 +2365,7 @@ ability; any slot not mentioned is unchanged.
 
 ### Cacturne
 * Ability slot 1: Sand Veil → **Shed Spines**.
+* Ability slot 2: none → **Water Absorb**.
 
 ### Altaria
 * Stats: Atk 70 → 100, Sp. Atk 70 → 40. BST 490 (unchanged).
@@ -2169,6 +2374,7 @@ ability; any slot not mentioned is unchanged.
   Dragon Breath at level 35; Outrage replaces Dragon Pulse at level 54.
 
 ### Zangoose
+* Stats: Atk 115 → 125, Sp. Atk 60 → 50. BST 458 (unchanged).
 * Ability slot 2: none → **Toxic Boost**.
 * Learnset: Hone Claws replaces Fury Cutter at level 14.
 
@@ -2176,20 +2382,32 @@ ability; any slot not mentioned is unchanged.
 * Typing: Poison → **Poison / Dark**.
 * Stats: Atk 100 → 120, Sp. Atk 100 → 80. BST 458 (unchanged).
 
+### Barboach
+* Ability slot 1: Oblivious → **Water Absorb**.
+* Ability slot 2: Anticipation → **Water Absorb**.
+
+### Whiscash
+* Ability slot 1: Oblivious → **Water Absorb**.
+* Ability slot 2: Anticipation → **Water Absorb**.
+
 ### Crawdaunt
 * Learnset: Swift @ 30 → Aqua Jet @ 30, Taunt @ 34 → Sucker Punch @ 34.
 
 ### Baltoy
+* Ability slot 1: Levitate → **Magic Guard**.
 * Learnset: Recover replaces Power Trick at level 31.
 
 ### Claydol
+* Ability slot 1: Levitate → **Magic Guard**.
 * Learnset: Recover replaces Power Trick at level 31.
 
 ### Lileep
-* Ability slot 2: none → **Storm Drain** (slot 1 stays Suction Cups).
+* Ability slot 1: Suction Cups → **Storm Drain**.
+* Ability slot 2: none → **Storm Drain**.
 
 ### Cradily
-* Ability slot 2: none → **Storm Drain** (slot 1 stays Suction Cups).
+* Ability slot 1: Suction Cups → **Storm Drain**.
+* Ability slot 2: none → **Storm Drain**.
 
 ### Anorith
 * Ability slot 2: none → **Swift Swim** (slot 1 stays Battle Armor).
@@ -2213,15 +2431,26 @@ ability; any slot not mentioned is unchanged.
 * Stats: Atk 90 → 100, Spe 40 → 30. BST 440 (unchanged).
 * Ability slot 2: none → **Protean**.
 
+### Shuppet
+* Ability slot 1: Insomnia → **Prankster**.
+* Ability slot 2: Frisk → **Prankster**.
+
 ### Banette
 * Ability slot 1: Insomnia → **Prankster**.
+* Ability slot 2: Frisk → **Prankster**.
 * Learnset: Grudge moved from level 58 to 25, Trick from 66 to 58, gains
   Destiny Bond at level 66.
+
+### Dusclops
+* Ability slot 1: Pressure → **Shadow Tag**.
 
 ### Chimecho
 * Typing: Psychic → **Psychic / Steel**.
 * Learnset: Protect replaces Double-Edge at level 33; Wish replaces Safeguard at
   level 41.
+
+### Absol
+* Ability slot 1: Pressure → **Super Luck**.
 
 ### Glalie
 * Ability slot 1: Inner Focus → **Refrigerate**.
@@ -2229,9 +2458,19 @@ ability; any slot not mentioned is unchanged.
 ### Walrein
 * Stats: Atk 80 → 95, Sp. Atk 95 → 80. BST 530 (unchanged).
 
+### Huntail
+* Stats: Atk 104 → 124, Sp. Atk 94 → 74. BST 485 (unchanged).
+
+### Gorebyss
+* Stats: Atk 84 → 64, Sp. Atk 114 → 134. BST 485 (unchanged).
+
 ### Luvdisc
 * Learnset: Lucky Chant and Captivate swapped — Captivate now at level 17,
   Lucky Chant at level 40.
+
+### Deoxys
+* Ability slot 1: Pressure → **Adaptability**, on all four forms (`res/pokemon/deoxys/data.json`
+  and `forms/{attack,defense,speed}/data.json`).
 
 ### Turtwig
 * Ability slot 2: none → **Shell Armor**.
@@ -2244,8 +2483,6 @@ ability; any slot not mentioned is unchanged.
 
 ### Chimchar
 * Ability slot 2: none → **Iron Fist**.
-* Typing: Fire → **Fire / Fighting** (now matches its evolutions, which were
-  already Fire/Fighting in the base game).
 
 ### Monferno
 * Ability slot 2: none → **Iron Fist**.
@@ -2283,16 +2520,20 @@ ability; any slot not mentioned is unchanged.
 * Learnset: Wild Charge replaces Scary Face at level 49.
 
 ### Cranidos
-* Ability slot 2: none → **Sheer Force** (slot 1 stays Mold Breaker).
+* Ability slot 1: Mold Breaker → **Sheer Force**.
+* Ability slot 2: none → **Sheer Force**.
 
 ### Rampardos
-* Ability slot 2: none → **Sheer Force** (slot 1 stays Mold Breaker).
+* Ability slot 1: Mold Breaker → **Sheer Force**.
+* Ability slot 2: none → **Sheer Force**.
 
 ### Shieldon
-* Ability slot 2: none → **Solid Rock** (slot 1 stays Sturdy).
+* Ability slot 1: Sturdy → **Solid Rock**.
+* Ability slot 2: none → **Solid Rock**.
 
 ### Bastiodon
-* Ability slot 2: none → **Solid Rock** (slot 1 stays Sturdy).
+* Ability slot 1: Sturdy → **Solid Rock**.
+* Ability slot 2: none → **Solid Rock**.
 
 ### Wormadam
 One species, three cloak forms (`res/pokemon/wormadam/data.json` for Plant Cloak,
@@ -2306,6 +2547,7 @@ One species, three cloak forms (`res/pokemon/wormadam/data.json` for Plant Cloak
 | Sandy | 79 → 99 | 59 → 39 | 36 |
 | Trash | 69 → 79 | 69 → 79 | 36 → 16 |
 
+* Abilities (every form): Anticipation / none → **Shed Skin** / **Shed Skin**.
 * Learnset (each cloak has its own list): the level-29 status move
   (Growth / Harden / Metal Sound) becomes **Leech Life** on all three; at level 47
   Plant's Leaf Storm becomes **Seed Bomb** and Sandy's Fissure becomes
@@ -2319,6 +2561,9 @@ One species, three cloak forms (`res/pokemon/wormadam/data.json` for Plant Cloak
 ### Combee
 * Gender ratio: 12.5% female → **75% female** (`GENDER_RATIO_FEMALE_75`).
 
+### Vespiquen
+* Ability slot 1: Pressure → **Swarm**.
+
 ### Pachirisu
 * Ability slot 2: Pickup → **Volt Absorb**.
 
@@ -2331,6 +2576,9 @@ One species, three cloak forms (`res/pokemon/wormadam/data.json` for Plant Cloak
 ### Gastrodon
 * Ability slot 1: Sticky Hold → **Storm Drain** (slot 2 already Storm Drain), so
   Storm Drain is now its only ability. Shellos is unchanged.
+
+### Ambipom
+* Ability slot 2: Pickup → **Technician**.
 
 ### Drifloon
 * Ability slot 1: Aftermath → **Flare Boost** (slot 2 stays Unburden).
@@ -2381,16 +2629,18 @@ One species, three cloak forms (`res/pokemon/wormadam/data.json` for Plant Cloak
 * Stats: Atk 65 → 55, Spe 91 → 101. BST 411 (unchanged).
 
 ### Spiritomb
-* Stats: Atk 92 → 30, Def 108 → 123, Sp. Atk 92 → 124, Sp. Def 108 → 123.
-  BST 485 (unchanged).
+* Stats: Atk 92 → 30, Def 108 → 123, Sp. Atk 92 → 124, Sp. Def 108 → 123. BST 485 (unchanged).
+* Ability slot 1: Pressure → **Magic Guard**.
 
 ### Garchomp
 * Ability slot 1: Sand Veil → **Rough Skin**. Gible and Gabite are unchanged.
 * Stats: Atk 130 → 160, Sp. Atk 80 → 50. BST 600 (unchanged).
 
 ### Lucario
-* Stats: Atk 110 → 60, Def 70 → 90, Spe 90 → 100, Sp. Def 70 → 90.
-  BST 525 (unchanged).
+* Stats: Def 70 → 85, Sp. Atk 115 → 125, Sp. Def 70 → 85. BST 525 → **565**
+  (+40; one of the few deliberate BST increases). Replaces an earlier
+  redistribution (Atk 110 → 60, Def/Sp. Def 70 → 90, Spe 90 → 100); Attack and
+  Speed are back to vanilla.
 
 ### Croagunk
 * Ability slot 1: Anticipation → **Poison Touch** (slot 2 stays Dry Skin).
@@ -2407,6 +2657,7 @@ One species, three cloak forms (`res/pokemon/wormadam/data.json` for Plant Cloak
 
 ### Carnivine
 * Stats: Atk 100 → 130, Sp. Atk 90 → 60. BST 454 (unchanged).
+* Ability slot 1: Levitate → **Leaf Guard**.
 
 ### Finneon
 * Evolves into Lumineon at level 23 (was 31).
@@ -2415,16 +2666,17 @@ One species, three cloak forms (`res/pokemon/wormadam/data.json` for Plant Cloak
 * Learnset: Tailwind replaces Captivate at level 26.
 
 ### Lickilicky
-* Ability slot 1: Own Tempo → **Cloud Nine**; ability slot 2: Oblivious →
-  **Filter**.
+* Ability slot 1: Own Tempo → **Thick Fat**.
+* Ability slot 2: Oblivious → **Simple**.
 
 ### Tangrowth
 * Learnset: Power Whip moved from level 54 to 40, Natural Gift from 40 to 54.
 
 ### Togekiss
+* Stats: HP 85 → 100, Atk 50 → 15, Def 95 → 115. BST 545 (unchanged).
+* Ability slot 1: Hustle → **Serene Grace**.
 * Learnset: also knows Ancient Power, Last Resort, Wish, Follow Me, Encore,
   Yawn and Extrasensory as level-1 moves.
-* Stats: HP 85 → 100, Atk 50 → 15, Def 95 → 115. BST 545 (unchanged).
 
 ### Yanmega
 * Learnset: Ancient Power and Pursuit swapped (Ancient Power @ 30, Pursuit @ 33);
@@ -2435,6 +2687,8 @@ One species, three cloak forms (`res/pokemon/wormadam/data.json` for Plant Cloak
 * Learnset: Seed Bomb replaces Magical Leaf at level 36.
 
 ### Glaceon
+* Ability slot 1: Snow Cloak → **Ice Body**.
+* Ability slot 2: Snow Cloak → **Ice Body**.
 * Learnset: Ice Beam replaces Ice Fang at level 43.
 
 ### Gliscor
@@ -2449,6 +2703,7 @@ One species, three cloak forms (`res/pokemon/wormadam/data.json` for Plant Cloak
 
 ### Dusknoir
 * Stats: HP 45 → 75, Sp. Atk 65 → 35. BST 525 (unchanged).
+* Ability slot 1: Pressure → **Shadow Tag**.
 
 ### Froslass
 * Stats: Atk 80 → 50, Sp. Atk 80 → 110. BST 480 (unchanged).
@@ -2486,6 +2741,12 @@ Base Rotom stays Electric / Ghost.
   **Psychic Surge** (Psychic Surge is now its only ability, creating Psychic
   Terrain on switch-in).
 * Learnset: Extrasensory at level 51 → **Expanding Force**.
+
+### Phione
+* Ability slot 2: none → **Drizzle**.
+
+### Manaphy
+* Ability slot 2: none → **Drizzle**.
 
 ### Arceus
 * Learnset: also knows **Spacial Rend**, **Roar of Time** and **Shadow Force**

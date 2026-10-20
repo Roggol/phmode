@@ -1,10 +1,10 @@
 {
     "base_stats": {
         "hp": 60,
-        "attack": 48,
+        "attack": 28,
         "defense": 45,
         "speed": 42,
-        "special_attack": 43,
+        "special_attack": 63,
         "special_defense": 90
     },
     "types": [ "TYPE_PSYCHIC", "TYPE_PSYCHIC" ],
@@ -27,7 +27,7 @@
     "base_friendship": 70,
     "exp_rate": "EXP_RATE_MEDIUM_FAST",
     "egg_groups": [ "EGG_GROUP_HUMAN_LIKE", "EGG_GROUP_HUMAN_LIKE" ],
-    "abilities": [ "ABILITY_INSOMNIA", "ABILITY_FOREWARN" ],
+    "abilities": [ "ABILITY_INSOMNIA", "ABILITY_BAD_DREAMS" ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_YELLOW",
     "flip_sprite": false,

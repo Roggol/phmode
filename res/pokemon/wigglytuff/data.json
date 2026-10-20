@@ -2,10 +2,10 @@
     "base_stats": {
         "hp": 140,
         "attack": 70,
-        "defense": 45,
+        "defense": 55,
         "speed": 45,
-        "special_attack": 75,
-        "special_defense": 50
+        "special_attack": 55,
+        "special_defense": 60
     },
     "types": [ "TYPE_NORMAL", "TYPE_NORMAL" ],
     "catch_rate": 50,
@@ -27,7 +27,7 @@
     "base_friendship": 70,
     "exp_rate": "EXP_RATE_FAST",
     "egg_groups": [ "EGG_GROUP_FAIRY", "EGG_GROUP_FAIRY" ],
-    "abilities": [ "ABILITY_CUTE_CHARM", "ABILITY_NONE" ],
+    "abilities": [ "ABILITY_COMPETITIVE", "ABILITY_COMPETITIVE" ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_PINK",
     "flip_sprite": false,

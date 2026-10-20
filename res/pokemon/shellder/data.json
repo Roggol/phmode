@@ -4,8 +4,8 @@
         "attack": 65,
         "defense": 100,
         "speed": 40,
-        "special_attack": 45,
-        "special_defense": 25
+        "special_attack": 25,
+        "special_defense": 45
     },
     "types": [ "TYPE_WATER", "TYPE_WATER" ],
     "catch_rate": 190,

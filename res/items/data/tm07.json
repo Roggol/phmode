@@ -3,9 +3,8 @@
   "plural": "TM07s",
   "article": "a",
   "description": [
-    "Summons a hailstorm that lasts for\n",
-    "five turns. The hailstorm damages\n",
-    "all types except Ice."
+    "Summons a snowstorm that boosts\n",
+    "defence for ice type pokemon."
   ],
   "icon": {
     "sprite": "tm_NCGR",
